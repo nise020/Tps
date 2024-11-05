@@ -1,9 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
-using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
-using static Guns;
 
 public class cSoljer : MonoBehaviour
 {
@@ -16,7 +14,7 @@ public class cSoljer : MonoBehaviour
 
     [Header("조준점")]
     [SerializeField] Transform AimtransPos;//명중 오브젝트
-    [SerializeField] TMP_Text BulletCount;//현재 남아있는 총알
+    //[SerializeField] Text BulletCount;//현재 남아있는 총알
     [SerializeField] Button ControlBtn;
 
     [Header("스텟")]
@@ -69,7 +67,7 @@ public class cSoljer : MonoBehaviour
             ChargeingTime = 3.0f;
         }
         RerodingBullet = bullet;
-        BulletCount.text = bullet.ToString();
+        //BulletCount.text = bullet.ToString();
     }
     public void BulletReturn(out int value) 
     {
@@ -85,7 +83,7 @@ public class cSoljer : MonoBehaviour
     void Update()
     {
         AttackModPosition();
-        GunFireCheck();
+        //GunFireCheck();
     }
     private void Chargeing()//총구 액션,(리로드 아님!)
     {
@@ -118,7 +116,7 @@ public class cSoljer : MonoBehaviour
         {
             bullet = RerodingBullet;
             RerodingTimer = 0.0f;
-            BulletCount.text = bullet.ToString();//찾을수 없다고 뜸
+            //BulletCount.text = bullet.ToString();//찾을수 없다고 뜸
 
             Debug.Log("Reroding off");
         }
@@ -134,14 +132,14 @@ public class cSoljer : MonoBehaviour
     }
     private void GunFireCheck() //총구 애니메이션 on/off
     {
-        if (MobPrefab[0].transform.position == GunHoleObj.transform.position)//MobPrefab[0]<--임시
-        {
-            GunHoleObj.SetActive(true);
-            if (GunHoleObj.activeSelf == true) 
-            {
+        //if (MobPrefab[0].transform.position == GunHoleObj.transform.position)//MobPrefab[0]<--임시
+        //{
+        //    GunHoleObj.SetActive(true);
+        //    if (GunHoleObj.activeSelf == true) 
+        //    {
 
-            }
-        }
+        //    }
+        //}
     }
 
     private void AttackModPosition()//애니메이션 실행+ 포지션 전환;
@@ -149,7 +147,7 @@ public class cSoljer : MonoBehaviour
         Vector3 scale = transform.localScale;
         if (Input.GetMouseButton(0) && bullet > 0)//총알이 남아있을 경우
         {
-            transform.position = new Vector3((beforTrs.x + 1.0f), transform.position.y, 0f);
+            transform.position = new Vector3((beforTrs.x + 2.0f), beforTrs.y, beforTrs.z);
             if (AimtransPos.transform.position.x >= transform.position.x)
             {
                 scale.x = Mathf.Abs(scale.x);
@@ -167,7 +165,7 @@ public class cSoljer : MonoBehaviour
         {
             Reloding();
             transform.position = beforTrs;
-            WeapontransPos.transform.rotation = Quaternion.Euler(0,0,beforAimtransPos.z);
+            //WeapontransPos.transform.rotation = Quaternion.Euler(0,0,beforAimtransPos.z);
             scale.x = Mathf.Abs(scale.x);
         }
         transform.localScale = scale;

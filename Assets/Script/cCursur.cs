@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEditor;
 using UnityEngine;
 
@@ -50,10 +51,17 @@ public class cCursur : MonoBehaviour
     void Update()
     {
         MobHit();
-        this.transform.position = cam.ScreenToWorldPoint(Input.mousePosition);
-        cursurCheck();
+        sight();
+        //cursurCheck();
     }
-    private void cursurCheck()
+    private void sight() 
+    {
+        Vector3 vactor = cam.ScreenToWorldPoint(Input.mousePosition);
+        Debug.Log($"{vactor}");
+        vactor.z = -20.0f;
+        this.transform.position = vactor;
+    }
+    private void cursurCheck()//수정필요
     {
         float minXmax = coll.size.x/2;
         float minYmax = coll.size.y/2;

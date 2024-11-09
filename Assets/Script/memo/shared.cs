@@ -4,8 +4,16 @@ using UnityEngine;
 
 public static class shared //메모
 {
-    public static GameManager GameManager;//싱글톤,static<--정적으로 접근하는 패턴,과거에 메모리를 계산하기 위해서 사용
-    public static SceneMgr SceneMgr;//싱글톤,static<--정적으로 접근하는 패턴,과거에 메모리를 계산하기 위해서 사용
+    //싱글톤,static<--정적으로 접근하는 패턴,과거에 메모리를 계산하기 위해서 사용
+    public static GameManager GameManager;
+    public static SceneMgr SceneMgr;
+    public static BattelManager BattelMgr;
+
+    //private void Awake()//예시
+    //{
+    //    shared.BattelMgr = this;
+    //}
+
     //32bit 2에 32승 데이터 처리
     //64bit 2에 64승 데이터 처리
     //static을 최대한 사용하지 않는게 좋다

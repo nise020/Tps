@@ -4,10 +4,10 @@ using UnityEngine;
 
 public class HitCheck : MonoBehaviour
 {
-    Guns guns;
+    Gun guns;
     void Start()
     {
-        guns = GetComponentInParent<Guns>();
+        guns = GetComponentInParent<Gun>();
     }
     private void OnTriggerEnter(Collider other)//레이저 사이트에 닿았는지 체크
     {

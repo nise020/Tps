@@ -4,10 +4,9 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 
 public partial class SceneMgr : MonoBehaviour
-{ 
-    eScene Scene = eScene.Title;
-
-    public void chageSecen(eScene _e, bool _Loading = false) 
+{
+    
+    public void chageSecen(eScene _e, bool _Loading = false)
     {
         if (Scene == _e)
             return;
@@ -30,4 +29,6 @@ public partial class SceneMgr : MonoBehaviour
                 break;
         }
     }
+
+
 }

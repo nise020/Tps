@@ -39,7 +39,7 @@ public partial class Gun : MonoBehaviour
     {
         Vector3 targetPoint = hit.point;
         //Vector3 targetPoint = cam.ScreenToWorldPoint(Input.mousePosition);
-        Vector3 Dir = (targetPoint - GunHole.transform.position).normalized;
+        Vector3 Dir = (targetPoint - GunObj.transform.position).normalized;
         Quaternion EndRotation = Quaternion.LookRotation(Dir);
         GunObj.transform.localRotation = Quaternion.Slerp(GunObj.transform.rotation, EndRotation, GunRotSpeed * Time.deltaTime);
         

@@ -6,7 +6,7 @@ using UnityEngine.SceneManagement;
 public partial class SceneMgr : MonoBehaviour
 {
     
-    public void chageSecen(eScene _e, bool _Loading = false)
+    public void chageScene(eScene _e, bool _Loading = false)
     {
         if (Scene == _e)
             return;

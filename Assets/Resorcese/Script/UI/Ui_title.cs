@@ -11,7 +11,7 @@ public partial class Ui_title : MonoBehaviour
     //public List<Character> monster = new List<Character>();
     public void OnbtnTitle() //예시
     {
-        shared.SceneMgr.chageSecen(eScene.Lobby);
+        shared.SceneMgr.chageScene(eScene.Lobby);
     }
     public Character GetCharacter(int index) //Dictionary 예시
     {

@@ -9,6 +9,7 @@ public static class shared //메모
     public static SceneMgr SceneMgr;
     public static BattelManager BattelMgr;
 
+    
     //private void Awake()//예시
     //{
     //    shared.BattelMgr = this;

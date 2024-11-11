@@ -25,7 +25,7 @@ public class GameManager : MonoBehaviour
     int Playerbullet;
     public void onbtnTitle() 
     {
-        SceneManager.LoadScene("Login");
+        //SceneManager.LoadScene("Login");
         //shared.SceneMgr.chageSecen
     }
 

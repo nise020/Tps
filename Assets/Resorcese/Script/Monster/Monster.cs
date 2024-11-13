@@ -4,17 +4,18 @@ using UnityEngine;
 
 public partial class Monster : MonoBehaviour
 {
-    [SerializeField] protected GameObject[] player;
-    
+    //[SerializeField] protected GameObject[] player;
+
     // Start is called before the first frame update
     void Start()
     {
-        
+
     }
 
     // Update is called once per frame
-    void Update()
+    void FixedUpdate()
     {
-        //MobAttack();
+        //MobAttackTimecheck();
+        nomalAttack();
     }
 }

@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -35,13 +36,14 @@ public partial class Gun : MonoBehaviour
     /// <summary>
     /// ÃÑÀÇ °¢µµ
     /// </summary>
-    public void AimGun(RaycastHit hit)
+    public void AimGun(RaycastHit _hit)
     {
-        Vector3 targetPoint = hit.point;
+        Vector3 targetPoint = _hit.point;
         //Vector3 targetPoint = cam.ScreenToWorldPoint(Input.mousePosition);
-        Vector3 Dir = (targetPoint - GunObj.transform.position).normalized;
-        Quaternion EndRotation = Quaternion.LookRotation(Dir);
-        GunObj.transform.localRotation = Quaternion.Slerp(GunObj.transform.rotation, EndRotation, GunRotSpeed * Time.deltaTime);
+        Vector3 Dir = (targetPoint - GunObj.transform.position);
+        Quaternion StartRotation = Quaternion.LookRotation(GunObj.transform.forward);
+        Quaternion EndRotation = Quaternion.LookRotation(Dir.normalized);
+        GunObj.transform.rotation = Quaternion.Slerp(StartRotation, EndRotation, GunRotSpeed * Time.deltaTime);
         
         Debug.Log($"{targetPoint}");
         Debug.Log($"{Dir}");

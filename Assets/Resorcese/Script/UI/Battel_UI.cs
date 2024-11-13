@@ -15,7 +15,7 @@ public class Battel_UI : MonoBehaviour
     void Start()
     {
         cam = Camera.main;
-        AutoBut.onClick.AddListener(autoOnOff);
+        //AutoBut.onClick.AddListener(autoOnOff);<연결필요
     }
 
     // Update is called once per frame
@@ -32,7 +32,7 @@ public class Battel_UI : MonoBehaviour
         //Vector3 vactor = cam.ScreenToViewportPoint(Input.mousePosition);
         //Debug.Log($"{vactor}");
         //vactor.z = 0.0f;
-        MainCursur.rectTransform.position = Input.mousePosition;
+        //MainCursur.rectTransform.position = Input.mousePosition;<--새로 생성
     }
 
     private void OnDrawGizmos()

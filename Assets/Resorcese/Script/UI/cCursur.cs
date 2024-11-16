@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
 
-public class cCursur : MonoBehaviour
+public class cCursur : Actor
 {
     Camera cam;
     [SerializeField] BoxCollider2D coll;

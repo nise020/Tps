@@ -1,10 +1,10 @@
-//using Newtonsoft.Json;
+using Newtonsoft.Json;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public partial class Login : MonoBehaviour
+public partial class Login : Actor
 {
     [Header("LoginScene")]
     [SerializeField] GameObject LoginObj;
@@ -20,8 +20,7 @@ public partial class Login : MonoBehaviour
     {
         if ((IdText.text == "" || IdText.text.Length <= 0)&&
             (PasswordText.text == "" || PasswordText.text.Length <= 0)) return;
-        Laoding = CreatPassword();
-        StartCoroutine(Laoding);
+        StartCoroutine(CreatPassword());
 
     }
     IEnumerator CreatPassword()//계정 생성
@@ -31,10 +30,11 @@ public partial class Login : MonoBehaviour
         IDKey = IdText.text;
         UserPassKey = PasswordText.text;
         shared.SceneMgr.SetPlayerPrefsStringKey(IDKey, UserPassKey);
+        shared.SceneMgr.PassKey = UserPassKey;
+        //ActKey = UserPassKey;
 
         yield return new WaitForSeconds(5);
 
-        shared.SceneMgr.PassKey = UserPassKey;
         //IDSave(IDKey, UserPassKey);
         Debug.Log($"UserPassKey={UserPassKey},IDKey={IDKey}");
 
@@ -43,18 +43,5 @@ public partial class Login : MonoBehaviour
 
 
     }
-    //public void IDSave(string _key,string _Pass) 
-    //{
-    //    //List<UserData> saveData = JsonConvert.DeserializeObject<List<UserData>>(PlayerPrefs.GetString(SaveData.PasswordData));
-    //    int count = saveData.Count;
-    //    for (int iNum = 0; iNum < count; iNum++)
-    //    {
-    //        if (saveData[iNum] != null)
-    //        {
-    //            return;
-    //        }
-    //        saveData[iNum].UserKey = _key;
-    //        saveData[iNum].UserId = _Pass;
-    //    }
-    //}
+    
 }

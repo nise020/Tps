@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class Battel_UI : MonoBehaviour
+public class Battel_UI : Actor
 {
     Camera cam;
     [SerializeField] Image MainCursur;
@@ -21,7 +21,7 @@ public class Battel_UI : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        cursurTrs();
+        //cursurTrs();
     }
     public void autoOnOff() 
     {

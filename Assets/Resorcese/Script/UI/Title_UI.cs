@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public partial class Title : MonoBehaviour
+public partial class Title : Actor
 {
     [Header("TitleScene")]
     [SerializeField] GameObject TitleObj;
@@ -12,24 +12,33 @@ public partial class Title : MonoBehaviour
     string PasswordKey;//유저의 비밀번호
     IEnumerator Laoding;
     // Start is called before the first frame update
-    void Start()
-    {
-        //LoadToJason("Json/passkey");
-    }
+    //void Start()
+    //{
+    //    LoadToJason("Json/passkey");
+    //}
     void LoadToJason(string DataName)//아직 제작중
     {
 
-        TextAsset PassKey = null;
-        PassKey = Resources.Load<TextAsset>(DataName);
-        UserData Data = JsonUtility.FromJson<UserData>(DataName);
-        Debug.Log($"{Data.UserId}");
-        PasswordKey = Data.UserId;
+        TextAsset PassKey = Resources.Load<TextAsset>(DataName);
+        if (PassKey==null)
+        {
+            return;
+        }
+        SaveData Data = JsonUtility.FromJson<SaveData>(PassKey.text);
+        //Debug.Log($"{Data.UserId}");
+        PasswordKey = Data.IdData;
+    }
+    public void Initialize(string target)
+    {
+        //PasswordKey = ActKey;
     }
     public void BackUpId() 
     {
         shared.SceneMgr.savePasskey(out PasswordKey);
+        //PasswordKey = ActKey;
+
+        if (PasswordKey.Length < 0 || PasswordKey== "" || PasswordKey==null) { return; }
         shared.SceneMgr.GetPlayerPrefsStringKey(PasswordKey);
-        if (PasswordKey == null) { return; }
         Laoding = Passwordcheck();
         StartCoroutine(Laoding);
         Debug.Log($"PassKey={PasswordKey}");

@@ -2,20 +2,24 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public partial class Monster : MonoBehaviour
+public abstract partial class Monster : Actor
 {
     //[SerializeField] protected GameObject[] player;
-
-    // Start is called before the first frame update
-    void Start()
+    private void Start()
     {
-
+        //StartCoroutine(MobAttackTimecheck());
+        nomalAttack();
+        //targetNumber();
     }
 
     // Update is called once per frame
+    //void FixedUpdate()
+    //{
+    //    StartCoroutine(MobAttackTimecheck());
+    //}
     void FixedUpdate()
     {
-        //MobAttackTimecheck();
-        nomalAttack();
+        MobAttackTimecheck();
+        //StartCoroutine(MobAttackTimecheck());
     }
 }

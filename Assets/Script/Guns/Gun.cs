@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public partial class Gun : MonoBehaviour
+public partial class Gun : Soljer
 {
     void Start()
     {

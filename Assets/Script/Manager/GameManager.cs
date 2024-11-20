@@ -62,24 +62,24 @@ public class GameManager : MonoBehaviour
     void cursurAtteck()//수동공격 
     {
         Cursur cCursur = AimObj.GetComponent<Cursur>();
-        Bulletcount(cCursur, PlayerObj[0]);//0은 임시
+        //Bulletcount(cCursur, PlayerObj[0]);//0은 임시
     }
-    void Bulletcount(Cursur value, GameObject PlayerObj) 
-    {
-        Soljer Soljer = PlayerObj.GetComponent<Soljer>();
-        if (value.shoot == true)
-        {
-            Soljer.bullet -= 1;
-            value.shoot = false;
-            Playerbullet = Soljer.bullet;
-            if (Playerbullet <= 0)
-            {
-                Playerbullet = 0;
-            }
-            BulletText.text = Playerbullet.ToString();
+    //void Bulletcount(Cursur value, GameObject PlayerObj) 
+    //{
+    //    Soljer Soljer = PlayerObj.GetComponent<Soljer>();
+    //    if (value.shoot == true)
+    //    {
+    //        Soljer.bullet -= 1;
+    //        value.shoot = false;
+    //        Playerbullet = Soljer.bullet;
+    //        if (Playerbullet <= 0)
+    //        {
+    //            Playerbullet = 0;
+    //        }
+    //        BulletText.text = Playerbullet.ToString();
         
-        }
-    }
+    //    }
+    //}
     void Update()
     {
         for (int iNum = 0; iNum < PlayerButtons.Length; iNum++) 

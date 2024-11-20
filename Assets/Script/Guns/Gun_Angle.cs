@@ -4,7 +4,7 @@ using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UI;
 
-public partial class Gun : MonoBehaviour
+public partial class Gun : Soljer
 {
     enum GunTags 
     {
@@ -45,11 +45,6 @@ public partial class Gun : MonoBehaviour
         Quaternion EndRotation = Quaternion.LookRotation(Dir.normalized);
         GunObj.transform.rotation = Quaternion.Slerp(StartRotation, EndRotation, GunRotSpeed * Time.deltaTime);
         
-        Debug.Log($"{targetPoint}");
-        Debug.Log($"{Dir}");
-        //GunObj.transform.rotation = Quaternion.LookRotation(Dir);
-        Debug.Log($"{EndRotation}");
-
         
         Debug.DrawLine(GunHole.transform.position, targetPoint, Color.red);
     }

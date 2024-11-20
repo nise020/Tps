@@ -14,7 +14,7 @@ public partial class Title : Actor
     // Start is called before the first frame update
     void Start()
     {
-        LoadToJason("Json/passkey");
+        //LoadToJason("Json/passkey");
     }
     void LoadToJason(string DataName)//아직 제작중
     {
@@ -54,9 +54,9 @@ public partial class Title : Actor
 
         yield return new WaitForSeconds(1);
 
-        Debug.Log($"{PasswordKey}님의 계정 정보를 확인되었습니다.\n잠시후 로비로 이동됩니다");
+        Debug.Log($"{PasswordKey}님의 계정 정보를 확인되었습니다.");
         yield return new WaitForSeconds(2);
 
-        Shared.SceneMgr.chageScene(eScene.Lobby);
+        Shared.SceneMgr.chageScene(eScene.Loading);
     }
 }

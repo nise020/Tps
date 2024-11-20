@@ -32,7 +32,7 @@ public partial class Login : Actor
         UserPassKey = PasswordText.text;
         Shared.SceneMgr.SetPlayerPrefsStringKey(IDKey, UserPassKey);
         Shared.SceneMgr.PassKey = UserPassKey;
-        Shared.SceneMgr.SaveFile(UserPassKey);
+        //Shared.SceneMgr.SaveFile(UserPassKey);
         //ActKey = UserPassKey;
 
         yield return new WaitForSeconds(5);

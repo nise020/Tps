@@ -1,0 +1,21 @@
+ref<-- 매개 변수에 넣으면 값을 직접수정
+
+targetOn(ref number);
+
+protected void targetOn(ref int _value) 
+    {
+        int count = playerObj.Count;//공격할 플레이어 정렬
+        _value = Random.Range(0, count);//랜덤으로 타겟 선정
+        
+    }
+====================================================================
+값을 함수내에 변수에 적용
+
+int value = targetOn(number);
+
+protected int targetOn(int _value) 
+    {
+        int count = playerObj.Count;//공격할 플레이어 정렬
+        _value = Random.Range(0, count);//랜덤으로 타겟 선정
+        return _value;
+    }

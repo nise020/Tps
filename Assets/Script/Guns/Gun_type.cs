@@ -2,10 +2,10 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public partial class Gun : MonoBehaviour
+public partial class Gun : Soljer
 {
     [Header("ÃÑÀÇ Á¾·ù,ÃÑ¾Ë")]
-    public int bullet;
+    protected new int bullet;
     public int RelodingBullet;
     float ChargeingTime;
     float ChargeingTimer = 0.0f;

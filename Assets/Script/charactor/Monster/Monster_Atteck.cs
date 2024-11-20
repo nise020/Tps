@@ -11,10 +11,10 @@ public abstract partial class Monster : charactor
     [SerializeField] GameObject AttackArm;//공격의 시작점이 될 팔
     [SerializeField] GameObject bulletTab;//총알 저장탭
     bool NumberOn = false;
-    int number;
+    protected int number;
     Vector3 targetpos;
     [Header("공격할 타켓")]
-    [SerializeField] List<GameObject> playerObj;//플레이어 위치 정보
+    [SerializeField] protected List<GameObject> playerObj;//플레이어 위치 정보
 
     [Header("기본 타이머")]
     //ublic int Patternt = 0f;
@@ -58,7 +58,7 @@ public abstract partial class Monster : charactor
     }
     protected override void nomalAttack()
     {
-        targetOn();
+        targetOn(ref number);
         if (playerObj[number] == null) { return; }
         GameObject go = Instantiate(MobBullet, AttackArm.transform.position, Quaternion.identity, bulletTab.transform);
         Mob_Bullet bullet = go.GetComponent<Mob_Bullet>();
@@ -71,10 +71,10 @@ public abstract partial class Monster : charactor
             NumberOn = false;
         }
     }
-    protected void targetOn() 
+    protected void targetOn(ref int _value) 
     {
         int count = playerObj.Count;//공격할 플레이어 정렬
-        number = Random.Range(0, count);//랜덤으로 타겟 선정
+        _value = Random.Range(0, count);//랜덤으로 타겟 선정
     }
     protected void GrenadeAttack() 
     {

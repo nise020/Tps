@@ -402,7 +402,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9243f7967f44c13478fa5dd645b2d9cb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxImg: {fileID: 0}
+  maxImg: {fileID: 1074814193}
 --- !u!1 &1074814191
 GameObject:
   m_ObjectHideFlags: 0

@@ -7,7 +7,7 @@ public abstract partial class Bullet : Actor
 {
     int targetnumber;
     public int speed;
-    Transform targetPos;
+    Transform targetPos;//공격할 목표
     enum bulletType 
     {
         Mobbullet,
@@ -15,18 +15,13 @@ public abstract partial class Bullet : Actor
         MobGranad,
     }
     [SerializeField] bulletType bulletTag;
-    private void Start()
-    {
-        //Initialize(targetPos);
-    }
+    
     public void Initialize(Transform target)
     {
         targetPos = target;
     }
-    public int targetNumber(int number)
-    {
-        return number;
-    }
+
+    
     public void moveing()
     {
         if (bulletTag == bulletType.MobGranad) { return; }

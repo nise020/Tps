@@ -10,6 +10,13 @@ public enum eScene //예전에는 앞에 sScene을 붙여야 했다
    End,
 
 }
+public enum eLayer //예전에는 앞에 sScene을 붙여야 했다
+{
+    Cover,
+    Player,
+    Bullet,
+}
+
 public class UserData 
 {
     public static int acount = 3;  

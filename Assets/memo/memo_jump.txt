@@ -1,23 +1,7 @@
-using System.Collections;
-using System.Collections.Generic;
-using Unity.VisualScripting;
-using UnityEngine;
-
-public partial class HugeMob : Monster
-{
-    float moveTime = 0.0f;
-    float jumpStart = 0.0f;
-    float jumpHight = 5.0f;
-    float runningTime = 10.0f;
-    bool targetCheack = false;
-    [SerializeField] bool jumpOn = false;
-
-
-
     public void jumpAttack()
     {
         if (jumpOn == false) { return; }
-        if (groundCheck == true)//∂•ø° ¥Íæ∆ ¿÷¿ª∂ß
+        if (groundCheck == true)//ÎïÖÏóê ÎãøÏïÑ ÏûàÏùÑÎïå
         {
             //mobRigid.useGravity = false;
         }
@@ -32,26 +16,29 @@ public partial class HugeMob : Monster
             
         }
 
-        float xzSpeed = runningTime;
-        Vector3 dir = (playerObj[number].transform.position - transform.position).normalized;
-        dir.y = 0;
-
-        float yForce = Mathf.Sqrt(2 * Physics.gravity.magnitude * jumpHight);//¡ﬂ∑¬¿Ã ƒ—¡Æ¿÷¥Ÿ ∞°¡§«œ∞Ì
-
-        Vector3 jumpPos = dir * xzSpeed + Vector3.up * yForce;
-
-        mobRigid.AddForce(jumpPos, ForceMode.VelocityChange);//¡°«¡
-
-        jumpOn = false;
-
-        #region ª¡˙(¡÷ºÆ)
         // moveTime += Time.deltaTime;
         //jumpStart += Time.deltaTime;
         //Vector3 mPos = transform.position;
         //mPos.y = 0;
         //Vector3 tPos = playerObj[number].transform.position;
         //tPos.y = 0;
-        //XZ ∞ËªÍ
+
+
+        //XZ Í≥ÑÏÇ∞
+        float xzSpeed = runningTime;
+        Vector3 dir = (playerObj[number].transform.position - transform.position).normalized;
+        dir.y = 0;
+        float yForce = Mathf.Sqrt(2 * Physics.gravity.magnitude * jumpHight);
+        //yForce = Mathf.Clamp(jumpHight ,0 , jumpHight);
+        Debug.Log($"{yForce}");
+        Vector3 jumpPos = dir * xzSpeed + Vector3.up * yForce;
+        Debug.Log($"{jumpPos}");
+        mobRigid.AddForce(jumpPos, ForceMode.VelocityChange);//Ï†êÌîÑ
+        //mobRigid.AddForce(jumpPos, ForceMode.Acceleration);//Ï†êÌîÑ
+        jumpOn = false;
+
+
+
         //float gavity = Mathf.Abs(Physics.gravity.y);//9.81~
         //float velocity = Mathf.Sqrt(2 * gavity * jump);
         //float timeToApex = velocity / gavity;
@@ -81,14 +68,5 @@ public partial class HugeMob : Monster
 
         //float distance = Vector3.Distance(new Vector3(mPos.x, 0, mPos.z), new Vector3(tPos.x, 0, tPos.z));
         //movePos.y = jumpPosY;
-        #endregion
+
     }
-    void FixedUpdate()
-    {
-        groundOn_Off(ref groundCheck);
-        jumpAttack();
-        //float gravity = Mathf.Abs(Physics.gravity.y);
-        //moving();
-        //StartCoroutine(MobAttackTimecheck());
-    }
-}

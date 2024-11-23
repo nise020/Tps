@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UIElements;
 
-public abstract partial class Monster : charactor
+public abstract partial class Monster : Charactor
 {
     [Header("공격할 물체")]
     [SerializeField] GameObject MobGrenade;//투척물 프리팹
@@ -62,8 +62,8 @@ public abstract partial class Monster : charactor
         if (playerObj[number] == null) { return; }
         GameObject go = Instantiate(MobBullet, AttackArm.transform.position, Quaternion.identity, bulletTab.transform);
         Mob_Bullet bullet = go.GetComponent<Mob_Bullet>();
-        targetNumber();
-        bullet.Initialize(ActTargetTrs);
+        chaTargetTrs = playerObj[number].transform;
+        bullet.Initialize(chaTargetTrs);
         if (AttackCount >= AttackMaxCount) 
         {
             Patterntimer = 0f;
@@ -74,14 +74,14 @@ public abstract partial class Monster : charactor
     protected void targetOn(ref int _value) 
     {
         int count = playerObj.Count;//공격할 플레이어 정렬
-        _value = Random.Range(0, count);//랜덤으로 타겟 선정
+        _value = Random.Range(0, count);//랜덤으로 타겟 번호 선정
     }
     protected void GrenadeAttack() 
     {
 
     }
-    public void targetNumber()
-    {
-        ActTargetTrs = playerObj[number].transform;
-    }
+    //protected void targetNumber()
+    //{
+    //    chaTargetTrs = playerObj[number].transform;
+    //}
 }

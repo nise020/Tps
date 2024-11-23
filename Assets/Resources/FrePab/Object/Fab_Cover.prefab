@@ -12,8 +12,8 @@ GameObject:
   - component: {fileID: 2522059135835982729}
   - component: {fileID: 6379255013923512014}
   - component: {fileID: 6036479634978202843}
-  m_Layer: 0
-  m_Name: Fab_Concealment
+  m_Layer: 11
+  m_Name: Fab_Cover
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -32,7 +32,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 13
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!33 &2522059135835982729
 MeshFilter:
@@ -62,7 +62,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: d290805a97014874f8965f68928ea3c2, type: 2}
+  - {fileID: 2100000, guid: 15215b4ac68b3004e91b20478bbc0eb4, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0

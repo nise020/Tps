@@ -2,22 +2,25 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public abstract partial class Monster : charactor
+public abstract partial class Monster : Charactor
 {
     [SerializeField] GameObject footObj;
     [SerializeField] protected bool groundCheck = false;
     [SerializeField] protected float leagh;
+    protected Rigidbody mobRigid;
     Color leaghColor;
-    Rigidbody mobRigid;
     BoxCollider boxColl;
     Collider mobColl;
-    protected void moving()//몬스터 매커니즘을 미리 정하고 만들어야 해서 보류  
+    
+    protected void moving()//몬스터 매커니즘을 미리 정하고 세부적으로 만들어야 해서 보류  
     {
         groundOn_Off(ref groundCheck);
         if (groundCheck == false) { return; }
-        
-
-
+        if (groundCheck == true) 
+        {
+            mobRigid.velocity = Vector3.zero;
+            //transform.position += new Vector3(1,0,0) * Time.deltaTime;
+        }
     }
     protected void groundOn_Off(ref bool _check) 
     {

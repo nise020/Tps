@@ -2,10 +2,10 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public abstract partial class Monster : charactor
+public abstract partial class Monster : Charactor
 {
     //[SerializeField] protected GameObject[] player;
-    private void Start()
+    protected void Start()
     {
         mobRigid = GetComponent<Rigidbody>();
         mobColl = GetComponent<Collider>();

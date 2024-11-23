@@ -22,6 +22,7 @@ public partial class Gun : Soljer
     [SerializeField, Tooltip("총 회전 감도")] float GunRotSpeed = 0.0f;
     [SerializeField, Tooltip("레이저 끝부분")] GameObject RazerEndObj;
     Camera cam;
+    LineRenderer gunLazer;
 
     public void GunTargetRaycast() 
     {
@@ -47,6 +48,10 @@ public partial class Gun : Soljer
         
         
         Debug.DrawLine(GunHole.transform.position, targetPoint, Color.red);
+    }
+    public void Lazer() 
+    {
+        gunLazer = GetComponent<LineRenderer>();
     }
  
 

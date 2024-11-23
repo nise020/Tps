@@ -4,13 +4,7 @@ using UnityEngine;
 
 public partial class Gun : Soljer
 {
-    [Header("ÃÑÀÇ Á¾·ù,ÃÑ¾Ë")]
-    protected new int bullet;
-    public int RelodingBullet;
-    float ChargeingTime;
-    float ChargeingTimer = 0.0f;
-    float RerodingTime = 3.0f;
-    float RerodingTimer = 0.0f;
+
     //[SerializeField, Tooltip("Auto Butten")] Button AutoBut;
     public void GunBulletType()//ÃÑÀÇ Á¾·ù
     {
@@ -31,7 +25,7 @@ public partial class Gun : Soljer
         }
         //RerodingBullet = bullet;
     }
-    public void Reloding()
+    protected override void Reloding()
     {
         if (bullet == RelodingBullet) { return; }
         RerodingTimer += Time.deltaTime;

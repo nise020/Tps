@@ -15,9 +15,9 @@ TagManager:
   - Gun
   - Player
   - Monster
-  - 
-  - 
-  - 
+  - Bullet
+  - MobBullet
+  - Cover
   - 
   - 
   - 

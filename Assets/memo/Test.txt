@@ -19,3 +19,9 @@ protected int targetOn(int _value)
         _value = Random.Range(0, count);//랜덤으로 타겟 선정
         return _value;
     }
+
+
+
+
+float verticalForce = Mathf.Sqrt(2 * Physics.gravity.magnitude(기본 중력) * jumpHight);
+:Y축 이동에 대한 힘의 공식

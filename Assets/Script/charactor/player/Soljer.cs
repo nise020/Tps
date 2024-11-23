@@ -9,8 +9,8 @@ public partial class Soljer : Charactor
     [Header("무기")]
     [SerializeField] GameObject WeaponPrefab;
     [SerializeField] GameObject[] MobPrefab;//몬스터
-    [SerializeField] GameObject GunHoleObj;//총구
-    [SerializeField] Transform WeapontransPos;//무기
+    //[SerializeField] GameObject GunHoleObj;//총구
+    //[SerializeField] Transform WeapontransPos;//무기
 
     [Header("조준점")]
     [SerializeField] Transform AimtransPos;//명중 오브젝트
@@ -30,13 +30,7 @@ public partial class Soljer : Charactor
     [Header("총의 종류,총알")]
     protected int bullet;
     protected int RelodingBullet;
-    public enum GunTags
-    {
-        MG,//머신건
-        SMG,//기간단총
-        SR,//저격총
-    }
-    [SerializeField] public GunTags GunType;
+    
     protected float ChargeingTime;
     protected float ChargeingTimer = 0.0f;
     protected float RerodingTime = 3.0f;
@@ -44,9 +38,9 @@ public partial class Soljer : Charactor
 
     private void Awake()
     {
-        GunHoleObj.gameObject.SetActive(false);
+        //GunHoleObj.gameObject.SetActive(false);
         beforTrs = this.transform.position;
-        beforAimtransPos = WeapontransPos.position;
+        //beforAimtransPos = WeapontransPos.position;
         Maincam = Camera.main;
     }
 
@@ -66,26 +60,7 @@ public partial class Soljer : Charactor
         //AttackModPosition();
         //GunFireCheck();
     }
-    protected virtual void Chargeing()//총구 액션,(리로드 아님!)
-    {
-        GunHoleObj.SetActive(false);
-        ChargeingTimer += Time.deltaTime;
-        if (ChargeingTimer > ChargeingTime)//마우스 땟을때 동작 필요
-        {
-            if (GunType == GunTags.SR && Input.GetKeyUp(KeyCode.Mouse0))
-            {
-                Debug.Log("SR");
-                GunHoleObj.SetActive(true);
-                ChargeingTimer = 0.0f;
-            }
-            else
-            {
-                Debug.Log("Not SR");
-                GunHoleObj.SetActive(true);
-                ChargeingTimer = 0.0f;
-            }
-        }
-    }
+
     //상속
     //추상함수
     protected virtual void Reloding()
@@ -109,7 +84,7 @@ public partial class Soljer : Charactor
         Vector2 Pos = mouseWorldPos - playerPos;
         float angle = Quaternion.FromToRotation(transform.localScale.x < 0 ? Vector3.left : Vector3.right, Pos).eulerAngles.z;
         //
-        WeapontransPos.transform.rotation = Quaternion.Euler(0, 0, angle);
+        //WeapontransPos.transform.rotation = Quaternion.Euler(0, 0, angle);
     }
     protected virtual void GunFireCheck() //총구 애니메이션 on/off
     {
@@ -139,7 +114,7 @@ public partial class Soljer : Charactor
             }
             CameraAim();
             GunFireCheck();
-            Chargeing();
+            //Chargeing();
 
         }
         else

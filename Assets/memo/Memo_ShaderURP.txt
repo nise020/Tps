@@ -1,0 +1,33 @@
+Memo_URP.txt
+
+2019버전부터
+유니티의 렌더링 시스템은
+
+이전까지의 built in Render Pipeline
+구조 대신에
+
+SRP(Script Rendering Pipeline ) 구조로 변경 되었다
+
+해당 구조는
+원한다면
+만대로 렌더링 파이프라인의 렌더를 작성해서 변경가능한 구조이다.
+보다 유연한 렌더링 구조를 가지게 된다.
+
+그리고
+유니티에서는
+주요란 렌더링 파이프라인의 렌더러 예로써
+
+URP와 HDRP를 제공한다.
+(LWRP이 처음에 만들어 졌지만 이는 URP로 통합 되었다)
+
+URP Universal Render Piprline
+   새로운 범용적인 렌더링 파이프라인<--게임 개발에서는 주로 이것
+HDRP High Definition Render Piprline
+   고품질 결과물용(3D 애니메이션 영화)
+
+<-- 기존의 렌더러는 Built in Renderer로 취급하고 있다.
+
+Project Settings/Graphics에 '렌더링파이프라인 애셋'이 설정되어 있고
+렌더링 파이프라인 애셋에는
+'렌더러 애셋'이 설정되어 있다.
+hlsl<-파일

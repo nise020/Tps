@@ -44,7 +44,7 @@ public partial class Gun : Soljer
         Vector3 Dir = (targetPoint - GunObj.transform.position);
         Quaternion StartRotation = Quaternion.LookRotation(GunObj.transform.forward);
         Quaternion EndRotation = Quaternion.LookRotation(Dir.normalized);
-        GunObj.transform.rotation = Quaternion.Slerp(StartRotation, EndRotation, GunRotSpeed * Time.deltaTime);
+        GunObj.transform.rotation = Quaternion.Lerp(StartRotation, EndRotation, GunRotSpeed * Time.deltaTime);
         
         
         Debug.DrawLine(GunHole.transform.position, targetPoint, Color.red);
@@ -53,6 +53,25 @@ public partial class Gun : Soljer
     {
         gunLazer = GetComponent<LineRenderer>();
     }
- 
 
+    //protected virtual void Chargeing()//총구 액션,(리로드 아님!)
+    //{
+    //    GunHoleObj.SetActive(false);
+    //    ChargeingTimer += Time.deltaTime;
+    //    if (ChargeingTimer > ChargeingTime)//마우스 땟을때 동작 필요
+    //    {
+    //        if (GunType == GunTags.SR && Input.GetKeyUp(KeyCode.Mouse0))
+    //        {
+    //            Debug.Log("SR");
+    //            GunHoleObj.SetActive(true);
+    //            ChargeingTimer = 0.0f;
+    //        }
+    //        else
+    //        {
+    //            Debug.Log("Not SR");
+    //            GunHoleObj.SetActive(true);
+    //            ChargeingTimer = 0.0f;
+    //        }
+    //    }
+    //}
 }

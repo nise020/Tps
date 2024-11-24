@@ -8477,6 +8477,10 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 1945716510}
     - target: {fileID: 1782147111970867764, guid: 5ba80b210443cd34aab20ef39b65f18c, type: 3}
+      propertyPath: runningTime
+      value: 20
+      objectReference: {fileID: 0}
+    - target: {fileID: 1782147111970867764, guid: 5ba80b210443cd34aab20ef39b65f18c, type: 3}
       propertyPath: playerObj.Array.data[1]
       value: 
       objectReference: {fileID: 1152143829}

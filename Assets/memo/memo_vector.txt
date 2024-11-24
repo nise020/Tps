@@ -1,0 +1,4 @@
+Vector3.magnitude
+:벡터의 길이 또는 크기
+float distance = (endPoint - startPoint).magnitude;
+<--이런식으로 Vector3가 아닌 float로도 변환 가능

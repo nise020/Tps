@@ -10,6 +10,21 @@ public enum eScene //예전에는 앞에 sScene을 붙여야 했다
    End,
 
 }
+public enum eAI //예전에는 앞에 sScene을 붙여야 했다
+{
+    Create,
+    Search,
+    Move,
+    Reset,
+}
+
+
+
+
+
+
+
+
 public enum eLayer //예전에는 앞에 sScene을 붙여야 했다
 {
     Cover,
@@ -37,8 +52,11 @@ public abstract class PLAYER
 {
     protected abstract void nomalAttack();//순수 가상클래스
     //자식이 무조건 만들어야 하는 기능
+
     protected virtual void nomal_Attack() { }//순수 가상클래스
     //자식들이 사용 할수도 안할수도 있는 기능
+    //재정의 할수 있다
+    //
 }
 public class SWORD : PLAYER
 {

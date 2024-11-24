@@ -8,20 +8,20 @@ public partial class HugeMob : Monster
     float moveTime = 0.0f;
     float jumpStart = 0.0f;
     float jumpHight = 5.0f;
-    float runningTime = 10.0f;
+    float runningTime = 5.0f;
     bool targetCheack = false;
     [SerializeField] bool jumpOn = false;
 
+    
 
-
-    public void jumpAttack()
+    public void jumpAttack()//조금 수정 필요
     {
         if (jumpOn == false) { return; }
         if (groundCheck == true)//땅에 닿아 있을때
         {
-            //mobRigid.useGravity = false;
+            //transform.position = Vector3.zero;
         }
-        if (targetCheack == false) 
+        else if (targetCheack == false) 
         {
             targetOn(ref number);
             if (playerObj[number] == null)
@@ -31,57 +31,30 @@ public partial class HugeMob : Monster
             targetCheack = true;
             
         }
+        moveTime += Time.deltaTime;
+        float time = moveTime/ runningTime;
+        Vector3 mpos = transform.position;
+        Vector3 tpos = playerObj[number].transform.position;
+        Vector3 dir = Vector3.Lerp(new Vector3(mpos.x,0, mpos.z), new Vector3(tpos.x, 0, tpos.z), time).normalized;
+        float gravity = Physics.gravity.magnitude;
+        //float ypos = Mathf.Sqrt( * jumpHight;
+        //transform.position = new Vector3(dir.x, ypos, dir.z);
+        //디스턴스
 
-        float xzSpeed = runningTime;
-        Vector3 dir = (playerObj[number].transform.position - transform.position).normalized;
-        dir.y = 0;
+        #region AddForce
+        //float xzSpeed = runningTime;
+        //Vector3 dir = (playerObj[number].transform.position - transform.position).normalized;
+        //dir.y = 0;
 
-        float yForce = Mathf.Sqrt(2 * Physics.gravity.magnitude * jumpHight);//중력이 켜져있다 가정하고
+        //float yForce = Mathf.Sqrt(2 * Physics.gravity.magnitude * jumpHight);//중력이 켜져있아야 한다
 
-        Vector3 jumpPos = dir * xzSpeed + Vector3.up * yForce;
+        //Vector3 jumpPos = dir * xzSpeed + Vector3.up * yForce;
 
-        mobRigid.AddForce(jumpPos, ForceMode.VelocityChange);//점프
+        //mobRigid.AddForce(jumpPos, ForceMode.VelocityChange);//점프
 
-        jumpOn = false;
-
-        #region 삽질(주석)
-        // moveTime += Time.deltaTime;
-        //jumpStart += Time.deltaTime;
-        //Vector3 mPos = transform.position;
-        //mPos.y = 0;
-        //Vector3 tPos = playerObj[number].transform.position;
-        //tPos.y = 0;
-        //XZ 계산
-        //float gavity = Mathf.Abs(Physics.gravity.y);//9.81~
-        //float velocity = Mathf.Sqrt(2 * gavity * jump);
-        //float timeToApex = velocity / gavity;
-        //float totalTime = timeToApex*2;
-        //Vector3 dd = Dir / totalTime;
-        //mobRigid.velocity = new Vector3(dd.x, velocity, dd.z);
-        //rigid.velocity = new Vector3(,velocity,)
-
-
-
-        //Vector3 movePosXZ = Vector3.Lerp(mPos, tPos, time);
-        //float movePosY = Mathf.Lerp(mPos.y, tPos.y, time);
-        //float jumpPosY = Mathf.Sin(Mathf.PI * time) * jump;
-        //float finalY = movePosY + jumpPosY;
-        //Vector3 endTrs = new Vector3(movePosXZ.x, finalY, movePosXZ.z);
-        //transform.position = endTrs;
-
-
-
-
-        //if (moveTime >= runningTime)
-        //{
-        //    target = false;
-        //    moveTime = 0.0f;
-        //}
-        //float hight = mPos.y - tPos.y;
-
-        //float distance = Vector3.Distance(new Vector3(mPos.x, 0, mPos.z), new Vector3(tPos.x, 0, tPos.z));
-        //movePos.y = jumpPosY;
+        //jumpOn = false;
         #endregion
+
     }
     void FixedUpdate()
     {

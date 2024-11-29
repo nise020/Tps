@@ -4,5 +4,5 @@ using UnityEngine;
 
 public partial class Mob_Bullet : Bullet
 {
-    
+   
 }

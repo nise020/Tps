@@ -3,10 +3,11 @@ using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
 
-public abstract partial class Bullet : Actor
+public partial class Bullet : Gun
 {
     int targetnumber;
-    public int speed;
+    int damage = 1;
+    public float speed = 0.0f;
     Transform targetPos;//공격할 목표
     enum bulletType 
     {
@@ -24,19 +25,29 @@ public abstract partial class Bullet : Actor
     
     public void moveing()
     {
-        if (bulletTag == bulletType.MobGranad) { return; }
-        if (bulletTag == bulletType.Mobbullet)//
+        if (bulletTag == bulletType.MobGranad) 
         {
-            //shared.BattelMgr.
+            damage = 5;
+            speed = 3.0f;
+            transform.root.rotation = Quaternion.Euler(0,1,0);
         }
-        else if (bulletTag == bulletType.Playerbullet) //오토기능도 참고 해야함
+        if (bulletTag == bulletType.Mobbullet)
         {
-
+            speed = 5.0f;
+            transform.localScale = Vector3.one;
         }
-        //int speed = 3;
+        else if (bulletTag == bulletType.Playerbullet) 
+        {
+            switch (GunEnumType)
+            {
+                case GunTags.SR:
+                    damage = damage + srGunDmg;
+                    break;
+            }
+            speed = 5.0f;
+        }
         Vector3 target = targetPos.position - transform.position;
         transform.position += (target).normalized * speed * Time.deltaTime;
-        Debug.Log($"{transform.position}");
     }
     void FixedUpdate()
     {

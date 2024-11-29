@@ -15,12 +15,23 @@ public enum eAI //예전에는 앞에 sScene을 붙여야 했다
     Create,
     Search,
     Move,
+    Attack,
     Reset,
 }
 
+public enum eMobType //예전에는 앞에 sScene을 붙여야 했다
+{
+    Huge,
+    Flying,
+    Defolt,
+}
 
-
-
+public enum GunTags
+{
+    MG,//머신건
+    SMG,//기간단총
+    SR,//저격총
+}
 
 
 

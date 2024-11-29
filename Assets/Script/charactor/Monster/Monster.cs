@@ -5,7 +5,7 @@ using UnityEngine;
 public abstract partial class Monster : Charactor
 {
     //[SerializeField] protected GameObject[] player;
-    protected void Start()
+    protected virtual void Start()
     {
         mobRigid = GetComponent<Rigidbody>();
         mobColl = GetComponent<Collider>();
@@ -15,10 +15,9 @@ public abstract partial class Monster : Charactor
         //targetNumber();
     }
 
-
     void FixedUpdate()
     {
-        MobAttackTimecheck();
+        //MobAttackTimecheck();
         //StartCoroutine(MobAttackTimecheck());
     }
 }

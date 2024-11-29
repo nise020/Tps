@@ -3,19 +3,28 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
-public partial class AiBase //: MonoBehaviour
+public partial class AiBase : MonoBehaviour
     //MonoBehaviour//유니티에서 할당하는 메모리를 사용하겠다
 {
     protected Charactor Charactor;
 
     protected eAI aIState = eAI.Create;
-    protected virtual void Type() { }
+    [SerializeField] protected eMobType MobType = eMobType.Defolt;
+    protected HugeMob Huge;
+    protected FlyingMob Flying;
+    protected DefoltMob Defolt;
+    public bool nextPatternOn = true;
+
+    protected virtual void Type() 
+    {
+        
+    }
     public void init(Charactor _Charactor) 
     {
         Charactor = _Charactor; 
     }
 
-    public virtual void staet() 
+    public virtual void state() 
     {
         switch (aIState)
         {
@@ -27,6 +36,9 @@ public partial class AiBase //: MonoBehaviour
                 break;
             case eAI.Move:
                 Move();
+                break;
+            case eAI.Attack:
+                Attack();
                 break;
             case eAI.Reset:
                 Reset();
@@ -44,6 +56,10 @@ public partial class AiBase //: MonoBehaviour
     protected virtual void Move() 
     {
         aIState = eAI.Move;
+    }
+    protected virtual void Attack()
+    {
+        aIState = eAI.Attack;
     }
     protected virtual void Reset() 
     {

@@ -5,31 +5,35 @@ using UnityEngine.UIElements;
 
 public abstract partial class Monster : Charactor
 {
-    [Header("공격할 물체")]
+    [Header("공격할 물체(공통)")]
     [SerializeField] GameObject MobGrenade;//투척물 프리팹
-    [SerializeField] GameObject MobBullet;//일반공격 총알 프리팹
-    [SerializeField] GameObject AttackArm;//공격의 시작점이 될 팔
-    [SerializeField] GameObject bulletTab;//총알 저장탭
-    bool NumberOn = false;
+    [SerializeField] protected GameObject MobBullet;//일반공격 총알 프리팹
+    [SerializeField] protected GameObject AttackArm;//공격의 시작점이 될 팔
+    [SerializeField] protected GameObject bulletTab;//총알 저장탭
+    protected bool NumberOn = false;
     protected int number;
     Vector3 targetpos;
-    [Header("공격할 타켓")]
+    [Header("공격할 타켓(공통)")]
     [SerializeField] protected List<GameObject> playerObj;//플레이어 위치 정보
+    [SerializeField] protected List<GameObject> coverObj;//플레이어 위치 정보
 
     [Header("기본 타이머")]
     //ublic int Patternt = 0f;
-    float Patterntimer = 0f;
-    float Patternltime = 10.0f;
+    protected float Patterntimer = 0f;
+    protected float Patternltime = 10.0f;
 
-    [Header("일반 공격 횟수")]
-    public int AttackCount = 0;
-    public int AttackMaxCount = 0;
+    [Header("일반 공격 횟수(DefoltMob)")]
+    protected int AttackCount = 0;
+    protected int AttackMaxCount = 6;
 
     [Header("스킬 타이머")]
-    public int ThroutCount = 0;
-    public int ThroutMaxCount = 0;
+    protected int ThroutCount = 0;
+    protected int ThroutMaxCount = 3;
 
-    protected void MobAttackTimecheck() 
+    //[Header("AI 패턴용")]
+    //public bool aiNextPattern = false;
+
+    protected virtual void MobAttackTimecheck() 
     {
         Patterntimer += Time.deltaTime;
         int number = 0;
@@ -56,7 +60,7 @@ public abstract partial class Monster : Charactor
         }
         //yield return null;
     }
-    protected override void nomalAttack()
+    protected virtual void nomalAttack()
     {
         targetOn(ref number);
         if (playerObj[number] == null) { return; }
@@ -64,24 +68,36 @@ public abstract partial class Monster : Charactor
         Mob_Bullet bullet = go.GetComponent<Mob_Bullet>();
         chaTargetTrs = playerObj[number].transform;
         bullet.Initialize(chaTargetTrs);
+        AttackCount++;
         if (AttackCount >= AttackMaxCount) 
         {
             Patterntimer = 0f;
             AttackCount = 0;
             NumberOn = false;
+            //aiNextPattern = true;
         }
     }
-    protected void targetOn(ref int _value) 
+    protected virtual void GrenadeAttack() 
+    {
+        targetOn(ref number);
+        if (playerObj[number] == null) { return; }
+        GameObject go = Instantiate(MobGrenade, AttackArm.transform.position, Quaternion.identity, bulletTab.transform);
+        Mob_Bullet bullet = go.GetComponent<Mob_Bullet>();
+        chaTargetTrs = playerObj[number].transform;
+        bullet.Initialize(chaTargetTrs);
+        ThroutCount++;
+        if (ThroutCount >= ThroutMaxCount)
+        {
+            Patterntimer = 0f;
+            ThroutCount = 0;
+            NumberOn = false;
+            //aiNextPattern = true;
+        }
+    }
+    protected virtual void targetOn(ref int _value) 
     {
         int count = playerObj.Count;//공격할 플레이어 정렬
         _value = Random.Range(0, count);//랜덤으로 타겟 번호 선정
     }
-    protected void GrenadeAttack() 
-    {
-
-    }
-    //protected void targetNumber()
-    //{
-    //    chaTargetTrs = playerObj[number].transform;
-    //}
+    
 }

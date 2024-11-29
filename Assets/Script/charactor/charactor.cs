@@ -19,10 +19,15 @@ public abstract partial class Charactor : Actor
         if (myColl.gameObject.layer == LayerMask.NameToLayer("Monster"))
         {
             if (other.gameObject.layer == LayerMask.NameToLayer("Player") ||
-                 other.gameObject.layer == LayerMask.NameToLayer("Cover")) 
+                 other.gameObject.layer == LayerMask.NameToLayer("Cover"))
             {
                 Destroy(myColl.gameObject);
             }
+            else if (other.gameObject.layer == LayerMask.NameToLayer("Bullet"))
+            {
+
+            }
+            else { return; }
         }
         else if (myColl.gameObject.layer == LayerMask.NameToLayer("Player")) 
         {
@@ -38,7 +43,7 @@ public abstract partial class Charactor : Actor
     /// <summary>
     /// 일반 공격
     /// </summary>
-    protected virtual void nomalAttack() { }
+    //protected virtual void nomalAttack() { }
     //자식들이 사용 할수도 안할수도 있는 기능
     
 }

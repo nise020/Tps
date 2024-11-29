@@ -6,13 +6,8 @@ using UnityEngine.UI;
 
 public partial class Gun : Soljer
 {
-    enum GunTags 
-    {
-        MG,//머신건
-        SMG,//기간단총
-        SR,//저격총
-    }
-    [SerializeField, Tooltip("총의 타입")] GunTags GunEnumType;
+    
+    [SerializeField, Tooltip("총의 타입")] protected GunTags GunEnumType;
 
     [SerializeField, Tooltip("레이저 사이트 길이")] float GunRazer;
     [SerializeField, Tooltip("레이저 사이트 확인여부")] bool RazerOn;

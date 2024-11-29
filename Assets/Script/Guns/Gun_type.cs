@@ -4,7 +4,7 @@ using UnityEngine;
 
 public partial class Gun : Soljer
 {
-
+    protected int srGunDmg;//SR 데미지 필요
     //[SerializeField, Tooltip("Auto Butten")] Button AutoBut;
     public void GunBulletType()//총의 종류
     {
@@ -21,6 +21,7 @@ public partial class Gun : Soljer
         else if (GunEnumType == GunTags.SR)
         {
             bullet = 5;
+            //차지 비례 대미지 문구 추가 팔요
             ChargeingTime = 3.0f;
         }
         //RerodingBullet = bullet;

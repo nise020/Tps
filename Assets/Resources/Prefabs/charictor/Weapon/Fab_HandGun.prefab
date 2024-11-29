@@ -10,8 +10,9 @@ GameObject:
   m_Component:
   - component: {fileID: 369101448470390884}
   - component: {fileID: 5533551079827112439}
-  m_Layer: 0
-  m_Name: Fab_Gun
+  - component: {fileID: 427542639769350931}
+  m_Layer: 7
+  m_Name: Fab_HandGun
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -47,11 +48,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   WeaponPrefab: {fileID: 0}
   MobPrefab: []
-  GunHoleObj: {fileID: 0}
-  WeapontransPos: {fileID: 0}
   AimtransPos: {fileID: 0}
   ControlBtn: {fileID: 0}
-  GunType: 0
   GunEnumType: 0
   GunRazer: 0
   RazerOn: 0
@@ -59,6 +57,27 @@ MonoBehaviour:
   GunObj: {fileID: 9141356711389114997}
   GunRotSpeed: 3
   RazerEndObj: {fileID: 8468055111872139867}
+--- !u!65 &427542639769350931
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4383385586661319670}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 1
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 2.6755228, y: 1.1047206, z: 0.39071846}
+  m_Center: {x: -0.8377614, y: 0.052360296, z: 0.019040108}
 --- !u!1 &5069946710695946514
 GameObject:
   m_ObjectHideFlags: 0
@@ -75,7 +94,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &916777006492255159
 Transform:
   m_ObjectHideFlags: 0
@@ -367,6 +386,10 @@ PrefabInstance:
       propertyPath: m_ConstrainProportionsScale
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 2300000, guid: 584761fab006d6d42b4d0d8c56a51241, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: b9cc689abd1b40240bc1de1d04be2dcf, type: 2}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects:

@@ -39,7 +39,8 @@ public partial class AIMonster : AiBase
         if (nextPatternOn == true)
         {
             nextPatternOn = false;
-            base.Move();
+            //base.Move();
+            base.Attack();
         }
     }
     protected override void Move()//¿Ãµø

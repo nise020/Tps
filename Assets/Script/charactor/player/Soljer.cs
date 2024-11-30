@@ -55,10 +55,10 @@ public partial class Soljer : Charactor
     }
 
     // Update is called once per frame
-    void Update()
+    void FixedUpdate()
     {
-        //AttackModPosition();
-        //GunFireCheck();
+        AttackModPosition();
+        GunFireCheck();
     }
 
     //»ó¼Ó

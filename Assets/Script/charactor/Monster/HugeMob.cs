@@ -15,7 +15,7 @@ public partial class HugeMob : Monster
     void FixedUpdate()
     {
         groundOn_Off(ref groundCheck);
-        //jumpAttack();
+        jumpAttack();
         //float gravity = Mathf.Abs(Physics.gravity.y);
         //moving();
         //StartCoroutine(MobAttackTimecheck());

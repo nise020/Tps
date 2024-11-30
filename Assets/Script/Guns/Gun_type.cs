@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -26,6 +27,7 @@ public partial class Gun : Soljer
         }
         //RerodingBullet = bullet;
     }
+    
     protected override void Reloding()
     {
         if (bullet == RelodingBullet) { return; }
@@ -42,20 +44,20 @@ public partial class Gun : Soljer
     }
     public void Charging()//총구 액션,(리로드 아님!)
     {
-        GunHole.SetActive(false);
+        gunHole.SetActive(false);
         ChargeingTimer += Time.deltaTime;
         if (ChargeingTimer > ChargeingTime)//마우스 땟을때 동작 필요
         {
             if (GunEnumType == GunTags.SR && Input.GetKeyUp(KeyCode.Mouse0))
             {
                 Debug.Log("SR");
-                GunHole.SetActive(true);
+                gunHole.SetActive(true);
                 ChargeingTimer = 0.0f;
             }
             else
             {
                 Debug.Log("Not SR");
-                GunHole.SetActive(true);
+                gunHole.SetActive(true);
                 ChargeingTimer = 0.0f;
             }
         }

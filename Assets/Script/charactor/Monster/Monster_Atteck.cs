@@ -67,7 +67,7 @@ public abstract partial class Monster : Charactor
         GameObject go = Instantiate(MobBullet, AttackArm.transform.position, Quaternion.identity, bulletTab.transform);
         Mob_Bullet bullet = go.GetComponent<Mob_Bullet>();
         chaTargetTrs = playerObj[number].transform;
-        bullet.Initialize(chaTargetTrs);
+        bullet.Initialize(chaTargetPos);//
         AttackCount++;
         if (AttackCount >= AttackMaxCount) 
         {
@@ -84,7 +84,7 @@ public abstract partial class Monster : Charactor
         GameObject go = Instantiate(MobGrenade, AttackArm.transform.position, Quaternion.identity, bulletTab.transform);
         Mob_Bullet bullet = go.GetComponent<Mob_Bullet>();
         chaTargetTrs = playerObj[number].transform;
-        bullet.Initialize(chaTargetTrs);
+        bullet.Initialize(chaTargetPos);//
         ThroutCount++;
         if (ThroutCount >= ThroutMaxCount)
         {

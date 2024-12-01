@@ -14,7 +14,7 @@ public partial class FlyingMob : Monster
     {
         base.targetOn(ref _value);
     }
-    public void DirectAttack() //예외처리 필요
+    public void DirectAttackSkill() //예외처리 필요
     {
         if (directAtkON == false) { return; }
         //moveTimer += Time.deltaTime;

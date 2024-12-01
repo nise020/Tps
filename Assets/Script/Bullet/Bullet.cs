@@ -9,8 +9,8 @@ public partial class Bullet : Gun
     int targetnumber;
     int damage = 1;
     public float speed = 0.0f;
-    Transform targetPos;//공격할 목표
-    RaycastHit hit;
+    Transform targetPos;//몬스터가 공격할 목표
+    RaycastHit hit;//총알이 맞출 목표
     enum bulletType 
     {
         Mobbullet,
@@ -19,18 +19,18 @@ public partial class Bullet : Gun
     }
     [SerializeField] bulletType bulletTag;
     
-    public void Initialize(Vector3 target)
+    public void Initialize(Transform _target)
     {
         switch (bulletTag)
         {
             case bulletType.Mobbullet:
-                targetPos.position = target;
-                break;
-            case bulletType.Playerbullet:
-                hit.point = target;
+                targetPos.position = _target.position;
                 break;
             case bulletType.MobGranad:
-                targetPos.position = target;
+                targetPos.position = _target.position;
+                break;
+            case bulletType.Playerbullet:
+                hit.point = _target.position;
                 break;
         }
     }
@@ -39,7 +39,7 @@ public partial class Bullet : Gun
         base.OnTriggerEnter(other);
     }
 
-    public void moveing()
+    public void moveing()//대거 수정 필요
     {
         if (bulletTag == bulletType.MobGranad) 
         {
@@ -70,6 +70,12 @@ public partial class Bullet : Gun
         }
         
     }
+    
+    protected override void Update()
+    {
+        moveing();
+    }
+
     protected override void GunTargetRaycast()
     {
         Ray ray = cam.ScreenPointToRay(Input.mousePosition);
@@ -80,9 +86,4 @@ public partial class Bullet : Gun
         //Vector3 ray = cam.ScreenToWorldPoint(Input.mousePosition);
         //if (Physics.Raycast(transform.position,ray, out RaycastHit hit))
     }
-    protected override void FixedUpdate()
-    {
-        moveing();
-    }
-
 }

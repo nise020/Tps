@@ -12,7 +12,7 @@ public partial class DefoltMob : Monster
     {
         base.targetOn(ref _value);
     }
-    public void attack()
+    public void attack()//수정 필요
     {
         base.MobAttackTimecheck();
         base.nomalAttack();

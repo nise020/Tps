@@ -30,9 +30,7 @@ public abstract partial class Monster : Charactor
     protected int ThroutCount = 0;
     protected int ThroutMaxCount = 3;
 
-    //[Header("AI 패턴용")]
-    //public bool aiNextPattern = false;
-
+    //Actor Act = new Actor();
     protected virtual void MobAttackTimecheck() 
     {
         Patterntimer += Time.deltaTime;
@@ -67,24 +65,25 @@ public abstract partial class Monster : Charactor
         GameObject go = Instantiate(MobBullet, AttackArm.transform.position, Quaternion.identity, bulletTab.transform);
         Mob_Bullet bullet = go.GetComponent<Mob_Bullet>();
         chaTargetTrs = playerObj[number].transform;
-        bullet.Initialize(chaTargetPos);//
+        bullet.Initialize(chaTargetTrs);//
         AttackCount++;
         if (AttackCount >= AttackMaxCount) 
         {
             Patterntimer = 0f;
             AttackCount = 0;
             NumberOn = false;
+            return;
             //aiNextPattern = true;
         }
     }
-    protected virtual void GrenadeAttack() 
+    protected virtual void GrenadeAttack()//수정필요 
     {
         targetOn(ref number);
         if (playerObj[number] == null) { return; }
         GameObject go = Instantiate(MobGrenade, AttackArm.transform.position, Quaternion.identity, bulletTab.transform);
         Mob_Bullet bullet = go.GetComponent<Mob_Bullet>();
         chaTargetTrs = playerObj[number].transform;
-        bullet.Initialize(chaTargetPos);//
+        bullet.Initialize(chaTargetTrs);//
         ThroutCount++;
         if (ThroutCount >= ThroutMaxCount)
         {

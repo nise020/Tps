@@ -6,7 +6,6 @@ using UnityEngine.UI;
 
 public partial class Gun : Soljer
 {
-    
     [SerializeField, Tooltip("총의 타입")] protected GunTags GunEnumType;
 
     [SerializeField, Tooltip("레이저 사이트 길이")] float gunRazer;
@@ -23,7 +22,7 @@ public partial class Gun : Soljer
     LineRenderer gunLazer;
     Vector3 beforeTrs;
     Vector3 beforeRot;
-    protected Vector3 gunRot;
+    Vector3 gunRot;
     public void attackReady()
     {
         Vector3 pos = beforeTrs;
@@ -38,16 +37,19 @@ public partial class Gun : Soljer
         if (Physics.Raycast(ray, out RaycastHit hit))
         {
             AimGun(hit);
-            //gunAttack(hit);
+            gunAttack(hit);
         }
         //Vector3 ray = cam.ScreenToWorldPoint(Input.mousePosition);
         //if (Physics.Raycast(transform.position,ray, out RaycastHit hit))
     }
     public void gunAttack(RaycastHit _hit)
     {
+        if (bullet==0) { return; }
+        //if (_hit.collider == LayerMask.LayerToName("Monster")) {  return; }
         GameObject go = Instantiate(bulletObj, gunHole.transform.position, Quaternion.identity, creatTabObj);
         Player_Bullet plBullet = go.GetComponent<Player_Bullet>();
-        plBullet.Initialize(chaTargetPos);
+        chaTargetPos = _hit.point;
+        plBullet.Initialize(chaTargetTrs);
         bullet--;
         //go.transform.position += _hit.point;
     }
@@ -56,15 +58,15 @@ public partial class Gun : Soljer
     /// </summary>
     public void AimGun(RaycastHit _hit)
     {
-        Vector3 targetPoint = _hit.point;
+        Vector3 targetPos = _hit.point;
         //Vector3 targetPoint = cam.ScreenToWorldPoint(Input.mousePosition);
-        Vector3 Dir = (targetPoint - gunObj.transform.position);
-        Quaternion StartRotation = Quaternion.LookRotation(gunObj.transform.forward);
-        Quaternion EndRotation = Quaternion.LookRotation(Dir.normalized);
-        gunObj.transform.rotation = Quaternion.Lerp(StartRotation, EndRotation, gunRotSpeed * Time.deltaTime);
+        Vector3 dir = (targetPos - gunObj.transform.position);
+        Quaternion startRot = Quaternion.LookRotation(gunObj.transform.forward);
+        Quaternion endRot = Quaternion.LookRotation(dir.normalized);
+        gunObj.transform.rotation = Quaternion.Lerp(startRot, endRot, gunRotSpeed * Time.deltaTime);
         
         
-        Debug.DrawLine(gunHole.transform.position, targetPoint, Color.red);
+        Debug.DrawLine(gunHole.transform.position, targetPos, Color.red);
     }
     public void Lazer() 
     {

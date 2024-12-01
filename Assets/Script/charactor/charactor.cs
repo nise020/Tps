@@ -11,7 +11,6 @@ public abstract partial class Charactor : Actor
     public Collider chaTargetColl { get; protected set; }
     //protected abstract void nomalAttack();//순수 가상클래스
     //자식이 무조건 만들어야 하는 기능
-    //private Dictionary<int, Action<Collider>> collisionHandlers;
 
     
     protected virtual void OnTriggerEnter(Collider other)

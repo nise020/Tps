@@ -4,7 +4,7 @@ using UnityEngine;
 
 public abstract partial class Monster : Charactor
 {
-    //[SerializeField] protected GameObject[] player;
+    AiMonster Ai = new AiMonster();
     protected virtual void Start()
     {
         mobRigid = GetComponent<Rigidbody>();
@@ -17,7 +17,13 @@ public abstract partial class Monster : Charactor
 
     void FixedUpdate()
     {
+        if (Ai=null) { return; }
+        //Ai.state();
         //MobAttackTimecheck();
         //StartCoroutine(MobAttackTimecheck());
+    }
+    private void Update()
+    {
+        
     }
 }

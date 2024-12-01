@@ -14,7 +14,7 @@ public partial class HugeMob : Monster
 
     
 
-    public void jumpAttack()//조금 수정 필요
+    public void jumpSkill()//조금 수정 필요
     {
         if (jumpOn == false) { return; }
         

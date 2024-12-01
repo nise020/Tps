@@ -23,9 +23,7 @@ public partial class Soljer : Charactor
 
     Camera Maincam;
     Vector3 beforTrs;
-    Vector3 beforAimtransPos;
-    Transform AfterTrs;
-    float moveSpeed = 5f;
+
 
     [Header("ÃÑÀÇ Á¾·ù,ÃÑ¾Ë")]
     protected int bullet;
@@ -36,8 +34,9 @@ public partial class Soljer : Charactor
     protected float RerodingTime = 3.0f;
     protected float RerodingTimer = 0.0f;
 
-    private void Awake()
+    private void Start()
     {
+        gameManager = GameManager.Instanse;
         //GunHoleObj.gameObject.SetActive(false);
         beforTrs = this.transform.position;
         //beforAimtransPos = WeapontransPos.position;
@@ -48,11 +47,7 @@ public partial class Soljer : Charactor
     {
         value = bullet;
     }
-    void Start()
-    {
-        gameManager = GameManager.Instanse;
-
-    }
+    
 
     // Update is called once per frame
     void FixedUpdate()

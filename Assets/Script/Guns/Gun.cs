@@ -3,11 +3,10 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
-using UnityEngine.UIElements;
 
 public partial class Gun : Soljer
 {
-    protected virtual void Start()
+    private void Start()
     {
         cam = Camera.main;
         GunBulletType();
@@ -18,9 +17,11 @@ public partial class Gun : Soljer
 
 
     // Update is called once per frame
-    protected virtual void FixedUpdate()
+    protected virtual void Update()
     {
-        if ((Input.GetMouseButton(0) || Input.GetKey(KeyCode.Space)))
+        bool value1 = Input.GetMouseButton(0);
+        bool value2 = Input.GetKey(KeyCode.Space);
+        if ((value1 || value2))
         {
             if (angleOn == true) 
             {
@@ -29,21 +30,20 @@ public partial class Gun : Soljer
             else if (angleOn == false) 
             {
                 GunTargetRaycast();
+                //gunAttack();//수정필요
                 razerOn = true;
             }
-            
-
         }
-        else if ((Input.GetMouseButtonUp(0)))
+        else if ((Input.GetMouseButtonUp(0)))//위치 초기화,수정 필요(Quaternion)
         {
             bool pos = Vector3.Distance(transform.position, beforeTrs) > 0.1f;
             bool rot = Quaternion.Angle(transform.rotation, Quaternion.Euler(beforeRot)) > 0.1f;
             bool gun_Rot = Quaternion.Angle(gunObj.transform.rotation, Quaternion.Euler(gunRot)) > 0.1f;
 
-            Debug.Log($"Position Changed: {pos}");
-            Debug.Log($"Rotation Changed: {rot}");
-            Debug.Log($"Gun Rotation Changed: {gun_Rot}");
-            Debug.Log($"Angle Difference: {Quaternion.Angle(gunObj.transform.rotation, Quaternion.Euler(gunRot))}");
+            Debug.Log($"{pos}");
+            Debug.Log($"{rot}");
+            Debug.Log($"{gun_Rot}");
+            Debug.Log($"Angle :{Quaternion.Angle(gunObj.transform.rotation, Quaternion.Euler(gunRot))}");
             
             if (pos || rot || gun_Rot) 
             {
@@ -60,7 +60,7 @@ public partial class Gun : Soljer
             }
            
         }
-        //else { return; }
+        else { return; }
     }
 
     

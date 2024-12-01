@@ -23,10 +23,22 @@ public class BattelManager : MonoBehaviour
         }
         //chageScene(eScene.Title);
     }
-    //public Vector3 targetNumber(Vector3 _pos)
-    //{
-    //    targetNumber(_pos);
-    //    return _pos; //number = player[targetNum].transform.position;
-    //}
+    Charactor Factory(eMobType _e)//∆—≈‰∏Æ ∆–≈œ 
+    {
+        Charactor c = null;
+        switch (_e)
+        {
+            case eMobType.Flying:
+                c = new FlyingMob();
+                break;
+            case eMobType.Huge:
+                c = new HugeMob();
+                break;
+            case eMobType.Defolt:
+                c = new DefoltMob();
+                break;
+        }
+        return c;
+    }
 
 }

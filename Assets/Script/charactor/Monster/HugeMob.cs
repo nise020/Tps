@@ -12,10 +12,11 @@ public partial class HugeMob : Monster
     {
         base.OnTriggerEnter(other);
     }
-    void FixedUpdate()
+    void Update()
     {
         groundOn_Off(ref groundCheck);
-        jumpAttack();
+        jumpSkill();
+        base.nomalAttack();
         //float gravity = Mathf.Abs(Physics.gravity.y);
         //moving();
         //StartCoroutine(MobAttackTimecheck());

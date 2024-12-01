@@ -37,7 +37,7 @@ public partial class Gun : Soljer
         {
             bullet = RelodingBullet;
             RerodingTimer = 0.0f;
-            //BulletCount.text = bullet.ToString();//찾을수 없다고 뜸
+            
 
             Debug.Log("Reroding off");
         }

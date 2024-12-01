@@ -17,6 +17,6 @@ public partial class FlyingMob : Monster
     // Update is called once per frame
     void FixedUpdate()
     {
-        DirectAttack();
+        DirectAttackSkill();
     }
 }

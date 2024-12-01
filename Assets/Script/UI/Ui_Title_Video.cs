@@ -12,7 +12,7 @@ public partial class Ui_Title : Actor
     VideoClip clip = null;
     private void Start()
     {
-        StartCoroutine(playingVideo());
+        //StartCoroutine(playingVideo());
     }
     IEnumerator SetVideo() 
     {

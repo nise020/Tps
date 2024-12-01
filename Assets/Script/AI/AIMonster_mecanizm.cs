@@ -4,6 +4,8 @@ using UnityEngine;
 
 public partial class AIMonster : AiBase
 {
+    //FSM
+    //캐릭터에서 AI를 호출할 필요
     protected override void Type() 
     {
         switch (MobType)
@@ -65,10 +67,10 @@ public partial class AIMonster : AiBase
                 Defolt.attack();
                 break;
             case eMobType.Flying:
-                Flying.DirectAttack();
+                Flying.DirectAttackSkill();
                 break;
             case eMobType.Huge:
-                Huge.jumpAttack();
+                Huge.jumpSkill();
                 break;
         }
         if (nextPatternOn==true) 
@@ -87,4 +89,5 @@ public partial class AIMonster : AiBase
             base.Move();
         }
     }
+    
 }

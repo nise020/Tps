@@ -22,7 +22,7 @@ public partial class Soljer : Charactor
 
 
     Camera Maincam;
-    Vector3 beforTrs;
+    //Vector3 beforTrs;//
 
 
     [Header("총의 종류,총알")]
@@ -38,7 +38,7 @@ public partial class Soljer : Charactor
     {
         gameManager = GameManager.Instanse;
         //GunHoleObj.gameObject.SetActive(false);
-        beforTrs = this.transform.position;
+        //beforTrs = this.transform.position;
         //beforAimtransPos = WeapontransPos.position;
         Maincam = Camera.main;
     }
@@ -47,8 +47,11 @@ public partial class Soljer : Charactor
     {
         value = bullet;
     }
-    
 
+    protected override void OnTriggerEnter(Collider other)
+    {
+        base.OnTriggerEnter(other);
+    }
     // Update is called once per frame
     void FixedUpdate()
     {
@@ -83,14 +86,7 @@ public partial class Soljer : Charactor
     }
     protected virtual void GunFireCheck() //총구 애니메이션 on/off
     {
-        //if (MobPrefab[0].transform.position == GunHoleObj.transform.position)//MobPrefab[0]<--임시
-        //{
-        //    GunHoleObj.SetActive(true);
-        //    if (GunHoleObj.activeSelf == true) 
-        //    {
-
-        //    }
-        //}
+        
     }
 
     private void AttackModPosition()//애니메이션 실행+ 포지션 전환;
@@ -98,24 +94,24 @@ public partial class Soljer : Charactor
         Vector3 scale = transform.localScale;
         if (Input.GetMouseButton(0) && bullet > 0)//총알이 남아있을 경우
         {
-            transform.position = new Vector3((beforTrs.x + 2.0f), beforTrs.y, beforTrs.z);
-            if (AimtransPos.transform.position.x >= transform.position.x)
-            {
-                scale.x = Mathf.Abs(scale.x);
-            }
-            else
-            {
-                scale.x = -Mathf.Abs(scale.x);
-            }
-            CameraAim();
-            GunFireCheck();
-            //Chargeing();
+            //transform.position = new Vector3((beforTrs.x + 2.0f), beforTrs.y, beforTrs.z);
+            //if (AimtransPos.transform.position.x >= transform.position.x)
+            //{
+            //    scale.x = Mathf.Abs(scale.x);
+            //}
+            //else
+            //{
+            //    scale.x = -Mathf.Abs(scale.x);
+            //}
+            //CameraAim();
+            //GunFireCheck();
+            ////Chargeing();
 
         }
         else
         {
             Reloding();
-            transform.position = beforTrs;
+            //transform.position = beforTrs;
             //WeapontransPos.transform.rotation = Quaternion.Euler(0,0,beforAimtransPos.z);
             scale.x = Mathf.Abs(scale.x);
         }

@@ -32,32 +32,32 @@ public partial class Gun : Soljer
     {
         if (bullet == RelodingBullet) { return; }
         RerodingTimer += Time.deltaTime;
-        Debug.Log("Reroding On");
+        //Debug.Log("Reroding On");
         if (RerodingTimer >= RerodingTime)
         {
             bullet = RelodingBullet;
             RerodingTimer = 0.0f;
             
 
-            Debug.Log("Reroding off");
+            //Debug.Log("Reroding off");
         }
     }
     public void Charging()//총구 액션,(리로드 아님!)
     {
-        gunHole.SetActive(false);
+        gunHoleObj.SetActive(false);
         ChargeingTimer += Time.deltaTime;
         if (ChargeingTimer > ChargeingTime)//마우스 땟을때 동작 필요
         {
             if (GunEnumType == GunTags.SR && Input.GetKeyUp(KeyCode.Mouse0))
             {
                 Debug.Log("SR");
-                gunHole.SetActive(true);
+                gunHoleObj.SetActive(true);
                 ChargeingTimer = 0.0f;
             }
             else
             {
                 Debug.Log("Not SR");
-                gunHole.SetActive(true);
+                gunHoleObj.SetActive(true);
                 ChargeingTimer = 0.0f;
             }
         }

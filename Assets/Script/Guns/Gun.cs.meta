@@ -3,7 +3,15 @@ guid: 0eb85edfe9bedb44eb603abc2b99b9d9
 MonoImporter:
   externalObjects: {}
   serializedVersion: 2
-  defaultReferences: []
+  defaultReferences:
+  - WeaponPrefab: {instanceID: 0}
+  - AimtransPos: {instanceID: 0}
+  - ControlBtn: {instanceID: 0}
+  - gunHoleObj: {instanceID: 0}
+  - gunObj: {instanceID: 0}
+  - bulletObj: {instanceID: 0}
+  - creatTabObj: {instanceID: 0}
+  - razerEndObj: {instanceID: 0}
   executionOrder: 0
   icon: {instanceID: 0}
   userData: 

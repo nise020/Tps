@@ -186,6 +186,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Fab_Gun
       objectReference: {fileID: 0}
+    - target: {fileID: 5533551079827112439, guid: 494318586390ca24b9f2bd507d02ccf8, type: 3}
+      propertyPath: gunRotSpeed
+      value: 20
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []

@@ -11,7 +11,7 @@ public partial class Gun : Soljer
     [SerializeField, Tooltip("∑π¿Ã¿˙ ªÁ¿Ã∆Æ ±Ê¿Ã")] float gunRazer;
     [SerializeField, Tooltip("∑π¿Ã¿˙ ªÁ¿Ã∆Æ »Æ¿Œø©∫Œ")] bool razerOn;
 
-    [SerializeField, Tooltip("√—±∏")] GameObject gunHole;
+    [SerializeField, Tooltip("√—±∏")] GameObject gunHoleObj;
     [SerializeField, Tooltip("√—")] GameObject gunObj;
     [SerializeField, Tooltip("√—æÀ")] GameObject bulletObj;
     [SerializeField, Tooltip("√—æÀ ª˝º∑≈«")] Transform creatTabObj;
@@ -20,13 +20,11 @@ public partial class Gun : Soljer
     [SerializeField, Tooltip("√— »∏¿¸ On,Off")] bool angleOn = true;
     protected Camera cam;
     LineRenderer gunLazer;
-    Vector3 beforeTrs;
-    Vector3 beforeRot;
-    Vector3 gunRot;
+    
     public void attackReady()
     {
-        Vector3 pos = beforeTrs;
-        Vector3 rot = beforeRot;
+        Vector3 pos = beforeMyGunTrs;
+        Vector3 rot = beforeMyGunRot;
         transform.position = new Vector3(pos.x + 2.5f, pos.y, pos.z);
         transform.rotation = Quaternion.Euler(rot.x, -270, rot.z);
         angleOn = false;
@@ -46,10 +44,11 @@ public partial class Gun : Soljer
     {
         if (bullet==0) { return; }
         //if (_hit.collider == LayerMask.LayerToName("Monster")) {  return; }
-        GameObject go = Instantiate(bulletObj, gunHole.transform.position, Quaternion.identity, creatTabObj);
+        GameObject go = Instantiate(bulletObj, gunHoleObj.transform.position, 
+            Quaternion.identity, creatTabObj);
         Player_Bullet plBullet = go.GetComponent<Player_Bullet>();
-        chaTargetPos = _hit.point;
-        plBullet.Initialize(chaTargetTrs);
+        plBullet.targetPos = _hit.point;
+        
         bullet--;
         //go.transform.position += _hit.point;
     }
@@ -66,7 +65,7 @@ public partial class Gun : Soljer
         gunObj.transform.rotation = Quaternion.Lerp(startRot, endRot, gunRotSpeed * Time.deltaTime);
         
         
-        Debug.DrawLine(gunHole.transform.position, targetPos, Color.red);
+        Debug.DrawLine(gunHoleObj.transform.position, targetPos, Color.red);
     }
     public void Lazer() 
     {

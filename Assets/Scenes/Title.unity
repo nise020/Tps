@@ -455,7 +455,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 7648412742624602475}
+      - m_Target: {fileID: 0}
         m_TargetAssemblyTypeName: Title, Assembly-CSharp
         m_MethodName: BackUpId
         m_Mode: 1
@@ -789,8 +789,8 @@ MonoBehaviour:
     callback:
       m_PersistentCalls:
         m_Calls:
-        - m_Target: {fileID: 7648412742624602476}
-          m_TargetAssemblyTypeName: Ui_Title, Assembly-CSharp
+        - m_Target: {fileID: 7648412742624602475}
+          m_TargetAssemblyTypeName: Title, Assembly-CSharp
           m_MethodName: OnPointerdown
           m_Mode: 0
           m_Arguments:
@@ -805,8 +805,8 @@ MonoBehaviour:
     callback:
       m_PersistentCalls:
         m_Calls:
-        - m_Target: {fileID: 7648412742624602476}
-          m_TargetAssemblyTypeName: Ui_Title, Assembly-CSharp
+        - m_Target: {fileID: 7648412742624602475}
+          m_TargetAssemblyTypeName: Title, Assembly-CSharp
           m_MethodName: OnpointerUP
           m_Mode: 0
           m_Arguments:
@@ -821,8 +821,8 @@ MonoBehaviour:
     callback:
       m_PersistentCalls:
         m_Calls:
-        - m_Target: {fileID: 7648412742624602476}
-          m_TargetAssemblyTypeName: Ui_Title, Assembly-CSharp
+        - m_Target: {fileID: 7648412742624602475}
+          m_TargetAssemblyTypeName: Title, Assembly-CSharp
           m_MethodName: OnpointerDrag
           m_Mode: 0
           m_Arguments:
@@ -922,7 +922,7 @@ RectTransform:
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 100, y: 100}
+  m_SizeDelta: {x: 200, y: 200}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1853396615
 MonoBehaviour:
@@ -1151,7 +1151,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 960.00006, y: -415.1}
+  m_AnchoredPosition: {x: 960, y: -415.1}
   m_SizeDelta: {x: 300, y: 120}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &3085363178240703779
@@ -1198,7 +1198,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 7648412742624602475}
+      - m_Target: {fileID: 0}
         m_TargetAssemblyTypeName: Title, Assembly-CSharp
         m_MethodName: LoginView
         m_Mode: 1
@@ -1253,7 +1253,6 @@ GameObject:
   - component: {fileID: 7570815870507599371}
   - component: {fileID: 4094091184868111496}
   - component: {fileID: 7648412742624602475}
-  - component: {fileID: 7648412742624602476}
   m_Layer: 5
   m_Name: Title_Canvas
   m_TagString: Untagged
@@ -1412,7 +1411,7 @@ Canvas:
   m_GameObject: {fileID: 3252399860730684945}
   m_Enabled: 1
   serializedVersion: 3
-  m_RenderMode: 1
+  m_RenderMode: 0
   m_Camera: {fileID: 72522546}
   m_PlaneDistance: 100
   m_PixelPerfect: 0
@@ -1433,29 +1432,15 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3252399860730684945}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 234b01b81d662504fb9bc3e4f4ba281c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   TitleObj: {fileID: 0}
-  MembershipBut: {fileID: 3085363178240703779}
+  MembershipBut: {fileID: 0}
   StartBut: {fileID: 0}
---- !u!114 &7648412742624602476
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3252399860730684945}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f4ef058ea91864445b1e4aff3a3ffa2b, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
   JOYSTICK: {fileID: 1853396613}
-  VIDEOPLAYER: {fileID: 0}
-  RAWIMG: {fileID: 0}
 --- !u!1 &7745923282152713155
 GameObject:
   m_ObjectHideFlags: 0

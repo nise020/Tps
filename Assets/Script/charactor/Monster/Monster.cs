@@ -4,26 +4,31 @@ using UnityEngine;
 
 public abstract partial class Monster : Charactor
 {
-    AiMonster Ai = new AiMonster();
+    protected AiMonster AI;
     protected virtual void Start()
     {
         mobRigid = GetComponent<Rigidbody>();
         mobColl = GetComponent<Collider>();
         boxColl = GetComponentInChildren<BoxCollider>();//¹ß
+        AI = new AiMonster(this, eType);
         //StartCoroutine(MobAttackTimecheck());
         //nomalAttack();
         //targetNumber();
     }
-
     void FixedUpdate()
     {
-        if (Ai=null) { return; }
-        //Ai.state();
-        //MobAttackTimecheck();
-        //StartCoroutine(MobAttackTimecheck());
-    }
-    private void Update()
-    {
+        if (AI == null) { return; }
+        AI.state();
+
         
     }
+
+    //void Update()
+    //{
+    //    if (Ai=null) { return; }
+    //    //Ai.state();
+    //    //MobAttackTimecheck();
+    //    //StartCoroutine(MobAttackTimecheck());
+    //}
+
 }

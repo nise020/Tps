@@ -118,7 +118,6 @@ GameObject:
   - component: {fileID: 3856231240387469067}
   - component: {fileID: 4431220249167600492}
   - component: {fileID: 9073359389155650380}
-  - component: {fileID: 8888372506290449288}
   - component: {fileID: 5416881466831899157}
   - component: {fileID: 8577845105108763718}
   - component: {fileID: 4483158066257087000}
@@ -195,19 +194,6 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!114 &8888372506290449288
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8902237188144697140}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9e0cd8390d4c36c41ba694e1961c872b, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  MobType: 1
 --- !u!114 &5416881466831899157
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -223,7 +209,7 @@ MonoBehaviour:
   MobGrenade: {fileID: 3467101612078837595, guid: ae96bb1e39c38e745ac453d6aa6ae3a0, type: 3}
   MobBullet: {fileID: 6620972946245811102, guid: 76a6c0a5166a6ca408b9d547d4ea3215, type: 3}
   AttackArm: {fileID: 2830262594315889986}
-  bulletTab: {fileID: 0}
+  creatTabObj: {fileID: 0}
   playerObj: []
   coverObj: []
   footObj: {fileID: 0}

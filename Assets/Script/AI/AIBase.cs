@@ -3,10 +3,10 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
-public partial class AiBase : MonoBehaviour
+public partial class AiBase
     //MonoBehaviour//유니티에서 할당하는 메모리를 사용하겠다
 {
-    protected Charactor Charactor;
+    Monster Monster;
 
     protected eAI aIState = eAI.Create;
     [SerializeField] protected eMobType MobType = eMobType.Defolt;
@@ -14,14 +14,15 @@ public partial class AiBase : MonoBehaviour
     protected FlyingMob Flying;
     protected DefoltMob Defolt;
     public bool nextPatternOn = true;
+    public bool moveChange = true;
 
     protected virtual void Type() 
     {
         
     }
-    public void init(Charactor _Charactor) 
+    public void init(Monster _Monster) 
     {
-        Charactor = _Charactor; 
+        Monster = _Monster; 
     }
 
     public virtual void state() 

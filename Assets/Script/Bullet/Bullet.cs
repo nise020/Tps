@@ -3,87 +3,54 @@ using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
 
-public partial class Bullet : Gun
+public partial class Bullet 
 {
     [Header("총알 관련 항목")]
-    int targetnumber;
-    int damage = 1;
     public float speed = 0.0f;
-    Transform targetPos;//몬스터가 공격할 목표
+    Vector3 targetPos;//몬스터가 공격할 목표
     RaycastHit hit;//총알이 맞출 목표
-    enum bulletType 
+    public bulletType BulletType;
+
+
+    public void Initialize(Vector3 _target)
     {
-        Mobbullet,
-        Playerbullet,
-        MobGranad,
-    }
-    [SerializeField] bulletType bulletTag;
-    
-    public void Initialize(Transform _target)
-    {
-        switch (bulletTag)
-        {
-            case bulletType.Mobbullet:
-                targetPos.position = _target.position;
-                break;
-            case bulletType.MobGranad:
-                targetPos.position = _target.position;
-                break;
-            case bulletType.Playerbullet:
-                hit.point = _target.position;
-                break;
-        }
-    }
-    protected override void OnTriggerEnter(Collider other)
-    {
-        base.OnTriggerEnter(other);
+        targetPos = _target;
     }
 
-    public void moveing()//대거 수정 필요
-    {
-        if (bulletTag == bulletType.MobGranad) 
-        {
-            damage = 5;
-            speed = 3.0f;
-            transform.root.rotation = Quaternion.Euler(0,1,0);
-            Vector3 target = targetPos.position - transform.position;
-            transform.position += (target).normalized * speed * Time.deltaTime;
-        }
-        if (bulletTag == bulletType.Mobbullet)
-        {
-            speed = 5.0f;
-            Vector3 target = targetPos.position - transform.position;
-            transform.position += (target).normalized * speed * Time.deltaTime;
 
-        }
-        else if (bulletTag == bulletType.Playerbullet) 
+    public Vector3 moveing(Vector3 _myPos, Vector3 _targetPos, bulletType _tag,float _speed)//대거 수정 필요
+    {
+        if (_tag == bulletType.MobGranad || _tag == bulletType.Mobbullet)
         {
-            switch (GunEnumType)
-            {
-                case GunTags.SR:
-                    damage = damage + srGunDmg;
-                    break;
-            }
-            speed = 5.0f;
-            Vector3 target = targetPos.position - transform.position;
-            transform.position += (hit.point*2).normalized * speed * Time.deltaTime;//임시
+            Vector3 direction = (_targetPos - _myPos).normalized;
+            _myPos += direction * _speed * Time.deltaTime;
         }
-        
+        else if (_tag == bulletType.Playerbullet)//세분화
+        {
+            //switch (BulletType)
+            //{
+            //    case GunTags.SR:
+            //        damage = damage + srGunDmg;
+            //        break;
+            //}
+            //speed = 5.0f;
+            //Vector3 target = targetPos.position - _trs.position;
+            //_trs.position += (hit.point*2).normalized * speed * Time.deltaTime;//임시
+        }
+        return _myPos;
+
     }
     
-    protected override void Update()
-    {
-        moveing();
-    }
+   
 
-    protected override void GunTargetRaycast()
-    {
-        Ray ray = cam.ScreenPointToRay(Input.mousePosition);
-        if (Physics.Raycast(ray, out hit))
-        {
+    //protected override void GunTargetRaycast()
+    //{
+    //    Ray ray = cam.ScreenPointToRay(Input.mousePosition);
+    //    if (Physics.Raycast(ray, out hit))
+    //    {
             
-        }
-        //Vector3 ray = cam.ScreenToWorldPoint(Input.mousePosition);
-        //if (Physics.Raycast(transform.position,ray, out RaycastHit hit))
-    }
+    //    }
+    //    //Vector3 ray = cam.ScreenToWorldPoint(Input.mousePosition);
+    //    //if (Physics.Raycast(transform.position,ray, out RaycastHit hit))
+    //}
 }

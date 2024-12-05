@@ -9,7 +9,7 @@ public abstract partial class Monster : Charactor
     [SerializeField] GameObject MobGrenade;//ÅõÃ´¹° ÇÁ¸®ÆÕ
     [SerializeField] protected GameObject MobBullet;//ÀÏ¹Ý°ø°Ý ÃÑ¾Ë ÇÁ¸®ÆÕ
     [SerializeField] protected GameObject AttackArm;//°ø°ÝÀÇ ½ÃÀÛÁ¡ÀÌ µÉ ÆÈ
-    [SerializeField] protected GameObject bulletTab;//ÃÑ¾Ë ÀúÀåÅÇ
+    [SerializeField] protected Transform creatTabObj;//ÃÑ¾Ë ÀúÀåÅÇ
     protected bool NumberOn = false;
     protected int number;
     Vector3 targetpos;
@@ -60,38 +60,26 @@ public abstract partial class Monster : Charactor
     }
     protected virtual void nomalAttack()
     {
+        if (AttackCount >= AttackMaxCount) { return; }
         targetOn(ref number);
-        if (playerObj[number] == null) { return; }
-        GameObject go = Instantiate(MobBullet, AttackArm.transform.position, Quaternion.identity, bulletTab.transform);
+        if (playerObj[number].transform.position == null) { return; }
+        GameObject go = Instantiate(MobBullet, AttackArm.transform.position, 
+            Quaternion.identity, creatTabObj.transform);
         Mob_Bullet bullet = go.GetComponent<Mob_Bullet>();
-        chaTargetTrs = playerObj[number].transform;
-        bullet.Initialize(chaTargetTrs);//
-        AttackCount++;
-        if (AttackCount >= AttackMaxCount) 
-        {
-            Patterntimer = 0f;
-            AttackCount = 0;
-            NumberOn = false;
-            return;
-            //aiNextPattern = true;
-        }
+        bullet.targetPos = playerObj[number].transform.position;
+        AttackCount += 1;
+ 
     }
     protected virtual void GrenadeAttack()//¼öÁ¤ÇÊ¿ä 
     {
+        if (ThroutCount >= ThroutMaxCount) { return; }
         targetOn(ref number);
-        if (playerObj[number] == null) { return; }
-        GameObject go = Instantiate(MobGrenade, AttackArm.transform.position, Quaternion.identity, bulletTab.transform);
+        if (playerObj[number].transform.position == null) { return; }
+        GameObject go = Instantiate(MobGrenade, AttackArm.transform.position, 
+            Quaternion.identity, creatTabObj.transform);
         Mob_Bullet bullet = go.GetComponent<Mob_Bullet>();
-        chaTargetTrs = playerObj[number].transform;
-        bullet.Initialize(chaTargetTrs);//
-        ThroutCount++;
-        if (ThroutCount >= ThroutMaxCount)
-        {
-            Patterntimer = 0f;
-            ThroutCount = 0;
-            NumberOn = false;
-            //aiNextPattern = true;
-        }
+        bullet.targetPos = playerObj[number].transform.position;
+        ThroutCount=1;
     }
     protected virtual void targetOn(ref int _value) 
     {

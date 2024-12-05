@@ -14,7 +14,7 @@ public partial class HugeMob : Monster
     }
     void Update()
     {
-        groundOn_Off(ref groundCheck);
+        groundCheck = groundOn_Off(groundCheck);
         jumpSkill();
         base.nomalAttack();
         //float gravity = Mathf.Abs(Physics.gravity.y);

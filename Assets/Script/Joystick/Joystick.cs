@@ -22,7 +22,8 @@ public class Joystick : MonoBehaviour
     public void OnDrag(PointerEventData eventData)
     {
         //사망연산자?
-        if (RectTransformUtility.ScreenPointToLocalPointInRectangle(IMGBALL.rectTransform, eventData.position, eventData.pressEventCamera, out Vector2 localPoint)) 
+        if (RectTransformUtility.ScreenPointToLocalPointInRectangle(IMGBALL.rectTransform, eventData.position, 
+            eventData.pressEventCamera, out Vector2 localPoint)) 
         {
             localPoint.x = Input.x / IMGBALL.rectTransform.sizeDelta.x;
             localPoint.y = Input.y / IMGBALL.rectTransform.sizeDelta.y;
@@ -32,7 +33,7 @@ public class Joystick : MonoBehaviour
 
             Input = (Input.magnitude > 1.0f) ? Input.normalized : Input;
             Position.x = Input.x * IMGBALL.rectTransform.sizeDelta.x / 2;
-            Position.z = Input.y * IMGBALL.rectTransform.sizeDelta.y / 2;
+            Position.y = Input.y * IMGBALL.rectTransform.sizeDelta.y / 2;
 
             IMGBALL.rectTransform.anchoredPosition = Position;
             //Position:이동값(수정이 필요 할수도 있다)

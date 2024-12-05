@@ -64,6 +64,12 @@ public partial class HugeMob : Monster
 
             mobRigid.AddForce(jumpPos, ForceMode.VelocityChange);//มกวม
 
+            float dts = Vector3.Distance(playerObj[number].transform.position, transform.position);
+            if (dts <= 0.1) 
+            {
+                //AI.Reset(); 
+            }
+
             jumpOn = false;
             #endregion
 
@@ -92,9 +98,12 @@ public partial class HugeMob : Monster
     {
         base.targetOn(ref _value);
     }
-    protected override void groundOn_Off(ref bool _check) 
+
+    protected override bool groundOn_Off(bool _check) 
     {
-        base.groundOn_Off(ref _check);
+        base.groundOn_Off(_check);
+        return _check;
     }
-    
+
+
 }

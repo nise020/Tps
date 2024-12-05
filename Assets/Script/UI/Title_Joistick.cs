@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
 
-public partial class Ui_Title : Actor
+public partial class Title : MonoBehaviour
 {
     //Dictionary<int, Character> CharacterMap = new Dictionary<int, Character>();
     //Dictionary<--자료형에 고유ID를 부여해서 쉽게 찾기 위함
@@ -19,13 +19,12 @@ public partial class Ui_Title : Actor
     public void OnPointerdown(BaseEventData eventData) 
     {
         JOYSTICK.gameObject.SetActive(true);
-        //Joystick.transform.position = Input.mousePosition;
-        //Touch touch = Input.GetTouch(0);
-        //Joystick.transform.position = touch.position;
+
 
 //#if UNITY_ANDROID
 #if UNITY_EDITOR
-      JOYSTICK.transform.position = Input.mousePosition;
+        JOYSTICK.transform.position = Input.mousePosition;
+        //JOYSTICK.transform.position
 #else
       Touch touch = Input.GetTouch(0);
       JOYSTICK.transform.position = touch.position;

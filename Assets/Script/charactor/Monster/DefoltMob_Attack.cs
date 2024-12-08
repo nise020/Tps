@@ -8,14 +8,14 @@ public partial class DefoltMob : Monster
     {
 
     }
-    protected override void targetOn(ref int _value)
+    protected override void targetOn(ref int _value, List<GameObject> _listObj)
     {
-        base.targetOn(ref _value);
+        base.targetOn(ref _value, _listObj);
     }
     public void attack()//수정 필요
     {
-        base.MobAttackTimecheck();
-        base.nomalAttack();
-        base.GrenadeAttack();
+        //base.MobAttackTimecheck();
+        //base.nomalAttack();
+        //base.GrenadeAttack();
     }
 }

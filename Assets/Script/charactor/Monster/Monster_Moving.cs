@@ -12,7 +12,7 @@ public abstract partial class Monster : Charactor
     Color leaghColor;
     BoxCollider boxColl;
     Collider mobColl;
-    public eMobType eType;
+    
     protected override void OnTriggerEnter(Collider other)
     {
         base.OnTriggerEnter(other);

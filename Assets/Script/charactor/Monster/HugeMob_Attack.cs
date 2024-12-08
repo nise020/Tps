@@ -12,7 +12,10 @@ public partial class HugeMob : Monster
     bool targetCheack = false;
     [SerializeField] bool jumpOn = false;
 
-    
+    public void timer() 
+    {
+
+    }
 
     public void jumpSkill()//조금 수정 필요
     {
@@ -25,7 +28,7 @@ public partial class HugeMob : Monster
         {
             if (targetCheack == false)
             {
-                targetOn(ref number);
+                targetOn(ref number,playerObj);
                 if (playerObj[number] == null)
                 {
                     return;
@@ -94,9 +97,9 @@ public partial class HugeMob : Monster
 
     }
     
-    protected override void targetOn(ref int _value)
+    protected override void targetOn(ref int _value, List<GameObject> _listObj)
     {
-        base.targetOn(ref _value);
+        base.targetOn(ref _value, _listObj);
     }
 
     protected override bool groundOn_Off(bool _check) 

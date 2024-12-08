@@ -15,8 +15,11 @@ public partial class HugeMob : Monster
     void Update()
     {
         groundCheck = groundOn_Off(groundCheck);
-        jumpSkill();
-        base.nomalAttack();
+        //jumpSkill();
+        SKILL.nomalAttack(playerObj, number,ref AttackCount,AttackMaxCount,
+            MobBullet,AttackArm.transform.position,creatTabObj);
+        //SKILL.jumpSkill(jumpOn,ref moveTimer, runningTime, targetCheack,number,playerObj,gameObject,jumpHight,mobRigid);
+        //base.nomalAttack();
         //float gravity = Mathf.Abs(Physics.gravity.y);
         //moving();
         //StartCoroutine(MobAttackTimecheck());

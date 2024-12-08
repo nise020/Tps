@@ -3800,7 +3800,7 @@ PrefabInstance:
       objectReference: {fileID: 5132851093641282708, guid: 0000000000000000d000000000000000, type: 0}
     - target: {fileID: 2104048156943457288, guid: 5ba80b210443cd34aab20ef39b65f18c, type: 3}
       propertyPath: jumpOn
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 2104048156943457288, guid: 5ba80b210443cd34aab20ef39b65f18c, type: 3}
       propertyPath: bulletTab

@@ -50,40 +50,18 @@ public abstract partial class Monster : Charactor
     {
         if (number == 0) 
         {
-            nomalAttack();
+            //nomalAttack();
         }
         else if (number == 1) 
         {
-            GrenadeAttack();
+            //GrenadeAttack();
         }
         //yield return null;
     }
-    protected virtual void nomalAttack()
+
+    protected virtual void targetOn(ref int _value,List<GameObject>_listObj) 
     {
-        if (AttackCount >= AttackMaxCount) { return; }
-        targetOn(ref number);
-        if (playerObj[number].transform.position == null) { return; }
-        GameObject go = Instantiate(MobBullet, AttackArm.transform.position, 
-            Quaternion.identity, creatTabObj.transform);
-        Mob_Bullet bullet = go.GetComponent<Mob_Bullet>();
-        bullet.targetPos = playerObj[number].transform.position;
-        AttackCount += 1;
- 
-    }
-    protected virtual void GrenadeAttack()//수정필요 
-    {
-        if (ThroutCount >= ThroutMaxCount) { return; }
-        targetOn(ref number);
-        if (playerObj[number].transform.position == null) { return; }
-        GameObject go = Instantiate(MobGrenade, AttackArm.transform.position, 
-            Quaternion.identity, creatTabObj.transform);
-        Mob_Bullet bullet = go.GetComponent<Mob_Bullet>();
-        bullet.targetPos = playerObj[number].transform.position;
-        ThroutCount=1;
-    }
-    protected virtual void targetOn(ref int _value) 
-    {
-        int count = playerObj.Count;//공격할 플레이어 정렬
+        int count = _listObj.Count;//공격할 플레이어 정렬
         _value = Random.Range(0, count);//랜덤으로 타겟 번호 선정
     }
     

@@ -16,9 +16,9 @@ public partial class AiBase
     public bool nextPatternOn = true;
     public bool moveChange = true;
 
-    protected virtual void Type() 
+    public void Type(eMobType _eNum) 
     {
-        
+        MobType = _eNum;
     }
     public void init(Monster _Monster) 
     {

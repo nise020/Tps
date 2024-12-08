@@ -14,8 +14,5 @@ public partial class DefoltMob : Monster
         base.OnTriggerEnter(other);
     }
     // Update is called once per frame
-    void FixedUpdate()
-    {
-        
-    }
+
 }

@@ -26,7 +26,12 @@ public partial class SceneMgr : MonoBehaviour
         }
         //chageScene(eScene.Title);
     }
+    private void Start()
+    {
+        //Shader.InutTableMgr();
+        //Table_Charactor.Info info = Shader.TableMgr.character.Get(1);
 
+    }
     public void savePasskey(out string _value) 
     {
         _value = PassKey;

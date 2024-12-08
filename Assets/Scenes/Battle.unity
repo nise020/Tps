@@ -756,6 +756,11 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 5d32d8321e176b944b08f104cbbf3dac, type: 3}
+--- !u!1 &496380007 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 3944837943892076858, guid: 5ba80b210443cd34aab20ef39b65f18c, type: 3}
+  m_PrefabInstance: {fileID: 6154879032202816700}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &524940310
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1454,7 +1459,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   player:
   - {fileID: 343223737}
-  Monster: []
+  MONSTER:
+  - {fileID: 496380007}
   Concealment:
   - {fileID: 161554210}
   - {fileID: 166915909}
@@ -3800,7 +3806,7 @@ PrefabInstance:
       objectReference: {fileID: 5132851093641282708, guid: 0000000000000000d000000000000000, type: 0}
     - target: {fileID: 2104048156943457288, guid: 5ba80b210443cd34aab20ef39b65f18c, type: 3}
       propertyPath: jumpOn
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 2104048156943457288, guid: 5ba80b210443cd34aab20ef39b65f18c, type: 3}
       propertyPath: bulletTab

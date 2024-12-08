@@ -29,7 +29,7 @@ public abstract partial class Monster : Charactor
     [Header("스킬 타이머")]
     protected int ThroutCount = 0;
     protected int ThroutMaxCount = 3;
-
+    public int ID = 1;
     //Actor Act = new Actor();
     protected virtual void MobAttackTimecheck() 
     {

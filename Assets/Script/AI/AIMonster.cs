@@ -12,28 +12,6 @@ public partial class AiMonster : AiBase
     //FSM
     //캐릭터에서 AI를 호출할 필요
 
-    //public AiMonster(Monster _monster, eMobType _eNum)
-    //{
-    //    this.MONSTER = _monster;
-    //    this.MOBTYPE = _eNum;
-    //}
-    //public void Type(eMobType _eNum)
-    //{
-    //    base.Type(_eNum);
-    //    //Monster
-    //    //switch (MobType)
-    //    //{
-    //    //    case eMobType.Defolt:
-    //    //        // Defolt = GetComponent<DefoltMob>();//class
-    //    //        break;
-    //    //    case eMobType.Flying:
-    //    //        // Flying = GetComponent<FlyingMob>();//class
-    //    //        break;
-    //    //    case eMobType.Huge:
-    //    //        // Huge = GetComponent<HugeMob>();//class
-    //    //        break;
-    //    //}
-    //}
 
     public void Pattern()
     {

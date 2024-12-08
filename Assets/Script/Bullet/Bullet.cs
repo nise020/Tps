@@ -25,7 +25,7 @@ public partial class Bullet
             Vector3 direction = (_targetPos - _myPos).normalized;
             _myPos += direction * _speed * Time.deltaTime;
         }
-        else if (_tag == bulletType.Playerbullet)//세분화
+        else if (_tag == bulletType.Playerbullet)//세분화 필요
         {
             //switch (BulletType)
             //{

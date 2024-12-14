@@ -1,50 +1,89 @@
 using System.Collections;
 using System.Collections.Generic;
-using System.Drawing;
-using Unity.VisualScripting;
 using UnityEngine;
 
-public partial class Monster_Skill : MonoBehaviour
+public partial class Monster_Skill 
 {
-    public void nomalAttack(List<GameObject> LISTOBJ, int _number,ref int _min,int _max,GameObject OBJ,
-        Vector3 _pos,Transform _creat)//총알 공격
-    {
-        if (_min >= _max) { return; }
-        targetOn(ref _number, LISTOBJ);
-        if (LISTOBJ[_number].transform.position == null) { return; }
-        GameObject GO = Instantiate(OBJ, _pos,Quaternion.identity, _creat);
-        Mob_Bullet BULLET = GO.GetComponent<Mob_Bullet>();
-        BULLET.targetPos = LISTOBJ[_number].transform.position;
-        _min += 1;
 
-    }
-    public void grenadeattack(List<GameObject> LISIOBJ, int _number, ref int _min, int _max, GameObject OBJ,
-        Vector3 _pos, Transform _creat)//수정필요 
+    protected bool NumberOn = false;
+    //protected int number;
+    Vector3 targetpos;
+    [Header("공격할 타켓(공통)")]
+
+    [Header("기본 타이머")]
+    //ublic int Patternt = 0f;
+    protected float Patterntimer = 0f;
+    protected float Patternltime = 10.0f;
+
+    [Header("일반 공격 횟수(DefoltMob)")]
+    protected int AttackCount = 0;
+    protected int AttackMaxCount = 6;
+
+    [Header("투척물 횟수")]
+    protected int ThroutCount = 0;
+    protected int ThroutMaxCount = 2;
+    public int ID = 1;
+
+    [Header("투척물 횟수")]
+    float moveTimer = 0.0f;
+    float jumpStart = 0.0f;
+    float jumpHight = 5.0f;
+    float runningTime = 5.0f;
+    bool targetCheack = false;
+
+    [Header("박치기 속도 횟수")]
+    float speed = 10.0f;
+    public void targetOn(ref int _value,List<GameObject> _OBJ)
     {
-        if (_min >= _max) { return; }
-        //targetOn(ref _number);
-        targetOn(ref _number, LISIOBJ);
-        if (LISIOBJ[_number].transform.position == null) { return; }
-        GameObject GO = Instantiate(OBJ, _pos, Quaternion.identity, _creat);
-        Mob_Bullet BULLET = GO.GetComponent<Mob_Bullet>();
-        BULLET.targetPos = LISIOBJ[_number].transform.position;
-        _min += 1;
+        int count = _OBJ.Count;//공격할 플레이어 정렬
+        _value = Random.Range(0, count);//랜덤으로 타겟 번호 선정
     }
-    public void jumpSkill(bool _canAttack,ref float _minTime,float _runTime,
-        bool _search,int _number,  List<GameObject> LISTOBJ,GameObject _myObj,float _jump,Rigidbody RIGID)
+    public void NomalAttack(int _number, GameObject _bullet , List<GameObject> targetObj, Vector3 _arm_Pos,Transform CREATTSR)//총알 공격
+    {
+        if (AttackCount >= AttackMaxCount) { return; }
+
+        if (targetObj[_number].transform.position == null) { return; }
+
+        GameObject GO = Delivery.Instantiate(_bullet, _arm_Pos, Quaternion.identity, CREATTSR);
+
+        Mob_Bullet BULLET = GO.GetComponent<Mob_Bullet>();
+
+        BULLET.targetPos = targetObj[_number].transform.position;
+
+        AttackCount += 1;
+    }
+    public void Grenadeattack(int _number, GameObject _Grenade, List<GameObject> targetObj, Vector3 _armPos, Transform CREATTSR)//수정필요 
+    {
+        if (ThroutCount >= ThroutMaxCount) { return; }
+
+        if (targetObj[_number].transform.position == null) { return; }
+
+        GameObject GO = Delivery.Instantiate(_Grenade, _armPos, Quaternion.identity, CREATTSR);
+
+        Mob_Bullet BULLET = GO.GetComponent<Mob_Bullet>();
+
+        BULLET.targetPos = targetObj[_number].transform.position;
+
+        ThroutCount += 1;
+    }
+    public Vector3 DirectAttackSkill(int _number,List<GameObject> targetObj,Vector3 _pos) //예외처리 필요
+    {
+        Vector3 dir = (targetObj[_number].transform.position - _pos).normalized;
+        //Vector3 dir = (coverObj[_number].transform.position - transform.position).normalized;
+        _pos += dir * speed * Time.deltaTime;
+        return _pos;
+    }
+    public void JumpSkill(int _number, List<GameObject> targetObj, ref bool _canAttack,Vector3 _pos,Rigidbody _rigid)
         //수정이 많이 필요
     {
-        if (_canAttack == false) { return; }
+        moveTimer += Time.deltaTime;
+        float time = moveTimer / runningTime;
 
-        _minTime += Time.deltaTime;
-        float time = _minTime / _runTime;
-
-        if (_minTime < _runTime)
+        if (moveTimer < runningTime)
         {
             if (_canAttack == false)
             {
-                targetOn(ref _number, LISTOBJ);
-                if (LISTOBJ[_number] == null)
+                if (targetObj[_number] == null)
                 {
                     return;
                 }
@@ -72,17 +111,17 @@ public partial class Monster_Skill : MonoBehaviour
 
 
             #region AddForce
-            float xzSpeed = _runTime;
-            Vector3 dir = (LISTOBJ[_number].transform.position - _myObj.transform.position).normalized;
+            float xzSpeed = runningTime;
+            Vector3 dir = (targetObj[_number].transform.position - _pos).normalized;//여기 문제 있음
             dir.y = 0;
 
-            float yForce = Mathf.Sqrt(2 * Physics.gravity.magnitude * _jump);//중력이 켜져있아야 한다
+            float yForce = Mathf.Sqrt(2 * Physics.gravity.magnitude * jumpHight);//중력이 켜져있아야 한다
 
             Vector3 jumpPos = dir * xzSpeed + Vector3.up * yForce;
 
-            RIGID.AddForce(jumpPos, ForceMode.VelocityChange);//점프
+            _rigid.AddForce(jumpPos, ForceMode.VelocityChange);//점프
 
-            float dts = Vector3.Distance(LISTOBJ[_number].transform.position, _myObj.transform.position);
+            float dts = Vector3.Distance(targetObj[_number].transform.position, _pos);
             if (dts <= 0.1)
             {
                 //AI.Reset(); 
@@ -105,33 +144,10 @@ public partial class Monster_Skill : MonoBehaviour
             //transform.rotation = Quaternion.identity;
             //moveTimer = 0;
         }
-        Debug.Log($"Time: {time}");
+        //Debug.Log($"Time: {time}");
         //디스턴스
 
 
 
-    }
-    //public void DirectAttackSkill(bool _canAttack,bool _target,List<GameObject> LISTOBJ,) //예외처리 필요
-    //{
-    //    if (directAtkON == false) { return; }
-    //    //moveTimer += Time.deltaTime;
-    //    if (targetCheack == false)
-    //    {
-    //        targetOn(ref number);
-    //        if (playerObj[number] == null || coverObj[number] == null)
-    //        {
-    //            return;
-    //        }
-    //        targetCheack = true;
-    //        Debug.Log($"{number}");
-    //    }
-    //    //Vector3 dir = (playerObj[number].transform.position - transform.position).normalized;
-    //    Vector3 dir = (coverObj[number].transform.position - transform.position).normalized;
-    //    transform.position += dir * speed * Time.deltaTime;
-    //}
-    public void targetOn(ref int _value, List<GameObject> LISTOBJ)
-    {
-        int count = LISTOBJ.Count;//공격할 플레이어 정렬
-        _value = Random.Range(0, count);//랜덤으로 타겟 번호 선정
     }
 }

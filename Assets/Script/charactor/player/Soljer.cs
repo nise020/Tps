@@ -14,32 +14,58 @@ public partial class Soljer : Charactor
 
     [Header("조준점")]
     [SerializeField] Transform AimtransPos;//명중 오브젝트
-    //[SerializeField] Text BulletCount;//현재 남아있는 총알
     [SerializeField] Button ControlBtn;
 
     [Header("스텟")]
-    float HP = 10.0f;
-
+    float hp = 100.0f;
+    float damage = 10f;
+    float burst_RunTime;
+    float burst_CoolTime;
 
     Camera Maincam;
     //Vector3 beforTrs;//
 
-
     [Header("총의 종류,총알")]
     protected int bullet;
+    protected int pluse_bullet;
     protected int RelodingBullet;
     
+    [Header("장전 시간,충전 시간")]
     protected float ChargeingTime;
     protected float ChargeingTimer = 0.0f;
     protected float RerodingTime = 3.0f;
     protected float RerodingTimer = 0.0f;
+    [Header("스킬 관련")]
+
+    [Header("버스트(궁) 관련")]
+
+    Skill_Add skill_Add = new Skill_Add();
+    protected GunTags GunEnumType;
+    protected void LoadSkill() 
+    {
+        switch (GunEnumType)
+        {
+            case GunTags.AR:
+                skill_Add.UseBurstSkill(1, pluse_bullet, damage, burst_RunTime,burst_CoolTime);
+                break;
+            case GunTags.MG:
+                skill_Add.UseBurstSkill(2, pluse_bullet, damage, burst_RunTime, burst_CoolTime);
+                break;
+            case GunTags.SG:
+                skill_Add.UseBurstSkill(3, pluse_bullet, damage, burst_RunTime, burst_CoolTime);
+                break;
+            case GunTags.SMG:
+                skill_Add.UseBurstSkill(4, pluse_bullet, damage, burst_RunTime, burst_CoolTime);
+                break;
+            case GunTags.SR:
+                skill_Add.UseBurstSkill(5, pluse_bullet, damage, burst_RunTime, burst_CoolTime);
+                break;
+        }
+    }
 
     private void Start()
     {
         gameManager = GameManager.Instanse;
-        //GunHoleObj.gameObject.SetActive(false);
-        //beforTrs = this.transform.position;
-        //beforAimtransPos = WeapontransPos.position;
         Maincam = Camera.main;
     }
 
@@ -53,7 +79,7 @@ public partial class Soljer : Charactor
         base.OnTriggerEnter(other);
     }
     // Update is called once per frame
-    void FixedUpdate()
+    void Update()
     {
         AttackModPosition();
         GunFireCheck();

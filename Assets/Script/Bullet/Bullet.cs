@@ -5,18 +5,11 @@ using UnityEngine;
 
 public partial class Bullet 
 {
-    [Header("총알 관련 항목")]
-    public float speed = 0.0f;
-    Vector3 targetPos;//몬스터가 공격할 목표
-    RaycastHit hit;//총알이 맞출 목표
-    public bulletType BulletType;
-
-
-    public void Initialize(Vector3 _target)
-    {
-        targetPos = _target;
-    }
-
+    //[Header("총알 관련 항목")]
+    //public float speed = 0.0f;
+    //Vector3 targetPos;//몬스터가 공격할 목표
+    //RaycastHit hit;//총알이 맞출 목표
+    //public bulletType BulletType;
 
     public Vector3 moveing(Vector3 _myPos, Vector3 _targetPos, bulletType _tag,float _speed)//대거 수정 필요
     {

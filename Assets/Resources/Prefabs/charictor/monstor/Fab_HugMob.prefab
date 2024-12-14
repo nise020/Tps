@@ -236,20 +236,21 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8dc07237bf9f1f54a900e4a7160ab8c9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  MobGrenade: {fileID: 3467101612078837595, guid: ae96bb1e39c38e745ac453d6aa6ae3a0, type: 3}
+  MobGrenade: {fileID: 0}
   MobBullet: {fileID: 6620972946245811102, guid: 76a6c0a5166a6ca408b9d547d4ea3215, type: 3}
-  AttackArm: {fileID: 2051772452969981261}
-  bulletTab: {fileID: 0}
-  playerObj:
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
+  eType: 0
+  soljerObj:
+  - {fileID: 6590099433310919523, guid: 5d32d8321e176b944b08f104cbbf3dac, type: 3}
   coverObj: []
+  AttackArm: {fileID: 2051772452969981261}
+  creatTabObj: {fileID: 0}
+  number: 0
+  HP: 0
+  MoveSpeed: 0
   footObj: {fileID: 4684642875952226306}
   groundCheck: 0
   leagh: 1.25
+  mobRigid: {fileID: 0}
   jumpOn: 0
 --- !u!1 &4684642875952226306
 GameObject:

@@ -1,12 +1,12 @@
 using System.Collections;
 using System.Collections.Generic;
 using Unity.VisualScripting;
+using UnityEditor.Experimental.GraphView;
 using UnityEngine;
 using UnityEngine.UI;
 
 public partial class Gun : Soljer
 {
-    [SerializeField, Tooltip("총의 타입")] protected GunTags GunEnumType;
 
     [SerializeField, Tooltip("레이저 사이트 길이")] float gunRazer;
     [SerializeField, Tooltip("레이저 사이트 확인여부")] bool razerOn;
@@ -34,13 +34,42 @@ public partial class Gun : Soljer
         Ray ray = cam.ScreenPointToRay(Input.mousePosition);
         if (Physics.Raycast(ray, out RaycastHit hit))
         {
-            AimGun(hit);
-            gunAttack(hit);
+            string layerName = LayerMask.LayerToName(hit.collider.gameObject.layer);
+            if (layerName != ("Cover"))//엄폐물에 안 닿기
+            {
+                AimGun(hit);
+                GunAttack(hit);
+            }
         }
-        //Vector3 ray = cam.ScreenToWorldPoint(Input.mousePosition);
-        //if (Physics.Raycast(transform.position,ray, out RaycastHit hit))
     }
-    public void gunAttack(RaycastHit _hit)
+    public void AimGun(RaycastHit _hit)
+    {
+        Vector3 targetPos = _hit.point;
+        //Vector3 targetPoint = cam.ScreenToWorldPoint(Input.mousePosition);
+        Vector3 dir = (targetPos - gunObj.transform.position);
+        Quaternion startRot = Quaternion.LookRotation(gunObj.transform.forward);
+        Quaternion endRot = Quaternion.LookRotation(dir.normalized);
+        gunObj.transform.rotation = Quaternion.Lerp(startRot, endRot, gunRotSpeed * Time.deltaTime);
+
+        // 상하 각도 제한
+        Vector3 eulerRotation = gunObj.transform.eulerAngles;
+        eulerRotation.x = clampAngle(eulerRotation.x, -45f, 45f);
+        eulerRotation.z = 0f;
+        gunObj.transform.eulerAngles = eulerRotation;
+
+        Debug.DrawLine(gunHoleObj.transform.position, targetPos, Color.red);
+    }
+
+    private float clampAngle(float _angle, float _min, float _max)
+    {
+        if (_angle > 180) // -180 ~ 180도로 변환
+        {
+            _angle -= 360; 
+        }
+        return Mathf.Clamp(_angle, _min, _max);
+    }
+
+    public void GunAttack(RaycastHit _hit)
     {
         if (bullet==0) { return; }
         //if (_hit.collider == LayerMask.LayerToName("Monster")) {  return; }
@@ -52,21 +81,7 @@ public partial class Gun : Soljer
         bullet--;
         //go.transform.position += _hit.point;
     }
-    /// <summary>
-    /// 총의 각도
-    /// </summary>
-    public void AimGun(RaycastHit _hit)
-    {
-        Vector3 targetPos = _hit.point;
-        //Vector3 targetPoint = cam.ScreenToWorldPoint(Input.mousePosition);
-        Vector3 dir = (targetPos - gunObj.transform.position);
-        Quaternion startRot = Quaternion.LookRotation(gunObj.transform.forward);
-        Quaternion endRot = Quaternion.LookRotation(dir.normalized);
-        gunObj.transform.rotation = Quaternion.Lerp(startRot, endRot, gunRotSpeed * Time.deltaTime);
-        
-        
-        Debug.DrawLine(gunHoleObj.transform.position, targetPos, Color.red);
-    }
+
     public void Lazer() 
     {
         gunLazer = GetComponent<LineRenderer>();

@@ -4,30 +4,21 @@ using UnityEngine;
 
 public abstract partial class Monster : Charactor
 {
-    [Header("다리,이동 관련(FlyingMob 제외)")]
-    [SerializeField] GameObject footObj;
-    [SerializeField] protected bool groundCheck = false;
-    [SerializeField] protected float leagh;
-    protected Rigidbody mobRigid;
-    Color leaghColor;
-    BoxCollider boxColl;
-    Collider mobColl;
-    
     protected override void OnTriggerEnter(Collider other)
     {
         base.OnTriggerEnter(other);
-        if (other.gameObject.layer == LayerMask.NameToLayer("BackGround"))
-        {
-            if (AI.moveChange) //좌우 움직임
-            {
-                AI.moveChange = false;
-            }
-            else
-            {
-                AI.moveChange = true;
-            }
-            //AI.moveChange = true;
-        }
+        //if (other.gameObject.layer == LayerMask.NameToLayer("BackGround"))
+        //{
+        //    if (AI.moveChange) //좌우 움직임
+        //    {
+        //        AI.moveChange = false;
+        //    }
+        //    else
+        //    {
+        //        AI.moveChange = true;
+        //    }
+        //    //AI.moveChange = true;
+        //}
     }
     protected void moving()//몬스터 매커니즘을 미리 정하고 세부적으로 만들어야 해서 보류  
     {

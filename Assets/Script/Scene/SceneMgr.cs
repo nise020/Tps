@@ -28,8 +28,8 @@ public partial class SceneMgr : MonoBehaviour
     }
     private void Start()
     {
-        //Shader.InutTableMgr();
-        //Table_Charactor.Info info = Shader.TableMgr.character.Get(1);
+        Shared.InutTableMgr();
+        Table_Charactor.Info info = Shared.TableMgr.Character.Get(1);
 
     }
     public void savePasskey(out string _value) 

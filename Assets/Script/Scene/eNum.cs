@@ -28,19 +28,36 @@ public enum eAI //예전에는 앞에 sScene을 붙여야 했다
 public enum eMobType //예전에는 앞에 sScene을 붙여야 했다
 {
     Huge,
-    Flying,
     Defolt,
+    Flying,
 }
 
 public enum GunTags
 {
+    AR,//소총
     MG,//머신건
     SMG,//기간단총
+    SG,//샷건
     SR,//저격총
 }
+public enum SoljerTags
+{
+    Soljer1,//머신건
+    Soljer2,//기간단총
+    Soljer3,//저격총
+    Soljer4,//소총
+    Soljer5,//샷건
+}
 
-
-
+public enum LayerTag 
+{
+    Monster,
+    Soljer,
+    Cover,
+    Bullet,
+    MobBullet,
+    BackGround,
+}
 
 public enum eLayer //예전에는 앞에 sScene을 붙여야 했다
 {
@@ -64,26 +81,4 @@ public class SaveData
     //public List<int> dataCount;//List 형태
     //public List<string> dataPassworld;//List 형태
     //Add 도 또 하나의 방법
-}
-public abstract class PLAYER 
-{
-    protected abstract void nomalAttack();//순수 가상클래스
-    //자식이 무조건 만들어야 하는 기능
-
-    protected virtual void nomal_Attack() { }//순수 가상클래스
-    //자식들이 사용 할수도 안할수도 있는 기능
-    //재정의 할수 있다
-    //
-}
-public class SWORD : PLAYER
-{
-    protected int hp;
-    protected override void nomalAttack() 
-    {
-
-    }
-    protected override void nomal_Attack()
-    {
-
-    }
 }

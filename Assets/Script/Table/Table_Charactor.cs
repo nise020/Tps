@@ -39,7 +39,7 @@ public class Table_Charactor : Table_Base
     public void Init_Csv(string _Name, int StartRoe, int _StartCol)
     {
         CSVReader reader = GetCSVReader(_Name);
-        for (int row = _StartCol; row < reader.row; ++row)
+        for (int row = StartRoe; row < reader.row; ++row)
         {
             Info info = new Info();
 

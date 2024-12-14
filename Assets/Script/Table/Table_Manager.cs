@@ -4,7 +4,7 @@ using UnityEngine;
 using UnityEditor;
 #endif
 
-public class TableMgr //: MonoBehaviour
+public class TableMgr 
 {
     public Table_Charactor Character = new Table_Charactor();
 

@@ -10,12 +10,14 @@ public abstract partial class Monster : Charactor
     public GameObject MobBullet;//일반공격 총알 프리팹
 
     protected AiMonster AI = new AiMonster();
-    protected Monster_Skill SKILL = new Monster_Skill();
-    [SerializeField] eMobType eType;
+    protected MonsterSkill SKILL = new MonsterSkill();
+
+    protected eMobType eType;//<---
+
     protected eAI aIState = eAI.Create;
     public List<GameObject> soljerObj;//플레이어 위치 정보
     public List<GameObject> coverObj;//엄폐물
-    public Transform creatTabObj => BATTELMANAGER.creatTab;//총알 저장탭
+    public Transform creatTabObj;//총알 저장탭
 
     [Header("몬스터의 정보")]
     public int mobKey = 0;

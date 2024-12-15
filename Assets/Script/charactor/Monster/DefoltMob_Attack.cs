@@ -4,18 +4,5 @@ using UnityEngine;
 
 public partial class DefoltMob : Monster
 {
-    public void targetSearch() 
-    {
 
-    }
-    protected override void targetOn(ref int _value, List<GameObject> _listObj)
-    {
-        base.targetOn(ref _value, _listObj);
-    }
-    public void attack()//수정 필요
-    {
-        //base.MobAttackTimecheck();
-        //base.nomalAttack();
-        //base.GrenadeAttack();
-    }
 }

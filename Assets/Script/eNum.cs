@@ -16,7 +16,7 @@ public enum eScene //예전에는 앞에 sScene을 붙여야 했다
    End,
 
 }
-public enum eAI //예전에는 앞에 sScene을 붙여야 했다
+public enum eAI //AI 상태
 {
     Create,
     Search,
@@ -25,8 +25,9 @@ public enum eAI //예전에는 앞에 sScene을 붙여야 했다
     Reset,
 }
 
-public enum eMobType //예전에는 앞에 sScene을 붙여야 했다
+public enum eMobType //몬스터 태그
 {
+    TagNull,
     Huge,
     Defolt,
     Flying,

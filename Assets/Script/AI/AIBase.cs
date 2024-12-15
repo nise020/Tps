@@ -8,11 +8,11 @@ public partial class AiBase
 {
 
     protected Monster MONSTER;
-    protected Monster_Skill SKILL;
+    protected MonsterSkill SKILL;
     protected eAI aIState = eAI.Create;
     protected eMobType MobType;
 
-    public bool nextPatternOn = true;
+    public bool nextOn_Off = true;
     public bool nowPatternOn = true;
     public bool moveChange = true;
 
@@ -20,7 +20,7 @@ public partial class AiBase
     {
         MobType = _eNum;
     }
-    public void init(Monster _Monster, Monster_Skill _SKILL) 
+    public void init(Monster _Monster, MonsterSkill _SKILL) 
     {
         MONSTER = _Monster;
         SKILL = _SKILL;

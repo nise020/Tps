@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public partial class Mob_Bullet : Monster
+public partial class Mob_Bullet : MonoBehaviour
 {
     Bullet BULLET = new Bullet();
     bulletType BulletType = bulletType.Mobbullet;

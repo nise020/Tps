@@ -7,7 +7,6 @@ using UnityEngine.TextCore.Text;
 
 public partial class AiMonster : AiBase
 {
-    //Monster_Skill SKILL;
     bool attackOn = true;
     int targetNumber;
     //Monster_Skill SKILL = new Monster_Skill();
@@ -22,9 +21,8 @@ public partial class AiMonster : AiBase
     {
         switch (MobType)
         {
-            case eMobType.Defolt://일반 평타(횟수제한)
-                SKILL.NomalAttack(targetNumber, MONSTER.MobBullet, MONSTER.soljerObj, MONSTER.AttackArm.transform.position,
-                    MONSTER.creatTabObj);
+            case eMobType.Defolt://일반 평타 (횟수제한)
+                SKILL.NomalAttack(nextOn_Off, targetNumber, MONSTER.MobBullet, MONSTER.soljerObj, MONSTER.AttackArm.transform.position, MONSTER.creatTabObj);
                 break;
             case eMobType.Flying://자폭 공격
                 MONSTER.gameObject.transform.position = SKILL.DirectAttackSkill
@@ -83,14 +81,18 @@ public partial class AiMonster : AiBase
         }
 
         SKILL.targetOn(ref targetNumber,MONSTER.soljerObj);
-        aIState = eAI.Attack;
+        if (MONSTER.soljerObj[targetNumber] == null)
+        {
+            return;
+        }
+        else { aIState = eAI.Attack; }
     }
     protected override void Attack()//공격
     {
         Pattern();
-        if (nextPatternOn == true)
+        if (nextOn_Off == true)
         {
-            nextPatternOn = false;
+            nextOn_Off = false;
             aIState = eAI.Reset;
         }
     }
@@ -108,9 +110,9 @@ public partial class AiMonster : AiBase
                 //Defolt.nomalAttack();
                 break;
         }
-        if (nextPatternOn == true)
+        if (nextOn_Off == true)
         {
-            nextPatternOn = false;
+            nextOn_Off = false;
             base.Attack();
         }
     }

@@ -12,10 +12,15 @@ public partial class Title : MonoBehaviour
     string PasswordKey;//유저의 비밀번호
     IEnumerator Laoding;
     // Start is called before the first frame update
-    void Start()
+
+    public void OnbtnTitle() //예시
     {
-        //LoadToJason("Json/passkey");
+        Shared.SceneMgr.chageScene(eScene.Lobby);
     }
+    //void Start()
+    //{
+    //    //LoadToJason("Json/passkey");
+    //}
     void LoadToJason(string DataName)//아직 제작중
     {
 

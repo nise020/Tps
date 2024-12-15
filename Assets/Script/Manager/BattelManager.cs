@@ -12,7 +12,7 @@ public class BattelManager : MonoBehaviour
     public Transform creatTab;
     public int targetNum;
     Vector3 targetPos;
-    public int Maxcount = 3;
+    public int Maxcount = 1;
     public int Mincount = 0;
     public int Monster_Count = 0;
     Dictionary<int, Charactor> CHARACTORDATA = new Dictionary<int, Charactor>();

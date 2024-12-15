@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public partial class Monster_Skill 
+public partial class MonsterSkill 
 {
 
     protected bool NumberOn = false;
@@ -38,9 +38,8 @@ public partial class Monster_Skill
         int count = _OBJ.Count;//공격할 플레이어 정렬
         _value = Random.Range(0, count);//랜덤으로 타겟 번호 선정
     }
-    public void NomalAttack(int _number, GameObject _bullet , List<GameObject> targetObj, Vector3 _arm_Pos,Transform CREATTSR)//총알 공격
+    public void NomalAttack(bool _attackOff,int _number, GameObject _bullet , List<GameObject> targetObj, Vector3 _arm_Pos,Transform CREATTSR)//총알 공격
     {
-        if (AttackCount >= AttackMaxCount) { return; }
 
         if (targetObj[_number].transform.position == null) { return; }
 
@@ -50,7 +49,12 @@ public partial class Monster_Skill
 
         BULLET.targetPos = targetObj[_number].transform.position;
 
-        AttackCount += 1;
+        if (AttackCount >= AttackMaxCount)
+        {
+            _attackOff = true;
+            AttackCount = 0;
+        }
+        else { AttackCount += 1; }
     }
     public void Grenadeattack(int _number, GameObject _Grenade, List<GameObject> targetObj, Vector3 _armPos, Transform CREATTSR)//수정필요 
     {

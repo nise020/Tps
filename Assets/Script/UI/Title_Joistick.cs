@@ -12,10 +12,7 @@ public partial class Title : MonoBehaviour
 
     public Joystick JOYSTICK;//카메라 셋팅 수정 필요
     //2d 기준이라서 수정 필요
-    public void OnbtnTitle() //예시
-    {
-        Shared.SceneMgr.chageScene(eScene.Lobby);
-    }
+
     public void OnPointerdown(BaseEventData eventData) 
     {
         JOYSTICK.gameObject.SetActive(true);
@@ -42,22 +39,5 @@ public partial class Title : MonoBehaviour
     {
         JOYSTICK.OnDrag((PointerEventData)eventData);
     }
-    //public Character GetCharacter(int index) //Dictionary 예시
-    //{
-    //   // CharacterMap.Add(index,player);
-    //    if (CharacterMap.ContainsKey(index))
-    //        return CharacterMap[index];
-
-    //    CharacterMap.Remove(index);
-    //    CharacterMap.Clear();
-
-    //    var pair = CharacterMap.GetEnumerator();
-
-    //    while (pair.MoveNext()) 
-    //    {
-    //        Character Character = pair.Current.Value;
-    //    }
-
-    //    return null;
-    //}
+    
 }

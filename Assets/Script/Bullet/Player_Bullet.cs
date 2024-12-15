@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 
-public partial class Player_Bullet : Gun
+public partial class Player_Bullet : MonoBehaviour
 {
     Bullet BULLET = new Bullet();
     public bulletType BulletType = bulletType.Playerbullet;
@@ -24,14 +24,14 @@ public partial class Player_Bullet : Gun
        transform.position = BULLET.moveing(transform.position, targetPos, BulletType, speed);
     }
 
-    protected override void GunTargetRaycast()
-    {
-        Ray ray = cam.ScreenPointToRay(Input.mousePosition);
-        if (Physics.Raycast(ray, out hit))
-        {
+    //protected override void GunTargetRaycast()
+    //{
+    //    Ray ray = cam.ScreenPointToRay(Input.mousePosition);
+    //    if (Physics.Raycast(ray, out hit))
+    //    {
 
-        }
-        //Vector3 ray = cam.ScreenToWorldPoint(Input.mousePosition);
-        //if (Physics.Raycast(transform.position,ray, out RaycastHit hit))
-    }
+    //    }
+    //    //Vector3 ray = cam.ScreenToWorldPoint(Input.mousePosition);
+    //    //if (Physics.Raycast(transform.position,ray, out RaycastHit hit))
+    //}
 }

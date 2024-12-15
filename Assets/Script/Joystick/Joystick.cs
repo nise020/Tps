@@ -25,13 +25,14 @@ public class Joystick : MonoBehaviour
         if (RectTransformUtility.ScreenPointToLocalPointInRectangle(IMGBALL.rectTransform, eventData.position, 
             eventData.pressEventCamera, out Vector2 localPoint)) 
         {
-            localPoint.x = Input.x / IMGBALL.rectTransform.sizeDelta.x;
-            localPoint.y = Input.y / IMGBALL.rectTransform.sizeDelta.y;
+            localPoint.x = localPoint.x / IMGBALL.rectTransform.sizeDelta.x;
+            localPoint.y = localPoint.y / IMGBALL.rectTransform.sizeDelta.y;
 
             Input.x = localPoint.x;
             Input.y = localPoint.y;
 
             Input = (Input.magnitude > 1.0f) ? Input.normalized : Input;
+
             Position.x = Input.x * IMGBALL.rectTransform.sizeDelta.x / 2;
             Position.y = Input.y * IMGBALL.rectTransform.sizeDelta.y / 2;
 

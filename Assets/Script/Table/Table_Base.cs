@@ -75,7 +75,7 @@ public class Table_Base
 
         string path = "D:\\UnityFile\\Tps shooting\\Document\\";
         //string path = GetTablePath()+ "/Document/";
-
+        //:path = 저장위치를 직접 갖다여야함
         FileStream file = new FileStream(path + _Name + ext, FileMode.Open, FileAccess.Read, FileShare.ReadWrite);
 
         StreamReader stream = new StreamReader(file, System.Text.Encoding.UTF8);

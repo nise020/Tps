@@ -37,4 +37,23 @@ public class Skill_Add
             Debug.Log("해당 무기 스킬이 없습니다: " + _key);
         }
     }
+
+    //public Character GetCharacter(int index) //Dictionary 예시
+    //{
+    //   // CharacterMap.Add(index,player);
+    //    if (CharacterMap.ContainsKey(index))
+    //        return CharacterMap[index];
+
+    //    CharacterMap.Remove(index);
+    //    CharacterMap.Clear();
+
+    //    var pair = CharacterMap.GetEnumerator();
+
+    //    while (pair.MoveNext()) 
+    //    {
+    //        Character Character = pair.Current.Value;
+    //    }
+
+    //    return null;
+    //}
 }

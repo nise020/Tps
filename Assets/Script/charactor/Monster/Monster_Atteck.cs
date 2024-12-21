@@ -41,6 +41,6 @@ public abstract partial class Monster : Charactor
 
     public void Dead() 
     {
-        BATTELMANAGER.Mincount -= 1;
+        //BATTELMANAGER.Mincount -= 1;
     }
 }

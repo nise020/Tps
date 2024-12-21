@@ -15,9 +15,9 @@ public partial class FlyingMob : Monster
         base.OnTriggerEnter(other);
     }
 
-    // Update is called once per frame
-    //private void Update()
-    //{
-        
-    //}
+    void FixedUpdate()
+    {
+        if (AI == null) { return; }
+        AI.State(ref aIState);
+    }
 }

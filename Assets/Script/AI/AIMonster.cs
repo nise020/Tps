@@ -8,7 +8,9 @@ using UnityEngine.TextCore.Text;
 public partial class AiMonster : AiBase
 {
     bool attackOn = true;
-    int targetNumber;
+    int targetNumber;//공격할 목표의 번호
+    float timer = 0.0f;
+    float time = 10.0f;
     //Monster_Skill SKILL = new Monster_Skill();
   
     //private eMobType MOBTYPE;
@@ -22,7 +24,7 @@ public partial class AiMonster : AiBase
         switch (MobType)
         {
             case eMobType.Defolt://일반 평타 (횟수제한)
-                SKILL.NomalAttack(nextOn_Off, targetNumber, MONSTER.MobBullet, MONSTER.soljerObj, MONSTER.AttackArm.transform.position, MONSTER.creatTabObj);
+                SKILL.NomalAttack(ref nextOn_Off, targetNumber, MONSTER.MobBullet, MONSTER.soljerObj, MONSTER.AttackArm.transform.position, MONSTER.creatTabObj);
                 break;
             case eMobType.Flying://자폭 공격
                 MONSTER.gameObject.transform.position = SKILL.DirectAttackSkill
@@ -59,8 +61,16 @@ public partial class AiMonster : AiBase
     }
     protected override void Create()//생성
     {
-        //SKILL = new Monster_Skill();
-        aIState = eAI.Search;
+        searchTimer();
+    }
+    private void searchTimer()
+    {
+        timer += Time.deltaTime;
+        if (timer >= time)
+        {
+            timer = 0.0f;
+            aIState = eAI.Search;
+        }
     }
     protected override void Search()//공격할 대상 찾기
     {

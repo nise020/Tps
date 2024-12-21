@@ -13,15 +13,13 @@ public partial class HugeMob : Monster
     {
         base.OnTriggerEnter(other);
     }
-    void Update()
+    //void Update()
+    //{
+    //    groundCheck = groundOn_Off(groundCheck);
+    //}
+    void FixedUpdate()
     {
-        groundCheck = groundOn_Off(groundCheck);
-        //SKILL.NomalAttack(playerObj, number,ref AttackCount,AttackMaxCount,
-        //    MobBullet,AttackArm.transform.position,creatTabObj);
-        //SKILL.JumpSkill(jumpOn,ref moveTimer, runningTime, targetCheack,number,playerObj,gameObject,jumpHight,mobRigid);
-        //base.nomalAttack();
-        //float gravity = Mathf.Abs(Physics.gravity.y);
-        //moving();
-        //StartCoroutine(MobAttackTimecheck());
+        if (AI == null) { return; }
+        AI.State(ref aIState);
     }
 }

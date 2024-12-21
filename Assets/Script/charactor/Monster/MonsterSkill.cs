@@ -16,11 +16,11 @@ public partial class MonsterSkill
     protected float Patternltime = 10.0f;
 
     [Header("일반 공격 횟수(DefoltMob)")]
-    protected int AttackCount = 0;
+    protected int AttackMinCount = 0;
     protected int AttackMaxCount = 6;
 
     [Header("투척물 횟수")]
-    protected int ThroutCount = 0;
+    protected int ThroutMinCount = 0;
     protected int ThroutMaxCount = 2;
     public int ID = 1;
 
@@ -38,7 +38,7 @@ public partial class MonsterSkill
         int count = _OBJ.Count;//공격할 플레이어 정렬
         _value = Random.Range(0, count);//랜덤으로 타겟 번호 선정
     }
-    public void NomalAttack(bool _attackOff,int _number, GameObject _bullet , List<GameObject> targetObj, Vector3 _arm_Pos,Transform CREATTSR)//총알 공격
+    public void NomalAttack(ref bool _attackOff,int _number, GameObject _bullet , List<GameObject> targetObj, Vector3 _arm_Pos,Transform CREATTSR)//총알 공격
     {
 
         if (targetObj[_number].transform.position == null) { return; }
@@ -49,16 +49,20 @@ public partial class MonsterSkill
 
         BULLET.targetPos = targetObj[_number].transform.position;
 
-        if (AttackCount >= AttackMaxCount)
+        if (AttackMinCount >= AttackMaxCount)
         {
             _attackOff = true;
-            AttackCount = 0;
+            AttackMinCount = 0;
+            return;
         }
-        else { AttackCount += 1; }
+        else 
+        {
+            AttackMinCount += 1; 
+        }
     }
     public void Grenadeattack(int _number, GameObject _Grenade, List<GameObject> targetObj, Vector3 _armPos, Transform CREATTSR)//수정필요 
     {
-        if (ThroutCount >= ThroutMaxCount) { return; }
+        if (ThroutMinCount >= ThroutMaxCount) { return; }
 
         if (targetObj[_number].transform.position == null) { return; }
 
@@ -68,7 +72,7 @@ public partial class MonsterSkill
 
         BULLET.targetPos = targetObj[_number].transform.position;
 
-        ThroutCount += 1;
+        ThroutMinCount += 1;
     }
     public Vector3 DirectAttackSkill(int _number,List<GameObject> targetObj,Vector3 _pos) //예외처리 필요
     {

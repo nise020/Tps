@@ -11,11 +11,11 @@ public class Table_Charactor : Table_Base
         public int Id;
         public byte Type;
         public int Skill;
-        public int Stat;
+        public int State;
         public string Prefabs;
         public string Img;
         public int Name;
-        public int Dec;
+        public int Dec;//Ό³Έν
     }
 
     public Dictionary<int, Info> Dictionary = new Dictionary<int, Info>();
@@ -54,7 +54,7 @@ public class Table_Charactor : Table_Base
         _Reader.get(_Row, ref _info.Id);
         _Reader.get(_Row, ref _info.Type);
         _Reader.get(_Row, ref _info.Skill);
-        _Reader.get(_Row, ref _info.Stat);
+        _Reader.get(_Row, ref _info.State);
         _Reader.get(_Row, ref _info.Prefabs);
         _Reader.get(_Row, ref _info.Img);
         _Reader.get(_Row, ref _info.Name);

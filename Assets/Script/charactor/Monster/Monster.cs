@@ -14,10 +14,5 @@ public abstract partial class Monster : Charactor
         AI.init(this, SKILL);
         AI.Type(eType);
     }
-    void FixedUpdate()
-    {
-        if (AI == null) { return; }
-        AI.State(ref aIState);
-    }
 
 }

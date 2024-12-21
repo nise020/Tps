@@ -11,10 +11,10 @@ public class BattelManager : MonoBehaviour
     [SerializeField, Tooltip("스폰 지점")] List<GameObject> spownObj;
     public Transform creatTab;
     public int targetNum;
-    Vector3 targetPos;
-    public int Maxcount = 1;
-    public int Mincount = 0;
-    public int Monster_Count = 0;
+    //Vector3 targetPos;
+    [SerializeField, Tooltip("스폰할 못스터 숫자")] int Maxcount = 1;
+    int Mincount = 0;
+    int Monster_Count = 0;
     Dictionary<int, Charactor> CHARACTORDATA = new Dictionary<int, Charactor>();
     Dictionary<int, GameObject> monster_Data = new Dictionary<int, GameObject>();
     float spownTimer = 0.0f;
@@ -29,6 +29,7 @@ public class BattelManager : MonoBehaviour
         spownTimer += Time.deltaTime;
         if (spownTimer >= spownTime) 
         {
+            spownTimer = 0.0f;
             creatMob();
         }
 
@@ -38,6 +39,7 @@ public class BattelManager : MonoBehaviour
         if (Mincount >= Maxcount) { return; }
 
         Monster_Count += 1;
+        Mincount += 1;
 
         int count1 = MONSTER.Count;
         count1 = Random.Range(0, count1);
@@ -49,7 +51,6 @@ public class BattelManager : MonoBehaviour
         Monster monster = go.GetComponent<Monster>();
         monster_Data.Add(Monster_Count, go);
         monster.mobKey = Monster_Count;
-        Mincount += 1;
     }
 
     private void Awake()

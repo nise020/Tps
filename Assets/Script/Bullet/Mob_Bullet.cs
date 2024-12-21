@@ -13,7 +13,15 @@ public partial class Mob_Bullet : MonoBehaviour
     float speed = 10.0f;
     //RaycastHit hit;//총알이 맞출 목표
 
-    
+    private void OnTriggerEnter(Collider other)
+    {
+        if (other.gameObject.layer == Delivery.LayerNameEnum(LayerTag.Soljer) ||
+                other.gameObject.layer == Delivery.LayerNameEnum(LayerTag.Cover))
+        {
+            Destroy(gameObject);
+        }
+    }
+
     private void Update()
     {
         gameObject.transform.position = BULLET.moveing(transform.position, targetPos, BulletType, speed);

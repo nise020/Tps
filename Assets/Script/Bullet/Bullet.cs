@@ -34,16 +34,4 @@ public partial class Bullet
 
     }
     
-   
-
-    //protected override void GunTargetRaycast()
-    //{
-    //    Ray ray = cam.ScreenPointToRay(Input.mousePosition);
-    //    if (Physics.Raycast(ray, out hit))
-    //    {
-            
-    //    }
-    //    //Vector3 ray = cam.ScreenToWorldPoint(Input.mousePosition);
-    //    //if (Physics.Raycast(transform.position,ray, out RaycastHit hit))
-    //}
 }

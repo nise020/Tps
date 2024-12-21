@@ -25,14 +25,6 @@ public abstract partial class Charactor : Actor
 
             }
         }
-        else if (myColl.gameObject.layer == Delivery.LayerNameEnum(LayerTag.MobBullet))//몹 총알일 경우
-        {
-            if (other.gameObject.layer == Delivery.LayerNameEnum(LayerTag.Soljer) ||
-                other.gameObject.layer == Delivery.LayerNameEnum(LayerTag.Cover))
-            {
-                Destroy(myColl.gameObject);
-            }
-        }
         else if (myColl.gameObject.layer == Delivery.LayerNameEnum(LayerTag.Soljer)) //플레이어 일 경우
         {
             //Destroy(myColl.gameObject);

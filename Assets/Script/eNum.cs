@@ -27,10 +27,9 @@ public enum eAI //AI 상태
 
 public enum eMobType //몬스터 태그
 {
-    TagNull,
-    Huge,
     Defolt,
     Flying,
+    Huge,
 }
 
 public enum GunTags

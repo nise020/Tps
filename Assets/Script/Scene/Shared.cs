@@ -12,6 +12,7 @@ public static class Shared //¸Þ¸ð
     public static SceneMgr SceneMgr;
     public static BattelManager BattelMgr;
     public static AtlasManager AtlasMgr;
+    public static SoundMgr SoundMgr;
 
     public static TableMgr TableMgr;
     public static TableMgr InutTableMgr() 

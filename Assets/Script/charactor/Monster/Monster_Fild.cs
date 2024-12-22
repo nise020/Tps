@@ -12,7 +12,7 @@ public abstract partial class Monster : Charactor
     protected AiMonster AI = new AiMonster();
     protected MonsterSkill SKILL = new MonsterSkill();
 
-    protected eMobType eType;//<---
+    public eMobType eType;//<---
 
     protected eAI aIState = eAI.Create;
     public List<GameObject> soljerObj;//플레이어 위치 정보

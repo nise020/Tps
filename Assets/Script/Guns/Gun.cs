@@ -35,8 +35,8 @@ public partial class Gun : Soljer
             else if (angleOn == false)
             {
                 GunTargetRaycast();
-                //gunAttack();//수정필요
-                razerOn = true;
+                //Shared.BattelMgr.
+                //razerOn = true;
             }
         }
         else if ((Input.GetMouseButtonUp(0)))//위치 초기화,수정 필요(Quaternion)

@@ -5,7 +5,6 @@ using UnityEngine.UI;
 
 public partial class Soljer : Charactor
 {
-    GameManager gameManager;
     [Header("무기")]
     [SerializeField] GameObject WeaponPrefab;
     [SerializeField] GameObject[] MobPrefab;//몬스터
@@ -65,7 +64,6 @@ public partial class Soljer : Charactor
 
     private void Start()
     {
-        gameManager = GameManager.Instanse;
         Maincam = Camera.main;
     }
 

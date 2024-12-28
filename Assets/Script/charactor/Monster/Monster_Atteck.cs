@@ -41,6 +41,7 @@ public abstract partial class Monster : Charactor
 
     public void Dead() 
     {
-        //BATTELMANAGER.Mincount -= 1;
+        Shared.BattelMgr.monster_Data.Remove(mobKey);
+        Destroy(this);
     }
 }

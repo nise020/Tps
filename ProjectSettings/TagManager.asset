@@ -19,9 +19,9 @@ TagManager:
   - MobBullet
   - Cover
   - BackGround
-  - 
-  - 
-  - 
+  - SpawnDefolt
+  - SpawnFlying
+  - SpawnHuge
   - 
   - 
   - 

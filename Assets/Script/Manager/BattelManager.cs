@@ -8,23 +8,29 @@ using static UnityEditor.Experimental.GraphView.GraphView;
 public class BattelManager : MonoBehaviour
 {
     //한글 꼭 지우기
-    [SerializeField, Tooltip("플레이어블")] public List<Soljer> PLAYER;
+    [SerializeField] public List<Soljer> PLAYER;
     [SerializeField, Tooltip("공격 감지")] public List<bool> AttackSearch;
-    [SerializeField, Tooltip("몬스터")] List< Monster> MONSTEROBJ;
+    [SerializeField] List< Monster> MONSTEROBJ;
+
+    [SerializeField] DefoltMob defoltMob;// = Resources.Load<DefoltMob>("Fab_DefoltMob");
+    [SerializeField] FlyingMob flyingMob;// = Resources.Load<FlyingMob>("Fab_FlyMob");
+    [SerializeField] HugeMob hugeMob;// = Resources.Load<HugeMob>("Fab_HugMob");
+
     [SerializeField, Tooltip("엄페물")] List<GameObject> COVER;
     [SerializeField, Tooltip("Stage Level에 따른 Stage 스폰 위치")] List<GameObject> STAGE;
 
     [Header("Defolt 생성 지점")]
-    [SerializeField, Tooltip("Defolt 생성 지점")] List<GameObject> DefoltSpowne;
-    [Tooltip("Defolt 생성 지점 모음")] List<GameObject> DefoltSpones;
+    [SerializeField] List<GameObject> StageSpowneObj;//SpowneObjectList
 
-    [Header("Flying 생성 지점")]
-    [SerializeField, Tooltip("Flying 생성 지점")] List<GameObject> FlyingSpowne;
-    [Tooltip("Flying 생성 지점 모음")] List<GameObject> FlyingSpones;
+    //[Tooltip("Defolt 생성 지점 모음")] List<GameObject> DefoltSpones;//Stage Lavel
 
-    [Header("Huge 생성 지점")]
-    [SerializeField, Tooltip("Huge 생성 지점")] List<GameObject> HugeSpowne;
-    [Tooltip("Huge 생성 지점 모음")] List<GameObject> HugeSpones;
+    //[Header("Flying 생성 지점")]
+    //[SerializeField] List<GameObject> FlyingSpowne;//SpowneObjectList,Find("Fab_")
+    //[Tooltip("Flying 생성 지점 모음")] List<GameObject> FlyingSpones;//Stage Lavel
+
+    //[Header("Huge 생성 지점")]
+    //[SerializeField] List<GameObject> HugeSpowne;//SpowneObjectList,Find("Fab_")
+    //[Tooltip("Huge 생성 지점 모음")] List<GameObject> HugeSpones;//Stage Lavel
 
     public Transform creatTab;
     public int targetNum;
@@ -33,83 +39,74 @@ public class BattelManager : MonoBehaviour
     int Mincount = 0;
     int Monster_Count = 0;
     Dictionary<int, Charactor> CHARACTORDATA = new Dictionary<int, Charactor>();
-    Dictionary<int, GameObject> monster_Data = new Dictionary<int, GameObject>();
+    public Dictionary<int, GameObject> monster_Data = new Dictionary<int, GameObject>();
     float spownTimer = 0.0f;
     float spownTime = 1.0f;
     int MobId = 0;
-    int stageLevel = 1;
-
+    int stageLevel = 0;
+    private void Start()
+    {
+        //DefoltSpones.InsertRange(0, DefoltSpowne);
+        //FlyingSpones.InsertRange(0, FlyingSpowne);
+        //HugeSpones.InsertRange(0, HugeSpowne);
+    }
     private void Update()
     {
         Timer();
     }
-    //public static void UserData(UnityWebRequest _www)
-    //{
-    //    //JSONNode.Parse(_www)
-    //}
-    private void Stage() 
+    private void SpownListArrange() 
     {
-        switch (stageLevel) 
+        GameObject stage = STAGE[stageLevel];//스테이지 불러오기
+
+        foreach (Transform spawnPoint in stage.transform)
         {
-            case 1:
-                creatMob();
-                break;
-            case 2:
-                creatMob();
-                break;
-            case 3:
-                creatMob();
-                break;
+            LayerMask Layer = spawnPoint.gameObject.layer;
+            string layerName = LayerMask.LayerToName(Layer);
+
+            spawnByType(layerName, spawnPoint.position);
         }
     }
+    private void spawnByType(string _layername, Vector3 _spawnTrs)
+    {
+        if (Mincount >= Maxcount) { return; }
+
+        Mincount += 1;
+
+        int count1 = MONSTEROBJ.Count;
+        count1 = Random.Range(0, count1);
+        int Level = STAGE.Count;
+        GameObject GO = null;
+        switch (_layername) 
+        {
+            case "SpawnDefolt":
+                GO = defoltMob.gameObject;
+                break;
+            case "SpawnFlying":
+                GO = flyingMob.gameObject;
+                break;
+            case "SpawnHuge":
+                GO = hugeMob.gameObject;
+                break;
+        }
+
+        GameObject go = Instantiate(GO, _spawnTrs, Quaternion.identity, creatTab);
+
+        Monster monster = GO.GetComponent<Monster>();
+        monster_Data.Add(Monster_Count, GO);
+        monster.mobKey = Monster_Count;
+        Monster_Count += 1;
+
+    }
+
     public void Timer() //이걸 인게임 시간으로 사용 예정
     {
         spownTimer += Time.deltaTime;
         if (spownTimer >= spownTime) 
         {
             spownTimer = 0.0f;
-            Stage();
-            creatMob();
+            SpownListArrange();
+
         }
-
-    }
-    private void creatMob()
-    {
-        if (Mincount >= Maxcount) { return; }
-
-        Monster_Count += 1;
-        Mincount += 1;
-
-        int count1 = MONSTEROBJ.Count;
-        count1 = Random.Range(0, count1);
-        int count2 = 0;
-        int Level = STAGE.Count;
-        GameObject GO = null;
-        switch (MONSTEROBJ[count1].eType) 
-        {
-            case eMobType.Defolt:
-                count2 = 1;
-                 GO = Instantiate(MONSTEROBJ[count1].gameObject, DefoltSpowne[count2].transform.position, Quaternion.identity, creatTab);
-                break;
-            case eMobType.Flying:
-                count2 = 2;
-                GO = Instantiate(MONSTEROBJ[count1].gameObject, FlyingSpowne[count2].transform.position, Quaternion.identity, creatTab);
-                break;
-            case eMobType.Huge:
-                count2 = 3;
-                GO = Instantiate(MONSTEROBJ[count1].gameObject, HugeSpowne[count2].transform.position, Quaternion.identity, creatTab);
-                break;
-        }
-        Monster monster = GO.GetComponent<Monster>();
-        monster_Data.Add(Monster_Count, GO);
-        monster.mobKey = Monster_Count;
-
-
-
-        //HugeSpowne[0].gameObject = gameObject.Find("d");
-
-
-
 
     }
 

@@ -6,6 +6,20 @@ public enum bulletType
         Playerbullet,
         MobGranad,
 }
+
+public enum eState 
+{
+    //HP,//체력
+    //MaxHP,//최대체력
+    //movespeed,//이동속도
+    //attack,//공격력
+    //Defens,//방어력
+    SkillCool_1,//1번 스킬쿨타임
+    SkillCool_2,//2번 스킬쿨타임
+    Buff,//버프
+    BurstCool,//버스트 쿨타임
+}
+
 public enum eScene //예전에는 앞에 sScene을 붙여야 했다
 {
    Title,
@@ -52,7 +66,7 @@ public enum SoljerTags
 public enum LayerTag 
 {
     Monster,
-    Soljer,
+    Player,
     Cover,
     Bullet,
     MobBullet,

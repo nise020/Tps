@@ -11,11 +11,12 @@ public partial class AiBase
     protected MonsterSkill SKILL;
     protected eAI aIState = eAI.Create;
     protected eMobType MobType;
+    protected GameObject startObj;
 
     public bool nextOn_Off = true;
     public bool nowPatternOn = true;
     public bool moveChange = true;
-
+    
     public void Type(eMobType _eNum) 
     {
         MobType = _eNum;

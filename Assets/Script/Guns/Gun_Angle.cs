@@ -5,7 +5,7 @@ using UnityEditor.Experimental.GraphView;
 using UnityEngine;
 using UnityEngine.UI;
 
-public partial class Gun : Soljer
+public partial class Gun : Actor
 {
 
     [SerializeField, Tooltip("레이저 사이트 길이")] float gunRazer;
@@ -18,7 +18,7 @@ public partial class Gun : Soljer
     [SerializeField, Tooltip("총 회전 감도")] float gunRotSpeed = 0.0f;
     [SerializeField, Tooltip("레이저 끝부분")] GameObject razerEndObj;
     [SerializeField, Tooltip("총 회전 On,Off")] bool angleOn = true;
-    protected Camera cam;
+    Camera cam;
     LineRenderer gunLazer;
     
     public void attackReady()
@@ -75,7 +75,7 @@ public partial class Gun : Soljer
         //if (_hit.collider == LayerMask.LayerToName("Monster")) {  return; }
         GameObject go = Instantiate(bulletObj, gunHoleObj.transform.position, 
             Quaternion.identity, creatTabObj);
-        Player_Bullet plBullet = go.GetComponent<Player_Bullet>();
+        Bullet_Player plBullet = go.GetComponent<Bullet_Player>();
         plBullet.targetPos = _hit.point;
         
         bullet--;

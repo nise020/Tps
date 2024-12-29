@@ -7,10 +7,12 @@ using UnityEngine.TextCore.Text;
 
 public partial class AiMonster : AiBase
 {
+    List<Player> target;
+    Transform creatTab;
     bool attackOn = true;
     int targetNumber;//공격할 목표의 번호
     float timer = 0.0f;
-    float time = 10.0f;
+    float time = 5.0f;
     //Monster_Skill SKILL = new Monster_Skill();
   
     //private eMobType MOBTYPE;
@@ -24,14 +26,14 @@ public partial class AiMonster : AiBase
         switch (MobType)
         {
             case eMobType.Defolt://일반 평타 (횟수제한)
-                SKILL.NomalAttack(ref nextOn_Off, targetNumber, MONSTER.MobBullet, MONSTER.soljerObj, MONSTER.AttackArm.transform.position, MONSTER.creatTabObj);
+                SKILL.NomalAttack(ref nextOn_Off, targetNumber, MONSTER.MobBullet, target, MONSTER.AttackArm.transform.position, creatTab);
                 break;
             case eMobType.Flying://자폭 공격
                 MONSTER.gameObject.transform.position = SKILL.DirectAttackSkill
-                    (targetNumber, MONSTER.soljerObj, MONSTER.gameObject.transform.position);
+                    (targetNumber, target, MONSTER.gameObject.transform.position);
                 break;
             case eMobType.Huge://자폭 공격
-                SKILL.JumpSkill(targetNumber, MONSTER.soljerObj, ref attackOn, 
+                SKILL.JumpSkill(targetNumber, target, ref attackOn, 
                     MONSTER.gameObject.transform.position, MONSTER.mobRigid);
                 break;
         }
@@ -61,7 +63,9 @@ public partial class AiMonster : AiBase
     }
     protected override void Create()//생성
     {
-        searchTimer();
+        target = Shared.BattelMgr.PLAYER;
+        creatTab = Shared.BattelMgr.creatTab;
+        aIState = eAI.Move;
     }
     private void searchTimer()
     {
@@ -90,8 +94,8 @@ public partial class AiMonster : AiBase
             return;
         }
 
-        SKILL.targetOn(ref targetNumber,MONSTER.soljerObj);
-        if (MONSTER.soljerObj[targetNumber] == null)
+        SKILL.targetOn(ref targetNumber, target);
+        if (target[targetNumber] == null)
         {
             return;
         }
@@ -110,16 +114,11 @@ public partial class AiMonster : AiBase
     {
         attackOn = true;
         targetNumber = 0;
-        aIState = eAI.Search;
+        aIState = eAI.Create;
     }
     protected override void Move()//이동
     {
-        switch (MobType)
-        {
-            case eMobType.Defolt:
-                //Defolt.nomalAttack();
-                break;
-        }
+        
         if (nextOn_Off == true)
         {
             nextOn_Off = false;

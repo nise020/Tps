@@ -3,9 +3,21 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public partial class Gun : Soljer
+public partial class Gun : Actor
 {
-    protected int srGunDmg;//SR µ¥¹ÌÁö ÇÊ¿ä
+
+    protected int bullet;//ÃÑ¾Ë°¹¼ö
+    protected int pluse_bullet;//Ãß°¡ÇÒ ÃÑ¾Ë°¹¼ö
+    protected int RelodingBullet;
+    protected GunTags GunEnumType;
+    protected int srGunDmg;
+
+
+    protected float ChargeingTime;//ÀåÀü
+    protected float ChargeingTimer = 0.0f;
+    protected float RerodingTime = 3.0f;
+    protected float RerodingTimer = 0.0f;
+
     //[SerializeField, Tooltip("Auto Butten")] Button AutoBut;
     public void GunBulletType()//ÃÑÀÇ Á¾·ù
     {
@@ -28,7 +40,7 @@ public partial class Gun : Soljer
         //RerodingBullet = bullet;
     }
     
-    protected override void Reloding()
+    protected virtual void Reloding()
     {
         if (bullet == RelodingBullet) { return; }
         RerodingTimer += Time.deltaTime;
@@ -42,24 +54,5 @@ public partial class Gun : Soljer
             //Debug.Log("Reroding off");
         }
     }
-    public void Charging()//ÃÑ±¸ ¾×¼Ç,(¸®·Îµå ¾Æ´Ô!)
-    {
-        gunHoleObj.SetActive(false);
-        ChargeingTimer += Time.deltaTime;
-        if (ChargeingTimer > ChargeingTime)//¸¶¿ì½º ¶­À»¶§ µ¿ÀÛ ÇÊ¿ä
-        {
-            if (GunEnumType == GunTags.SR && Input.GetKeyUp(KeyCode.Mouse0))
-            {
-                Debug.Log("SR");
-                gunHoleObj.SetActive(true);
-                ChargeingTimer = 0.0f;
-            }
-            else
-            {
-                Debug.Log("Not SR");
-                gunHoleObj.SetActive(true);
-                ChargeingTimer = 0.0f;
-            }
-        }
-    }
+
 }

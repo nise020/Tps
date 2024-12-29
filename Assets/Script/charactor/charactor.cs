@@ -5,46 +5,37 @@ using UnityEngine;
 
 public abstract partial class Charactor : Actor
 {
-    [Tooltip("몬스터가 공격할 대상을 총알,투척물이 받아서 사용")] 
+    //캐릭터
+    //스텟 사용
+    //clone 오브젝트 적극 사용 
+    //protected int ID;//자신의 ID
+    protected float HP;//보여지는 체력
+    protected float cheHP;//체크할 체력
+    protected float maxHP;//최대체력
 
-    //protected abstract void nomalAttack();//순수 가상클래스
-    //자식이 무조건 만들어야 하는 기능
 
-    protected virtual void OnTriggerEnter(Collider other)//추가 필요
+
+    protected float skillCool_1;//1번 스킬쿨타임
+    protected float skillCool_2;//2번 스킬쿨타임
+    protected float buff;//버프
+    protected float burstCool;//버스트 쿨타임
+    public void NowHp()//스타트에서 한번만 실행 
     {
-        Collider myColl = gameObject.GetComponent<Collider>();
-        if (myColl.gameObject.layer == Delivery.LayerNameEnum(LayerTag.Monster))//몬스터일 경우
-        {
-            if (other.gameObject.layer == Delivery.LayerNameEnum(LayerTag.Soljer) ||
-                other.gameObject.layer == Delivery.LayerNameEnum(LayerTag.Cover))
-            {
-                Destroy(myColl.gameObject);
-            }
-            else if (other.gameObject.layer == Delivery.LayerNameEnum(LayerTag.Bullet))
-            {
-
-            }
-        }
-        else if (myColl.gameObject.layer == Delivery.LayerNameEnum(LayerTag.Soljer)) //플레이어 일 경우
-        {
-            //Destroy(myColl.gameObject);
-        }
-        else if (myColl.gameObject.layer == Delivery.LayerNameEnum(LayerTag.Bullet)) //플레이어 총알 일경우
-        {
-            if (other.gameObject.layer == Delivery.LayerNameEnum(LayerTag.BackGround) ||
-                other.gameObject.layer == Delivery.LayerNameEnum(LayerTag.Monster))
-            {
-                Destroy(myColl.gameObject);
-            }
-        }
-        
+        HP = maxHP;
+        cheHP = HP;
     }
-    
+    public void CheckHp()//cheHP가 우선적으로 소모
+    {
+        if (HP == cheHP) { return; }
+        //코루틴 으로 수정 예정
+        if (HP != cheHP && HP >= 0) 
+        {
+            HP = cheHP;
+        }
+    }
+    protected void dead() //사망
+    {
 
-    /// <summary>
-    /// 일반 공격
-    /// </summary>
-    //protected virtual void nomalAttack() { }
-    //자식들이 사용 할수도 안할수도 있는 기능
+    }
 
 }

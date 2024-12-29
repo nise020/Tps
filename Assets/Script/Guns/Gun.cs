@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public partial class Gun : Soljer
+public partial class Gun : Actor
 {
     Vector3 beforeMyGunTrs;//해당스크립트의 pos
     Vector3 beforeMyGunRot;//해당스크립트의 rot
@@ -14,7 +14,7 @@ public partial class Gun : Soljer
     {
         cam = Camera.main;
         GunBulletType();
-        beforeMyGunTrs = transform.position;
+        beforeMyGunTrs = gameObject.transform.position;
         beforeMyGunRot = transform.rotation.eulerAngles;
         if (gunObj == null) { return; }
         gunObjRot = gunObj.transform.rotation.eulerAngles;

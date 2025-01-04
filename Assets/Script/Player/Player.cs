@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -5,6 +6,12 @@ using UnityEngine.UI;
 
 public partial class Player : Charactor
 {
+    Vector3 Vector = new Vector3(0, 1.5f, 0);
+    Vector3 movePos;
+    float moveSpeed;
+    Rigidbody rigid;
+    Animation playerAnim;
+
     [Header("무기")]
     [SerializeField] GameObject WeaponPrefab;
     [SerializeField] GameObject[] MobPrefab;//몬스터
@@ -55,6 +62,7 @@ public partial class Player : Charactor
 
     private void Start()
     {
+        playerAnim = GetComponent<Animation>();
         Maincam = Camera.main;
     }
 
@@ -66,7 +74,16 @@ public partial class Player : Charactor
     // Update is called once per frame
     void Update()
     {
+        move();
     
+    }
+
+    private void move()
+    {
+        movePos.x = Input.GetAxisRaw("Horizontal");
+        movePos.z = Input.GetAxisRaw("Vertical");
+
+        transform.position += movePos * moveSpeed * Time.deltaTime;
     }
 
     //상속
@@ -96,7 +113,7 @@ public partial class Player : Charactor
     //}
     //protected virtual void GunFireCheck() //총구 애니메이션 on/off
     //{
-        
+
     //}
 
     //private void AttackModPosition()//애니메이션 실행+ 포지션 전환;

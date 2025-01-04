@@ -94,7 +94,6 @@ GameObject:
   m_Component:
   - component: {fileID: 369101448470390884}
   - component: {fileID: 5533551079827112439}
-  - component: {fileID: 427542639769350931}
   m_Layer: 7
   m_Name: Fab_HandGun
   m_TagString: Untagged
@@ -130,11 +129,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0eb85edfe9bedb44eb603abc2b99b9d9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  WeaponPrefab: {fileID: 0}
-  MobPrefab: []
-  AimtransPos: {fileID: 0}
-  ControlBtn: {fileID: 0}
-  GunEnumType: 1
   gunRazer: 0
   razerOn: 0
   gunHoleObj: {fileID: 4064885540784625271}
@@ -144,27 +138,6 @@ MonoBehaviour:
   gunRotSpeed: 10
   razerEndObj: {fileID: 0}
   angleOn: 0
---- !u!65 &427542639769350931
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4383385586661319670}
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_IsTrigger: 1
-  m_ProvidesContacts: 0
-  m_Enabled: 1
-  serializedVersion: 3
-  m_Size: {x: 2.6755228, y: 1.1047206, z: 0.39071846}
-  m_Center: {x: -0.8377614, y: 0.052360296, z: 0.019040108}
 --- !u!1 &5069946710695946514
 GameObject:
   m_ObjectHideFlags: 0

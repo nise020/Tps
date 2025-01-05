@@ -6,7 +6,7 @@ using UnityEngine.UI;
 
 public class Battel_UI : Actor
 {
-    Camera cam;
+    UnityEngine.Camera cam;
     [SerializeField] Image mainCursur;
     [SerializeField] Button autoBut;
 

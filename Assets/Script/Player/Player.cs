@@ -7,8 +7,8 @@ using UnityEngine.UI;
 public partial class Player : Charactor
 {
     Vector3 Vector = new Vector3(0, 1.5f, 0);
-    Vector3 movePos;
-    float moveSpeed;
+    Vector3 movePos = Vector3.zero;
+    float moveSpeed = 3.0f;
     Rigidbody rigid;
     Animation playerAnim;
 
@@ -25,7 +25,7 @@ public partial class Player : Charactor
     [Header("½ºÅÝ")]
     float burst_RunTime;
     int attack;
-    Camera Maincam;
+    UnityEngine.Camera Maincam;
 
     protected int pluse_bullet;
     protected int RelodingBullet;
@@ -62,8 +62,10 @@ public partial class Player : Charactor
 
     private void Start()
     {
+        Shared.InutTableMgr();
+        Table_Charactor.Info info = Shared.TableMgr.Character.Get(1);
         playerAnim = GetComponent<Animation>();
-        Maincam = Camera.main;
+        Maincam = UnityEngine.Camera.main;
     }
 
 

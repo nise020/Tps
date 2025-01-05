@@ -13,6 +13,7 @@ public static class Shared //¸Þ¸ð
     public static BattelManager BattelMgr;
     public static AtlasManager AtlasMgr;
     public static SoundMgr SoundMgr;
+    public static MainCamera MainCamera;
 
     public static TableMgr TableMgr;
     public static TableMgr InutTableMgr() 

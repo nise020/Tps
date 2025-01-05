@@ -7,7 +7,7 @@ using UnityEngine.Networking;
 public class BattelManager : MonoBehaviour
 {
     //한글 꼭 지우기
-    public List<Player> PLAYER;
+    public Player PLAYER;
     [SerializeField, Tooltip("공격 감지")] public List<bool> AttackSearch;
     [SerializeField] List< Monster> MONSTEROBJ;
 

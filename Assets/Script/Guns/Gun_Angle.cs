@@ -8,25 +8,25 @@ using UnityEngine.UI;
 public partial class Gun : Actor
 {
 
-    [SerializeField, Tooltip("레이저 사이트 길이")] float gunRazer;
-    [SerializeField, Tooltip("레이저 사이트 확인여부")] bool razerOn;
+    [SerializeField] float gunRazer;
+    [SerializeField] bool razerOn;
 
-    [SerializeField, Tooltip("총구")] GameObject gunHoleObj;
-    [SerializeField, Tooltip("총")] GameObject gunObj;
-    [SerializeField, Tooltip("총알")] GameObject bulletObj;
-    [SerializeField, Tooltip("총알 생섭탭")] Transform creatTabObj;
-    [SerializeField, Tooltip("총 회전 감도")] float gunRotSpeed = 0.0f;
-    [SerializeField, Tooltip("레이저 끝부분")] GameObject razerEndObj;
-    [SerializeField, Tooltip("총 회전 On,Off")] bool angleOn = true;
-    Camera cam;
+    [SerializeField] GameObject gunHoleObj;//gunHole
+    [SerializeField] GameObject gunObj;//gun
+    [SerializeField] GameObject bulletObj;//bullet
+    [SerializeField] Transform creatTabObj;
+    [SerializeField] float gunRotSpeed = 0.0f;
+    [SerializeField] GameObject razerEndObj;
+    [SerializeField] bool angleOn = true;
+    UnityEngine.Camera cam;
     LineRenderer gunLazer;
     
     public void attackReady()
     {
         Vector3 pos = beforeMyGunTrs;
         Vector3 rot = beforeMyGunRot;
-        transform.position = new Vector3(pos.x + 2.5f, pos.y, pos.z);
-        transform.rotation = Quaternion.Euler(rot.x, -270, rot.z);
+        //transform.position = new Vector3(pos.x + 2.5f, pos.y, pos.z);
+        //transform.rotation = Quaternion.Euler(rot.x, -270, rot.z);
         angleOn = false;
     }
     protected virtual void GunTargetRaycast() 

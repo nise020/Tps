@@ -6,7 +6,7 @@ using UnityEngine;
 
 public class Cursur : Actor
 {
-    Camera cam;
+    UnityEngine.Camera cam;
     [SerializeField] BoxCollider2D coll;
     [SerializeField] CapsuleCollider2D[] MobColl;//몬스터의 콜라이더
     [SerializeField] GameObject gunHoie;
@@ -25,19 +25,10 @@ public class Cursur : Actor
     {
         gameManager = GameManager.Instanse;
         transform.position = new Vector3(0, 0, 0);
-        cam = Camera.main;
+        cam = UnityEngine.Camera.main;
     }
    
-    private void OnTriggerEnter2D(Collider2D collision)
-    {
-        if (collision.gameObject.tag == "Mob")
-        {
-            Monster monster = collision.gameObject.GetComponent<Monster>();
-            shoot = true;
-            Debug.Log("Hit");
-            CircleColl.enabled = false;
-        }
-    }
+   
 
     void MobHit()
     {

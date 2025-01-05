@@ -12,7 +12,7 @@ public partial class Gun : Actor
 
     private void Start()
     {
-        cam = Camera.main;
+        cam = UnityEngine.Camera.main;
         GunBulletType();
         beforeMyGunTrs = gameObject.transform.position;
         beforeMyGunRot = transform.rotation.eulerAngles;
@@ -52,7 +52,7 @@ public partial class Gun : Actor
 
             if (pos || rot || gun_Rot)
             {
-                transform.position = beforeMyGunTrs;
+                //transform.position = beforeMyGunTrs;
                 transform.rotation = Quaternion.Euler(beforeMyGunRot);
                 gunObj.transform.rotation = Quaternion.Euler(gunObjRot);
                 angleOn = true;

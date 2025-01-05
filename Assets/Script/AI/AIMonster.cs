@@ -63,7 +63,7 @@ public partial class AiMonster : AiBase
     }
     protected override void Create()//»ý¼º
     {
-        target = Shared.BattelMgr.PLAYER;
+        //target = Shared.BattelMgr.PLAYER;
         creatTab = Shared.BattelMgr.creatTab;
         aIState = eAI.Move;
     }

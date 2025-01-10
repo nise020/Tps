@@ -50,9 +50,5 @@ public partial class PhotonMgr : MonoBehaviourPunCallbacks//응답이 오면 그때 처�
 
    }
 
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
+
 }

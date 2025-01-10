@@ -77,7 +77,7 @@ public partial class Player : Charactor
     void Update()
     {
         move();
-    
+        //moveRot();
     }
 
     private void move()
@@ -87,67 +87,6 @@ public partial class Player : Charactor
 
         transform.position += movePos * moveSpeed * Time.deltaTime;
     }
+    
 
-    //상속
-    //추상함수
-    //protected virtual void Reloding()
-    //{
-    //    if (bullet == RelodingBullet) { return; }
-    //    RerodingTimer += Time.deltaTime;
-    //    Debug.Log("Reroding On");
-    //    if (RerodingTimer >= RerodingTime)
-    //    {
-    //        bullet = RelodingBullet;
-    //        RerodingTimer = 0.0f;
-    //        //BulletCount.text = bullet.ToString();//찾을수 없다고 뜸
-
-    //        Debug.Log("Reroding off");
-    //    }
-    //}
-    //protected virtual void CameraAim()//무기 각도 회전
-    //{
-    //    Vector2 mouseWorldPos = Maincam.ScreenToWorldPoint(Input.mousePosition);
-    //    Vector2 playerPos = transform.position;
-    //    Vector2 Pos = mouseWorldPos - playerPos;
-    //    float angle = Quaternion.FromToRotation(transform.localScale.x < 0 ? Vector3.left : Vector3.right, Pos).eulerAngles.z;
-    //    //
-    //    //WeapontransPos.transform.rotation = Quaternion.Euler(0, 0, angle);
-    //}
-    //protected virtual void GunFireCheck() //총구 애니메이션 on/off
-    //{
-
-    //}
-
-    //private void AttackModPosition()//애니메이션 실행+ 포지션 전환;
-    //{
-    //    Vector3 scale = transform.localScale;
-    //    if (Input.GetMouseButton(0) && bullet > 0)//총알이 남아있을 경우
-    //    {
-    //        //transform.position = new Vector3((beforTrs.x + 2.0f), beforTrs.y, beforTrs.z);
-    //        //if (AimtransPos.transform.position.x >= transform.position.x)
-    //        //{
-    //        //    scale.x = Mathf.Abs(scale.x);
-    //        //}
-    //        //else
-    //        //{
-    //        //    scale.x = -Mathf.Abs(scale.x);
-    //        //}
-    //        //CameraAim();
-    //        //GunFireCheck();
-    //        ////Chargeing();
-
-    //    }
-    //    else
-    //    {
-    //        Reloding();
-    //        //transform.position = beforTrs;
-    //        //WeapontransPos.transform.rotation = Quaternion.Euler(0,0,beforAimtransPos.z);
-    //        scale.x = Mathf.Abs(scale.x);
-    //    }
-    //    transform.localScale = scale;
-    //    if (bullet <= 0)
-    //    {
-    //        bullet = 0;
-    //    }
-    //}
 }

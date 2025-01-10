@@ -12,12 +12,14 @@ public partial class Gun : Actor
 
     private void Start()
     {
+        ui = Shared.BattelMgr.ui;
         cam = UnityEngine.Camera.main;
         GunBulletType();
         beforeMyGunTrs = gameObject.transform.position;
         beforeMyGunRot = transform.rotation.eulerAngles;
         if (gunObj == null) { return; }
         gunObjRot = gunObj.transform.rotation.eulerAngles;
+        creatTabObj = Shared.BattelMgr.creatTab;
     }
 
 
@@ -25,45 +27,25 @@ public partial class Gun : Actor
     private void Update()
     {
         bool value1 = Input.GetMouseButton(0);
-        bool value2 = Input.GetKey(KeyCode.Space);
-        if ((value1 || value2))
+        //bool value2 = Input.GetKey(KeyCode.Space);
+        if ((value1))
         {
-            if (angleOn == true)
-            {
-                attackReady();
-            }
-            else if (angleOn == false)
-            {
-                GunTargetRaycast();
-                //Shared.BattelMgr.
-                //razerOn = true;
-            }
+            GunTargetRaycast();
         }
         else if ((Input.GetMouseButtonUp(0)))//위치 초기화,수정 필요(Quaternion)
         {
-            bool pos = Vector3.Distance(transform.position, beforeMyGunTrs) > 0.1f;
-            bool rot = Quaternion.Angle(transform.rotation, Quaternion.Euler(beforeMyGunRot)) > 0.1f;
             bool gun_Rot = Quaternion.Angle(gunObj.transform.rotation, Quaternion.Euler(gunObjRot)) > 0.1f;
 
-            Debug.Log($"{pos}");
-            Debug.Log($"{rot}");
-            Debug.Log($"{gun_Rot}");
-            Debug.Log($"Angle :{Quaternion.Angle(gunObj.transform.rotation, Quaternion.Euler(gunObjRot))}");
-
-            if (pos || rot || gun_Rot)
+            if (gun_Rot)
             {
-                //transform.position = beforeMyGunTrs;
-                transform.rotation = Quaternion.Euler(beforeMyGunRot);
                 gunObj.transform.rotation = Quaternion.Euler(gunObjRot);
-                angleOn = true;
-                razerOn = false;
             }
             else
             {
                 Debug.Log("No changes detected. Skipping reset.");
                 return;
             }
-
+            Shared.BattelMgr.MOVECAM.cameraShakeAnim(false);
         }
         else { return; }
     }

@@ -7,48 +7,71 @@ using UnityEngine.UI;
 
 public partial class Gun : Actor
 {
+    Battel_UI ui;
+
 
     [SerializeField] float gunRazer;
     [SerializeField] bool razerOn;
 
     [SerializeField] GameObject gunHoleObj;//gunHole
     [SerializeField] GameObject gunObj;//gun
-    [SerializeField] GameObject bulletObj;//bullet
+    [SerializeField] Bullet_Player bulletObj;//bullet
     [SerializeField] Transform creatTabObj;
     [SerializeField] float gunRotSpeed = 0.0f;
     [SerializeField] GameObject razerEndObj;
     [SerializeField] bool angleOn = true;
     UnityEngine.Camera cam;
     LineRenderer gunLazer;
-    
-    public void attackReady()
-    {
-        Vector3 pos = beforeMyGunTrs;
-        Vector3 rot = beforeMyGunRot;
-        //transform.position = new Vector3(pos.x + 2.5f, pos.y, pos.z);
-        //transform.rotation = Quaternion.Euler(rot.x, -270, rot.z);
-        angleOn = false;
-    }
+
+    //private void attackReady()
+    //{
+    //    Vector3 pos = beforeMyGunTrs;
+    //    Vector3 rot = beforeMyGunRot;
+    //    //transform.position = new Vector3(pos.x + 2.5f, pos.y, pos.z);
+    //    //transform.rotation = Quaternion.Euler(rot.x, -270, rot.z);
+    //    angleOn = false;
+    //}
     protected virtual void GunTargetRaycast() 
     {
-        Ray ray = cam.ScreenPointToRay(Input.mousePosition);
-        if (Physics.Raycast(ray, out RaycastHit hit))
+        Vector3 AimPos = Shared.BattelMgr.camAim.transform.position;
+        Vector3 AimDirection = Shared.BattelMgr.camAim.transform.forward;
+
+        if (Physics.Raycast(AimPos, AimDirection, out RaycastHit hit))
         {
-            string layerName = LayerMask.LayerToName(hit.collider.gameObject.layer);
-            if (layerName != ("Cover"))//엄폐물에 안 닿기
+            AimGun(hit.point);
+            float value = Vector3.Dot(AimDirection.normalized, gunHoleObj.transform.forward.normalized);
+            if (value < 0.01) 
             {
-                AimGun(hit);
-                GunAttack(hit);
+                GunAttack(AimDirection);//에러 
             }
+
         }
     }
-    public void AimGun(RaycastHit _hit)
+    public void GunAttack(Vector3 _hit)
     {
-        Vector3 targetPos = _hit.point;
-        //Vector3 targetPoint = cam.ScreenToWorldPoint(Input.mousePosition);
-        Vector3 dir = (targetPos - gunObj.transform.position);
+        if (bullet==0) { return; }
+        RapidTimer += Time.deltaTime;
+        if (RapidTimer > RapidTime) 
+        {
+            Shared.BattelMgr.MOVECAM.cameraShakeAnim(true);
+
+            GameObject go = Instantiate(bulletObj.gameObject, gunHoleObj.transform.position,
+                Quaternion.identity, creatTabObj);
+
+            Bullet_Player plBullet = go.GetComponent<Bullet_Player>();
+            plBullet.targetPos = _hit;
+            bullet--;
+            RapidTimer = 0.0f;
+        }
+        //go.transform.position += _hit.point;
+    }
+    public void AimGun(Vector3 _hit)//Aim 오브젝트를 기준으로 바꿔야함
+    {
+        Vector3 targetPos = _hit;
+        Debug.Log($" _hit = {_hit}");
+        Vector3 distanse = (targetPos - gunObj.transform.position);
         Quaternion startRot = Quaternion.LookRotation(gunObj.transform.forward);
-        Quaternion endRot = Quaternion.LookRotation(dir.normalized);
+        Quaternion endRot = Quaternion.LookRotation(distanse.normalized);
         gunObj.transform.rotation = Quaternion.Lerp(startRot, endRot, gunRotSpeed * Time.deltaTime);
 
         // 상하 각도 제한
@@ -56,7 +79,7 @@ public partial class Gun : Actor
         eulerRotation.x = clampAngle(eulerRotation.x, -45f, 45f);
         eulerRotation.z = 0f;
         gunObj.transform.eulerAngles = eulerRotation;
-
+        
         Debug.DrawLine(gunHoleObj.transform.position, targetPos, Color.red);
     }
 
@@ -69,18 +92,6 @@ public partial class Gun : Actor
         return Mathf.Clamp(_angle, _min, _max);
     }
 
-    public void GunAttack(RaycastHit _hit)
-    {
-        if (bullet==0) { return; }
-        //if (_hit.collider == LayerMask.LayerToName("Monster")) {  return; }
-        GameObject go = Instantiate(bulletObj, gunHoleObj.transform.position, 
-            Quaternion.identity, creatTabObj);
-        Bullet_Player plBullet = go.GetComponent<Bullet_Player>();
-        plBullet.targetPos = _hit.point;
-        
-        bullet--;
-        //go.transform.position += _hit.point;
-    }
 
     public void Lazer() 
     {

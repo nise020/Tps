@@ -20,6 +20,8 @@ public partial class Bullet
         }
         else if (_tag == bulletType.Playerbullet)//세분화 필요
         {
+            //Vector3 direction = (_targetPos - _myPos).normalized;
+            _myPos += _targetPos.normalized * _speed * Time.deltaTime;
             //switch (BulletType)
             //{
             //    case GunTags.SR:

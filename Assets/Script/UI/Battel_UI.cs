@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class Battel_UI : Actor
+public class Battel_UI : MonoBehaviour
 {
     UnityEngine.Camera cam;
     [SerializeField] Image mainCursur;
@@ -12,6 +12,8 @@ public class Battel_UI : Actor
 
     [SerializeField] List <Button> playerBtn;
 
+    public Image amiCursur;
+    RectTransform CursurRect;
 
     [SerializeField] Image gameTimerBar;//진행도 바
     [SerializeField] Text minutesImg;//제한시간 글씨(분)
@@ -22,16 +24,22 @@ public class Battel_UI : Actor
     private void Start()
     {
         //gameTimerBar.fillAmount = 0.0f;
+        cam = UnityEngine.Camera.main;
+        CursurRect = GetComponent<RectTransform>();
     }
     private void Update()
     {
         //Timer();
     }
+    private void LateUpdate()
+    {
 
+    }
     public void Onclick() 
     {
         //Shared.BattelMgr.PLAYER[]
     }
+
 
 
     public void Timer()

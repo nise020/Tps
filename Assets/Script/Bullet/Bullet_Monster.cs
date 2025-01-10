@@ -6,7 +6,7 @@ public partial class Bullet_Monster : MonoBehaviour
 {
     Bullet BULLET = new Bullet();
     bulletType BulletType = bulletType.Mobbullet;
-    public Vector3 targetPos;//몬스터가 공격할 목표
+    public Vector3 targetPos;//공격할 목표
 
     [Header("총알 관련 항목")]
     int bulletdamage = 1;

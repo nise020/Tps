@@ -6,6 +6,12 @@ using UnityEngine.Networking;
 
 public class BattelManager : MonoBehaviour
 {
+    public Battel_UI ui;
+    //public Camera playerCam;
+    public MoveCamera MOVECAM;
+    public GameObject camAim;
+
+
     //한글 꼭 지우기
     public Player PLAYER;
     [SerializeField, Tooltip("공격 감지")] public List<bool> AttackSearch;

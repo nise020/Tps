@@ -30,18 +30,18 @@ public class Cursur : Actor
    
    
 
-    void MobHit()
-    {
-        if (Input.GetMouseButton(0)) 
-        {
-            CircleColl.enabled = true;
-        }
-    }
+    //void MobHit()
+    //{
+    //    if (Input.GetMouseButton(0)) 
+    //    {
+    //        CircleColl.enabled = true;
+    //    }
+    //}
     // Update is called once per frame
     void Update()
     {
-        MobHit();
-        sight();
+        //MobHit();
+        //sight();
         //cursurCheck();
     }
     private void sight() 

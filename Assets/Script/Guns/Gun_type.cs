@@ -9,15 +9,18 @@ public partial class Gun : Actor
     protected int bullet;//ÃÑ¾Ë°¹¼ö
     protected int pluse_bullet;//Ãß°¡ÇÒ ÃÑ¾Ë°¹¼ö
     protected int RelodingBullet;
-    protected GunTags GunEnumType;
+    [SerializeField] GunTags GunEnumType;
     protected int srGunDmg;
 
 
     protected float ChargeingTime;//ÀåÀü
     protected float ChargeingTimer = 0.0f;
+
     protected float RerodingTime = 3.0f;
     protected float RerodingTimer = 0.0f;
 
+    protected float RapidTimer = 0.0f;
+    protected float RapidTime = 0.2f;
     //[SerializeField, Tooltip("Auto Butten")] Button AutoBut;
     public void GunBulletType()//ÃÑÀÇ Á¾·ù
     {

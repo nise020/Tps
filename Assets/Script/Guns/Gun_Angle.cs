@@ -42,7 +42,7 @@ public partial class Gun : Actor
             float value = Vector3.Dot(AimDirection.normalized, gunHoleObj.transform.forward.normalized);
             if (value < 0.01) 
             {
-                GunAttack(AimDirection);//에러 
+                GunAttack(gunHoleObj.transform.forward);//에러 
             }
 
         }

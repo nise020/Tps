@@ -10,7 +10,7 @@ public partial class Player : Charactor
     Vector3 movePos = Vector3.zero;
     float moveSpeed = 3.0f;
     Rigidbody rigid;
-    Animation playerAnim;
+    Animator playerAnim;
 
     [Header("¹«±â")]
     [SerializeField] GameObject WeaponPrefab;
@@ -64,7 +64,7 @@ public partial class Player : Charactor
     {
         Shared.InutTableMgr();
         Table_Charactor.Info info = Shared.TableMgr.Character.Get(1);
-        playerAnim = GetComponent<Animation>();
+        playerAnim = GetComponentInChildren<Animator>();
         Maincam = UnityEngine.Camera.main;
     }
 
@@ -77,7 +77,6 @@ public partial class Player : Charactor
     void Update()
     {
         move();
-        //moveRot();
     }
 
     private void move()
@@ -86,7 +85,12 @@ public partial class Player : Charactor
         movePos.z = Input.GetAxisRaw("Vertical");
 
         transform.position += movePos * moveSpeed * Time.deltaTime;
+        Anim();
     }
-    
+    private void Anim() 
+    {
+        playerAnim.SetInteger("Move", (int)movePos.x);
+        //string move = playerAnim.GetLayerName(1);
+    }
 
 }

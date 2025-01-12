@@ -24,14 +24,14 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4064885540784625271}
-  m_LocalRotation: {x: 0, y: -0.7071068, z: 0, w: 0.7071068}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: -0.006, y: 0.132, z: 0.711}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 9141356711389212245}
   m_RootOrder: -1
-  m_LocalEulerAnglesHint: {x: 0, y: -90, z: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!212 &5479479043899250608
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -129,16 +129,19 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0eb85edfe9bedb44eb603abc2b99b9d9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  reLoed: 0
   gunRazer: 0
   razerOn: 0
   gunHoleObj: {fileID: 4064885540784625271}
   gunObj: {fileID: 9141356711389114997}
   bulletObj: {fileID: 8315013135361078018, guid: f91a1c6d90c566a4dbd6048e4c71d4e9, type: 3}
   creatTabObj: {fileID: 0}
-  gunRotSpeed: 10
+  gunRotSpeed: 80
   razerEndObj: {fileID: 0}
   angleOn: 0
-  GunEnumType: 0
+  bullet: 0
+  nowbullet: 0
+  GunEnumType: 2
 --- !u!1001 &9141356711389082837
 PrefabInstance:
   m_ObjectHideFlags: 0

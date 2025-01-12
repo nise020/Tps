@@ -6,7 +6,8 @@ using UnityEngine;
 public partial class Gun : Actor
 {
 
-    protected int bullet;//ÃÑ¾Ë°¹¼ö
+    public int bullet;//ÃÑ¾Ë°¹¼ö
+    public int nowbullet;//ÃÑ¾Ë°¹¼ö
     protected int pluse_bullet;//Ãß°¡ÇÒ ÃÑ¾Ë°¹¼ö
     protected int RelodingBullet;
     [SerializeField] GunTags GunEnumType;
@@ -40,22 +41,10 @@ public partial class Gun : Actor
             //Â÷Áö ºñ·Ê ´ë¹ÌÁö ¹®±¸ Ãß°¡ ÆÈ¿ä
             ChargeingTime = 3.0f;
         }
+        nowbullet = bullet;
         //RerodingBullet = bullet;
     }
     
-    protected virtual void Reloding()
-    {
-        if (bullet == RelodingBullet) { return; }
-        RerodingTimer += Time.deltaTime;
-        //Debug.Log("Reroding On");
-        if (RerodingTimer >= RerodingTime)
-        {
-            bullet = RelodingBullet;
-            RerodingTimer = 0.0f;
-            
 
-            //Debug.Log("Reroding off");
-        }
-    }
 
 }

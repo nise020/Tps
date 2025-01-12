@@ -1746,7 +1746,6 @@ GameObject:
   m_Component:
   - component: {fileID: 1185048758}
   - component: {fileID: 1185048762}
-  - component: {fileID: 1185048761}
   m_Layer: 0
   m_Name: UI Camera
   m_TagString: MainCamera
@@ -1769,14 +1768,6 @@ Transform:
   m_Father: {fileID: 1067667112}
   m_RootOrder: -1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!81 &1185048761
-AudioListener:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1185048757}
-  m_Enabled: 1
 --- !u!20 &1185048762
 Camera:
   m_ObjectHideFlags: 0
@@ -2876,21 +2867,9 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 1111280844}
     - target: {fileID: 1447178636475948384, guid: 5d32d8321e176b944b08f104cbbf3dac, type: 3}
-      propertyPath: m_Enabled
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 1447178636475948384, guid: 5d32d8321e176b944b08f104cbbf3dac, type: 3}
-      propertyPath: GunEnumType
-      value: 2
-      objectReference: {fileID: 0}
-    - target: {fileID: 1447178636475948384, guid: 5d32d8321e176b944b08f104cbbf3dac, type: 3}
       propertyPath: creatTabObj
       value: 
       objectReference: {fileID: 1945716511}
-    - target: {fileID: 1447178636475948384, guid: 5d32d8321e176b944b08f104cbbf3dac, type: 3}
-      propertyPath: gunRotSpeed
-      value: 80
-      objectReference: {fileID: 0}
     - target: {fileID: 2076552735488103266, guid: 5d32d8321e176b944b08f104cbbf3dac, type: 3}
       propertyPath: WeaponPrefab
       value: 
@@ -2926,22 +2905,6 @@ PrefabInstance:
     - target: {fileID: 2739008053356622530, guid: 5d32d8321e176b944b08f104cbbf3dac, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: -9
-      objectReference: {fileID: 0}
-    - target: {fileID: 3288347913406870532, guid: 5d32d8321e176b944b08f104cbbf3dac, type: 3}
-      propertyPath: m_LocalPosition.y
-      value: -3.7499275
-      objectReference: {fileID: 0}
-    - target: {fileID: 3288347913406870532, guid: 5d32d8321e176b944b08f104cbbf3dac, type: 3}
-      propertyPath: m_LocalPosition.z
-      value: -0.012042357
-      objectReference: {fileID: 0}
-    - target: {fileID: 3288347913406870532, guid: 5d32d8321e176b944b08f104cbbf3dac, type: 3}
-      propertyPath: m_LocalRotation.w
-      value: 0.8660254
-      objectReference: {fileID: 0}
-    - target: {fileID: 3288347913406870532, guid: 5d32d8321e176b944b08f104cbbf3dac, type: 3}
-      propertyPath: m_LocalRotation.y
-      value: 0.5
       objectReference: {fileID: 0}
     - target: {fileID: 3288347913406870532, guid: 5d32d8321e176b944b08f104cbbf3dac, type: 3}
       propertyPath: m_LocalEulerAnglesHint.y

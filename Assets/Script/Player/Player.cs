@@ -7,10 +7,14 @@ using UnityEngine.UI;
 public partial class Player : Charactor
 {
     Vector3 Vector = new Vector3(0, 1.5f, 0);
-    Vector3 movePos = Vector3.zero;
+    public Vector3 movePos = Vector3.zero;
     float moveSpeed = 3.0f;
     Rigidbody rigid;
     Animator playerAnim;
+    Gun gun;
+    bool runstate = false;
+
+    [SerializeField] GameObject upperbody;
 
     [Header("무기")]
     [SerializeField] GameObject WeaponPrefab;
@@ -38,6 +42,11 @@ public partial class Player : Charactor
 
     Skill_Add SKILLADD = new Skill_Add();
     protected GunTags GunEnumType;//다른곳에서 전달 받기
+    [Header("Animator Layer")]
+    int baselayerIndex = 0;
+    int attacklayerIndex = 1;
+
+
     protected void LoadSkill() 
     {
         switch (GunEnumType)
@@ -62,10 +71,11 @@ public partial class Player : Charactor
 
     private void Start()
     {
-        Shared.InutTableMgr();
-        Table_Charactor.Info info = Shared.TableMgr.Character.Get(1);
+        gun = GetComponentInChildren<Gun>();
         playerAnim = GetComponentInChildren<Animator>();
         Maincam = UnityEngine.Camera.main;
+        Shared.InutTableMgr();
+        Table_Charactor.Info info = Shared.TableMgr.Character.Get(1);
     }
 
 
@@ -76,26 +86,71 @@ public partial class Player : Charactor
     // Update is called once per frame
     void Update()
     {
+        runcheck();
         move();
+        reloding();
     }
-
     private void move()
     {
         movePos.x = Input.GetAxisRaw("Horizontal");
         movePos.z = Input.GetAxisRaw("Vertical");
-
-        transform.position += movePos * moveSpeed * Time.deltaTime;
-        moveAnim();
+        walkAnim(movePos.z);
     }
-    private void moveAnim() 
+    private void walkAnim(float _move) 
     {
-        if (movePos.x == 0.0) return;
-        playerAnim.SetInteger("Move", (int)movePos.x);
+        if (runstate == false)//Off
+        {
+            playerAnim.SetInteger("Move", (int)_move);
+            transform.position += movePos * moveSpeed * Time.deltaTime;
+        }
+        else //On
+        {
+            playerAnim.SetInteger("Run", (int)_move);
+            transform.position += movePos * (moveSpeed * 2) * Time.deltaTime;
+        }
+    }
+    private void runcheck() 
+    {
+        if (Input.GetKeyDown(KeyCode.Mouse1)) 
+        {
+            runstate = !runstate;
+            playerAnim.SetInteger("Move", 0);
+            playerAnim.SetInteger("Run", 0);
+        }
     }
     public void reloding() 
     {
-        int index = 1;
-        float weight = 1.0f;
-        playerAnim.SetLayerWeight(index, weight);
+        if (gun.nowbullet == gun.bullet) { return; }
+        if (gun.nowbullet == 0 || Input.GetKeyDown(KeyCode.Mouse1))
+        {
+            gun.reLoed = !gun.reLoed;
+        }
+        int index = attacklayerIndex;
+        AnimatorStateInfo animStateInfo  = playerAnim.GetCurrentAnimatorStateInfo(index);
+
+        float time = playerAnim.GetCurrentAnimatorStateInfo(index).normalizedTime;
+
+        if (time <= 1.0f)
+        {
+            playerAnim.SetLayerWeight(index, 1.0f);
+            playerAnim.Play("AttackAnimation", index);
+            playerAnim.SetInteger("Reload", 1);
+        }
+        else if (time >= 1.0f)
+        {
+            playerAnim.SetLayerWeight(index, 0.0f);
+            gun.reLoed = false;
+            StartCoroutine(reLoadout());
+            playerAnim.SetInteger("Reload", 0);
+        }
+    }
+    IEnumerator reLoadout() 
+    {
+        gun.nowbullet = gun.bullet;
+        yield return null;
+    }
+    public void attackRot() 
+    {
+
     }
 }

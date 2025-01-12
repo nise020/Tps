@@ -8,7 +8,7 @@ using UnityEngine.UI;
 public partial class Gun : Actor
 {
     Battel_UI ui;
-
+    public bool reLoed = false;
 
     [SerializeField] float gunRazer;
     [SerializeField] bool razerOn;
@@ -33,7 +33,7 @@ public partial class Gun : Actor
     //}
     protected virtual void GunTargetRaycast() 
     {
-        if (bullet == 0) { return; }
+        if (nowbullet == 0) { return; }
         Vector3 AimPos = Shared.BattelMgr.camAim.transform.position;
         Vector3 AimDirection = Shared.BattelMgr.camAim.transform.forward;
 
@@ -48,13 +48,22 @@ public partial class Gun : Actor
 
         }
     }
-    public void bulletreloed() 
-    {
-        if (bullet == 0 ||Input.GetKey(KeyCode.LeftShift)) 
-        {
-            PLAYER.reloding();
-        }  
-    }
+    //public void reloedcheck() 
+    //{
+    //    if (nowbullet == 0 ||Input.GetKeyDown(KeyCode.Mouse1)) 
+    //    {
+    //        reLoed = !reLoed;
+    //    }
+    //    reloed();
+    //}
+    //public void reloed() 
+    //{
+    //    if (reLoed == true)
+    //    {
+    //        PLAYER.reloding();
+    //    }
+    //    else { return; }
+    //}
     public void GunAttack(Vector3 _hit)
     {
         RapidTimer += Time.deltaTime;
@@ -67,7 +76,7 @@ public partial class Gun : Actor
 
             Bullet_Player plBullet = go.GetComponent<Bullet_Player>();
             plBullet.targetPos = _hit;
-            bullet--;
+            nowbullet--;
             RapidTimer = 0.0f;
         }
         //go.transform.position += _hit.point;

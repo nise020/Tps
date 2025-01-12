@@ -12,10 +12,10 @@ public partial class Gun : Actor
     Player PLAYER;
     private void Start()
     {
+        GunBulletType();
         ui = Shared.BattelMgr.ui;
         PLAYER = GetComponentInParent<Player>();
         cam = UnityEngine.Camera.main;
-        GunBulletType();
         beforeMyGunTrs = gameObject.transform.position;
         beforeMyGunRot = transform.rotation.eulerAngles;
         if (gunObj == null) { return; }
@@ -35,6 +35,7 @@ public partial class Gun : Actor
         }
         else if ((Input.GetMouseButtonUp(0)))//위치 초기화,수정 필요(Quaternion)
         {
+            if (nowbullet == 0) return;
             //bool gun_Rot = Quaternion.Angle(gunObj.transform.rotation, Quaternion.Euler(gunObjRot)) > 0.1f;
 
             //if (gun_Rot)
@@ -49,7 +50,7 @@ public partial class Gun : Actor
             Shared.BattelMgr.MOVECAM.cameraShakeAnim(false);
         }
         else { return; }
-        bulletreloed();
+        //bulletreloed();
     }
 
 

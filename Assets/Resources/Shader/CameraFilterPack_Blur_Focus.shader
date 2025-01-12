@@ -73,7 +73,8 @@ Shader "CameraFilterPack/Blur_Focus"
                 fixed4 tx = 0.0;
 
                 for (float u = 0.0; u < _Size; u += 0.2)
-              
+                {
+    
                     fixed4 a = tex2D(_MainTex, barrelDistortion(uv, u / _Circle));
                     tx += a;
                 }

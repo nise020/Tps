@@ -33,6 +33,7 @@ public partial class Gun : Actor
     //}
     protected virtual void GunTargetRaycast() 
     {
+        if (bullet == 0) { return; }
         Vector3 AimPos = Shared.BattelMgr.camAim.transform.position;
         Vector3 AimDirection = Shared.BattelMgr.camAim.transform.forward;
 
@@ -47,9 +48,15 @@ public partial class Gun : Actor
 
         }
     }
+    public void bulletreloed() 
+    {
+        if (bullet == 0 ||Input.GetKey(KeyCode.LeftShift)) 
+        {
+            PLAYER.reloding();
+        }  
+    }
     public void GunAttack(Vector3 _hit)
     {
-        if (bullet==0) { return; }
         RapidTimer += Time.deltaTime;
         if (RapidTimer > RapidTime) 
         {
@@ -72,26 +79,16 @@ public partial class Gun : Actor
         Vector3 distanse = (targetPos - gunObj.transform.position);
         Quaternion startRot = Quaternion.LookRotation(gunObj.transform.forward);
         Quaternion endRot = Quaternion.LookRotation(distanse.normalized);
-        gunObj.transform.rotation = Quaternion.Lerp(startRot, endRot, gunRotSpeed * Time.deltaTime);
+        gunObj.transform.rotation = Quaternion.Lerp(startRot, endRot, gunRotSpeed);//* Time.deltaTime
 
         // 상하 각도 제한
-        Vector3 eulerRotation = gunObj.transform.eulerAngles;
-        eulerRotation.x = clampAngle(eulerRotation.x, -45f, 45f);
-        eulerRotation.z = 0f;
-        gunObj.transform.eulerAngles = eulerRotation;
+        //Vector3 eulerRotation = gunObj.transform.eulerAngles;
+        //eulerRotation.x = clampAngle(eulerRotation.x, -45f, 45f);
+        //eulerRotation.z = 0f;
+        //gunObj.transform.eulerAngles = eulerRotation;
         
         Debug.DrawLine(gunHoleObj.transform.position, targetPos, Color.red);
     }
-
-    private float clampAngle(float _angle, float _min, float _max)
-    {
-        if (_angle > 180) // -180 ~ 180도로 변환
-        {
-            _angle -= 360; 
-        }
-        return Mathf.Clamp(_angle, _min, _max);
-    }
-
 
     public void Lazer() 
     {

@@ -11,6 +11,8 @@ public class BattelManager : MonoBehaviour
     public MoveCamera MOVECAM;
     public GameObject camAim;
 
+    public bool GameOver = false;
+
 
     //한글 꼭 지우기
     public Player PLAYER;
@@ -96,7 +98,10 @@ public class BattelManager : MonoBehaviour
             spownListArrange();
             spownTimer = 0.0f;
         }
-
+        //float ScaleTime = 0.2f;
+        //float SlowTime = 3f;
+        //float SlowTimeTimeConvertSlow = ScaleTime * SlowTime;
+        //Shared.MainCamera.ZoomEndStage(0f, -1.5f, 2f, SlowTime - 1.5f, 1f, Vector3.zero);
     }
 
     private void Awake()

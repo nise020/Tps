@@ -85,12 +85,17 @@ public partial class Player : Charactor
         movePos.z = Input.GetAxisRaw("Vertical");
 
         transform.position += movePos * moveSpeed * Time.deltaTime;
-        Anim();
+        moveAnim();
     }
-    private void Anim() 
+    private void moveAnim() 
     {
+        if (movePos.x == 0.0) return;
         playerAnim.SetInteger("Move", (int)movePos.x);
-        //string move = playerAnim.GetLayerName(1);
     }
-
+    public void reloding() 
+    {
+        int index = 1;
+        float weight = 1.0f;
+        playerAnim.SetLayerWeight(index, weight);
+    }
 }

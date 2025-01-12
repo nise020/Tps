@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEditor;
 using UnityEngine;
 
-public class MainCamera : MonoBehaviour
+public partial class MainCamera : MonoBehaviour
 {
     // Update is called once per frame
     void Update()
@@ -16,7 +16,15 @@ public class MainCamera : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.Space)) 
         {
-            Shared.ShakeCamera.Shake(0);
+            //Shared.ShakeCamera.Shake(0);
+            camZoom();
         }
+    }
+    public void camZoom() 
+    {
+        float ScaleTime = 0.2f;
+        float SlowTime = 3f;
+        float SlowTimeTimeConvertSlow = ScaleTime * SlowTime;
+        ZoomEndStage(0f, -1.5f, 2f, SlowTime - 1.5f, 1f, Vector3.zero);
     }
 }

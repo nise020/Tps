@@ -14,7 +14,7 @@ public static class Shared //¸Þ¸ð
     public static AtlasManager AtlasMgr;
     public static SoundMgr SoundMgr;
     public static ShakeCamera ShakeCamera;
-
+    public static MainCamera MainCamera;
     public static TableMgr TableMgr;
     public static TableMgr InutTableMgr() 
     {

@@ -102,6 +102,6 @@ public partial class MoveCamera : MonoBehaviour
             Cursor.visible = true;
         }
     }
-
+    //poton transform
 
 }

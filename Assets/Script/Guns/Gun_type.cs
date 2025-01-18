@@ -21,7 +21,7 @@ public partial class Gun : Actor
     protected float RerodingTimer = 0.0f;
 
     protected float RapidTimer = 0.0f;
-    protected float RapidTime = 0.2f;
+    protected float RapidTime = 0.1f;
     //[SerializeField, Tooltip("Auto Butten")] Button AutoBut;
     public void GunBulletType()//ÃÑÀÇ Á¾·ù
     {

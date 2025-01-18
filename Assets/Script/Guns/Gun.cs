@@ -1,3 +1,4 @@
+using Photon.Pun.Demo.Asteroids;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -9,49 +10,38 @@ public partial class Gun : Actor
     Vector3 beforeMyGunTrs;//해당스크립트의 pos
     Vector3 beforeMyGunRot;//해당스크립트의 rot
     Vector3 gunObjRot;//총 오브젝트의 pos
+
+    public Dictionary<int, GameObject> bulletData = new Dictionary<int, GameObject>();
+    public int bulletcount;
+
     Player PLAYER;
+    GameObject playerUpperBody;
     private void Start()
     {
         GunBulletType();
         ui = Shared.BattelMgr.ui;
         PLAYER = GetComponentInParent<Player>();
+        playerUpperBody = PLAYER.playerSpine;
         cam = UnityEngine.Camera.main;
         beforeMyGunTrs = gameObject.transform.position;
         beforeMyGunRot = transform.rotation.eulerAngles;
-        if (gunObj == null) { return; }
+
         gunObjRot = gunObj.transform.rotation.eulerAngles;
-        creatTabObj = Shared.BattelMgr.creatTab;
+        //creatTabObj = Shared.BattelMgr.creatTab;
+
+        creatbullet();
     }
-
-
-    // Update is called once per frame
-    private void Update()
+    public void creatbullet() 
     {
-        bool value1 = Input.GetMouseButton(0);
-        //bool value2 = Input.GetKey(KeyCode.Space);
-        if ((value1))
+        while (bulletcount < bullet) 
         {
-            GunTargetRaycast();
+            GameObject go = Instantiate(bulletObj.gameObject, gunHoleObj.transform.position,
+                    Quaternion.identity, magazine.transform);//Creat bullet
+            go.SetActive(false);
+            bulletData.Add(bulletcount, go);
+            bulletcount++;
         }
-        else if ((Input.GetMouseButtonUp(0)))//위치 초기화,수정 필요(Quaternion)
-        {
-            if (nowbullet == 0) return;
-            //bool gun_Rot = Quaternion.Angle(gunObj.transform.rotation, Quaternion.Euler(gunObjRot)) > 0.1f;
-
-            //if (gun_Rot)
-            //{
-            //    gunObj.transform.rotation = Quaternion.Euler(gunObjRot);
-            //}
-            //else
-            //{
-            //    Debug.Log("No changes detected. Skipping reset.");
-            //    return;
-            //}
-            Shared.BattelMgr.MOVECAM.cameraShakeAnim(false);
-        }
-        else { return; }
-        //bulletreloed();
+        bulletcount = 0;
     }
-
 
 }

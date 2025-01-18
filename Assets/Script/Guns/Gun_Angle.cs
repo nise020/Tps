@@ -16,7 +16,7 @@ public partial class Gun : Actor
     [SerializeField] GameObject gunHoleObj;//gunHole
     [SerializeField] GameObject gunObj;//gun
     [SerializeField] Bullet_Player bulletObj;//bullet
-    [SerializeField] Transform creatTabObj;
+    [SerializeField] GameObject magazine;
     [SerializeField] float gunRotSpeed = 0.0f;
     [SerializeField] GameObject razerEndObj;
     [SerializeField] bool angleOn = true;
@@ -31,64 +31,68 @@ public partial class Gun : Actor
     //    //transform.rotation = Quaternion.Euler(rot.x, -270, rot.z);
     //    angleOn = false;
     //}
-    protected virtual void GunTargetRaycast() 
+    //protected virtual void GunTargetRaycast() 
+    //{
+    //    if (nowbullet == 0) { return; }
+    //    Vector3 AimPos = Shared.BattelMgr.camAim.transform.position;
+    //    Vector3 AimDirection = Shared.BattelMgr.camAim.transform.forward;
+
+    //    if (Physics.Raycast(AimPos, AimDirection, out RaycastHit hit))
+    //    {
+    //        //AimGun(hit.point);
+    //        float value = Vector3.Dot(AimDirection.normalized, gunHoleObj.transform.forward.normalized);
+    //        if (value <= 0.01)
+    //        {
+    //            GunAttack(gunHoleObj.transform.forward);//에러 
+    //        }
+    //        else { Debug.Log($"{value}"); }
+
+    //    }
+    //}
+
+    public void reloed()
     {
-        if (nowbullet == 0) { return; }
-        Vector3 AimPos = Shared.BattelMgr.camAim.transform.position;
-        Vector3 AimDirection = Shared.BattelMgr.camAim.transform.forward;
-
-        if (Physics.Raycast(AimPos, AimDirection, out RaycastHit hit))
+        for (int iNum = 0; iNum < bulletData.Count; iNum++) 
         {
-            AimGun(hit.point);
-            float value = Vector3.Dot(AimDirection.normalized, gunHoleObj.transform.forward.normalized);
-            if (value < 0.01) 
+            if (bulletData[iNum].activeSelf)
             {
-                GunAttack(gunHoleObj.transform.forward);//에러 
+                bulletData[iNum].SetActive(false);
             }
-
+            else { return; }
         }
     }
-    //public void reloedcheck() 
-    //{
-    //    if (nowbullet == 0 ||Input.GetKeyDown(KeyCode.Mouse1)) 
-    //    {
-    //        reLoed = !reLoed;
-    //    }
-    //    reloed();
-    //}
-    //public void reloed() 
-    //{
-    //    if (reLoed == true)
-    //    {
-    //        PLAYER.reloding();
-    //    }
-    //    else { return; }
-    //}
-    public void GunAttack(Vector3 _hit)
+    public void GunAttack(Vector3 _pos)
     {
         RapidTimer += Time.deltaTime;
-        if (RapidTimer > RapidTime) 
+        if (RapidTimer > RapidTime)
         {
-            Shared.BattelMgr.MOVECAM.cameraShakeAnim(true);
+            //GameObject go = Instantiate(bulletObj.gameObject, gunHoleObj.transform.position,
+            //    Quaternion.identity, creatTabObj);//Creat bullet
+            //Instantiate or SetActive
 
-            GameObject go = Instantiate(bulletObj.gameObject, gunHoleObj.transform.position,
-                Quaternion.identity, creatTabObj);
-
+            GameObject go = bulletData[bulletcount];
+            go.transform.position = gunHoleObj.transform.position;
             Bullet_Player plBullet = go.GetComponent<Bullet_Player>();
-            plBullet.targetPos = _hit;
+            plBullet.targetPos = _pos;
+            go.SetActive(true);
+
+            bulletcount++;
             nowbullet--;
+
             RapidTimer = 0.0f;
+            Shared.BattelMgr.MOVECAM.cameraShakeAnim(true);//Animation
         }
         //go.transform.position += _hit.point;
     }
-    public void AimGun(Vector3 _hit)//Aim 오브젝트를 기준으로 바꿔야함
+    public Quaternion AimGun(GameObject _player,Vector3 _hitPos)//Aim 오브젝트를 기준으로 바꿔야함
     {
-        Vector3 targetPos = _hit;
-        Debug.Log($" _hit = {_hit}");
+        Vector3 targetPos = _hitPos;
+        Debug.Log($" _hit = {_hitPos}");
         Vector3 distanse = (targetPos - gunObj.transform.position);
         Quaternion startRot = Quaternion.LookRotation(gunObj.transform.forward);
         Quaternion endRot = Quaternion.LookRotation(distanse.normalized);
-        gunObj.transform.rotation = Quaternion.Lerp(startRot, endRot, gunRotSpeed);//* Time.deltaTime
+        //gunObj.transform.rotation = Quaternion.Lerp(startRot, endRot, gunRotSpeed);//* Time.deltaTime
+        _player.transform.localRotation = Quaternion.Lerp(startRot, endRot, gunRotSpeed);//* Time.deltaTime
 
         // 상하 각도 제한
         //Vector3 eulerRotation = gunObj.transform.eulerAngles;
@@ -97,6 +101,7 @@ public partial class Gun : Actor
         //gunObj.transform.eulerAngles = eulerRotation;
         
         Debug.DrawLine(gunHoleObj.transform.position, targetPos, Color.red);
+        return _player.transform.localRotation;
     }
 
     public void Lazer() 

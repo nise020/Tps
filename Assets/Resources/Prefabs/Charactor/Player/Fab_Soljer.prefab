@@ -46,7 +46,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   movePos: {x: 0, y: 0, z: 0}
-  upperbody: {fileID: 4580540782300036948}
+  playerSpine: {fileID: 4580540782300036948}
   WeaponPrefab: {fileID: 4383385586661319670, guid: 494318586390ca24b9f2bd507d02ccf8, type: 3}
   MobPrefab: []
   AimtransPos: {fileID: 0}
@@ -170,12 +170,20 @@ PrefabInstance:
       value: -1
       objectReference: {fileID: 0}
     - target: {fileID: 369101448470390884, guid: 494318586390ca24b9f2bd507d02ccf8, type: 3}
-      propertyPath: m_LocalPosition.x
-      value: 0
+      propertyPath: m_LocalRotation.w
+      value: 0.4260398
       objectReference: {fileID: 0}
     - target: {fileID: 369101448470390884, guid: 494318586390ca24b9f2bd507d02ccf8, type: 3}
-      propertyPath: m_LocalPosition.z
-      value: 0
+      propertyPath: m_LocalRotation.x
+      value: -0.42604056
+      objectReference: {fileID: 0}
+    - target: {fileID: 369101448470390884, guid: 494318586390ca24b9f2bd507d02ccf8, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0.56434906
+      objectReference: {fileID: 0}
+    - target: {fileID: 369101448470390884, guid: 494318586390ca24b9f2bd507d02ccf8, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0.564349
       objectReference: {fileID: 0}
     - target: {fileID: 369101448470390884, guid: 494318586390ca24b9f2bd507d02ccf8, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
@@ -188,6 +196,10 @@ PrefabInstance:
     - target: {fileID: 369101448470390884, guid: 494318586390ca24b9f2bd507d02ccf8, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1515900610018163350, guid: 494318586390ca24b9f2bd507d02ccf8, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0.692
       objectReference: {fileID: 0}
     - target: {fileID: 4383385586661319670, guid: 494318586390ca24b9f2bd507d02ccf8, type: 3}
       propertyPath: m_Name

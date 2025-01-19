@@ -16,6 +16,7 @@ public class BattelManager : MonoBehaviour
 
     //한글 꼭 지우기
     public Player PLAYER;
+    [SerializeField] GameObject startPointObj;
     [SerializeField, Tooltip("공격 감지")] public List<bool> AttackSearch;
     [SerializeField] List< Monster> MONSTEROBJ;
 
@@ -44,7 +45,10 @@ public class BattelManager : MonoBehaviour
     float spownTime = 1.0f;
     int MobId = 0;
     int stageLevel = 0;
-
+    //private void Start()
+    //{
+    //   // GameObject go = Instantiate(PLAYER.gameObject, startPointObj.transform.position, Quaternion.identity);
+    //}
     private void Update()
     {
         Timer();

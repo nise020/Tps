@@ -6,7 +6,16 @@ public enum bulletType
         Playerbullet,
         MobGranad,
 }
-
+public enum PlayerAnimParameters 
+{
+    Walk,
+    Run,
+    Reload,
+    Attack,
+    Back,
+    Close,
+    Shit
+}
 public enum eState 
 {
     //HP,//Ã¼·Â

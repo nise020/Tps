@@ -18,8 +18,8 @@ public partial class Player : Charactor
 
     [Header("무기")]
     [SerializeField] GameObject WeaponPrefab;
-    [SerializeField] GameObject[] MobPrefab;//몬스터
-    //[SerializeField] GameObject GunHoleObj;//총구
+    [SerializeField] GameObject shortSword;
+
     //[SerializeField] Transform WeapontransPos;//무기
 
     [Header("조준점")]
@@ -42,10 +42,9 @@ public partial class Player : Charactor
 
     Skill_Add SKILLADD = new Skill_Add();
     protected GunTags GunEnumType;//다른곳에서 전달 받기
-    [Header("Animator Layer")]
-    int baselayerIndex = 0;
-    int attacklayerIndex = 1;
 
+    
+    //AnimatorStateInfo animStateInfo;
 
     protected void LoadSkill() 
     {
@@ -95,14 +94,17 @@ public partial class Player : Charactor
         {
             attack();
         }
-        else if(value2) 
+        else if(value2 || gun.nowbullet <= 0) 
         {
+            string text = ($"{PlayerAnimParameters.Attack}");
             Shared.BattelMgr.MOVECAM.cameraShakeAnim(false);
-            playerAnim.SetInteger("Attack", 0);
-            playerAnim.SetLayerWeight(attacklayerIndex, 0.0f);
+            playerAnim.SetInteger(text, 0);
+            //playerAnim.SetLayerWeight(attacklayerIndex, 0.0f);
         }
         reloding();
-
+        closeAttack(closeCheck);
+        shitdownCheak();
+        //Time.timeScale = 0;//Faraim Speed up,Down
     }
 
     private void attack()
@@ -116,13 +118,15 @@ public partial class Player : Charactor
         {
             playerSpine.transform.localRotation = Quaternion.Euler(AimPos.normalized);//check
             float value = Vector3.Dot(AimDirection.normalized, playerSpine.transform.forward.normalized);
-            if (value <= 1.0f && gun.reLoed == false && gun.nowbullet > 0)
+            if (value <= 1.0f && gun.reLoed == false && gun.nowbullet >= 0)
             {
+                string text = ($"{PlayerAnimParameters.Attack}");
+
                 playerAnim.SetLayerWeight(attacklayerIndex, 1.0f);
-                playerAnim.SetInteger("Attack", 1);
+                playerAnim.SetInteger(text, 1);
                 gun.GunAttack(AimDirection);//에러
             }
-            else if (gun.reLoed == true || gun.nowbullet <= 0) 
+            else if (gun.reLoed == true || gun.nowbullet <= 0)
             {
                 Shared.BattelMgr.MOVECAM.cameraShakeAnim(false);
             }
@@ -130,11 +134,13 @@ public partial class Player : Charactor
     }
     public void reloding() 
     {
-        if ((Input.GetKeyDown(KeyCode.Mouse1) || gun.nowbullet <= 0 )&& !gun.reLoed)
+        bool cheack = Input.GetKeyDown(KeyCode.R);
+        if ((cheack || gun.nowbullet <= 0 )&& !gun.reLoed)
         {
-            gun.reLoed = !gun.reLoed;
+            string text = ($"{PlayerAnimParameters.Reload}");
+            gun.reLoed = true;
             playerAnim.SetLayerWeight(attacklayerIndex, 1.0f);
-            playerAnim.SetInteger("Reload", 1);    
+            playerAnim.SetInteger(text, 1);    
         }
 
         if (gun.reLoed)
@@ -145,12 +151,41 @@ public partial class Player : Charactor
 
             if (time >= 1.0f && animStateInfo.IsName("reloading"))
             {
+                string text = ($"{PlayerAnimParameters.Reload}");
                 StartCoroutine(reLoadout(index));
-                playerAnim.SetInteger("Reload", 0);
+                playerAnim.SetInteger(text, 0);
             }
-            else { return; }
+            else 
+            {
+                return; 
+            }
         }
 
+    }
+    public void closeAttack(bool _check)//bug check
+    {
+        if (!_check) { return; }
+        bool cheack = Input.GetKeyDown(KeyCode.Q);
+        string text = ($"{PlayerAnimParameters.Close}");
+        if (cheack) 
+        {
+            playerAnim.SetLayerWeight(attacklayerIndex, 1.0f);
+            playerAnim.SetInteger(text, 1);
+            Debug.Log(text);
+        }
+
+        int index = shortSwordIndex;
+
+        AnimatorStateInfo animStateInfo = playerAnim.GetCurrentAnimatorStateInfo(index);
+        float time = animStateInfo.normalizedTime;
+
+        if (time >= 1.0f && animStateInfo.IsName("closeAttack")) 
+        {
+            playerAnim.SetInteger(text, 0);
+            playerAnim.SetLayerWeight(attacklayerIndex, 0.0f);
+            Debug.Log($"{text} end");
+        }
+        else { return; }
     }
     IEnumerator reLoadout(int _index) 
     {
@@ -161,41 +196,8 @@ public partial class Player : Charactor
         yield return null;
     }
 
-    private void move()
-    {
-        movePos.x = Input.GetAxisRaw("Horizontal");
-        movePos.z = Input.GetAxisRaw("Vertical");
-        walkAnim(movePos.z);
-    }
-    private void walkAnim(float _move) 
-    {
-        if (runstate == false && _move > 0)//Off
-        {
-            playerAnim.SetInteger("Move", (int)_move);
-            transform.position += movePos * moveSpeed * Time.deltaTime;
-        }
-        else if (runstate == false && _move < 0) 
-        {
-            playerAnim.SetInteger("Back", (int)_move);
-            transform.position += movePos * moveSpeed * Time.deltaTime;
-        }
-        else //On
-        {
-            playerAnim.SetInteger("Run", (int)_move);
-            transform.position += movePos * (moveSpeed * 2) * Time.deltaTime;
-        }
-    }
-    private void runcheck() 
-    {
-        if (Input.GetKeyDown(KeyCode.Mouse1))
-        {
-            runstate = !runstate;
-            playerAnim.SetInteger("Back", 0);
-            playerAnim.SetInteger("Move", 0);
-            playerAnim.SetInteger("Run", 0);
-        }
-        else { return; }
-    }
+    
+    
     public Quaternion attackRot(Vector3 _pos,Quaternion _rot) 
     {
         _rot = Quaternion.Euler(_pos); 

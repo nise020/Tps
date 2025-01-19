@@ -9,6 +9,7 @@ public partial class Player : Charactor
     int attacklayerIndex = 1;
     int shortSwordIndex = 2;
     [SerializeField] bool shitCheack = false;
+     bool shitOn = false;
     [SerializeField] bool closeCheck = false;
     private void move()
     {
@@ -91,10 +92,10 @@ public partial class Player : Charactor
         playerAnim.SetInteger(text2, 0);
         playerAnim.SetInteger(text3, 0);
     }
-    private void shitdownAnim(bool _cheak)
+    private void shitdownAnim(bool _check)
     {
         string text = ($"{PlayerAnimParameters.Shit}");
-        if (_cheak)
+        if (_check)
         {
             playerAnim.SetInteger(text, 1);
         }
@@ -113,5 +114,40 @@ public partial class Player : Charactor
             //playerAnim.SetLayerWeight(attacklayerIndex, 1.0f);
         }
     }
+    private void closeAttackCheack() 
+    {
+        bool check = Input.GetKeyDown(KeyCode.Q);
+        if (check)
+        {
+            closeCheck = !closeCheck;
+            //playerAnim.SetLayerWeight(attacklayerIndex, 1.0f);
+        }
+        closeAttack(closeCheck);
+    }
+    public void closeAttack(bool _check)//bug check
+    {
+        string text1 = ($"{PlayerAnimParameters.Close}");
+        string text2 = ($"{onesPractice.closeAttack}");
 
+        if (_check)
+        {
+            playerAnim.SetLayerWeight(attacklayerIndex, 1.0f);
+            playerAnim.SetInteger(text1, 1);
+            _check = false;
+        }
+
+        int index = shortSwordIndex;
+
+        AnimatorStateInfo animStateInfo = playerAnim.GetCurrentAnimatorStateInfo(index);
+        float time = animStateInfo.normalizedTime;//불러오지를 못함
+
+        Debug.Log($"{time}");
+        if (time >= 1.0f && animStateInfo.IsName(text2))
+        {
+            playerAnim.SetLayerWeight(attacklayerIndex, 0.0f);
+            playerAnim.SetInteger(text1, 0);
+            Debug.Log($"{text1} end");
+        }
+        else { return; }
+    }
 }

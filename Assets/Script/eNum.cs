@@ -16,6 +16,23 @@ public enum PlayerAnimParameters
     Close,
     Shit
 }
+public enum onesPractice
+{
+    closeAttack,
+    reloading
+}
+public enum CameraAnim 
+{
+    Shake
+}
+public enum Playerstate
+{
+
+}
+public enum Characterstate 
+{
+
+}
 public enum eState 
 {
     //HP,//Ã¼·Â

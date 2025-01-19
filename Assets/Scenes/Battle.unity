@@ -1455,8 +1455,8 @@ MonoBehaviour:
   rotSensitive: 5
   limitRot: 22.7
   rotTime: 1.5
-  camRotOn: 1
-  attackModeOn: 0
+  camRotOn: 0
+  attackModeOn: 1
 --- !u!114 &963194233
 MonoBehaviour:
   m_ObjectHideFlags: 0

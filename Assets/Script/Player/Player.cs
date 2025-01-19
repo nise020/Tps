@@ -102,7 +102,7 @@ public partial class Player : Charactor
             //playerAnim.SetLayerWeight(attacklayerIndex, 0.0f);
         }
         reloding();
-        closeAttack(closeCheck);
+        closeAttackCheack();
         shitdownCheak();
         //Time.timeScale = 0;//Faraim Speed up,Down
     }
@@ -148,8 +148,9 @@ public partial class Player : Charactor
             int index = attacklayerIndex;
             AnimatorStateInfo animStateInfo = playerAnim.GetCurrentAnimatorStateInfo(index);
             float time = animStateInfo.normalizedTime;
-
-            if (time >= 1.0f && animStateInfo.IsName("reloading"))
+            string text2 = ($"{onesPractice.reloading}");//여기는 제대로 동작함
+            Debug.Log($"{time}");
+            if (time >= 1.0f && animStateInfo.IsName(text2))
             {
                 string text = ($"{PlayerAnimParameters.Reload}");
                 StartCoroutine(reLoadout(index));
@@ -162,31 +163,7 @@ public partial class Player : Charactor
         }
 
     }
-    public void closeAttack(bool _check)//bug check
-    {
-        if (!_check) { return; }
-        bool cheack = Input.GetKeyDown(KeyCode.Q);
-        string text = ($"{PlayerAnimParameters.Close}");
-        if (cheack) 
-        {
-            playerAnim.SetLayerWeight(attacklayerIndex, 1.0f);
-            playerAnim.SetInteger(text, 1);
-            Debug.Log(text);
-        }
-
-        int index = shortSwordIndex;
-
-        AnimatorStateInfo animStateInfo = playerAnim.GetCurrentAnimatorStateInfo(index);
-        float time = animStateInfo.normalizedTime;
-
-        if (time >= 1.0f && animStateInfo.IsName("closeAttack")) 
-        {
-            playerAnim.SetInteger(text, 0);
-            playerAnim.SetLayerWeight(attacklayerIndex, 0.0f);
-            Debug.Log($"{text} end");
-        }
-        else { return; }
-    }
+ 
     IEnumerator reLoadout(int _index) 
     {
         gun.nowbullet = gun.bullet;

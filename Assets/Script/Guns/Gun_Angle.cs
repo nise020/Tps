@@ -13,7 +13,7 @@ public partial class Gun : Actor
     [SerializeField] float gunRazer;
     [SerializeField] bool razerOn;
 
-    [SerializeField] GameObject gunHoleObj;//gunHole
+    public GameObject gunHoleObj;//gunHole
     [SerializeField] GameObject gunObj;//gun
     [SerializeField] Bullet_Player bulletObj;//bullet
     [SerializeField] GameObject magazine;

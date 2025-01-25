@@ -5,6 +5,7 @@ using UnityEngine;
 public partial class MoveCamera : MonoBehaviour
 {
     GameObject PlayerObj;
+    GameObject attackAim;
     Vector3 camPos;
     UnityEngine.Camera cam;
     public Animation Shake;
@@ -17,6 +18,7 @@ public partial class MoveCamera : MonoBehaviour
 
     public float rotSensitive = 10.0f;
     public float limitRot = 55.0f;
+    public float attacklimitRot = 55.0f;
     public float rotTime = 1.5f;
 
     public bool camRotOn = false;
@@ -62,8 +64,20 @@ public partial class MoveCamera : MonoBehaviour
     {
         if (attackModeOn == true)
         {
-            gameObject.transform.localRotation = new Quaternion();
-            gameObject.transform.localPosition = PlayerObj.transform.position + camPos;
+            float xRot = Input.GetAxis("Mouse X") * rotSensitive;
+            float yRot = Input.GetAxis("Mouse Y") * rotSensitive;
+
+            xValue += xRot;
+            yValue -= yRot;
+
+            Quaternion rotation = Quaternion.Euler(yValue, xValue, 0);
+            yValue = Mathf.Clamp(yValue, -attacklimitRot, attacklimitRot);
+
+            gameObject.transform.localPosition = PlayerObj.transform.position + rotation * camPos;
+            gameObject.transform.rotation = rotation;
+            PlayerObj.transform.rotation = rotation;
+            //gameObject.transform.localRotation = new Quaternion();
+
         }
         else { return; }
     }
@@ -74,6 +88,7 @@ public partial class MoveCamera : MonoBehaviour
         //Cursor.lockState = CursorLockMode.Locked;
         //Cursor.visible = false;
         PlayerObj = Shared.BattelMgr.PLAYER.gameObject;
+        attackAim = Shared.BattelMgr.camAim;
     }
 
     

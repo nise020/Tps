@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class State 
 {
-    protected int attack;//공격력
-    protected int defense;//방어력
-    protected float movespeed;//이동속도
+    public int attack;//공격력
+    public int defense;//방어력
+    public float movespeed;//이동속도
 }

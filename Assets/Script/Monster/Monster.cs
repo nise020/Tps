@@ -7,6 +7,7 @@ public abstract partial class Monster : Charactor
 {
     protected virtual void Start()
     {
+        Mobanimator = GetComponentInChildren<Animator>();
         NowHp();
         creatTabObj = Shared.BattelMgr.creatTab;//¿ÀºêÁ§Æ® »ý¼º ÅÇ(ex.ÃÑ¾Ë)
         mobRigid = GetComponent<Rigidbody>();

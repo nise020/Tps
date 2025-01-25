@@ -39,7 +39,7 @@ public abstract partial class Monster : Charactor
         _value = Random.Range(0, count);//랜덤으로 타겟 번호 선정
     }
 
-    public void Dead() 
+    protected override void Dead() 
     {
         Shared.BattelMgr.monsterData.Remove(mobKey);
         Destroy(this);

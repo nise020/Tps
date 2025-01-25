@@ -14,9 +14,20 @@ public enum PlayerAnimParameters
     Attack,
     Back,
     Close,
-    Shit
+    Shit,
+    Right,
+    Left
 }
-public enum onesPractice
+public enum MobAnim
+{
+    Null,
+    Attack,
+    Serch,
+    AttackDilray,
+    Move
+}
+
+public enum animInfoName
 {
     closeAttack,
     reloading
@@ -27,11 +38,17 @@ public enum CameraAnim
 }
 public enum Playerstate
 {
-
+    Null,
+    Run,
+    CloseAttack,
+    ShitDown,
+    Reload,
+    Attack,
 }
 public enum Characterstate 
 {
-
+    Health,
+    Dead
 }
 public enum eState 
 {

@@ -16,13 +16,14 @@ public class BattelManager : MonoBehaviour
 
     //한글 꼭 지우기
     public Player PLAYER;
+    public GameObject attackAim;
     [SerializeField] GameObject startPointObj;
     [SerializeField, Tooltip("공격 감지")] public List<bool> AttackSearch;
     [SerializeField] List< Monster> MONSTEROBJ;
 
     [SerializeField] DefoltMob defoltMob;
     [SerializeField] FlyingMob flyingMob;
-    [SerializeField] HugeMob hugeMob;
+    //[SerializeField] SphereMob sphereMob;
 
     [SerializeField, Tooltip("엄페물")] List<GameObject> COVER;
     [SerializeField, Tooltip("Stage Level에 따른 Stage 스폰 위치")] List<GameObject> STAGE;
@@ -80,7 +81,7 @@ public class BattelManager : MonoBehaviour
                 GO = flyingMob.gameObject;
                 break;
             case "SpawnHuge":
-                GO = hugeMob.gameObject;
+                //GO = hugeMob.gameObject;
                 break;
         }
 

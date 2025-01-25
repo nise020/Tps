@@ -15,13 +15,13 @@ public partial class Gun : Actor
     public int bulletcount;
 
     Player PLAYER;
-    GameObject playerUpperBody;
+    //GameObject playerUpperBody;
     private void Start()
     {
         GunBulletType();
         ui = Shared.BattelMgr.ui;
         PLAYER = GetComponentInParent<Player>();
-        playerUpperBody = PLAYER.playerSpine;
+        //playerUpperBody = PLAYER.playerSpine;
         cam = UnityEngine.Camera.main;
         beforeMyGunTrs = gameObject.transform.position;
         beforeMyGunRot = transform.rotation.eulerAngles;

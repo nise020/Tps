@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using static System.Net.Mime.MediaTypeNames;
 
 public partial class Player : Charactor
 {
@@ -14,7 +15,7 @@ public partial class Player : Charactor
     Gun gun;
     bool runstate = false;
 
-    public GameObject playerSpine;
+    //public GameObject playerSpine;
 
     [Header("무기")]
     [SerializeField] GameObject WeaponPrefab;
@@ -42,7 +43,7 @@ public partial class Player : Charactor
 
     Skill_Add SKILLADD = new Skill_Add();
     protected GunTags GunEnumType;//다른곳에서 전달 받기
-
+    string Name;
     
     //AnimatorStateInfo animStateInfo;
 
@@ -75,6 +76,7 @@ public partial class Player : Charactor
         Maincam = UnityEngine.Camera.main;
         Shared.InutTableMgr();
         Table_Charactor.Info info = Shared.TableMgr.Character.Get(1);
+        Name = info.Img;
     }
 
 
@@ -85,81 +87,68 @@ public partial class Player : Charactor
     // Update is called once per frame
     void Update()
     {
+        //upperStateEnum();
+        //lowerStateEnum();
+        // move();
+
         runcheck();
         move();
-        
+        attackRot();
         bool value1 = Input.GetMouseButton(0);
         bool value2 = Input.GetMouseButtonUp(0);
         if ((value1))
         {
             attack();
         }
-        else if(value2 || gun.nowbullet <= 0) 
+        else if (value2 || gun.nowbullet <= 0)
         {
             string text = ($"{PlayerAnimParameters.Attack}");
             Shared.BattelMgr.MOVECAM.cameraShakeAnim(false);
             playerAnim.SetInteger(text, 0);
-            //playerAnim.SetLayerWeight(attacklayerIndex, 0.0f);
         }
         reloding();
         closeAttackCheack();
         shitdownCheak();
-        //Time.timeScale = 0;//Faraim Speed up,Down
+        ////Time.timeScale = 0;//Faraim Speed up,Down
     }
 
     private void attack()
     {
-        //attackRot();
-        //reloding();
         Vector3 AimPos = Shared.BattelMgr.camAim.transform.position;
         Vector3 AimDirection = Shared.BattelMgr.camAim.transform.forward;
-
+        string text = ($"{PlayerAnimParameters.Attack}");
         if (Physics.Raycast(AimPos, AimDirection, out RaycastHit hit))
         {
-            playerSpine.transform.localRotation = Quaternion.Euler(AimPos.normalized);//check
-            float value = Vector3.Dot(AimDirection.normalized, playerSpine.transform.forward.normalized);
+            float value = Vector3.Dot(AimDirection.normalized, gun.gunHoleObj.transform.forward.normalized);
             if (value <= 1.0f && gun.reLoed == false && gun.nowbullet >= 0)
             {
-                string text = ($"{PlayerAnimParameters.Attack}");
-
-                playerAnim.SetLayerWeight(attacklayerIndex, 1.0f);
+                playerAnim.SetLayerWeight(attackLayerIndex, 1.0f);
                 playerAnim.SetInteger(text, 1);
                 gun.GunAttack(AimDirection);//에러
             }
             else if (gun.reLoed == true || gun.nowbullet <= 0)
             {
                 Shared.BattelMgr.MOVECAM.cameraShakeAnim(false);
+                playerAnim.SetInteger(text, 0);
             }
+            else { return; }
         }
     }
     public void reloding() 
     {
-        bool cheack = Input.GetKeyDown(KeyCode.R);
-        if ((cheack || gun.nowbullet <= 0 )&& !gun.reLoed)
+        string text = ($"{PlayerAnimParameters.Reload}");
+        string text2 = ($"{animInfoName.reloading}");
+        bool reload = Input.GetKeyDown(KeyCode.R);
+        if (reload || gun.nowbullet <= 0)
         {
-            string text = ($"{PlayerAnimParameters.Reload}");
             gun.reLoed = true;
-            playerAnim.SetLayerWeight(attacklayerIndex, 1.0f);
-            playerAnim.SetInteger(text, 1);    
+            playerAnim.SetLayerWeight(attackLayerIndex, 1.0f);
+            playerAnim.SetInteger(text, 1);
         }
 
         if (gun.reLoed)
         {
-            int index = attacklayerIndex;
-            AnimatorStateInfo animStateInfo = playerAnim.GetCurrentAnimatorStateInfo(index);
-            float time = animStateInfo.normalizedTime;
-            string text2 = ($"{onesPractice.reloading}");//여기는 제대로 동작함
-            Debug.Log($"{time}");
-            if (time >= 1.0f && animStateInfo.IsName(text2))
-            {
-                string text = ($"{PlayerAnimParameters.Reload}");
-                StartCoroutine(reLoadout(index));
-                playerAnim.SetInteger(text, 0);
-            }
-            else 
-            {
-                return; 
-            }
+            animCheck(text, text2);
         }
 
     }
@@ -175,9 +164,9 @@ public partial class Player : Charactor
 
     
     
-    public Quaternion attackRot(Vector3 _pos,Quaternion _rot) 
+    public void attackRot() 
     {
-        _rot = Quaternion.Euler(_pos); 
-        return _rot;
+        Vector3 pos = Shared.BattelMgr.camAim.transform.forward;
+        transform.rotation = Quaternion.Euler(pos); 
     }
 }

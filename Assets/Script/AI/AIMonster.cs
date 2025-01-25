@@ -4,6 +4,7 @@ using System.Threading;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.TextCore.Text;
+using UnityEngine.XR;
 
 public partial class AiMonster : AiBase
 {
@@ -13,8 +14,17 @@ public partial class AiMonster : AiBase
     int targetNumber;//공격할 목표의 번호
     float timer = 0.0f;
     float time = 5.0f;
+    MobAnim mobAnim = MobAnim.Null;
+    Transform eyePos;
+    Vector3 targetPos;
+    Animator animator;
+    string moveAnim = ($"{MobAnim.Move}");
+    string attackAnim = ($"{MobAnim.Attack}");
+    string serchAnim = ($"{MobAnim.Serch}");
+    string dilrayAnim = ($"{MobAnim.AttackDilray}");
+
     //Monster_Skill SKILL = new Monster_Skill();
-  
+
     //private eMobType MOBTYPE;
     //Monster Monster;
     //FSM
@@ -65,7 +75,9 @@ public partial class AiMonster : AiBase
     {
         //target = Shared.BattelMgr.PLAYER;
         creatTab = Shared.BattelMgr.creatTab;
-        aIState = eAI.Move;
+        eyePos = MONSTER.eyeObj.transform;
+        animator = MONSTER.Mobanimator;
+        aIState = eAI.Search;
     }
     private void searchTimer()
     {
@@ -78,32 +90,47 @@ public partial class AiMonster : AiBase
     }
     protected override void Search()//공격할 대상 찾기
     {
+        animator.SetInteger(serchAnim,1);
 
-        //필요한 기능
-        //1.타이머
-        //2.타이머 기능이 끝날때 타겟 좌표 확정(이후 위치 바꿔도 따라가는 기능이 아님)
-        if (MONSTER == null)
+        if (Physics.Raycast(eyePos.position,
+           eyePos.transform.forward, out RaycastHit hit))
         {
-            Debug.LogError("MONSTER가 null입니다.");
-            return;
-        }
+            string text1 = ($"{LayerTag.Player}");//enum
+            string text2 = ($"{LayerTag.Cover}");
+            int layer = hit.collider.gameObject.layer;
+            string name = LayerMask.LayerToName(layer);
 
-        if (SKILL == null)
-        {
-            Debug.LogError("SKILL이 null입니다.");
-            return;
+            if (name == text1)
+            {
+                targetPos = hit.point;
+                animator.SetInteger(serchAnim, 0);
+                aIState = eAI.Move;
+            }
+            else if (name == text2)
+            {
+                return;
+            }
         }
-
-        SKILL.targetOn(ref targetNumber, target);
-        if (target[targetNumber] == null)
-        {
-            return;
-        }
-        else { aIState = eAI.Attack; }
     }
+    protected override void Move()//이동
+    {
+        animator.SetInteger(moveAnim, 1);
+        Vector3 myPos = MONSTER.gameObject.transform.position;
+        float distanse = Vector3.Distance(myPos, targetPos);
+        float targetvalue = MONSTER.attackDistanse;
+        if (distanse < targetvalue) 
+        {
+            aIState = eAI.Attack;
+        }
+    }
+
     protected override void Attack()//공격
     {
+        animator.SetInteger(attackAnim, 1);
         Pattern();
+
+
+
         if (nextOn_Off == true)
         {
             nextOn_Off = false;
@@ -116,15 +143,7 @@ public partial class AiMonster : AiBase
         targetNumber = 0;
         aIState = eAI.Create;
     }
-    protected override void Move()//이동
-    {
-        
-        if (nextOn_Off == true)
-        {
-            nextOn_Off = false;
-            base.Attack();
-        }
-    }
+    
 
 
 }

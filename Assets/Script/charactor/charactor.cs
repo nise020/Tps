@@ -12,6 +12,7 @@ public abstract partial class Charactor : Actor
     protected float HP;//보여지는 체력
     protected float cheHP;//체크할 체력
     protected float maxHP;//최대체력
+    [SerializeField] protected float CharactorId = 0;//최대체력
 
 
 
@@ -33,7 +34,7 @@ public abstract partial class Charactor : Actor
             HP = cheHP;
         }
     }
-    protected void dead() //사망
+    protected virtual void Dead() //사망
     {
 
     }

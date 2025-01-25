@@ -29,6 +29,9 @@ public abstract partial class Monster : Charactor
     protected bool NumberOn = false;
     public int number;
     Vector3 targetpos;
+    public GameObject eyeObj;
+    public float attackDistanse;
+    public Animator Mobanimator;
 
 
     [Header("기본 타이머")]

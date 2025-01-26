@@ -27,7 +27,7 @@ public partial class AiBase
         SKILL = _SKILL;
     }
 
-    public virtual void State(ref eAI _aIState) 
+    public virtual void State() 
     {
         switch (aIState)
         {

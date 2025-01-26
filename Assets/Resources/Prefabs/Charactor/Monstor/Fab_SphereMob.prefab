@@ -10,6 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1857717090619830574}
   - component: {fileID: 2914542211161757420}
+  - component: {fileID: 3471114786846679897}
   m_Layer: 0
   m_Name: Fab_SphereMob
   m_TagString: Untagged
@@ -26,7 +27,7 @@ Transform:
   m_GameObject: {fileID: 8506997544264202415}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 7.5180826, y: 6.323326, z: -26.031452}
-  m_LocalScale: {x: 20, y: 20, z: 20}
+  m_LocalScale: {x: 26.310001, y: 26.310001, z: 26.310001}
   m_ConstrainProportionsScale: 1
   m_Children:
   - {fileID: 5769457745514160899}
@@ -45,19 +46,44 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8dc07237bf9f1f54a900e4a7160ab8c9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  CharactorId: 0
+  movePosObj: []
   MobGrenade: {fileID: 0}
   MobBullet: {fileID: 0}
   eType: 0
   mobKey: 0
   AttackArm: {fileID: 0}
   number: 0
+  eyeObj: {fileID: 5769457745513742089}
+  attackDistanse: 0
+  Mobanimator: {fileID: 0}
   footObj: {fileID: 0}
   groundCheck: 0
   leagh: 0
   mobRigid: {fileID: 0}
   jumpOn: 0
-  eyeObj: {fileID: 5769457745513742089}
   maxEyeObj: {fileID: 0}
+--- !u!95 &3471114786846679897
+Animator:
+  serializedVersion: 5
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8506997544264202415}
+  m_Enabled: 1
+  m_Avatar: {fileID: 9000000, guid: bff429107601444d59c67940e6ad78c4, type: 3}
+  m_Controller: {fileID: 9100000, guid: 280957d48219cec4eb658cebd99d91f6, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0
 --- !u!1001 &5769457745513773549
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -88,7 +114,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 400110, guid: bff429107601444d59c67940e6ad78c4, type: 3}
       propertyPath: m_LocalRotation.w
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 400110, guid: bff429107601444d59c67940e6ad78c4, type: 3}
       propertyPath: m_LocalRotation.x
@@ -96,7 +122,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 400110, guid: bff429107601444d59c67940e6ad78c4, type: 3}
       propertyPath: m_LocalRotation.y
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 400110, guid: bff429107601444d59c67940e6ad78c4, type: 3}
       propertyPath: m_LocalRotation.z

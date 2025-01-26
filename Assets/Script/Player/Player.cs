@@ -137,7 +137,7 @@ public partial class Player : Charactor
     public void reloding() 
     {
         string text = ($"{PlayerAnimParameters.Reload}");
-        string text2 = ($"{animInfoName.reloading}");
+        string text2 = ($"{playerAnimInfoName.reloading}");
         bool reload = Input.GetKeyDown(KeyCode.R);
         if (reload || gun.nowbullet <= 0)
         {

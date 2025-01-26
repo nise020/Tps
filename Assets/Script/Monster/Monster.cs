@@ -7,7 +7,8 @@ public abstract partial class Monster : Charactor
 {
     protected virtual void Start()
     {
-        Mobanimator = GetComponentInChildren<Animator>();
+        //startPos = gameObject.transform.position;
+        mobanimator = GetComponent<Animator>();
         NowHp();
         creatTabObj = Shared.BattelMgr.creatTab;//¿ÀºêÁ§Æ® »ý¼º ÅÇ(ex.ÃÑ¾Ë)
         mobRigid = GetComponent<Rigidbody>();
@@ -19,7 +20,7 @@ public abstract partial class Monster : Charactor
     private void FixedUpdate()
     {
         if (AI == null) { return; }
-        AI.State(ref aIState);
+        AI.State();
         CheckHp();
     }
 }

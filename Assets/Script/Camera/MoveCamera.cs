@@ -89,6 +89,7 @@ public partial class MoveCamera : MonoBehaviour
         //Cursor.visible = false;
         PlayerObj = Shared.BattelMgr.PLAYER.gameObject;
         attackAim = Shared.BattelMgr.camAim;
+        transform.LookAt(PlayerObj.transform);
     }
 
     

@@ -20,14 +20,22 @@ public enum PlayerAnimParameters
 }
 public enum MobAnim
 {
-    Null,
+    Idle,
     Attack,
     Serch,
     AttackDilray,
-    Move
+    Walk
 }
-
-public enum animInfoName
+public enum mobAnimInfoName
+{
+    Idle,
+    Attack,
+    Serch,
+    Open,
+    Stop,
+    Walk
+}
+public enum playerAnimInfoName
 {
     closeAttack,
     reloading
@@ -87,6 +95,7 @@ public enum eMobType //몬스터 태그
     Defolt,
     Flying,
     Huge,
+    Sphere
 }
 
 public enum GunTags

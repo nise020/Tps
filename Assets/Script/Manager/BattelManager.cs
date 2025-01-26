@@ -52,7 +52,7 @@ public class BattelManager : MonoBehaviour
     //}
     private void Update()
     {
-        Timer();
+        //Timer();
     }
     private void spownListArrange() 
     {

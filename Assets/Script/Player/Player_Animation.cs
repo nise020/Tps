@@ -111,19 +111,19 @@ public partial class Player : Charactor
 
         if (runstate)
         {
-            if (movePos.z > 0)
+            if (movePos.z > 0)//transform.localPosition bug
             {
-                transform.position += movePos * (moveSpeed * 2) * Time.deltaTime;
+                transform.localPosition += movePos * (moveSpeed * 2) * Time.deltaTime;
                 //2 <- state
             }
             else
             {
-                transform.position += movePos * moveSpeed * Time.deltaTime;
+                transform.localPosition += movePos * moveSpeed * Time.deltaTime;
             }
         }
         else
         {
-            transform.position += movePos * moveSpeed * Time.deltaTime;
+            transform.localPosition += movePos * moveSpeed * Time.deltaTime;
         }
     }
     private void sideWalk(float _move) 
@@ -247,7 +247,7 @@ public partial class Player : Charactor
     {
         if (!_check) { return; }
         string text1 = ($"{PlayerAnimParameters.Close}");
-        string text2 = ($"{animInfoName.closeAttack}");//나중에 수정 필요
+        string text2 = ($"{playerAnimInfoName.closeAttack}");//나중에 수정 필요
 
         if (_check)
         {
@@ -266,8 +266,8 @@ public partial class Player : Charactor
         Debug.Log($"{time}");
         if (time >= 1.0f && animStateInfo.IsName(_animText))
         {
-            string reloading = ($"{animInfoName.reloading}");
-            string closeAttack = ($"{animInfoName.closeAttack}");
+            string reloading = ($"{playerAnimInfoName.reloading}");
+            string closeAttack = ($"{playerAnimInfoName.closeAttack}");
             if (_animText == reloading)
             {
                 StartCoroutine(reLoadout(index));

@@ -12,10 +12,10 @@ public abstract partial class Monster : Charactor
 
     public GameObject MobGrenade;//투척물 프리팹
     public GameObject MobBullet;//일반공격 총알 프리팹
-   
+
 
     protected AiMonster AI = new AiMonster();
-    protected MonsterSkill SKILL = new MonsterSkill();
+    protected Skill_Monster SKILL = new Skill_Monster();
 
     public eMobType eType;
 
@@ -33,7 +33,7 @@ public abstract partial class Monster : Charactor
     Vector3 targetpos;
     public GameObject eyeObj;
     public float attackDistanse;
-    public Animator mobanimator;
+
 
 
     [Header("기본 타이머")]
@@ -43,6 +43,7 @@ public abstract partial class Monster : Charactor
 
 
     [Header("다리,이동 관련(FlyingMob 제외)")]
+    public float moveSpeed = 10.0f;//임시
     [SerializeField] GameObject footObj;
     [SerializeField] protected bool groundCheck = false;
     [SerializeField] protected float leagh;

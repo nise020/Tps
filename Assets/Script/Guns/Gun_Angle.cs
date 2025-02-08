@@ -87,11 +87,9 @@ public partial class Gun : Actor
     public Quaternion AimGun(GameObject _player,Vector3 _hitPos)//Aim 오브젝트를 기준으로 바꿔야함
     {
         Vector3 targetPos = _hitPos;
-        Debug.Log($" _hit = {_hitPos}");
         Vector3 distanse = (targetPos - gunObj.transform.position);
         Quaternion startRot = Quaternion.LookRotation(gunObj.transform.forward);
         Quaternion endRot = Quaternion.LookRotation(distanse.normalized);
-        //gunObj.transform.rotation = Quaternion.Lerp(startRot, endRot, gunRotSpeed);//* Time.deltaTime
         _player.transform.localRotation = Quaternion.Lerp(startRot, endRot, gunRotSpeed);//* Time.deltaTime
 
         // 상하 각도 제한

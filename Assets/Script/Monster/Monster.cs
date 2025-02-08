@@ -5,10 +5,10 @@ using UnityEngine;
 
 public abstract partial class Monster : Charactor
 {
-    protected virtual void Start()
+    protected override void Start()//Actor에 이동
     {
         //startPos = gameObject.transform.position;
-        mobanimator = GetComponent<Animator>();
+        mobAnimator = GetComponent<Animator>();
         NowHp();
         creatTabObj = Shared.BattelMgr.creatTab;//오브젝트 생성 탭(ex.총알)
         mobRigid = GetComponent<Rigidbody>();
@@ -20,7 +20,7 @@ public abstract partial class Monster : Charactor
     private void FixedUpdate()
     {
         if (AI == null) { return; }
-        AI.State();
+        AI.State(ref aIState);
         CheckHp();
     }
 }

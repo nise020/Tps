@@ -4,24 +4,44 @@ using UnityEngine;
 
 public partial class Monster : Charactor
 {
-    string idleAnim = ($"{MobAnim.Idle}");
-    string walkAnim = ($"{MobAnim.Walk}");
-    string attackAnim = ($"{MobAnim.Attack}");
-    string serchAnim = ($"{MobAnim.Serch}");
-    string dilrayAnim = ($"{MobAnim.AttackDilray}");
-
-    Animator animator;
-
-    public void PointMove(string _value)
+    public Animator mobAnimator;
+    public bool animCheack = false;
+    public void PointMoveAnim(int _value)
     {
-        Debug.Log($"PointMove");
-        if (_value == "test")
+        if (_value != 0) 
         {
-            mobanimator.SetInteger(walkAnim, 1);
-        }
-        else
-        {
-            mobanimator.SetInteger(walkAnim, 0);
+            mobAnimator.SetInteger("Walk", 1);
+            AI.searching = true;
+            //mobAnimator.SetInteger("Search", 0);
         }
     }
+    public void AttackReadyAnim(int _value)
+    {
+        if (_value != 0)
+        {
+            mobAnimator.SetInteger("Attack", 1);
+            AI.moveing = true;
+            //mobAnimator.SetInteger("Search", 0);
+        }
+    }
+    public IEnumerator EndAinmation(Animator _anim,string _animText) 
+    {
+        //AnimatorStateInfo animStateInfo = _anim.GetCurrentAnimatorStateInfo(0);//layer
+        //float time = animStateInfo.normalizedTime;
+
+        //if (time >= 1.0f && animStateInfo.IsName(_animText))
+        //{
+
+        //}
+        if (_anim.GetCurrentAnimatorStateInfo(0).IsName(_animText)) 
+        {
+            float time = _anim.GetCurrentAnimatorStateInfo(0).normalizedTime;
+        }
+
+        yield return new WaitForSeconds(0.5f);
+        _anim.Play(_animText, 0, 0f);
+    }
+
+    //이더 스크롤
+
 }

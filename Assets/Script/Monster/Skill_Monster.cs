@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public partial class MonsterSkill 
+public partial class Skill_Monster 
 {
 
     protected bool NumberOn = false;

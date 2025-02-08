@@ -128,15 +128,15 @@ public partial class Player : Charactor
     }
     private void sideWalk(float _move) 
     {
-        string text1 = ($"{PlayerAnimParameters.Right}");
-        string text2 = ($"{PlayerAnimParameters.Left}");
+        //string text1 = ($"{PlayerAnimParameters.Right}");
+        //string text2 = ($"{PlayerAnimParameters.Left}");
         if (_move > 0) 
         {
-            playerAnim.SetInteger(text1, (int)_move);
+            playerAnim.SetInteger("Right", (int)_move);
         }
         else if (_move < 0)
         {
-            playerAnim.SetInteger(text2, (int)_move);
+            playerAnim.SetInteger("Left", (int)_move);
         }
     }
     private void moveAnim(float _move)
@@ -158,26 +158,26 @@ public partial class Player : Charactor
     {
         if (_move > 0)//Off
         {
-            string text = ($"{PlayerAnimParameters.Run}");
-            playerAnim.SetInteger(text, (int)_move);
+            //string text = ($"{PlayerAnimParameters.Run}");
+            playerAnim.SetInteger("Run", (int)_move);
         }
         else if (_move < 0)
         {
-            string text = ($"{PlayerAnimParameters.Back}");
-            playerAnim.SetInteger(text, (int)_move);
+            //string text = ($"{PlayerAnimParameters.Back}");
+            playerAnim.SetInteger("Back", (int)_move);
         }
     }
     private void walkAnim(Animator _anim, float _move)
     {
         if (_move > 0)
         {
-            string text = ($"{PlayerAnimParameters.Walk}");
-            playerAnim.SetInteger(text, (int)_move);
+            //string text = ($"{PlayerAnimParameters.Walk}");
+            playerAnim.SetInteger("Walk", (int)_move);
         }
         else if (_move < 0)
         {
-            string text = ($"{PlayerAnimParameters.Back}");
-            playerAnim.SetInteger(text, (int)_move);
+            //string text = ($"{PlayerAnimParameters.Back}");
+            playerAnim.SetInteger("Back", (int)_move);
         }
     }
     private void runcheck()
@@ -192,27 +192,27 @@ public partial class Player : Charactor
     }
     private void clearAnim() 
     {
-        string text1 = ($"{PlayerAnimParameters.Walk}");
-        string text2 = ($"{PlayerAnimParameters.Back}");
-        string text3 = ($"{PlayerAnimParameters.Run}");
-        string text4 = ($"{PlayerAnimParameters.Right}");
-        string text5 = ($"{PlayerAnimParameters.Left}");
-        playerAnim.SetInteger(text1, 0);
-        playerAnim.SetInteger(text2, 0);
-        playerAnim.SetInteger(text3, 0);
-        playerAnim.SetInteger(text4, 0);
-        playerAnim.SetInteger(text5, 0);
+        //string text1 = ($"{PlayerAnimParameters.Walk}");
+        //string text2 = ($"{PlayerAnimParameters.Back}");
+        //string text3 = ($"{PlayerAnimParameters.Run}");
+        //string text4 = ($"{PlayerAnimParameters.Right}");
+        //string text5 = ($"{PlayerAnimParameters.Left}");
+        playerAnim.SetInteger("Walk", 0);
+        playerAnim.SetInteger("Back", 0);
+        playerAnim.SetInteger("Run", 0);
+        playerAnim.SetInteger("Right", 0);
+        playerAnim.SetInteger("Left", 0);
     }
     private void shitdownAnim(bool _check)
     {
         string text = ($"{PlayerAnimParameters.Shit}");
         if (_check)
         {
-            playerAnim.SetInteger(text, 1);
+            playerAnim.SetInteger("Shit", 1);
         }
         else 
         {
-            playerAnim.SetInteger(text, 0);
+            playerAnim.SetInteger("Shit", 0);
         }
     }
     private void shitdownCheak()
@@ -225,8 +225,8 @@ public partial class Player : Charactor
         }
         if (movePos.z != 0.0 || movePos.x != 0.0) 
         {
-            string text = ($"{PlayerAnimParameters.Shit}");
-            playerAnim.SetInteger(text, 0);
+            //string text = ($"{PlayerAnimParameters.Shit}");
+            playerAnim.SetInteger("Shit", 0);
         }
         
     }
@@ -246,14 +246,14 @@ public partial class Player : Charactor
     public void closeSwordAttack(bool _check)//bug check
     {
         if (!_check) { return; }
-        string text1 = ($"{PlayerAnimParameters.Close}");
-        string text2 = ($"{playerAnimInfoName.closeAttack}");//나중에 수정 필요
+        //string text1 = ($"{PlayerAnimParameters.Close}");
+        //string text2 = ($"{playerAnimInfoName.closeAttack}");//나중에 수정 필요
 
         if (_check)
         {
             playerAnim.SetLayerWeight(attackLayerIndex, 1.0f);
-            playerAnim.SetInteger(text1, 1);
-            animCheck(text1, text2);
+            playerAnim.SetInteger("Close", 1);
+            animCheck("Close", "closeAttack");
         }
     }
     public void animCheck(string _parameterText, string _animText) 

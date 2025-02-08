@@ -8,7 +8,7 @@ public partial class AiBase
 {
 
     protected Monster MONSTER;
-    protected MonsterSkill SKILL;
+    protected Skill_Monster SKILL;
     protected eAI aIState = eAI.Create;
     protected eMobType MobType;
     protected GameObject startObj;
@@ -21,13 +21,13 @@ public partial class AiBase
     {
         MobType = _eNum;
     }
-    public void init(Monster _Monster, MonsterSkill _SKILL) 
+    public void init(Monster _Monster, Skill_Monster _SKILL) 
     {
         MONSTER = _Monster;
         SKILL = _SKILL;
     }
 
-    public virtual void State() 
+    public virtual void State(ref eAI _aIState) 
     {
         switch (aIState)
         {

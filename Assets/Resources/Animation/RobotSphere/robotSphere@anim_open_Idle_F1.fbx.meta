@@ -856,11 +856,11 @@ ModelImporter:
       curves: []
       events:
       - time: 0.9159836
-        functionName: PointMove
+        functionName: PointMoveAnim
         data: test
         objectReferenceParameter: {instanceID: 0}
         floatParameter: 0
-        intParameter: 0
+        intParameter: 1
         messageOptions: 0
       transformMask: []
       maskType: 3

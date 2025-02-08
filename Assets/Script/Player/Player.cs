@@ -69,7 +69,7 @@ public partial class Player : Charactor
         }
     }
 
-    private void Start()
+    protected override void Start()
     {
         gun = GetComponentInChildren<Gun>();
         playerAnim = GetComponentInChildren<Animator>();
@@ -102,9 +102,8 @@ public partial class Player : Charactor
         }
         else if (value2 || gun.nowbullet <= 0)
         {
-            string text = ($"{PlayerAnimParameters.Attack}");
             Shared.BattelMgr.MOVECAM.cameraShakeAnim(false);
-            playerAnim.SetInteger(text, 0);
+            playerAnim.SetInteger("Attack", 0);
         }
         reloding();
         closeAttackCheack();
@@ -116,39 +115,39 @@ public partial class Player : Charactor
     {
         Vector3 AimPos = Shared.BattelMgr.camAim.transform.position;
         Vector3 AimDirection = Shared.BattelMgr.camAim.transform.forward;
-        string text = ($"{PlayerAnimParameters.Attack}");
+        //string text = ($"{PlayerAnimParameters.Attack}");
         if (Physics.Raycast(AimPos, AimDirection, out RaycastHit hit))
         {
             float value = Vector3.Dot(AimDirection.normalized, gun.gunHoleObj.transform.forward.normalized);
             if (value <= 1.0f && gun.reLoed == false && gun.nowbullet >= 0)
             {
                 playerAnim.SetLayerWeight(attackLayerIndex, 1.0f);
-                playerAnim.SetInteger(text, 1);
+                playerAnim.SetInteger("Attack", 1);
                 gun.GunAttack(AimDirection);//¿¡·¯
             }
             else if (gun.reLoed == true || gun.nowbullet <= 0)
             {
                 Shared.BattelMgr.MOVECAM.cameraShakeAnim(false);
-                playerAnim.SetInteger(text, 0);
+                playerAnim.SetInteger("Attack", 0);
             }
             else { return; }
         }
     }
     public void reloding() 
     {
-        string text = ($"{PlayerAnimParameters.Reload}");
-        string text2 = ($"{playerAnimInfoName.reloading}");
+        //string text = ($"{PlayerAnimParameters.Reload}");
+        //string text2 = ($"{playerAnimInfoName.reloading}");
         bool reload = Input.GetKeyDown(KeyCode.R);
         if (reload || gun.nowbullet <= 0)
         {
             gun.reLoed = true;
             playerAnim.SetLayerWeight(attackLayerIndex, 1.0f);
-            playerAnim.SetInteger(text, 1);
+            playerAnim.SetInteger("Reload", 1);
         }
 
         if (gun.reLoed)
         {
-            animCheck(text, text2);
+            animCheck("Reload", "reloading");
         }
 
     }

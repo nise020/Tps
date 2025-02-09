@@ -11,6 +11,7 @@ public partial class Monster : Charactor
         if (_value != 0) 
         {
             mobAnimator.SetInteger("Walk", 1);
+            Debug.Log("PointMoveAnim");
             AI.searching = true;
             //mobAnimator.SetInteger("Search", 0);
         }
@@ -20,6 +21,7 @@ public partial class Monster : Charactor
         if (_value != 0)
         {
             mobAnimator.SetInteger("Attack", 1);
+            Debug.Log("AttackReadyAnim");
             AI.moveing = true;
             //mobAnimator.SetInteger("Search", 0);
         }

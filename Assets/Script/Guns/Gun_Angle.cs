@@ -73,7 +73,7 @@ public partial class Gun : Actor
             GameObject go = bulletData[bulletcount];
             go.transform.position = gunHoleObj.transform.position;
             Bullet_Player plBullet = go.GetComponent<Bullet_Player>();
-            plBullet.targetPos = _pos;
+            plBullet.targetPos = _pos.normalized;
             go.SetActive(true);
 
             bulletcount++;

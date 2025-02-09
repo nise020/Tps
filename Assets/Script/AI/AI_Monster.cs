@@ -39,18 +39,14 @@ public partial class AiMonster : AiBase
     {
         switch (MobType)
         {
-            case eMobType.Defolt://일반 평타 (횟수제한)
+            case eMobType.Spider:
                 SKILL.NomalAttack(ref nextOn_Off, targetNumber, MONSTER.MobBullet, target, MONSTER.AttackArm.transform.position, creatTab);
                 break;
-            case eMobType.Flying://자폭 공격
-                MONSTER.gameObject.transform.position = SKILL.DirectAttackSkill
-                    (targetNumber, target, MONSTER.gameObject.transform.position);
-                break;
-            case eMobType.Huge://자폭 공격
-                SKILL.JumpSkill(targetNumber, target, ref attackOn, 
+            case eMobType.Sphere:
+                SKILL.JumpSkill(targetNumber, target, ref attackOn,
                     MONSTER.gameObject.transform.position, MONSTER.mobRigid);
                 break;
-            case eMobType.Sphere:
+            case eMobType.Flying:
                 SKILL.JumpSkill(targetNumber, target, ref attackOn,
                     MONSTER.gameObject.transform.position, MONSTER.mobRigid);
                 break;
@@ -98,6 +94,9 @@ public partial class AiMonster : AiBase
             searchAnim = true;
             animator.SetInteger("Search", 1);
         }
+
+        Debug.Log($"Search");
+
         if (Physics.Raycast(eyePos.position,
            eyePos.transform.forward, out RaycastHit hit))//target Serching
                                                          //플레이어가 걸렸을때
@@ -107,9 +106,11 @@ public partial class AiMonster : AiBase
 
             if (name == "Player")
             {
+                Debug.Log($"{name}");
                 moveAnim = false;
                 targetPos = hit.point;//Vector3
-                aIState = eAI.Attack;//next Pattern
+                //aIState = eAI.Move;//next Pattern
+                aIState = eAI.Attack;
 
                 searchAnim = false;//clear
 
@@ -117,10 +118,17 @@ public partial class AiMonster : AiBase
         }
         MONSTER.readySearch(ref searching);
     }
+    //Vector3
 
+    //DIstance: 거리 구하기
+    //Dot 내적: 방향, 밀치기
+    //Cross 외적: 빛 반사
+    //Normalize 정규화: 방향만 구하고 값은 1로 낮춘다
+
+    //행렬
     protected override void Move()//이동
     {
-        Debug.Log($"Move");
+        //MONSTER.readySearch(ref searching);
     }
 
     protected override void Attack()//공격
@@ -134,22 +142,35 @@ public partial class AiMonster : AiBase
             moveAnim = true;
             animator.SetInteger("Search", 0);// Serching X
             animator.SetInteger("Walk", 0);
-            animator.SetInteger("Close", 1);
+            if (MobType == eMobType.Sphere) 
+            {
+                animator.SetInteger("Close", 1);
+            }
         }
-        if (moveing == true)
+        if (moveing == true && MobType == eMobType.Sphere)//구체 일 경우
         {
             Vector3 myPos = MONSTER.gameObject.transform.position;
             float speed = MONSTER.moveSpeed;
             MONSTER.gameObject.transform.position += (targetPos - myPos).normalized * speed * Time.deltaTime;
+            //계속 이동하는 문제 있음
 
             float distanse = Vector3.Distance(myPos, targetPos);
             float targetvalue = MONSTER.attackDistanse;//사정거리
             if (distanse < targetvalue)
             {
-                animator.SetInteger("Close", 0);
-                animator.SetInteger("AttackDilray", 1);
+                if (MobType == eMobType.Sphere)
+                {
+                    animator.SetInteger("Close", 0);
+                    animator.SetInteger("AttackDilray", 1);
+                }
                 aIState = eAI.Reset;
             }
+        }
+        else if (MobType == eMobType.Spider)//거미일 경우 
+        {
+            GameObject go = Delivery.Instantiator(MONSTER.MobGrenade, eyePos.position, Quaternion.identity,creatTab);
+
+            //Instantiator가 아닌 SetActive를 사용해서 리소스를 재사용 해야함
         }
 
         //if (nextOn_Off == true)

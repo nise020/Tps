@@ -3,8 +3,6 @@ using System.Collections.Generic;
 using System.Threading;
 using Unity.VisualScripting;
 using UnityEngine;
-using static UnityEditor.PlayerSettings;
-using UnityEngine.XR;
 
 public partial class SphereMob : Monster
 {

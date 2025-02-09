@@ -47,16 +47,19 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   CharactorId: 0
+  mobAnimator: {fileID: 0}
+  animCheack: 0
+  SearchCheack: 0
   movePosObj: []
   MobGrenade: {fileID: 0}
   MobBullet: {fileID: 0}
-  eType: 0
+  eType: 3
   mobKey: 0
   AttackArm: {fileID: 0}
   number: 0
   eyeObj: {fileID: 5769457745513742089}
   attackDistanse: 0
-  Mobanimator: {fileID: 0}
+  moveSpeed: 10
   footObj: {fileID: 0}
   groundCheck: 0
   leagh: 0

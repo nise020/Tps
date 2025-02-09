@@ -94,7 +94,7 @@ public enum eMobType //몬스터 태그
 {
     Defolt,
     Flying,
-    Huge,
+    Spider,
     Sphere
 }
 

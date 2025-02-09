@@ -147,8 +147,20 @@ public partial class AiMonster : AiBase
                 animator.SetInteger("Close", 1);
             }
         }
-        if (moveing == true && MobType == eMobType.Sphere)//구체 일 경우
+        switch (MobType) 
         {
+            case eMobType.Sphere:
+                break;
+            case eMobType.Spider:
+
+                break;
+            case eMobType.Flying:
+
+                break;
+        }
+        if (MobType == eMobType.Sphere)//구체 일 경우
+        {
+            if (moveing == false) return;
             Vector3 myPos = MONSTER.gameObject.transform.position;
             float speed = MONSTER.moveSpeed;
             MONSTER.gameObject.transform.position += (targetPos - myPos).normalized * speed * Time.deltaTime;
@@ -169,24 +181,22 @@ public partial class AiMonster : AiBase
         else if (MobType == eMobType.Spider)//거미일 경우 
         {
             GameObject go = Delivery.Instantiator(MONSTER.MobGrenade, eyePos.position, Quaternion.identity,creatTab);
-
+            animator.SetInteger("Attack", 0);
+            //추가적으로 던져야 하기 떄문에 AddForce를 추가해야함
             //Instantiator가 아닌 SetActive를 사용해서 리소스를 재사용 해야함
+            aIState = eAI.Reset;
         }
 
-        //if (nextOn_Off == true)
-        //{
-        //    animator.SetInteger("AttackDilray", 1);
-        //    nextOn_Off = false;
-        //    aIState = eAI.Reset;
-        //}
     }
     protected override void Reset()//사이클 끝(보통 다시 공격 대상 탐색)
     {
         Debug.Log($"Reset");
+        moveing = false;
         attackOn = true;
         targetNumber = 0;
         aIState = eAI.Search;
+
     }
 
-
+    
 }

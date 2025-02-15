@@ -40,6 +40,8 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1421508972335600618}
+  - component: {fileID: 5597881581228526016}
+  - component: {fileID: 6191365220507688643}
   m_Layer: 0
   m_Name: Fab_Dron
   m_TagString: Untagged
@@ -56,13 +58,69 @@ Transform:
   m_GameObject: {fileID: 4921606687498584654}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 7.8328238, y: 5.476428, z: -25.98338}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 7, y: 7, z: 7}
   m_ConstrainProportionsScale: 1
   m_Children:
   - {fileID: 6237419382192364794}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!95 &5597881581228526016
+Animator:
+  serializedVersion: 5
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4921606687498584654}
+  m_Enabled: 1
+  m_Avatar: {fileID: 9000000, guid: f14b6f7503476eb4e9b2afc1cc05e719, type: 3}
+  m_Controller: {fileID: 9100000, guid: 53b0fdbd542669a40badecde3794d908, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0
+--- !u!114 &6191365220507688643
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4921606687498584654}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5bb1f276d658b8440a93cc4bb4692f77, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  CharactorId: 0
+  mobAnimator: {fileID: 0}
+  animCheack: 0
+  target: {fileID: 0}
+  height: 5
+  throuTime: 2
+  SearchCheack: 1
+  movePosObj: []
+  MobGrenade: {fileID: 0}
+  MobBullet: {fileID: 6620972946245811102, guid: 76a6c0a5166a6ca408b9d547d4ea3215, type: 3}
+  eType: 0
+  mobKey: 0
+  deadEffect: {fileID: 1000011797152326, guid: acf39d9f4addf294d93fa56fa373961b, type: 3}
+  AttackArm: {fileID: 0}
+  number: 0
+  eyeObj: {fileID: 1542163998025942687}
+  attackDistanse: 0
+  moveSpeed: 10
+  footObj: {fileID: 0}
+  groundCheck: 0
+  leagh: 0
+  mobRigid: {fileID: 0}
+  directAtkON: 0
 --- !u!1001 &6237419382191965816
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -89,15 +147,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 400002, guid: f14b6f7503476eb4e9b2afc1cc05e719, type: 3}
       propertyPath: m_LocalScale.x
-      value: 10
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 400002, guid: f14b6f7503476eb4e9b2afc1cc05e719, type: 3}
       propertyPath: m_LocalScale.y
-      value: 10
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 400002, guid: f14b6f7503476eb4e9b2afc1cc05e719, type: 3}
       propertyPath: m_LocalScale.z
-      value: 10
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 400002, guid: f14b6f7503476eb4e9b2afc1cc05e719, type: 3}
       propertyPath: m_LocalPosition.x
@@ -144,6 +202,10 @@ PrefabInstance:
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 9500000, guid: f14b6f7503476eb4e9b2afc1cc05e719, type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 9500000, guid: f14b6f7503476eb4e9b2afc1cc05e719, type: 3}
       propertyPath: m_Controller
       value: 
       objectReference: {fileID: 9100000, guid: 53b0fdbd542669a40badecde3794d908, type: 2}
@@ -170,7 +232,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6237419382192062682}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 5bb1f276d658b8440a93cc4bb4692f77, type: 3}
   m_Name: 
@@ -178,12 +240,16 @@ MonoBehaviour:
   CharactorId: 0
   mobAnimator: {fileID: 0}
   animCheack: 0
+  target: {fileID: 0}
+  height: 5
+  throuTime: 2
   SearchCheack: 1
   movePosObj: []
   MobGrenade: {fileID: 0}
   MobBullet: {fileID: 6620972946245811102, guid: 76a6c0a5166a6ca408b9d547d4ea3215, type: 3}
   eType: 0
   mobKey: 0
+  deadEffect: {fileID: 1000011797152326, guid: acf39d9f4addf294d93fa56fa373961b, type: 3}
   AttackArm: {fileID: 0}
   number: 0
   eyeObj: {fileID: 1542163998025942687}

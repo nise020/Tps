@@ -69,62 +69,65 @@ public partial class Player : Charactor
             shitdownAnim(shitCheack);
         }
 
-        //bool front = Input.GetKey(KeyCode.W);
-        //bool right = Input.GetKey(KeyCode.A);
-        //bool back = Input.GetKey(KeyCode.S);
-        //bool reft = Input.GetKey(KeyCode.D);
-
-        //if (front || right || back || reft)
-        //{
-        //    move();
-        //}
-        //else 
-        //{
-        //    playerAnim.SetLayerWeight(attacklayerIndex, 1.0f);
-        //    clearAnim();
-        //}
     }
-    private void move()
+    protected override void move()
     {
-        //bool front = Input.GetKey(KeyCode.W);
-        //bool right = Input.GetKey(KeyCode.A);
-        //bool back = Input.GetKey(KeyCode.S);
-        //bool reft = Input.GetKey(KeyCode.D);
 
-        ////if (front || right || back || reft)
-        ////{
-        ////    //movePos.x = Input.GetAxisRaw("Horizontal");
-        ////    //movePos.z = Input.GetAxisRaw("Vertical");
-        ////}
-
-        //if (!front && !right && !back && !reft)
-        //{
-        //    return;
-        //}
-
-        movePos.x = Input.GetAxisRaw("Horizontal");
-        movePos.z = Input.GetAxisRaw("Vertical");
-
+        //movePos.x = Input.GetAxisRaw("Horizontal");
+        //movePos.z = Input.GetAxisRaw("Vertical");
+        Vector3 movePos = new Vector3(Input.GetAxisRaw("Horizontal"), 0, Input.GetAxisRaw("Vertical"));
+        //movePos.y = movePos.y + -9.8f * Time.deltaTime;
+        //if (movePos.x == 0.0f && movePos.z == 0.0f) { return; }
         moveAnim(movePos.z);
         sideWalk(movePos.x);
-        //Debug.Log($"{movePos.z}");
+        Vector3 direction = transform.TransformDirection(movePos.normalized);
 
+        Vector3 move = Vector3.zero;
+
+        //if (movePos.magnitude > 0.1f) // 입력이 있을 때만 이동
+        //{
+        //    float speed = runstate ? moveSpeed * 2 : moveSpeed;
+        //    rigid.velocity = direction * speed;
+        //}
+        //else
+        //{
+        //    rigid.velocity = Vector3.zero; // 입력이 없으면 멈추게 설정
+        //}
         if (runstate)
         {
+            Debug.Log(movePos);
             if (movePos.z > 0)//transform.localPosition bug
             {
-                transform.localPosition += movePos * (moveSpeed * 2) * Time.deltaTime;
+                //transform.localPosition += direction * (moveSpeed * 2) * Time.deltaTime;
+                rigid.MovePosition(rigid.position + direction * (moveSpeed * 2) * Time.fixedDeltaTime);
+
+                //rigid.velocity = direction * (moveSpeed * 2);
+
+                //rigid.MovePosition(rigid.position + movePos * (moveSpeed * 2) * Time.fixedDeltaTime);
                 //2 <- state
             }
             else
             {
-                transform.localPosition += movePos * moveSpeed * Time.deltaTime;
+                //transform.localPosition += direction * moveSpeed * Time.deltaTime;
+                rigid.MovePosition(rigid.position + direction * (moveSpeed) * Time.fixedDeltaTime);
+
+                //rigid.velocity = direction * (moveSpeed); ;
+                //rigid.velocity += direction * moveSpeed * Time.deltaTime;
+                //rigid.MovePosition(rigid.position + movePos * moveSpeed * Time.fixedDeltaTime);
             }
         }
         else
         {
-            transform.localPosition += movePos * moveSpeed * Time.deltaTime;
+            //transform.localPosition += direction * moveSpeed * Time.deltaTime;
+
+            rigid.MovePosition(rigid.position + direction * (moveSpeed) * Time.fixedDeltaTime);
+
+            //rigid.velocity = direction * (moveSpeed);
+
+            //rigid.MovePosition(rigid.position + movePos * moveSpeed * Time.fixedDeltaTime);
+
         }
+
     }
     private void sideWalk(float _move) 
     {

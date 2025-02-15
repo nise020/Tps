@@ -16,13 +16,16 @@ public class BattelManager : MonoBehaviour
 
     //한글 꼭 지우기
     public Player PLAYER;
+    public GameObject playerUpper;//상체
+    public GameObject playerHand;//오른손
+    public Gun GUN;
     public GameObject attackAim;
     [SerializeField] GameObject startPointObj;
     [SerializeField, Tooltip("공격 감지")] public List<bool> AttackSearch;
     [SerializeField] List< Monster> MONSTEROBJ;
 
-    [SerializeField] DefoltMob defoltMob;
-    [SerializeField] FlyingMob flyingMob;
+    [SerializeField] SpiderMob defoltMob;
+    [SerializeField] DronMob flyingMob;
     //[SerializeField] SphereMob sphereMob;
 
     [SerializeField, Tooltip("엄페물")] List<GameObject> COVER;
@@ -42,14 +45,40 @@ public class BattelManager : MonoBehaviour
     int monsterCount = 0;
     Dictionary<int, Charactor> CHARACTORDATA = new Dictionary<int, Charactor>();
     public Dictionary<int, GameObject> monsterData = new Dictionary<int, GameObject>();
+    //public Dictionary<int, Monster> monsterData = new Dictionary<int, Monster>();
     float spownTimer = 0.0f;
     float spownTime = 1.0f;
     int MobId = 0;
     int stageLevel = 0;
-    //private void Start()
-    //{
-    //   // GameObject go = Instantiate(PLAYER.gameObject, startPointObj.transform.position, Quaternion.identity);
-    //}
+
+    //작업 해야 할것
+    //start 에서 미리 오브젝트 생성 후 비 활성화+key 값을 부여
+    //죽으면 비활성화
+    //일정 시간 후 부활(위치는 원래 위치)
+    //몬스터나 플레이어 생성시 사용할 아이템도 생성
+
+    private void Start()
+    {
+        //creatObject();
+        //spownListArrange();
+    }
+    private void creatObject() 
+    {
+        //player
+        GameObject player = Instantiate(PLAYER.gameObject, startPointObj.transform.position, Quaternion.identity);
+
+
+        //Gun
+        GameObject gun = Instantiate(GUN.gameObject,transform.position, Quaternion.identity, playerHand.transform);
+        Gun guns = gun.GetComponent<Gun>();
+        guns.GunBulletType();
+        guns.creatbullet();
+
+        //buulet
+
+        //monster
+        GameObject monster = Instantiate(GUN.gameObject, transform.position, Quaternion.identity, playerHand.transform);
+    }
     private void Update()
     {
         //Timer();

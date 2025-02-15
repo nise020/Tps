@@ -22,7 +22,7 @@ public partial class Skill_Monster
     [Header("ÅõÃ´¹° È½¼ö")]
     protected int ThroutMinCount = 0;
     protected int ThroutMaxCount = 2;
-    public int ID = 1;
+    public int mobId = 1;
 
     [Header("ÅõÃ´¹° È½¼ö")]
     float moveTimer = 0.0f;

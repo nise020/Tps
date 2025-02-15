@@ -9,7 +9,7 @@ public abstract partial class Monster : Charactor
     {
         //startPos = gameObject.transform.position;
         mobAnimator = GetComponent<Animator>();
-        NowHp();
+        //NowHp();
         creatTabObj = Shared.BattelMgr.creatTab;//¿ÀºêÁ§Æ® »ý¼º ÅÇ(ex.ÃÑ¾Ë)
         mobRigid = GetComponent<Rigidbody>();
         mobColl = GetComponent<Collider>();
@@ -21,6 +21,6 @@ public abstract partial class Monster : Charactor
     {
         if (AI == null) { return; }
         AI.State(ref aIState);
-        CheckHp();
+        //CheckHp();
     }
 }

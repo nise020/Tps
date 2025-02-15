@@ -11,7 +11,7 @@ public partial class Lobby : Actor
     // Start is called before the first frame update
     void Start()
     {
-        TitleLoadBut.onClick.AddListener(()=>Shared.SceneMgr.chageScene(eScene.Title));//임시
+        TitleLoadBut.onClick.AddListener(()=>Shared.SceneMgr.chageScene(Scene.Title));//임시
     }
 
 

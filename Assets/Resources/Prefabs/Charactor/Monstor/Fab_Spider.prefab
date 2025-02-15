@@ -9,6 +9,8 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1303508888865524946}
+  - component: {fileID: 8083318495069326932}
+  - component: {fileID: 3985822225663787479}
   m_Layer: 0
   m_Name: Fab_Spider
   m_TagString: Untagged
@@ -25,13 +27,68 @@ Transform:
   m_GameObject: {fileID: 2367429089660032736}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 7.8328238, y: 5.476428, z: -25.98338}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 5, y: 5, z: 5}
   m_ConstrainProportionsScale: 1
   m_Children:
   - {fileID: 5780793563263782546}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &8083318495069326932
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2367429089660032736}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: eea484dcd1ba9e446b0b9743f05dd1d8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  CharactorId: 0
+  mobAnimator: {fileID: 0}
+  animCheack: 0
+  target: {fileID: 0}
+  height: 5
+  throuTime: 2
+  SearchCheack: 0
+  movePosObj: []
+  MobGrenade: {fileID: 3467101612078837595, guid: ae96bb1e39c38e745ac453d6aa6ae3a0, type: 3}
+  MobBullet: {fileID: 0}
+  eType: 2
+  mobKey: 0
+  deadEffect: {fileID: 0}
+  AttackArm: {fileID: 0}
+  number: 0
+  eyeObj: {fileID: 3565306436663224119}
+  attackDistanse: 0
+  moveSpeed: 10
+  footObj: {fileID: 0}
+  groundCheck: 0
+  leagh: 0
+  mobRigid: {fileID: 0}
+--- !u!95 &3985822225663787479
+Animator:
+  serializedVersion: 5
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2367429089660032736}
+  m_Enabled: 1
+  m_Avatar: {fileID: 9000000, guid: cc633396b5f95da4b916357a5508ee4f, type: 3}
+  m_Controller: {fileID: 9100000, guid: 88c7fe55ad43f714c8ed1713287f1ffa, type: 2}
+  m_CullingMode: 1
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0
 --- !u!1 &3565306436663224119
 GameObject:
   m_ObjectHideFlags: 0
@@ -81,15 +138,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 400000, guid: cc633396b5f95da4b916357a5508ee4f, type: 3}
       propertyPath: m_LocalScale.x
-      value: 10
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 400000, guid: cc633396b5f95da4b916357a5508ee4f, type: 3}
       propertyPath: m_LocalScale.y
-      value: 10
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 400000, guid: cc633396b5f95da4b916357a5508ee4f, type: 3}
       propertyPath: m_LocalScale.z
-      value: 10
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 400000, guid: cc633396b5f95da4b916357a5508ee4f, type: 3}
       propertyPath: m_LocalPosition.x
@@ -136,6 +193,10 @@ PrefabInstance:
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 9500000, guid: cc633396b5f95da4b916357a5508ee4f, type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 9500000, guid: cc633396b5f95da4b916357a5508ee4f, type: 3}
       propertyPath: m_Controller
       value: 
       objectReference: {fileID: 9100000, guid: 88c7fe55ad43f714c8ed1713287f1ffa, type: 2}
@@ -167,7 +228,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5780793563263816370}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: eea484dcd1ba9e446b0b9743f05dd1d8, type: 3}
   m_Name: 
@@ -175,12 +236,16 @@ MonoBehaviour:
   CharactorId: 0
   mobAnimator: {fileID: 0}
   animCheack: 0
+  target: {fileID: 0}
+  height: 5
+  throuTime: 2
   SearchCheack: 0
   movePosObj: []
   MobGrenade: {fileID: 3467101612078837595, guid: ae96bb1e39c38e745ac453d6aa6ae3a0, type: 3}
   MobBullet: {fileID: 0}
-  eType: 0
+  eType: 2
   mobKey: 0
+  deadEffect: {fileID: 0}
   AttackArm: {fileID: 0}
   number: 0
   eyeObj: {fileID: 3565306436663224119}

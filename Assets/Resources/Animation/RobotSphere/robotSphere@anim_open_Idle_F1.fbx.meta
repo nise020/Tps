@@ -857,7 +857,7 @@ ModelImporter:
       events:
       - time: 0.9159836
         functionName: PointMoveAnim
-        data: test
+        data: 
         objectReferenceParameter: {instanceID: 0}
         floatParameter: 0
         intParameter: 1

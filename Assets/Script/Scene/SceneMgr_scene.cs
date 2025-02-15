@@ -6,7 +6,7 @@ using UnityEngine.SceneManagement;
 public partial class SceneMgr : MonoBehaviour
 {
     
-    public void chageScene(eScene _e, bool _Loading = false)
+    public void chageScene(Scene _e, bool _Loading = false)
     {
         if (Scene == _e)
             return;
@@ -15,16 +15,16 @@ public partial class SceneMgr : MonoBehaviour
 
         switch (_e)
         {
-            case eScene.Title:
+            case Scene.Title:
                 SceneManager.LoadScene("Title");
                 break;
-            case eScene.Login:
+            case Scene.Login:
                 SceneManager.LoadScene("Login");
                 break;
-            case eScene.Lobby:
+            case Scene.Lobby:
                 SceneManager.LoadScene("Lobby");
                 break;
-            case eScene.Battle:
+            case Scene.Battle:
                 SceneManager.LoadScene("Battle");
                 break;
         }

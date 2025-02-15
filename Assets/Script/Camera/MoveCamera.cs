@@ -87,7 +87,8 @@ public partial class MoveCamera : MonoBehaviour
         camAnim = GetComponentInParent<Animator>();
         //Cursor.lockState = CursorLockMode.Locked;
         //Cursor.visible = false;
-        PlayerObj = Shared.BattelMgr.PLAYER.gameObject;
+        //PlayerObj = Shared.BattelMgr.PLAYER.gameObject;
+        PlayerObj = Shared.BattelMgr.playerUpper.gameObject;
         attackAim = Shared.BattelMgr.camAim;
         transform.LookAt(PlayerObj.transform);
     }

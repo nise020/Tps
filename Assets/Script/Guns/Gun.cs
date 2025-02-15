@@ -16,7 +16,7 @@ public partial class Gun : Actor
 
     Player PLAYER;
     //GameObject playerUpperBody;
-    private void Start()
+    protected override void Start()
     {
         GunBulletType();
         ui = Shared.BattelMgr.ui;

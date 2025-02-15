@@ -71,6 +71,7 @@ public partial class Player : Charactor
 
     protected override void Start()
     {
+        rigid = GetComponent<Rigidbody>();
         gun = GetComponentInChildren<Gun>();
         playerAnim = GetComponentInChildren<Animator>();
         Maincam = UnityEngine.Camera.main;
@@ -87,12 +88,8 @@ public partial class Player : Charactor
     // Update is called once per frame
     void Update()
     {
-        //upperStateEnum();
-        //lowerStateEnum();
-        // move();
-
         runcheck();
-        move();
+        //move();
         attackRot();
         bool value1 = Input.GetMouseButton(0);
         bool value2 = Input.GetMouseButtonUp(0);
@@ -110,8 +107,11 @@ public partial class Player : Charactor
         shitdownCheak();
         ////Time.timeScale = 0;//Faraim Speed up,Down
     }
-
-    private void attack()
+    private void FixedUpdate()
+    {
+        move();
+    }
+    protected override void attack()
     {
         Vector3 AimPos = Shared.BattelMgr.camAim.transform.position;
         Vector3 AimDirection = Shared.BattelMgr.camAim.transform.forward;

@@ -41,7 +41,7 @@ public partial class Login : Actor
         Debug.Log($"UserPassKey={UserPassKey},IDKey={IDKey}");
 
         LoginBut.interactable = true;
-        Shared.SceneMgr.chageScene(eScene.Loading);
+        Shared.SceneMgr.chageScene(Scene.Loading);
 
 
     }

@@ -10,8 +10,8 @@ GameObject:
   m_Component:
   - component: {fileID: 795172783068780014}
   - component: {fileID: 2076552735488103266}
-  - component: {fileID: 4265622000327854643}
-  - component: {fileID: 7360539576896122344}
+  - component: {fileID: 7541716180109616060}
+  - component: {fileID: 4268791606964638330}
   m_Layer: 7
   m_Name: Fab_Soljer
   m_TagString: Untagged
@@ -48,6 +48,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e6208191cdf996d4a9bcef356eb6b200, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  CharactorId: 0
   movePos: {x: 0, y: 0, z: 0}
   WeaponPrefab: {fileID: 4383385586661319670, guid: 494318586390ca24b9f2bd507d02ccf8, type: 3}
   shortSword: {fileID: 0}
@@ -55,7 +56,28 @@ MonoBehaviour:
   ControlBtn: {fileID: 0}
   shitCheack: 0
   closeCheck: 0
---- !u!54 &4265622000327854643
+--- !u!65 &7541716180109616060
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6590099433310919523}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 1, y: 1, z: 1}
+  m_Center: {x: 0, y: 0, z: 0}
+--- !u!54 &4268791606964638330
 Rigidbody:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -82,29 +104,6 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
---- !u!136 &7360539576896122344
-CapsuleCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6590099433310919523}
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_IsTrigger: 0
-  m_ProvidesContacts: 0
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Radius: 0.65
-  m_Height: 5.278212
-  m_Direction: 1
-  m_Center: {x: 0, y: -1.2608941, z: 0}
 --- !u!1001 &3037737855976608751
 PrefabInstance:
   m_ObjectHideFlags: 0

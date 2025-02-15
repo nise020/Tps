@@ -9,7 +9,7 @@ public abstract partial class Charactor : Actor
     //스텟 사용
     //clone 오브젝트 적극 사용 
     //protected int ID;//자신의 ID
-    protected float HP;//보여지는 체력
+    protected float hP;//보여지는 체력
     protected float cheHP;//체크할 체력
     protected float maxHP;//최대체력
     [SerializeField] protected float CharactorId = 0;//최대체력
@@ -20,23 +20,22 @@ public abstract partial class Charactor : Actor
     protected float skillCool_2;//2번 스킬쿨타임
     protected float buff;//버프
     protected float burstCool;//버스트 쿨타임
-    public void NowHp()//스타트에서 한번만 실행 
-    {
-        HP = maxHP;
-        cheHP = HP;
-    }
-    public void CheckHp()//cheHP가 우선적으로 소모
-    {
-        if (HP == cheHP) { return; }
-        //코루틴 으로 수정 예정
-        if (HP != cheHP && HP >= 0) 
-        {
-            HP = cheHP;
-        }
-    }
-    protected virtual void Dead() //사망
+
+    public void Hit() 
     {
 
     }
 
+    protected virtual void dead() //사망 상태
+    {
+
+    }
+    protected virtual void move() 
+    {
+
+    }
+    protected virtual void attack() 
+    {
+
+    }
 }

@@ -17,14 +17,15 @@ public abstract partial class Monster : Charactor
     protected AiMonster AI = new AiMonster();
     protected Skill_Monster SKILL = new Skill_Monster();
 
-    public eMobType eType;
+    public MonsterType eType;
 
-    protected eAI aIState = eAI.Create;
+    protected AI aIState = global::AI.Create;
 
     Transform creatTabObj;//총알 저장탭
 
     [Header("몬스터의 정보")]
     public int mobKey = 0;
+    [SerializeField] GameObject deadEffect;
 
     [Header("공격할 물체(공통)")]
     public GameObject AttackArm;//공격의 시작점이 될 팔

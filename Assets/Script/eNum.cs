@@ -71,7 +71,7 @@ public enum eState
     BurstCool,//버스트 쿨타임
 }
 
-public enum eScene //예전에는 앞에 sScene을 붙여야 했다
+public enum Scene //예전에는 앞에 sScene을 붙여야 했다
 {
    Title,
    Login,
@@ -81,7 +81,7 @@ public enum eScene //예전에는 앞에 sScene을 붙여야 했다
    End,
 
 }
-public enum eAI //AI 상태
+public enum AI //AI 상태
 {
     Create,
     Search,
@@ -90,14 +90,19 @@ public enum eAI //AI 상태
     Reset,
 }
 
-public enum eMobType //몬스터 태그
+public enum MonsterType //몬스터 태그
 {
     Defolt,
-    Flying,
+    Dron,
     Spider,
     Sphere
 }
-
+public enum CharactorType 
+{
+    None,
+    Player,
+    Monster,
+}
 public enum GunTags
 {
     AR,//소총
@@ -122,10 +127,11 @@ public enum LayerTag
     Cover,
     Bullet,
     MobBullet,
+    MobGranid,
     BackGround,
 }
 
-public enum eLayer //예전에는 앞에 sScene을 붙여야 했다
+public enum Layer //예전에는 앞에 sScene을 붙여야 했다
 {
     Cover,
     Player,

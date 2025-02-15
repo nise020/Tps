@@ -5,7 +5,7 @@ using UnityEngine.UI;
 
 public partial class SceneMgr : MonoBehaviour
 { 
-    eScene Scene = eScene.Title;
+    Scene Scene = Scene.Title;
 
     int IntKey;
     public string PassKey;

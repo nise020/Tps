@@ -15,7 +15,7 @@ public partial class Title : MonoBehaviour
 
     public void OnbtnTitle() //예시
     {
-        Shared.SceneMgr.chageScene(eScene.Lobby);
+        Shared.SceneMgr.chageScene(Scene.Lobby);
     }
     //void Start()
     //{
@@ -51,7 +51,7 @@ public partial class Title : MonoBehaviour
     public void LoginView()
     {
         //StartBut.interactable = true;
-        Shared.SceneMgr.chageScene(eScene.Login);
+        Shared.SceneMgr.chageScene(Scene.Login);
     }
     IEnumerator Passwordcheck()
     {
@@ -62,6 +62,6 @@ public partial class Title : MonoBehaviour
         Debug.Log($"{PasswordKey}님의 계정 정보를 확인되었습니다.");
         yield return new WaitForSeconds(2);
 
-        Shared.SceneMgr.chageScene(eScene.Loading);
+        Shared.SceneMgr.chageScene(Scene.Loading);
     }
 }

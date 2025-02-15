@@ -9,15 +9,15 @@ public partial class AiBase
 
     protected Monster MONSTER;
     protected Skill_Monster SKILL;
-    protected eAI aIState = eAI.Create;
-    protected eMobType MobType;
+    protected AI aIState = AI.Create;
+    protected MonsterType MobType;
     protected GameObject startObj;
 
     public bool nextOn_Off = true;
     public bool nowPatternOn = true;
     public bool moveChange = true;
     
-    public void Type(eMobType _eNum) 
+    public void Type(MonsterType _eNum) 
     {
         MobType = _eNum;
     }
@@ -27,46 +27,46 @@ public partial class AiBase
         SKILL = _SKILL;
     }
 
-    public virtual void State(ref eAI _aIState) 
+    public virtual void State(ref AI _aIState) 
     {
         switch (aIState)
         {
-            case eAI.Create:
+            case AI.Create:
                 Create();
                 break;
-            case eAI.Search:
+            case AI.Search:
                 Search();
                 break;
-            case eAI.Move:
+            case AI.Move:
                 Move();
                 break;
-            case eAI.Attack:
+            case AI.Attack:
                 Attack();
                 break;
-            case eAI.Reset:
+            case AI.Reset:
                 Reset();
                 break;
         }
     }
     protected virtual void Create() 
     {
-        aIState = eAI.Search;
+        aIState = AI.Search;
     }
     protected virtual void Search() 
     {
-        aIState = eAI.Attack;
+        aIState = AI.Attack;
     }
     protected virtual void Move() 
     {
-        aIState = eAI.Move;
+        aIState = AI.Move;
     }
     protected virtual void Attack()
     {
-        aIState = eAI.Reset;
+        aIState = AI.Reset;
     }
     protected virtual void Reset() 
     {
-        aIState = eAI.Search;
+        aIState = AI.Search;
     }
 }
     

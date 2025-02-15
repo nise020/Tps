@@ -1,56 +1,61 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UIElements;
+using static UIWidget;
 
 public abstract partial class Monster : Charactor
 {
-
-    protected virtual void MobAttackTimecheck() 
+    public void DirectAttack(GameObject _obj,Vector3 _pos) 
     {
-        Patterntimer += Time.deltaTime;
-        int number = 0;
-        if (Patterntimer >  Patternltime) 
-        {
-            if (NumberOn == false)
-            {
-                number = Random.Range(0, 1);
-                NumberOn = true;
-            }
-            MobAttackTimer(number);
-        }
+        Vector3 myPos = _obj.transform.position;
+        float speed = moveSpeed;
+        _obj.transform.position += (_pos - myPos).normalized * speed * Time.deltaTime;
+    }
+
+    public Transform target;
+    public float height = 5f;
+    public float throuTime = 2f;
+    public void granaidAttack(Vector3 _start, Vector3 _end, GameObject _obj) 
+    {
+        StartCoroutine(Throu(_start, _end, _obj));
+    }
+    IEnumerator Throu(Vector3 _start,Vector3 _end,GameObject _obj) 
+    {
         
-    }
-    protected void MobAttackTimer(int number) 
-    {
-        if (number == 0) 
-        {
-            //nomalAttack();
-        }
-        else if (number == 1) 
-        {
-            //GrenadeAttack();
-        }
-        //yield return null;
-    }
+        float elapsed = 0;
 
-    protected virtual void targetOn(ref int _value,List<GameObject>_listObj) 
-    {
-        int count = _listObj.Count;//공격할 플레이어 정렬
-        _value = Random.Range(0, count);//랜덤으로 타겟 번호 선정
-    }
+        while (elapsed < throuTime)
+        {
+            elapsed += Time.deltaTime;
+            float time = elapsed / throuTime;
 
-    protected override void Dead() 
+            Vector3 currentPos = Vector3.Lerp(_start, _end, time);
+            currentPos.y += Mathf.Sin(time * Mathf.PI) * height;
+
+            _obj.transform.position = currentPos;
+            yield return null;
+        }
+        _obj.transform.position = _end;
+    }
+    protected override void dead() 
     {
         Shared.BattelMgr.monsterData.Remove(mobKey);
+        GameObject go = Instantiate(deadEffect, transform.position, Quaternion.identity, creatTabObj);
+        StartCoroutine(EffectTime(go));
         Destroy(this);
     }
-
+    IEnumerator EffectTime(GameObject _obj) 
+    {
+        yield return new WaitForSeconds(4);
+        _obj.SetActive(false);
+    }
 
     Vector3 targetPos;
     Vector3 myPos = Vector3.zero;
     int moveNumber = 0;
-    public bool SearchCheack = false;
+   // public bool SearchCheack = false;
     float RotSpeed = 30;
     public void readySearch(ref bool _value)//공격할 대상 찾기
     {
@@ -58,7 +63,10 @@ public abstract partial class Monster : Charactor
         mobAnimator.SetInteger("Search", 0);
         //재정의
         float speed = moveSpeed;
-
+        if (movePosObj.Count == 0) 
+        {
+            Debug.Log("이동할 위치를 찾을수 없음");
+        }
 
         if (moveNumber >= movePosObj.Count) 
         {
@@ -73,13 +81,14 @@ public abstract partial class Monster : Charactor
 
         if (value > 0.1f)//Move
         {
-            gameObject.transform.position += (dir - nowPos).normalized * speed * Time.deltaTime;
 
-            Vector3 targetPos = dir;
-            Vector3 d = (targetPos - gameObject.transform.position);
+            Vector3 targetPos = (dir - nowPos).normalized;
+
             Quaternion startRot = Quaternion.LookRotation(gameObject.transform.forward);
-            Quaternion endRot = Quaternion.LookRotation(d.normalized);
+            Quaternion endRot = Quaternion.LookRotation(targetPos);
             gameObject.transform.localRotation = Quaternion.Lerp(startRot, endRot, RotSpeed);//* Time.deltaTime
+
+            gameObject.transform.position += targetPos * speed * Time.deltaTime;
         }
         else
         {
@@ -89,5 +98,4 @@ public abstract partial class Monster : Charactor
             moveNumber += 1;
         }
     }
-
 }

@@ -16,7 +16,21 @@ public partial class Monster : Charactor
             //mobAnimator.SetInteger("Search", 0);
         }
     }
-    public void AttackReadyAnim(int _value)
+    public void SearchAnim(int _value) 
+    {
+
+    }
+    public void AttackEndAnim(int _value)
+    {
+        if (_value != 0 && eType == MonsterType.Spider)
+        {
+            //AI.moveing = true;
+            mobAnimator.SetInteger("Attack", 0);
+            Debug.Log("AttackReadyAnim");
+            //mobAnimator.SetInteger("Search", 0);
+        }
+    }
+    public void AttackReadyAnim(int _value)//cicle
     {
         if (_value != 0)
         {

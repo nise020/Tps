@@ -6,7 +6,7 @@ public partial class SphereMob : Monster
 {
     protected override void Start()
     {
-        eType = eMobType.Sphere;
+        eType = MonsterType.Sphere;
         base.Start();
     }
     protected override void OnTriggerEnter(Collider other)

@@ -30,7 +30,7 @@ public class Loading : Actor
         maxImg.fillAmount = 1.0f;
         if (maxImg.fillAmount == 1.0f) 
         {
-            Shared.SceneMgr.chageScene(eScene.Lobby);
+            Shared.SceneMgr.chageScene(Scene.Lobby);
         }
 
 

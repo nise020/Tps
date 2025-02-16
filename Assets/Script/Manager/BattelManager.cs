@@ -6,7 +6,7 @@ using UnityEngine.Networking;
 
 public class BattelManager : MonoBehaviour
 {
-    public Battel_UI ui;
+    public BattelUI ui;
     //public Camera playerCam;
     public MoveCamera MOVECAM;
     public GameObject camAim;
@@ -24,8 +24,9 @@ public class BattelManager : MonoBehaviour
     [SerializeField, Tooltip("공격 감지")] public List<bool> AttackSearch;
     [SerializeField] List< Monster> MONSTEROBJ;
 
-    [SerializeField] SpiderMob defoltMob;
-    [SerializeField] DronMob flyingMob;
+    [SerializeField] SpiderMob SpiderMob;
+    [SerializeField] DronMob dronMob;
+    [SerializeField] SphereMob sphereMob;
     //[SerializeField] SphereMob sphereMob;
 
     [SerializeField, Tooltip("엄페물")] List<GameObject> COVER;
@@ -33,11 +34,12 @@ public class BattelManager : MonoBehaviour
 
     [Header("Defolt 생성 지점")]
     [SerializeField] List<GameObject> StageSpowneObj;//SpowneObjectList
-    [SerializeField] Battel_UI BATTELUI;
+    [SerializeField] BattelUI BATTELUI;
 
 
 
     public Transform creatTab;
+    public Transform uiHpTab;
     public int targetNum;
     //Vector3 targetPos;
     [SerializeField, Tooltip("스폰할 못스터 숫자")] int Maxcount = 1;
@@ -59,58 +61,60 @@ public class BattelManager : MonoBehaviour
 
     private void Start()
     {
-        //creatObject();
+        creatObject();
         //spownListArrange();
     }
     private void creatObject() 
     {
         //player
         GameObject player = Instantiate(PLAYER.gameObject, startPointObj.transform.position, Quaternion.identity);
-
+        MOVECAM.PlayerObj = player;
+        //camera.PLAYER
 
         //Gun
-        GameObject gun = Instantiate(GUN.gameObject,transform.position, Quaternion.identity, playerHand.transform);
-        Gun guns = gun.GetComponent<Gun>();
-        guns.GunBulletType();
-        guns.creatbullet();
-
-        //buulet
+        //GameObject gun = Instantiate(GUN.gameObject,transform.position, Quaternion.identity, playerHand.transform);
+        //Gun guns = gun.GetComponent<Gun>();
+        //guns.GunBulletType();
+        //guns.creatbullet();
 
         //monster
-        GameObject monster = Instantiate(GUN.gameObject, transform.position, Quaternion.identity, playerHand.transform);
+        spownListArrange(STAGE[stageLevel]);
+        //hpBar
+        Shared.BattelUI.CreatHpBar(Maxcount);
+
+        //GameObject monster = Instantiate(GUN.gameObject, transform.position, Quaternion.identity, creatTab);
+        
     }
     private void Update()
     {
         //Timer();
     }
-    private void spownListArrange() 
+    private void spownListArrange(GameObject _stage) 
     {
-        GameObject stage = STAGE[stageLevel];//스테이지 불러오기
-
-        foreach (Transform spawnPoint in stage.transform)
+        foreach (Transform spawnPoint in _stage.transform)
         {
             LayerMask Layer = spawnPoint.gameObject.layer;
             string layerName = LayerMask.LayerToName(Layer);
 
-            spawnByType(layerName, spawnPoint.position);
+            spawnByType(layerName, spawnPoint.position, mincount,Maxcount);
         }
     }
-    private void spawnByType(string _layername, Vector3 _spawnTrs)
+    private void spawnByType(string _layername, Vector3 _spawnTrs,int _min,int _max)
     {
-        if (mincount >= Maxcount) { return; }
+        if (_min >= _max) { return; }
 
-        mincount += 1;
+        _min += 1;
         GameObject GO = null;
-        switch (_layername) 
+        switch (_layername) //수정 필요
         {
-            case "SpawnDefolt":
-                GO = defoltMob.gameObject;
+            case "SpawnSpider":
+                GO = SpiderMob.gameObject;
                 break;
-            case "SpawnFlying":
-                GO = flyingMob.gameObject;
+            case "SpawnDron":
+                GO = dronMob.gameObject;
                 break;
-            case "SpawnHuge":
-                //GO = hugeMob.gameObject;
+            case "SpawnSphere":
+                GO = sphereMob.gameObject;
                 break;
         }
 
@@ -129,7 +133,7 @@ public class BattelManager : MonoBehaviour
         spownTimer += Time.deltaTime;
         if (spownTimer >= spownTime) 
         {
-            spownListArrange();
+            //spownListArrange();
             spownTimer = 0.0f;
         }
         //float ScaleTime = 0.2f;
@@ -153,5 +157,8 @@ public class BattelManager : MonoBehaviour
         //chageScene(eScene.Title);
     }
 
-  
+    public void Resurrection() 
+    {
+
+    }
 }

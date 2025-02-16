@@ -6,9 +6,10 @@ public class Granad : Actor
 {
     Vector3 GranadPos;
     public Vector3 startPos;
+    [SerializeField] GameObject explotionObj;
     private void Active()
     {
-        
+        GameObject go = Instantiate(explotionObj,transform.position,Quaternion.identity);
     }
     protected override void Start()
     {

@@ -4,7 +4,7 @@ using UnityEngine;
 
 public partial class MoveCamera : MonoBehaviour
 {
-    GameObject PlayerObj;
+    public GameObject PlayerObj;
     GameObject attackAim;
     Vector3 camPos;
     UnityEngine.Camera cam;
@@ -88,18 +88,18 @@ public partial class MoveCamera : MonoBehaviour
         //Cursor.lockState = CursorLockMode.Locked;
         //Cursor.visible = false;
         //PlayerObj = Shared.BattelMgr.PLAYER.gameObject;
-        PlayerObj = Shared.BattelMgr.playerUpper.gameObject;
+        //PlayerObj = Shared.BattelMgr.PLAYER.gameObject;
         attackAim = Shared.BattelMgr.camAim;
-        transform.LookAt(PlayerObj.transform);
+        //transform.LookAt(PlayerObj.transform);
     }
 
     
     private void LateUpdate()
     {
-        showCursue();
-        shootMode();
-        shootCamera();
-        camRot();
+        //showCursue();
+        //shootMode();
+        //shootCamera();
+        //camRot();
     }
     public void cameraShakeAnim(bool _anim) 
     {

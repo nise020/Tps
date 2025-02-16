@@ -16,6 +16,10 @@ public abstract partial class Monster : Charactor
 
     protected AiMonster AI = new AiMonster();
     protected Skill_Monster SKILL = new Skill_Monster();
+    GameObject hpBar;
+
+
+
 
     public MonsterType eType;
 

@@ -13,13 +13,26 @@ public abstract partial class Charactor : Actor
     protected float cheHP;//체크할 체력
     protected float maxHP;//최대체력
     [SerializeField] protected float CharactorId = 0;//최대체력
-
-
+    [SerializeField] GameObject hpBar;//uiHp
+    State state = new State();
 
     protected float skillCool_1;//1번 스킬쿨타임
     protected float skillCool_2;//2번 스킬쿨타임
     protected float buff;//버프
     protected float burstCool;//버스트 쿨타임
+
+    protected void inIt() 
+    {
+        hP = state.MaxHP;
+        cheHP = hP;
+        maxHP = hP;
+    }
+
+    protected override void OnTriggerEnter(Collider other) 
+    {
+        //base.OnTriggerEnter(other);
+
+    }
 
     public void Hit() 
     {

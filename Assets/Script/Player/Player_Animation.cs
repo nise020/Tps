@@ -99,7 +99,8 @@ public partial class Player : Charactor
             if (movePos.z > 0)//transform.localPosition bug
             {
                 //transform.localPosition += direction * (moveSpeed * 2) * Time.deltaTime;
-                rigid.MovePosition(rigid.position + direction * (moveSpeed * 2) * Time.fixedDeltaTime);
+
+                //rigid.MovePosition(rigid.position + direction * (moveSpeed * 2) * Time.fixedDeltaTime);
 
                 //rigid.velocity = direction * (moveSpeed * 2);
 
@@ -109,7 +110,8 @@ public partial class Player : Charactor
             else
             {
                 //transform.localPosition += direction * moveSpeed * Time.deltaTime;
-                rigid.MovePosition(rigid.position + direction * (moveSpeed) * Time.fixedDeltaTime);
+
+                //rigid.MovePosition(rigid.position + direction * (moveSpeed) * Time.fixedDeltaTime);
 
                 //rigid.velocity = direction * (moveSpeed); ;
                 //rigid.velocity += direction * moveSpeed * Time.deltaTime;
@@ -120,7 +122,7 @@ public partial class Player : Charactor
         {
             //transform.localPosition += direction * moveSpeed * Time.deltaTime;
 
-            rigid.MovePosition(rigid.position + direction * (moveSpeed) * Time.fixedDeltaTime);
+            //rigid.MovePosition(rigid.position + direction * (moveSpeed) * Time.fixedDeltaTime);
 
             //rigid.velocity = direction * (moveSpeed);
 

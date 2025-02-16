@@ -20,8 +20,8 @@ public partial class State
     public float cheHP;//체크할 체력
 
     public float MaxHP;//최대체력
-    public int   Attack;//공격력
-    public int   Defense;//방어력
+    public int Attack;//공격력
+    public int Defense;//방어력
     public float Movespeed;//이동속도
     public void charactorType(CharactorType _eNum)
     {

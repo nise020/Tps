@@ -7,7 +7,7 @@ using UnityEngine.UI;
 
 public partial class Gun : Actor
 {
-    Battel_UI ui;
+    BattelUI ui;
     public bool reLoed = false;
 
     [SerializeField] float gunRazer;

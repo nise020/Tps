@@ -1,0 +1,43 @@
+ManifestFileVersion: 0
+CRC: 2704168269
+Hashes:
+  AssetFileHash:
+    serializedVersion: 2
+    Hash: 9af5f4ffd9cbd9f8ef0de7394992e82a
+  TypeTreeHash:
+    serializedVersion: 2
+    Hash: 22265d8a68d496a79dcddde46332f8e6
+HashAppended: 0
+ClassTypes:
+- Class: 1
+  Script: {instanceID: 0}
+- Class: 4
+  Script: {instanceID: 0}
+- Class: 21
+  Script: {instanceID: 0}
+- Class: 23
+  Script: {instanceID: 0}
+- Class: 28
+  Script: {instanceID: 0}
+- Class: 33
+  Script: {instanceID: 0}
+- Class: 43
+  Script: {instanceID: 0}
+- Class: 48
+  Script: {instanceID: 0}
+- Class: 108
+  Script: {instanceID: 0}
+- Class: 114
+  Script: {fileID: 11500000, guid: 539d9500bb7fab24097a0c368df5c00e, type: 3}
+- Class: 115
+  Script: {instanceID: 0}
+- Class: 135
+  Script: {instanceID: 0}
+- Class: 198
+  Script: {instanceID: 0}
+- Class: 199
+  Script: {instanceID: 0}
+SerializeReferenceClassIdentifiers: []
+Assets:
+- Assets/Resources/Prefabs/Bullet/Fab_Granad.prefab
+Dependencies: []

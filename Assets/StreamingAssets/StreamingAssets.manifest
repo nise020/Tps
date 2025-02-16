@@ -1,0 +1,7 @@
+ManifestFileVersion: 0
+CRC: 3079616675
+AssetBundleManifest:
+  AssetBundleInfos:
+    Info_0:
+      Name: fab_granaid.bullet
+      Dependencies: {}

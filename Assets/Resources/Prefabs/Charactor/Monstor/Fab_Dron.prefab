@@ -99,12 +99,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   CharactorId: 0
+  hpBar: {fileID: 9135575270855701387, guid: e3d5465fd69dd4e4bad042dc6f58d2d8, type: 3}
   mobAnimator: {fileID: 0}
   animCheack: 0
   target: {fileID: 0}
   height: 5
   throuTime: 2
-  SearchCheack: 1
   movePosObj: []
   MobGrenade: {fileID: 0}
   MobBullet: {fileID: 6620972946245811102, guid: 76a6c0a5166a6ca408b9d547d4ea3215, type: 3}
@@ -238,12 +238,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   CharactorId: 0
+  hpBar: {fileID: 0}
   mobAnimator: {fileID: 0}
   animCheack: 0
   target: {fileID: 0}
   height: 5
   throuTime: 2
-  SearchCheack: 1
   movePosObj: []
   MobGrenade: {fileID: 0}
   MobBullet: {fileID: 6620972946245811102, guid: 76a6c0a5166a6ca408b9d547d4ea3215, type: 3}

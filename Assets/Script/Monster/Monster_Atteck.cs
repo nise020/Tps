@@ -2,8 +2,6 @@ using System.Collections;
 using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
-using UnityEngine.UIElements;
-using static UIWidget;
 
 public abstract partial class Monster : Charactor
 {
@@ -74,7 +72,7 @@ public abstract partial class Monster : Charactor
             return;
         }
 
-        Vector3 dir = movePosObj[moveNumber].transform.position;
+        Vector3 dir = movePosObj[moveNumber].transform.position;//¿¡·¯
         Vector3 nowPos = gameObject.transform.position;
 
         float value = Vector3.Distance(nowPos, dir);

@@ -109,7 +109,7 @@ public partial class Player : Charactor
     }
     private void FixedUpdate()
     {
-        move();
+        //move();
     }
     protected override void attack()
     {

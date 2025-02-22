@@ -1,3 +1,4 @@
+using Photon.Realtime;
 using SimpleJSON;
 using System.Collections;
 using System.Collections.Generic;
@@ -8,45 +9,50 @@ public class BattelManager : MonoBehaviour
 {
     public BattelUI ui;
     //public Camera playerCam;
+    [SerializeField] GameObject playerCam;
     public MoveCamera MOVECAM;
-    public GameObject camAim;
+    public GameObject CamAim;
 
     public bool GameOver = false;
 
-
+    [Header("Player")]
     //한글 꼭 지우기
     public Player PLAYER;
+    public bool PlayerAlive = false;
     public GameObject playerUpper;//상체
     public GameObject playerHand;//오른손
+
+    [Header("Gun")]
     public Gun GUN;
     public GameObject attackAim;
     [SerializeField] GameObject startPointObj;
     [SerializeField, Tooltip("공격 감지")] public List<bool> AttackSearch;
     [SerializeField] List< Monster> MONSTEROBJ;
 
+    [Header("Monster")]
     [SerializeField] SpiderMob SpiderMob;
     [SerializeField] DronMob dronMob;
     [SerializeField] SphereMob sphereMob;
     //[SerializeField] SphereMob sphereMob;
 
+    [Header("Monster")]
     [SerializeField, Tooltip("엄페물")] List<GameObject> COVER;
     [SerializeField, Tooltip("Stage Level에 따른 Stage 스폰 위치")] List<GameObject> STAGE;
 
     [Header("Defolt 생성 지점")]
     [SerializeField] List<GameObject> StageSpowneObj;//SpowneObjectList
     [SerializeField] BattelUI BATTELUI;
+    [SerializeField, Tooltip("스폰할 못스터 숫자")] int Maxcount = 1;
+    public Dictionary<int, GameObject> monsterData = new Dictionary<int, GameObject>();
 
-
-
+    [Header("CreatTab")]
     public Transform creatTab;
     public Transform uiHpTab;
     public int targetNum;
+
     //Vector3 targetPos;
-    [SerializeField, Tooltip("스폰할 못스터 숫자")] int Maxcount = 1;
     int mincount = 0;
     int monsterCount = 0;
-    Dictionary<int, Charactor> CHARACTORDATA = new Dictionary<int, Charactor>();
-    public Dictionary<int, GameObject> monsterData = new Dictionary<int, GameObject>();
     //public Dictionary<int, Monster> monsterData = new Dictionary<int, Monster>();
     float spownTimer = 0.0f;
     float spownTime = 1.0f;
@@ -58,7 +64,7 @@ public class BattelManager : MonoBehaviour
     //죽으면 비활성화
     //일정 시간 후 부활(위치는 원래 위치)
     //몬스터나 플레이어 생성시 사용할 아이템도 생성
-
+    
     private void Start()
     {
         creatObject();
@@ -68,19 +74,17 @@ public class BattelManager : MonoBehaviour
     {
         //player
         GameObject player = Instantiate(PLAYER.gameObject, startPointObj.transform.position, Quaternion.identity);
-        MOVECAM.PlayerObj = player;
+        PlayerAlive = true;
         //camera.PLAYER
-
+        //GameObject camera = Instantiate(playerCam, startPointObj.transform.position, Quaternion.identity);
+        //MoveCamera MOVECAM = camera.GetComponentInChildren<MoveCamera>();
+        //MOVECAM.PlayerObj = player;
+        playerCam.transform.position = player.transform.position;
+        MOVECAM.PlayerObj = player;
         //Gun
-        //GameObject gun = Instantiate(GUN.gameObject,transform.position, Quaternion.identity, playerHand.transform);
-        //Gun guns = gun.GetComponent<Gun>();
-        //guns.GunBulletType();
-        //guns.creatbullet();
 
         //monster
         spownListArrange(STAGE[stageLevel]);
-        //hpBar
-        Shared.BattelUI.CreatHpBar(Maxcount);
 
         //GameObject monster = Instantiate(GUN.gameObject, transform.position, Quaternion.identity, creatTab);
         
@@ -99,6 +103,20 @@ public class BattelManager : MonoBehaviour
             spawnByType(layerName, spawnPoint.position, mincount,Maxcount);
         }
     }
+    public bool GetPlayerPosition(out Vector3 _pos) 
+    {
+        _pos = default;
+        if (PLAYER == null)
+        {
+            return false;
+        }
+        else
+        {
+            _pos = PLAYER.transform.position;
+            return true;
+        }
+    }
+
     private void spawnByType(string _layername, Vector3 _spawnTrs,int _min,int _max)
     {
         if (_min >= _max) { return; }
@@ -123,6 +141,9 @@ public class BattelManager : MonoBehaviour
         Monster monster = GO.GetComponent<Monster>();
         monsterData.Add(monsterCount, GO);
         monster.mobKey = monsterCount;
+
+        //hpBar
+        Shared.BattelUI.CreatHpBar(Maxcount, monster);
         monsterCount += 1;
 
     }
@@ -154,7 +175,6 @@ public class BattelManager : MonoBehaviour
         {
             Destroy(gameObject);
         }
-        //chageScene(eScene.Title);
     }
 
     public void Resurrection() 

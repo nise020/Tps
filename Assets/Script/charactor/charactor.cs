@@ -20,7 +20,7 @@ public abstract partial class Charactor : Actor
     protected float skillCool_2;//2번 스킬쿨타임
     protected float buff;//버프
     protected float burstCool;//버스트 쿨타임
-
+    [SerializeField] CharactorType type = CharactorType.None;
     protected void inIt() 
     {
         hP = state.MaxHP;
@@ -41,7 +41,15 @@ public abstract partial class Charactor : Actor
 
     protected virtual void dead() //사망 상태
     {
-
+        if (type == CharactorType.Player) 
+        {
+            gameObject.SetActive(false);
+            Shared.BattelMgr.PlayerAlive = false;
+        }
+        else 
+        {
+            gameObject.SetActive(false);
+        }
     }
     protected virtual void move() 
     {

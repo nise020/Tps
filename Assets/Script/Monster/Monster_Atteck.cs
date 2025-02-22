@@ -55,38 +55,42 @@ public abstract partial class Monster : Charactor
     int moveNumber = 0;
    // public bool SearchCheack = false;
     float RotSpeed = 30;
+    bool checkPos = false;
     public void readySearch(ref bool _value)//공격할 대상 찾기
     {
         if (!_value) { return; }
         mobAnimator.SetInteger("Search", 0);
         //재정의
         float speed = moveSpeed;
-        if (movePosObj.Count == 0) 
+        if (movePos.Count == 0) 
         {
             Debug.Log("이동할 위치를 찾을수 없음");
         }
-
-        if (moveNumber >= movePosObj.Count) 
+        if (moveNumber >= movePos.Count) 
         {
             moveNumber = 0;
             return;
         }
 
-        Vector3 dir = movePosObj[moveNumber].transform.position;//에러
+        if (checkPos == false) 
+        {
+            targetPos = gameObject.transform.position + movePos[moveNumber];//에러
+            checkPos = true;
+        }
         Vector3 nowPos = gameObject.transform.position;
 
-        float value = Vector3.Distance(nowPos, dir);
+        float value = Vector3.Distance(nowPos, targetPos);
 
         if (value > 0.1f)//Move
         {
 
-            Vector3 targetPos = (dir - nowPos).normalized;
+            Vector3 dir = (targetPos - nowPos).normalized;
 
             Quaternion startRot = Quaternion.LookRotation(gameObject.transform.forward);
-            Quaternion endRot = Quaternion.LookRotation(targetPos);
+            Quaternion endRot = Quaternion.LookRotation(dir);
             gameObject.transform.localRotation = Quaternion.Lerp(startRot, endRot, RotSpeed);//* Time.deltaTime
 
-            gameObject.transform.position += targetPos * speed * Time.deltaTime;
+            gameObject.transform.position += dir * speed * Time.deltaTime;
         }
         else
         {
@@ -94,6 +98,7 @@ public abstract partial class Monster : Charactor
             mobAnimator.SetInteger("Search", 1);
             _value = false;
             moveNumber += 1;
+            checkPos = false;
         }
     }
 }

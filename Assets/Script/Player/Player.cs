@@ -89,7 +89,6 @@ public partial class Player : Charactor
     void Update()
     {
         runcheck();
-        //move();
         attackRot();
         bool value1 = Input.GetMouseButton(0);
         bool value2 = Input.GetMouseButtonUp(0);
@@ -109,12 +108,12 @@ public partial class Player : Charactor
     }
     private void FixedUpdate()
     {
-        //move();
+        move();
     }
     protected override void attack()
     {
-        Vector3 AimPos = Shared.BattelMgr.camAim.transform.position;
-        Vector3 AimDirection = Shared.BattelMgr.camAim.transform.forward;
+        Vector3 AimPos = Shared.BattelMgr.CamAim.transform.position;
+        Vector3 AimDirection = Shared.BattelMgr.CamAim.transform.forward;
         //string text = ($"{PlayerAnimParameters.Attack}");
         if (Physics.Raycast(AimPos, AimDirection, out RaycastHit hit))
         {
@@ -165,7 +164,7 @@ public partial class Player : Charactor
     
     public void attackRot() 
     {
-        Vector3 pos = Shared.BattelMgr.camAim.transform.forward;
+        Vector3 pos = Shared.BattelMgr.CamAim.transform.forward;
         transform.rotation = Quaternion.Euler(pos); 
     }
 }

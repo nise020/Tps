@@ -41,14 +41,15 @@ public partial class BattelUI : MonoBehaviour
     }
     //stack 구현 필요
     //Que
-    public void CreatHpBar(int _max) 
+    public void CreatHpBar(int _max,Monster _monster) 
     {
         for(int i = 0; i < _max; i++) 
         {
             GameObject go = Instantiate(hpBar,transform.position,Quaternion.identity,creatTab.transform);
-            hpData.Add(i, go);
             HpBar hp = go.GetComponent<HpBar>();
+            hpData.Add(i, go);
             hp.key = i;
+            hp.inIt(_monster);
           
         }
     }
@@ -58,18 +59,6 @@ public partial class BattelUI : MonoBehaviour
         cam = UnityEngine.Camera.main;
         CursurRect = GetComponent<RectTransform>();
     }
-
-    private void LateUpdate()
-    {
-
-    }
-
-    public void Onclick() 
-    {
-        //Shared.BattelMgr.PLAYER[]
-    }
-
-
 
     public void Timer()
     {

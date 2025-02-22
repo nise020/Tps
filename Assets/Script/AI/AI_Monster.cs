@@ -22,7 +22,7 @@ public partial class AiMonster : AiBase
     public bool moveing = false;
     public bool searching = false;
     bool attackCheck = false;
-    List<GameObject> searchPosObj;
+    List<Vector3> searchPosObj;
     Vector3 startPos = Vector3.zero;
     
     int moveNumber = 0;
@@ -60,7 +60,7 @@ public partial class AiMonster : AiBase
     {
         animator = MONSTER.mobAnimator;
 
-        searchPosObj = MONSTER.movePosObj;//List
+        searchPosObj = MONSTER.movePos;//List
 
         creatTab = Shared.BattelMgr.creatTab;
         eyePos = MONSTER.eyeObj.transform;
@@ -151,7 +151,7 @@ public partial class AiMonster : AiBase
             float distanse = Vector3.Distance(myPos, targetPos);
             float targetvalue = MONSTER.attackDistanse;//사정거리
 
-            if (distanse < targetvalue)
+            if (distanse < 1.0f)
             {
                 animator.SetInteger("Close", 0);
                 animator.SetInteger("AttackDilray", 1);

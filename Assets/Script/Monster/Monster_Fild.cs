@@ -7,7 +7,7 @@ public abstract partial class Monster : Charactor
     BattelManager BATTELMANAGER;
     [Header("공격할 물체(공통)")]
 
-    public List<GameObject> movePosObj;
+    public List<Vector3> movePos;
 
 
     public GameObject MobGrenade;//투척물 프리팹

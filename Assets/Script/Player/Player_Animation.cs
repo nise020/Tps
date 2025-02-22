@@ -84,51 +84,46 @@ public partial class Player : Charactor
 
         Vector3 move = Vector3.zero;
 
-        //if (movePos.magnitude > 0.1f) // 입력이 있을 때만 이동
-        //{
-        //    float speed = runstate ? moveSpeed * 2 : moveSpeed;
-        //    rigid.velocity = direction * speed;
-        //}
-        //else
-        //{
-        //    rigid.velocity = Vector3.zero; // 입력이 없으면 멈추게 설정
-        //}
-        if (runstate)
+        if (movePos.magnitude > 0.1f) // 입력이 있을 때만 이동
         {
-            Debug.Log(movePos);
-            if (movePos.z > 0)//transform.localPosition bug
-            {
-                //transform.localPosition += direction * (moveSpeed * 2) * Time.deltaTime;
-
-                //rigid.MovePosition(rigid.position + direction * (moveSpeed * 2) * Time.fixedDeltaTime);
-
-                //rigid.velocity = direction * (moveSpeed * 2);
-
-                //rigid.MovePosition(rigid.position + movePos * (moveSpeed * 2) * Time.fixedDeltaTime);
-                //2 <- state
-            }
-            else
-            {
-                //transform.localPosition += direction * moveSpeed * Time.deltaTime;
-
-                //rigid.MovePosition(rigid.position + direction * (moveSpeed) * Time.fixedDeltaTime);
-
-                //rigid.velocity = direction * (moveSpeed); ;
-                //rigid.velocity += direction * moveSpeed * Time.deltaTime;
-                //rigid.MovePosition(rigid.position + movePos * moveSpeed * Time.fixedDeltaTime);
-            }
+            float speed = runstate ? moveSpeed * 2 : moveSpeed;
+            rigid.velocity = direction * speed;
         }
         else
         {
-            //transform.localPosition += direction * moveSpeed * Time.deltaTime;
-
-            //rigid.MovePosition(rigid.position + direction * (moveSpeed) * Time.fixedDeltaTime);
-
-            //rigid.velocity = direction * (moveSpeed);
-
-            //rigid.MovePosition(rigid.position + movePos * moveSpeed * Time.fixedDeltaTime);
-
+            rigid.velocity = Vector3.zero; // 입력이 없으면 멈추게 설정
         }
+        //if (runstate)
+        //{
+        //    Debug.Log(movePos);
+        //    if (movePos.z > 0)//transform.localPosition bug
+        //    {
+        //        transform.localPosition += direction * (moveSpeed * 2) * Time.deltaTime;
+
+        //        //rigid.MovePosition(rigid.position + direction * (moveSpeed * 2) * Time.fixedDeltaTime);
+
+        //        //rigid.velocity = direction * (moveSpeed * 2);
+        //        //2 <- state
+        //    }
+        //    else
+        //    {
+        //        transform.localPosition += direction * moveSpeed * Time.deltaTime;
+
+        //        //rigid.MovePosition(rigid.position + direction * (moveSpeed) * Time.fixedDeltaTime);
+
+        //        //rigid.velocity = direction * (moveSpeed); ;
+        //        //rigid.velocity += direction * moveSpeed * Time.deltaTime;
+        //    }
+        //}
+        //else
+        //{
+        //    transform.localPosition += direction * moveSpeed * Time.deltaTime;
+
+        //    //rigid.MovePosition(rigid.position + direction * (moveSpeed) * Time.fixedDeltaTime);
+
+        //    //rigid.velocity = direction * (moveSpeed);
+
+        //}
 
     }
     private void sideWalk(float _move) 
@@ -268,7 +263,7 @@ public partial class Player : Charactor
         AnimatorStateInfo animStateInfo = playerAnim.GetCurrentAnimatorStateInfo(index);
         float time = animStateInfo.normalizedTime;
 
-        Debug.Log($"{time}");
+        //Debug.Log($"{time}");
         if (time >= 1.0f && animStateInfo.IsName(_animText))
         {
             string reloading = ($"{playerAnimInfoName.reloading}");

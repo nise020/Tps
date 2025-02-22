@@ -89,7 +89,7 @@ public partial class MoveCamera : MonoBehaviour
         //Cursor.visible = false;
         //PlayerObj = Shared.BattelMgr.PLAYER.gameObject;
         //PlayerObj = Shared.BattelMgr.PLAYER.gameObject;
-        attackAim = Shared.BattelMgr.camAim;
+        attackAim = Shared.BattelMgr.CamAim;
         //transform.LookAt(PlayerObj.transform);
     }
 
@@ -97,9 +97,9 @@ public partial class MoveCamera : MonoBehaviour
     private void LateUpdate()
     {
         //showCursue();
-        //shootMode();
-        //shootCamera();
-        //camRot();
+        shootMode();
+        shootCamera();
+        camRot();
     }
     public void cameraShakeAnim(bool _anim) 
     {

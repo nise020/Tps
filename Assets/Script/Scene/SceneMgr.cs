@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 public partial class SceneMgr : MonoBehaviour
@@ -37,6 +38,22 @@ public partial class SceneMgr : MonoBehaviour
         _value = PassKey;
     }
 
+    private void gameExit()
+    {
+#if UNITY_EDITOR
+        UnityEditor.EditorApplication.isPlaying = false;
+#else
+Application.Quit();
+#endif
+    }
 
+    private void gameStart()
+    {
+        Shared.FaidInOut.ActiveFade(true, () =>
+        {
+            Shared.SceneMgr.chageScene((Scene.Battle));//юс╫ц
+            Shared.FaidInOut.ActiveFade(false, null);
+        });
+    }
 
 }

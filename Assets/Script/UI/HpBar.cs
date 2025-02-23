@@ -32,39 +32,19 @@ public partial class HpBar : MonoBehaviour
     {
         cam = Camera.main;
         rectTransform = GetComponent<RectTransform>();
+    }
+    private void Start()
+    {
         initHp();
     }
     private void Update()
     {
-        hpPosiTion();
+       // hpPosiTion();
 
         checkFillAmount();
         chasePlayer();
         chekedPlayerDestroy();
 
-    }
-
-    private void hpPosiTion()
-    {
-
-        if (posiTion != null)
-        {
-            // 3D 월드 좌표를 2D 뷰포트 좌표로 변환
-            Vector3 viewportPos = cam.WorldToViewportPoint(posiTion + offset);
-
-            // 카메라가 몬스터를 보고 있는지 확인
-            bool isVisible = (viewportPos.z > 0 && viewportPos.x > 0 && viewportPos.x < 1 && viewportPos.y > 0 && viewportPos.y < 1);
-
-            // 화면 안에 있으면 체력바 활성화, 화면 밖이면 비활성화
-            rectTransform.gameObject.SetActive(isVisible);
-
-            if (isVisible)
-            {
-                // UI 위치 업데이트
-                rectTransform.anchorMin = viewportPos;
-                rectTransform.anchorMax = viewportPos;
-            }
-        }
     }
 
     private void initHp()
@@ -93,12 +73,12 @@ public partial class HpBar : MonoBehaviour
             imgEffect.fillAmount = imgHp.fillAmount;
         }
     }
-    private void chasePlayer()//위치 고정
+    private void chasePlayer()
     {
-        if (Shared.BattelMgr.GetPlayerPosition(out Vector3 pos) == true)
+        if (Shared.BattelMgr.GetMonsterPosition(key,out Vector3 pos) == true)
         {
-            pos.y -= 0.7f;
-            transform.position = pos;// = pos - new Vector3(0,0.7f,0);
+            pos.y =+ 0.7f;
+            rectTransform.position = pos;
         }
     }
 
@@ -106,7 +86,7 @@ public partial class HpBar : MonoBehaviour
     {
         if (imgEffect.fillAmount == 0.1f)
         {
-            Destroy(gameObject);
+            gameObject.SetActive(false);
         }
     }
 }

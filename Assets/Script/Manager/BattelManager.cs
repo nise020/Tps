@@ -33,17 +33,17 @@ public class BattelManager : MonoBehaviour
     [SerializeField] SpiderMob SpiderMob;
     [SerializeField] DronMob dronMob;
     [SerializeField] SphereMob sphereMob;
-    //[SerializeField] SphereMob sphereMob;
+    [SerializeField] GameObject hpBarCanvers;
+    [SerializeField] HpBar hpBarObj;
+    public Dictionary<int, GameObject> hpData = new Dictionary<int, GameObject>();
 
-    [Header("Monster")]
-    [SerializeField, Tooltip("엄페물")] List<GameObject> COVER;
-    [SerializeField, Tooltip("Stage Level에 따른 Stage 스폰 위치")] List<GameObject> STAGE;
-
-    [Header("Defolt 생성 지점")]
-    [SerializeField] List<GameObject> StageSpowneObj;//SpowneObjectList
-    [SerializeField] BattelUI BATTELUI;
+    [Header("Spown")]
+    [SerializeField] List<GameObject> STAGE;
     [SerializeField, Tooltip("스폰할 못스터 숫자")] int Maxcount = 1;
     public Dictionary<int, GameObject> monsterData = new Dictionary<int, GameObject>();
+
+    [Header("Defolt 생성 지점")]
+    [SerializeField] BattelUI BATTELUI;
 
     [Header("CreatTab")]
     public Transform creatTab;
@@ -68,19 +68,15 @@ public class BattelManager : MonoBehaviour
     private void Start()
     {
         creatObject();
-        //spownListArrange();
     }
     private void creatObject() 
     {
         //player
-        GameObject player = Instantiate(PLAYER.gameObject, startPointObj.transform.position, Quaternion.identity);
+        PLAYER.gameObject.transform.position = startPointObj.gameObject.transform.position;
         PlayerAlive = true;
-        //camera.PLAYER
-        //GameObject camera = Instantiate(playerCam, startPointObj.transform.position, Quaternion.identity);
-        //MoveCamera MOVECAM = camera.GetComponentInChildren<MoveCamera>();
-        //MOVECAM.PlayerObj = player;
-        playerCam.transform.position = player.transform.position;
-        MOVECAM.PlayerObj = player;
+
+        playerCam.transform.position = PLAYER.transform.position;
+        MOVECAM.PlayerObj = PLAYER.gameObject;
         //Gun
 
         //monster
@@ -88,10 +84,6 @@ public class BattelManager : MonoBehaviour
 
         //GameObject monster = Instantiate(GUN.gameObject, transform.position, Quaternion.identity, creatTab);
         
-    }
-    private void Update()
-    {
-        //Timer();
     }
     private void spownListArrange(GameObject _stage) 
     {
@@ -101,6 +93,19 @@ public class BattelManager : MonoBehaviour
             string layerName = LayerMask.LayerToName(Layer);
 
             spawnByType(layerName, spawnPoint.position, mincount,Maxcount);
+        }
+    }
+    public bool GetMonsterPosition(int _value, out Vector3 _pos) 
+    {
+        _pos = Vector3.zero;
+        if (monsterData[_value] == null) 
+        {
+            return false;
+        }
+        else
+        {
+            _pos = monsterData[_value].transform.position;
+            return true;
         }
     }
     public bool GetPlayerPosition(out Vector3 _pos) 
@@ -122,30 +127,40 @@ public class BattelManager : MonoBehaviour
         if (_min >= _max) { return; }
 
         _min += 1;
-        GameObject GO = null;
+        GameObject monsterType = null;
         switch (_layername) //수정 필요
         {
             case "SpawnSpider":
-                GO = SpiderMob.gameObject;
+                monsterType = SpiderMob.gameObject;
                 break;
             case "SpawnDron":
-                GO = dronMob.gameObject;
+                monsterType = dronMob.gameObject;
                 break;
             case "SpawnSphere":
-                GO = sphereMob.gameObject;
+                monsterType = sphereMob.gameObject;
                 break;
         }
 
-        GameObject go = Instantiate(GO, _spawnTrs, Quaternion.identity, creatTab);
+        GameObject go = Instantiate(monsterType, _spawnTrs, Quaternion.identity, creatTab);
 
-        Monster monster = GO.GetComponent<Monster>();
-        monsterData.Add(monsterCount, GO);
+        Monster monster = go.GetComponent<Monster>();
+        monsterData.Add(monsterCount, go);
         monster.mobKey = monsterCount;
 
-        //hpBar
-        Shared.BattelUI.CreatHpBar(Maxcount, monster);
+        CreatHpBar(hpBarCanvers, Maxcount, monsterCount, monster);
         monsterCount += 1;
 
+    }
+
+    public void CreatHpBar(GameObject _hpBarCanvers, int _max,int _min, Monster _monster)
+    {
+        GameObject go = Instantiate(hpBarObj.gameObject, transform.position, Quaternion.identity, _hpBarCanvers.transform);
+        HpBar hp = go.GetComponent<HpBar>();
+        _monster.HpInIt(hp);
+        hpData.Add(_min, go);
+
+        hp.key = _min;
+        hp.inIt(_monster);
     }
 
     public void Timer() //이걸 인게임 시간으로 사용 예정

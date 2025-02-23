@@ -171,9 +171,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b516f9280de252643a7cff2b6cb4f5f8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  PlayerObj: {fileID: 0}
   Shake: {fileID: 0}
   camAnim: {fileID: 730717860918958092}
-  Distans: -4
+  Distans: -10
   Hight: 0.71
   aim: 1
   rotSensitive: 5

@@ -27,7 +27,7 @@ public partial class Gun : Actor
         beforeMyGunRot = transform.rotation.eulerAngles;
 
         gunObjRot = gunObj.transform.rotation.eulerAngles;
-        //creatTabObj = Shared.BattelMgr.creatTab;
+        magazine = Shared.BattelMgr.creatTab.gameObject;
 
         creatbullet();
     }

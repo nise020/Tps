@@ -7,6 +7,7 @@ public abstract partial class Monster : Charactor
 {
     protected override void Start()//Actorø° ¿Ãµø
     {
+        base.Start();
         //startPos = gameObject.transform.position;
         mobAnimator = GetComponent<Animator>();
         //NowHp();
@@ -21,6 +22,25 @@ public abstract partial class Monster : Charactor
     {
         if (AI == null) { return; }
         AI.State(ref aIState);
-        //CheckHp();
+        CameraInMonsterCheck();
+    }
+    HpBar HPBAR;
+    public void HpInIt(HpBar _hpBar) 
+    {
+        HPBAR = _hpBar;
+    }
+    public void CameraInMonsterCheck() 
+    {
+        Vector3 viewportPos = cam.WorldToViewportPoint(gameObject.transform.position);
+
+        bool isVisible = (viewportPos.z > 0 && viewportPos.x > 0 && viewportPos.x < 1 && viewportPos.y > 0 && viewportPos.y < 1);
+        if (isVisible)
+        {
+            HPBAR.gameObject.SetActive(true);
+        }
+        else 
+        {
+            HPBAR.gameObject.SetActive(false);
+        }
     }
 }

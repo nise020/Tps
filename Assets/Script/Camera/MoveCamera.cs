@@ -36,8 +36,6 @@ public partial class MoveCamera : MonoBehaviour
         float xRot = Input.GetAxis("Mouse X") * rotSensitive;
         float yRot = Input.GetAxis("Mouse Y") * rotSensitive;
 
-        //xValue = xValue + xRot;
-        //yValue = yValue + yRot * (-1.0f);
         xValue += xRot;
         yValue -= yRot;
 
@@ -48,6 +46,7 @@ public partial class MoveCamera : MonoBehaviour
         transform.localPosition = PlayerObj.transform.position + rotation * distans;
 
         transform.LookAt(PlayerObj.transform.position);
+        PlayerObj.transform.rotation = rotation;
         //Cursor.lockState = CursorLockMode.None;
         //return transform.rotation;
     }
@@ -64,6 +63,8 @@ public partial class MoveCamera : MonoBehaviour
     {
         if (attackModeOn == true)
         {
+            camPos = new Vector3(aim, Hight, Distans);
+
             float xRot = Input.GetAxis("Mouse X") * rotSensitive;
             float yRot = Input.GetAxis("Mouse Y") * rotSensitive;
 
@@ -76,19 +77,15 @@ public partial class MoveCamera : MonoBehaviour
             gameObject.transform.localPosition = PlayerObj.transform.position + rotation * camPos;
             gameObject.transform.rotation = rotation;
             PlayerObj.transform.rotation = rotation;
-            //gameObject.transform.localRotation = new Quaternion();
 
         }
         else { return; }
     }
     void Start()
     {
-        camPos = new Vector3(aim, Hight, Distans);
         camAnim = GetComponentInParent<Animator>();
         //Cursor.lockState = CursorLockMode.Locked;
         //Cursor.visible = false;
-        //PlayerObj = Shared.BattelMgr.PLAYER.gameObject;
-        //PlayerObj = Shared.BattelMgr.PLAYER.gameObject;
         attackAim = Shared.BattelMgr.CamAim;
         //transform.LookAt(PlayerObj.transform);
     }

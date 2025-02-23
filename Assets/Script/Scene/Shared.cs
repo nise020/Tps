@@ -6,7 +6,6 @@ public static class Shared //메모
 {
     //버그 잡ㅂ거나 할때 임의 적으로 사용하기 위해서 
     //MonoBehaviour를 상속하지 않는다
-
     //싱글톤,static<--정적으로 접근하는 패턴,과거에 메모리를 계산하기 위해서 사용
     public static GameManager GameManager;
     public static SceneMgr SceneMgr;

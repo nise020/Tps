@@ -21,6 +21,8 @@ public abstract partial class Charactor : Actor
     protected float buff;//버프
     protected float burstCool;//버스트 쿨타임
     [SerializeField] CharactorType type = CharactorType.None;
+
+
     protected void inIt() 
     {
         hP = state.MaxHP;

@@ -9,7 +9,7 @@ public partial class State
     //player
     //gun
     //moneter
-    public State()
+    public void init() 
     {
         stateCheck();
     }

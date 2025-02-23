@@ -13,123 +13,28 @@ public partial class Player : Charactor
     Playerstate upperState = Playerstate.Null;
     Playerstate lowerState = Playerstate.Null;
 
-    private void upperStateEnum() 
-    {
-        //close Sword
-        bool closeAttack = Input.GetKeyDown(KeyCode.Q);
-        if (closeAttack)
-        {
-            closeCheck = !closeCheck;
-
-            if (closeCheck)
-            {
-                closeSwordAttack(closeCheck);
-            }
-        }
-
-        //reload
-        bool reload = Input.GetKeyDown(KeyCode.R);
-        if (reload || gun.nowbullet <= 0) 
-        {
-            reloding();
-        }
-
-        //ATTACK
-        bool attackOn = Input.GetMouseButton(0);
-        bool attackOff = Input.GetMouseButtonUp(0);
-
-        if ((attackOn && gun.nowbullet >= 0))
-        {
-            attack();
-        }
-        else if (attackOff || (gun.nowbullet <= 0)) 
-        {
-            string text = ($"{PlayerAnimParameters.Attack}");
-            Shared.BattelMgr.MOVECAM.cameraShakeAnim(false);
-            playerAnim.SetInteger(text, 0);
-        }
-
-        
-    }
-    private void lowerStateEnum()
-    {
-        //runOn/Off
-        bool runcheck = Input.GetKeyDown(KeyCode.Mouse1);
-        if (runcheck) 
-        {
-            runstate = !runstate;
-            clearAnim();
-        }
-
-        //shit
-        bool shitDown = Input.GetKeyDown(KeyCode.Z);
-        if (shitDown)
-        {
-            shitCheack = !shitCheack;
-            shitdownAnim(shitCheack);
-        }
-
-    }
     protected override void move()
     {
-
-        //movePos.x = Input.GetAxisRaw("Horizontal");
-        //movePos.z = Input.GetAxisRaw("Vertical");
         Vector3 movePos = new Vector3(Input.GetAxisRaw("Horizontal"), 0, Input.GetAxisRaw("Vertical"));
-        //movePos.y = movePos.y + -9.8f * Time.deltaTime;
-        //if (movePos.x == 0.0f && movePos.z == 0.0f) { return; }
+
         moveAnim(movePos.z);
         sideWalk(movePos.x);
         Vector3 direction = transform.TransformDirection(movePos.normalized);
 
-        Vector3 move = Vector3.zero;
-
-        if (movePos.magnitude > 0.1f) // 입력이 있을 때만 이동
+        if (movePos.magnitude > 0.1f)
         {
             float speed = runstate ? moveSpeed * 2 : moveSpeed;
-            rigid.velocity = direction * speed;
+            transform.localPosition += direction * (speed) * Time.deltaTime;
+            //rigid.velocity = direction * speed;
         }
         else
         {
-            rigid.velocity = Vector3.zero; // 입력이 없으면 멈추게 설정
+            return;
+            rigid.velocity = Vector3.zero;
         }
-        //if (runstate)
-        //{
-        //    Debug.Log(movePos);
-        //    if (movePos.z > 0)//transform.localPosition bug
-        //    {
-        //        transform.localPosition += direction * (moveSpeed * 2) * Time.deltaTime;
-
-        //        //rigid.MovePosition(rigid.position + direction * (moveSpeed * 2) * Time.fixedDeltaTime);
-
-        //        //rigid.velocity = direction * (moveSpeed * 2);
-        //        //2 <- state
-        //    }
-        //    else
-        //    {
-        //        transform.localPosition += direction * moveSpeed * Time.deltaTime;
-
-        //        //rigid.MovePosition(rigid.position + direction * (moveSpeed) * Time.fixedDeltaTime);
-
-        //        //rigid.velocity = direction * (moveSpeed); ;
-        //        //rigid.velocity += direction * moveSpeed * Time.deltaTime;
-        //    }
-        //}
-        //else
-        //{
-        //    transform.localPosition += direction * moveSpeed * Time.deltaTime;
-
-        //    //rigid.MovePosition(rigid.position + direction * (moveSpeed) * Time.fixedDeltaTime);
-
-        //    //rigid.velocity = direction * (moveSpeed);
-
-        //}
-
     }
     private void sideWalk(float _move) 
     {
-        //string text1 = ($"{PlayerAnimParameters.Right}");
-        //string text2 = ($"{PlayerAnimParameters.Left}");
         if (_move > 0) 
         {
             playerAnim.SetInteger("Right", (int)_move);
@@ -158,12 +63,10 @@ public partial class Player : Charactor
     {
         if (_move > 0)//Off
         {
-            //string text = ($"{PlayerAnimParameters.Run}");
             playerAnim.SetInteger("Run", (int)_move);
         }
         else if (_move < 0)
         {
-            //string text = ($"{PlayerAnimParameters.Back}");
             playerAnim.SetInteger("Back", (int)_move);
         }
     }
@@ -171,12 +74,10 @@ public partial class Player : Charactor
     {
         if (_move > 0)
         {
-            //string text = ($"{PlayerAnimParameters.Walk}");
             playerAnim.SetInteger("Walk", (int)_move);
         }
         else if (_move < 0)
         {
-            //string text = ($"{PlayerAnimParameters.Back}");
             playerAnim.SetInteger("Back", (int)_move);
         }
     }
@@ -192,11 +93,6 @@ public partial class Player : Charactor
     }
     private void clearAnim() 
     {
-        //string text1 = ($"{PlayerAnimParameters.Walk}");
-        //string text2 = ($"{PlayerAnimParameters.Back}");
-        //string text3 = ($"{PlayerAnimParameters.Run}");
-        //string text4 = ($"{PlayerAnimParameters.Right}");
-        //string text5 = ($"{PlayerAnimParameters.Left}");
         playerAnim.SetInteger("Walk", 0);
         playerAnim.SetInteger("Back", 0);
         playerAnim.SetInteger("Run", 0);
@@ -225,7 +121,6 @@ public partial class Player : Charactor
         }
         if (movePos.z != 0.0 || movePos.x != 0.0) 
         {
-            //string text = ($"{PlayerAnimParameters.Shit}");
             playerAnim.SetInteger("Shit", 0);
         }
         
@@ -246,8 +141,6 @@ public partial class Player : Charactor
     public void closeSwordAttack(bool _check)//bug check
     {
         if (!_check) { return; }
-        //string text1 = ($"{PlayerAnimParameters.Close}");
-        //string text2 = ($"{playerAnimInfoName.closeAttack}");//나중에 수정 필요
 
         if (_check)
         {
@@ -263,7 +156,6 @@ public partial class Player : Charactor
         AnimatorStateInfo animStateInfo = playerAnim.GetCurrentAnimatorStateInfo(index);
         float time = animStateInfo.normalizedTime;
 
-        //Debug.Log($"{time}");
         if (time >= 1.0f && animStateInfo.IsName(_animText))
         {
             string reloading = ($"{playerAnimInfoName.reloading}");
@@ -278,8 +170,6 @@ public partial class Player : Charactor
             }
             playerAnim.SetLayerWeight(index, 0.0f);
             playerAnim.SetInteger(_parameterText, 0);
-            //Debug.Log($"{time} end");
-
         }
     }
 }

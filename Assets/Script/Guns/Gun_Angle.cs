@@ -23,33 +23,6 @@ public partial class Gun : Actor
     UnityEngine.Camera cam;
     LineRenderer gunLazer;
 
-    //private void attackReady()
-    //{
-    //    Vector3 pos = beforeMyGunTrs;
-    //    Vector3 rot = beforeMyGunRot;
-    //    //transform.position = new Vector3(pos.x + 2.5f, pos.y, pos.z);
-    //    //transform.rotation = Quaternion.Euler(rot.x, -270, rot.z);
-    //    angleOn = false;
-    //}
-    //protected virtual void GunTargetRaycast() 
-    //{
-    //    if (nowbullet == 0) { return; }
-    //    Vector3 AimPos = Shared.BattelMgr.camAim.transform.position;
-    //    Vector3 AimDirection = Shared.BattelMgr.camAim.transform.forward;
-
-    //    if (Physics.Raycast(AimPos, AimDirection, out RaycastHit hit))
-    //    {
-    //        //AimGun(hit.point);
-    //        float value = Vector3.Dot(AimDirection.normalized, gunHoleObj.transform.forward.normalized);
-    //        if (value <= 0.01)
-    //        {
-    //            GunAttack(gunHoleObj.transform.forward);//에러 
-    //        }
-    //        else { Debug.Log($"{value}"); }
-
-    //    }
-    //}
-
     public void reloed()
     {
         for (int iNum = 0; iNum < bulletData.Count; iNum++) 
@@ -66,10 +39,6 @@ public partial class Gun : Actor
         RapidTimer += Time.deltaTime;
         if (RapidTimer > RapidTime)
         {
-            //GameObject go = Instantiate(bulletObj.gameObject, gunHoleObj.transform.position,
-            //    Quaternion.identity, creatTabObj);//Creat bullet
-            //Instantiate or SetActive
-
             GameObject go = bulletData[bulletcount];
             go.transform.position = gunHoleObj.transform.position;
             Bullet_Player plBullet = go.GetComponent<Bullet_Player>();
@@ -82,7 +51,6 @@ public partial class Gun : Actor
             RapidTimer = 0.0f;
             Shared.BattelMgr.MOVECAM.cameraShakeAnim(true);//Animation
         }
-        //go.transform.position += _hit.point;
     }
     public Quaternion AimGun(GameObject _player,Vector3 _hitPos)//Aim 오브젝트를 기준으로 바꿔야함
     {

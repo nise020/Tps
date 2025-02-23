@@ -28,9 +28,18 @@ public abstract partial class Monster : Charactor
     Transform creatTabObj;//총알 저장탭
 
     [Header("몬스터의 정보")]
+    Dictionary<int, HpBar> hpBarData = new Dictionary<int, HpBar>();
+
     public int mobKey = 0;
     [SerializeField] GameObject deadEffect;
-
+    public void keyAdd(Dictionary<int, HpBar> _data,int _value)
+    {
+        _data.Add(_value, new HpBar());
+    }
+    public void hpAdd() 
+    {
+        hpBarData.Clear();
+    }
     [Header("공격할 물체(공통)")]
     public GameObject AttackArm;//공격의 시작점이 될 팔
     protected bool NumberOn = false;

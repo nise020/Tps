@@ -22,7 +22,6 @@ public partial class Gun : Actor
         ui = Shared.BattelMgr.ui;
         PLAYER = GetComponentInParent<Player>();
         //playerUpperBody = PLAYER.playerSpine;
-        cam = UnityEngine.Camera.main;
         beforeMyGunTrs = gameObject.transform.position;
         beforeMyGunRot = transform.rotation.eulerAngles;
 

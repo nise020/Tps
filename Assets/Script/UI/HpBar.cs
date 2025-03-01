@@ -14,11 +14,12 @@ public partial class HpBar : MonoBehaviour
     [SerializeField] Image imgEffect;
 
     [SerializeField, Range(0.1f, 10f)] float effectTime = 1;//0은 나눌수 없으니 주의
-    Vector3 posiTion = Vector3.zero;
+    //Vector3 posiTion = new Vector3(0,0.5f,0);
 
     public Vector3 offset;
-    private Camera cam;
+    private Camera mainCam;
     private RectTransform rectTransform;
+    Canvas canvas;
     public void inIt(Charactor charactor) 
     {
         Charactor = charactor;
@@ -28,30 +29,26 @@ public partial class HpBar : MonoBehaviour
     {
         //charactor.
     }
-    private void Awake()
-    {
-        cam = Camera.main;
-        rectTransform = GetComponent<RectTransform>();
-    }
+
     private void Start()
     {
         initHp();
+        mainCam = Camera.main;
+        rectTransform = GetComponent<RectTransform>();
+        canvas = GetComponentInParent<Canvas>();
     }
-    private void Update()
+    private void LateUpdate()
     {
-       // hpPosiTion();
-
         checkFillAmount();
         chasePlayer();
         chekedPlayerDestroy();
-
     }
 
     private void initHp()
     {
         imgHp.fillAmount = 1;
         imgEffect.fillAmount = 1;
-        posiTion = Shared.BattelMgr.monsterData[key].transform.position;
+        //posiTion = Shared.BattelMgr.monsterData[key].transform.position;
     }
 
     private void checkFillAmount()
@@ -73,13 +70,30 @@ public partial class HpBar : MonoBehaviour
             imgEffect.fillAmount = imgHp.fillAmount;
         }
     }
+    public void SetHp(float _maxHp, float _curHp)//0~1
+    {
+        imgHp.fillAmount = _curHp / _maxHp;
+    }
+
     private void chasePlayer()
     {
-        if (Shared.BattelMgr.GetMonsterPosition(key,out Vector3 pos) == true)
+        if (Shared.BattelMgr.GetMonsterPosition(key, out Vector3 pos) == true)
         {
-            pos.y =+ 0.7f;
-            rectTransform.position = pos;
+            //Vector3 screenPosition = mainCam.WorldToScreenPoint(pos + new Vector3(0, 2.0f, 0));
+            //rectTransform.anchoredPosition = screenPosition;
+            transform.LookAt(transform.position + mainCam.transform.forward);
+
+
+
+
+
+
+            //Vector3 screenPosition = mainCam.WorldToScreenPoint(pos + new Vector3(0, 2.0f, 0));
+            //rectTransform.anchoredPosition = screenPosition;
+            //rectTransform.LookAt(rectTransform.position + mainCam.transform.rotation * Vector3.forward,
+            //                mainCam.transform.rotation * Vector3.up);
         }
+        else { return; }
     }
 
     private void chekedPlayerDestroy()

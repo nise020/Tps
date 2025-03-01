@@ -52,6 +52,7 @@ MonoBehaviour:
   CharactorId: 0
   hpBar: {fileID: 9135575270855701387, guid: e3d5465fd69dd4e4bad042dc6f58d2d8, type: 3}
   type: 0
+  monster: 3
   mobAnimator: {fileID: 0}
   animCheack: 0
   target: {fileID: 0}

@@ -59,7 +59,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2367429089660032736}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 7.8328238, y: 5.476428, z: -25.98338}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 5, y: 5, z: 5}
   m_ConstrainProportionsScale: 1
   m_Children:
@@ -83,6 +83,7 @@ MonoBehaviour:
   CharactorId: 0
   hpBar: {fileID: 9135575270855701387, guid: e3d5465fd69dd4e4bad042dc6f58d2d8, type: 3}
   type: 0
+  monster: 2
   mobAnimator: {fileID: 0}
   animCheack: 0
   target: {fileID: 0}
@@ -449,6 +450,7 @@ MonoBehaviour:
   CharactorId: 0
   hpBar: {fileID: 0}
   type: 0
+  monster: 0
   mobAnimator: {fileID: 0}
   animCheack: 0
   target: {fileID: 0}

@@ -35,6 +35,7 @@ public class BattelManager : MonoBehaviour
     [SerializeField] SphereMob sphereMob;
     [SerializeField] GameObject hpBarCanvers;
     [SerializeField] HpBar hpBarObj;
+    [SerializeField] GameObject exflotionEffect;
     public Dictionary<int, GameObject> hpData = new Dictionary<int, GameObject>();
 
     [Header("Spown")]
@@ -146,7 +147,7 @@ public class BattelManager : MonoBehaviour
         Monster monster = go.GetComponent<Monster>();
         monsterData.Add(monsterCount, go);
         monster.mobKey = monsterCount;
-
+        monster.deadEffect = exflotionEffect;
         CreatHpBar(hpBarCanvers, Maxcount, monsterCount, monster);
         monsterCount += 1;
 
@@ -154,7 +155,18 @@ public class BattelManager : MonoBehaviour
 
     public void CreatHpBar(GameObject _hpBarCanvers, int _max,int _min, Monster _monster)
     {
-        GameObject go = Instantiate(hpBarObj.gameObject, transform.position, Quaternion.identity, _hpBarCanvers.transform);
+        float monsterHeight = _monster.GetComponent<Collider>().bounds.size.y;
+
+        GameObject go = Instantiate(_hpBarCanvers.gameObject, _monster.transform);
+
+        RectTransform rect = go.GetComponent<RectTransform>();
+        rect.localPosition = new Vector3(0, 0.5f, 0);
+
+        float BaseHeight = 1.0f;
+        float scaleMultiplier = monsterHeight / BaseHeight;
+        rect.localScale = new Vector3(scaleMultiplier, scaleMultiplier, 1);
+
+
         HpBar hp = go.GetComponent<HpBar>();
         _monster.HpInIt(hp);
         hpData.Add(_min, go);
@@ -169,13 +181,8 @@ public class BattelManager : MonoBehaviour
         spownTimer += Time.deltaTime;
         if (spownTimer >= spownTime) 
         {
-            //spownListArrange();
             spownTimer = 0.0f;
         }
-        //float ScaleTime = 0.2f;
-        //float SlowTime = 3f;
-        //float SlowTimeTimeConvertSlow = ScaleTime * SlowTime;
-        //Shared.MainCamera.ZoomEndStage(0f, -1.5f, 2f, SlowTime - 1.5f, 1f, Vector3.zero);
     }
 
     private void Awake()

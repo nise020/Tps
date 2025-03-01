@@ -44,9 +44,9 @@ public partial class Player : Charactor
     Skill_Add SKILLADD = new Skill_Add();
     protected GunTags GunEnumType;//다른곳에서 전달 받기
     string Name;
-    
-    //AnimatorStateInfo animStateInfo;
 
+    //AnimatorStateInfo animStateInfo;
+    CharactorType charactor = CharactorType.Player;
     protected void LoadSkill() 
     {
         switch (GunEnumType)
@@ -71,6 +71,7 @@ public partial class Player : Charactor
 
     protected override void Start()
     {
+        STATE.init(charactor);
         rigid = GetComponent<Rigidbody>();
         gun = GetComponentInChildren<Gun>();
         playerAnim = GetComponentInChildren<Animator>();
@@ -159,9 +160,17 @@ public partial class Player : Charactor
         gun.reLoed = false;
         yield return null;
     }
+    protected override void hpCheck() 
+    {
+        base.hpCheck();
+    }
+    protected override void dead() 
+    {
+        Shared.BattelMgr.PlayerAlive = false;
+        gameObject.SetActive(false);
+    }
 
-    
-    
+
     public void attackRot() 
     {
         Vector3 pos = Shared.BattelMgr.CamAim.transform.forward;

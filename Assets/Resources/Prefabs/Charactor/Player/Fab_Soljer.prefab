@@ -50,7 +50,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   CharactorId: 0
   hpBar: {fileID: 0}
-  type: 0
+  type: 1
   movePos: {x: 0, y: 0, z: 0}
   WeaponPrefab: {fileID: 4383385586661319670, guid: 494318586390ca24b9f2bd507d02ccf8, type: 3}
   shortSword: {fileID: 0}

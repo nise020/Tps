@@ -5,10 +5,11 @@ using UnityEngine;
 
 public abstract partial class Monster : Charactor
 {
+    [SerializeField] MonsterType monster;
     protected override void Start()//Actor에 이동
     {
         base.Start();
-        //startPos = gameObject.transform.position;
+        STATE.monsterState(monster);
         mobAnimator = GetComponent<Animator>();
         //NowHp();
         creatTabObj = Shared.BattelMgr.creatTab;//오브젝트 생성 탭(ex.총알)
@@ -24,12 +25,12 @@ public abstract partial class Monster : Charactor
         AI.State(ref aIState);
         CameraInMonsterCheck();
     }
-    HpBar HPBAR;
-    public void HpInIt(HpBar _hpBar) 
+    protected HpBar HPBAR = new HpBar();
+    public void HpInIt(HpBar _hpBar)
     {
         HPBAR = _hpBar;
     }
-    public void CameraInMonsterCheck() 
+    public void CameraInMonsterCheck()
     {
         Vector3 viewportPos = cam.WorldToViewportPoint(gameObject.transform.position);
 
@@ -38,9 +39,14 @@ public abstract partial class Monster : Charactor
         {
             HPBAR.gameObject.SetActive(true);
         }
-        else 
+        else
         {
             HPBAR.gameObject.SetActive(false);
         }
+    }
+
+    public float GetMonsterHeight()
+    {
+        return GetComponent<Collider>().bounds.size.y;
     }
 }

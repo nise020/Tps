@@ -73,6 +73,7 @@ GameObject:
   - component: {fileID: 1421508972335600618}
   - component: {fileID: 5597881581228526016}
   - component: {fileID: 6191365220507688643}
+  - component: {fileID: 2989853712130978414}
   m_Layer: 8
   m_Name: Fab_Dron
   m_TagString: Untagged
@@ -88,7 +89,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4921606687498584654}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 7.8328238, y: 5.476428, z: -25.98338}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 7, y: 7, z: 7}
   m_ConstrainProportionsScale: 1
   m_Children:
@@ -133,6 +134,7 @@ MonoBehaviour:
   CharactorId: 0
   hpBar: {fileID: 9135575270855701387, guid: e3d5465fd69dd4e4bad042dc6f58d2d8, type: 3}
   type: 0
+  monster: 1
   mobAnimator: {fileID: 0}
   animCheack: 0
   target: {fileID: 0}
@@ -156,6 +158,27 @@ MonoBehaviour:
   leagh: 0
   mobRigid: {fileID: 0}
   directAtkON: 0
+--- !u!65 &2989853712130978414
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4921606687498584654}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 0.83, y: 0.27, z: 0.85}
+  m_Center: {x: 0, y: 0, z: -0.06}
 --- !u!1001 &6237419382191965816
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -299,6 +322,7 @@ MonoBehaviour:
   CharactorId: 0
   hpBar: {fileID: 0}
   type: 0
+  monster: 0
   mobAnimator: {fileID: 0}
   animCheack: 0
   target: {fileID: 0}

@@ -9,7 +9,7 @@ public abstract partial class Monster : Charactor
     {
         Vector3 myPos = _obj.transform.position;
         float speed = moveSpeed;
-        _obj.transform.position += (_pos - myPos).normalized * speed * Time.deltaTime;
+        _obj.transform.position += (new Vector3(_pos.x,0, _pos.z) - myPos).normalized * speed * Time.deltaTime;
     }
 
     public Transform target;
@@ -37,12 +37,18 @@ public abstract partial class Monster : Charactor
         }
         _obj.transform.position = _end;
     }
+    protected override void hpCheck()
+    {
+        base.hpCheck();
+        HPBAR.SetHp(maxHP,cheHP);
+    }
     protected override void dead() 
     {
         Shared.BattelMgr.monsterData.Remove(mobKey);
         GameObject go = Instantiate(deadEffect, transform.position, Quaternion.identity, creatTabObj);
         StartCoroutine(EffectTime(go));
-        Destroy(this);
+        inIt();
+        gameObject.SetActive(false);
     }
     IEnumerator EffectTime(GameObject _obj) 
     {

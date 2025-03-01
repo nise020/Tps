@@ -9,9 +9,15 @@ public partial class State
     //player
     //gun
     //moneter
-    public void init() 
+    public void init(CharactorType charactor) 
     {
-        stateCheck();
+        playerState();
+        Debug.Log($"charactor={charactor}\n" +
+            $",monster={monster}\n" +
+            $",MaxHP={MaxHP}\n" +
+            $",Attack={Attack}\n" +
+            $",Defense={Defense}\n" +
+            $",Movespeed{Movespeed}");
     }
     CharactorType charactor;
     MonsterType monster = MonsterType.Defolt;
@@ -31,20 +37,6 @@ public partial class State
     {
         monster = _eNum;
     }
-    public void stateCheck() 
-    {
-        switch (charactor) 
-        {
-            case CharactorType.None:
-                break;
-            case CharactorType.Player:
-                playerState();
-                break;
-            case CharactorType.Monster:
-                monsterState();
-                break;
-        }
-    }
 
     private void playerState() 
     {
@@ -53,9 +45,9 @@ public partial class State
         Defense = 30;
         Movespeed = 10;
     }
-    private void monsterState()
+    public void monsterState(MonsterType _monster)
     {
-        switch (monster)
+        switch (_monster)
         {
             case MonsterType.Spider:
                 MaxHP = 30;
@@ -76,6 +68,12 @@ public partial class State
                 Movespeed = 10;
                 break;
         }
+        Debug.Log($"\n" +
+            $",monster={_monster}\n" +
+            $",MaxHP={MaxHP}\n" +
+            $",Attack={Attack}\n" +
+            $",Defense={Defense}\n" +
+            $",Movespeed{Movespeed}");
     }
     public void Hit()
     {

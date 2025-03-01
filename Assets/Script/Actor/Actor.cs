@@ -18,8 +18,7 @@ public abstract partial class Actor : MonoBehaviour
         Collider myColl = gameObject.GetComponent<Collider>();
         if (myColl.gameObject.layer == Delivery.LayerNameEnum(LayerTag.Monster))//몬스터일 경우
         {
-            if (other.gameObject.layer == Delivery.LayerNameEnum(LayerTag.Player) ||
-                other.gameObject.layer == Delivery.LayerNameEnum(LayerTag.Cover))
+            if (other.gameObject.layer == Delivery.LayerNameEnum(LayerTag.Player))
             {
                 //Destroy(myColl.gameObject);
                 gameObject.SetActive(false);
@@ -29,23 +28,25 @@ public abstract partial class Actor : MonoBehaviour
 
             }
         }
-        else if (myColl.gameObject.layer == Delivery.LayerNameEnum(LayerTag.Player)) //플레이어 일 경우
+        else if (myColl.gameObject.layer == Delivery.LayerNameEnum(LayerTag.Player))//플레이어 일 경우
         {
-            //Destroy(myColl.gameObject);
-        }
-        else if (myColl.gameObject.layer == Delivery.LayerNameEnum(LayerTag.Bullet)) //플레이어 총알 일경우
-        {
-            if (other.gameObject.layer == Delivery.LayerNameEnum(LayerTag.BackGround) ||
-                other.gameObject.layer == Delivery.LayerNameEnum(LayerTag.Monster))
+            if (other.gameObject.layer == Delivery.LayerNameEnum(LayerTag.Monster))
             {
                 //Destroy(myColl.gameObject);
                 gameObject.SetActive(false);
             }
         }
-        else if (myColl.gameObject.layer == Delivery.LayerNameEnum(LayerTag.MobGranid)) //플레이어 총알 일경우
+        else if (myColl.gameObject.layer == Delivery.LayerNameEnum(LayerTag.Bullet))//플레이어 총알 일경우
         {
-            if (other.gameObject.layer == Delivery.LayerNameEnum(LayerTag.BackGround) ||
-                other.gameObject.layer == Delivery.LayerNameEnum(LayerTag.Player))
+            if (other.gameObject.layer == Delivery.LayerNameEnum(LayerTag.Monster))
+            {
+                //Destroy(myColl.gameObject);
+                gameObject.SetActive(false);
+            }
+        }
+        else if (myColl.gameObject.layer == Delivery.LayerNameEnum(LayerTag.MobGranid))//몬스터 총알 일경우
+        {
+            if (other.gameObject.layer == Delivery.LayerNameEnum(LayerTag.Player))
             {
                 gameObject.SetActive(false);
             }

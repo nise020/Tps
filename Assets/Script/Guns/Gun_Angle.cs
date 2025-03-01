@@ -20,7 +20,6 @@ public partial class Gun : Actor
     [SerializeField] float gunRotSpeed = 0.0f;
     [SerializeField] GameObject razerEndObj;
     [SerializeField] bool angleOn = true;
-    UnityEngine.Camera cam;
     LineRenderer gunLazer;
 
     public void reloed()

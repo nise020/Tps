@@ -100,14 +100,13 @@ public partial class MoveCamera : MonoBehaviour
     }
     public void cameraShakeAnim(bool _anim) 
     {
-        string text = $"{CameraAnim.Shake}";
         if (_anim) 
         {
-            camAnim.SetInteger(text, 1);
+            camAnim.SetInteger("Shake", 1);
         }
         else 
         {
-            camAnim.SetInteger(text, 0);
+            camAnim.SetInteger("Shake", 0);
         }
     }
     void showCursue()

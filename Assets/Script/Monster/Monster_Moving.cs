@@ -7,6 +7,15 @@ public abstract partial class Monster : Charactor
     protected override void OnTriggerEnter(Collider other)
     {
         base.OnTriggerEnter(other);
+        if (aIState == AiState.Attack)
+        {
+            if (monster == MonsterType.Sphere)
+            {
+                mobAnimator.SetInteger("Close", 0);
+                mobAnimator.SetInteger("AttackDilray", 1);
+                aIState = AiState.Reset;
+            }
+        }
     }
     protected void moving()//몬스터 매커니즘을 미리 정하고 세부적으로 만들어야 해서 보류  
     {

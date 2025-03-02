@@ -96,6 +96,36 @@ public class BattelManager : MonoBehaviour
             spawnByType(layerName, spawnPoint.position, mincount,Maxcount);
         }
     }
+    private void spawnByType(string _layername, Vector3 _spawnTrs,int _min,int _max)
+    {
+        if (_min >= _max) { return; }
+
+        _min += 1;
+        GameObject monsterType = null;
+        switch (_layername) //수정 필요
+        {
+            case "SpawnSpider":
+                monsterType = SpiderMob.gameObject;
+                break;
+            case "SpawnDron":
+                monsterType = dronMob.gameObject;
+                break;
+            case "SpawnSphere":
+                monsterType = sphereMob.gameObject;
+                break;
+        }
+
+        GameObject go = Instantiate(monsterType, _spawnTrs, Quaternion.identity, creatTab);
+
+        Monster monster = go.GetComponent<Monster>();
+        monsterData.Add(monsterCount, go);
+        monster.mobKey = monsterCount;
+        monster.deadEffect = exflotionEffect;
+        HpBarValue(hpBarCanvers, Maxcount, monsterCount, monster);
+        monsterCount += 1;
+
+    }
+
     public bool GetMonsterPosition(int _value, out Vector3 _pos) 
     {
         _pos = Vector3.zero;
@@ -123,61 +153,29 @@ public class BattelManager : MonoBehaviour
         }
     }
 
-    private void spawnByType(string _layername, Vector3 _spawnTrs,int _min,int _max)
+    public void HpBarValue(GameObject _hpBarCanvers, int _max,int _min, Monster _monster)
     {
-        if (_min >= _max) { return; }
+        HpBar hpBar = _monster.GetComponentInChildren<HpBar>();
 
-        _min += 1;
-        GameObject monsterType = null;
-        switch (_layername) //수정 필요
-        {
-            case "SpawnSpider":
-                monsterType = SpiderMob.gameObject;
-                break;
-            case "SpawnDron":
-                monsterType = dronMob.gameObject;
-                break;
-            case "SpawnSphere":
-                monsterType = sphereMob.gameObject;
-                break;
-        }
+        //RectTransform rect = hpBar.gameObject.GetComponent<RectTransform>();
+        //rect.localPosition = new Vector3(0, 0.5f, 0);
 
-        GameObject go = Instantiate(monsterType, _spawnTrs, Quaternion.identity, creatTab);
-
-        Monster monster = go.GetComponent<Monster>();
-        monsterData.Add(monsterCount, go);
-        monster.mobKey = monsterCount;
-        monster.deadEffect = exflotionEffect;
-        CreatHpBar(hpBarCanvers, Maxcount, monsterCount, monster);
-        monsterCount += 1;
-
-    }
-
-    public void CreatHpBar(GameObject _hpBarCanvers, int _max,int _min, Monster _monster)
-    {
-        float monsterHeight = _monster.GetComponent<Collider>().bounds.size.y;
-
-        GameObject go = Instantiate(_hpBarCanvers.gameObject, _monster.transform);
-
-        RectTransform rect = go.GetComponent<RectTransform>();
-        rect.localPosition = new Vector3(0, 0.5f, 0);
-
-        float BaseHeight = 1.0f;
-        float scaleMultiplier = monsterHeight / BaseHeight;
-        rect.localScale = new Vector3(scaleMultiplier, scaleMultiplier, 1);
+        //float monsterHeight = _monster.GetComponent<Collider>().bounds.size.y;
+        //float BaseHeight = 1.0f;
+        //float scaleMultiplier = monsterHeight / BaseHeight;
+        //rect.localScale = new Vector3(scaleMultiplier, scaleMultiplier, 1);
 
 
-        HpBar hp = go.GetComponent<HpBar>();
-        _monster.HpInIt(hp);
-        hpData.Add(_min, go);
+        //HpBar hp = _monster.GetComponent<HpBar>();
+        _monster.HpInIt(hpBar);
+        hpData.Add(_min, _monster.gameObject);
 
-        hp.key = _min;
-        hp.inIt(_monster);
+        hpBar.key = _min;
+        hpBar.inIt(_monster);
     }
 
     public void Timer() //이걸 인게임 시간으로 사용 예정
     {
-
         spownTimer += Time.deltaTime;
         if (spownTimer >= spownTime) 
         {
@@ -199,8 +197,8 @@ public class BattelManager : MonoBehaviour
         }
     }
 
-    public void Resurrection() 
+    public void Resurrection(int _number) 
     {
-
+        Invoke("monsterData[_number].gameObject.SetActive(true)",10f);
     }
 }

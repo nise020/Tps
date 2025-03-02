@@ -1,7 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
 using Unity.VisualScripting;
-//using UnityEditor.Experimental.GraphView;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -44,11 +43,16 @@ public partial class Gun : Actor
             plBullet.targetPos = _pos.normalized;
             go.SetActive(true);
 
+
             bulletcount++;
             nowbullet--;
-
+      
             RapidTimer = 0.0f;
+            Invoke("go.SetActive(false)", 3f);
+
             Shared.BattelMgr.MOVECAM.cameraShakeAnim(true);//Animation
+
+
         }
     }
     public Quaternion AimGun(GameObject _player,Vector3 _hitPos)//Aim 오브젝트를 기준으로 바꿔야함

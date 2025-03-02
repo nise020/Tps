@@ -18,6 +18,7 @@ public abstract partial class Monster : Charactor
         boxColl = GetComponentInChildren<BoxCollider>();//¹ß
         AI.init(this, SKILL);
         AI.Type(eType);
+        inIt();
     }
     private void FixedUpdate()
     {

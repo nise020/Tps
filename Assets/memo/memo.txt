@@ -206,7 +206,23 @@ tcpip
 
 멀티 쓰레드
 
+  //델리게이트
+    //지연이 걸리는 부분에 사용
 
+    //Action: 패치관련
+    //Funtion
+    //Task: ADK,동기화,싱크(async)
+
+    //대리자
+    //system.Func<object,bool> UpteAction = null;
+    //UpteAction = 함수연결
+    //system.Action<bool> FinishAction = null;
+    //FinishAction = 함수연결
+    //delegaet void CallBack();
+    //CallBack callback = null;
+    //callback = 함수연결
+    //async -> await // 비동기
+    //변수 호출시 연결된 함시 실행
 
 
 

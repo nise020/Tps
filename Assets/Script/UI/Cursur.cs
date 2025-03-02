@@ -6,7 +6,7 @@ using UnityEngine;
 
 public class Cursur : Actor
 {
-    UnityEngine.Camera cam;
+    //UnityEngine.Camera cam;
     [SerializeField] BoxCollider2D coll;
     [SerializeField] CapsuleCollider2D[] MobColl;//몬스터의 콜라이더
     [SerializeField] GameObject gunHoie;
@@ -21,12 +21,12 @@ public class Cursur : Actor
         CircleColl.enabled = false;
     }
     // Start is called before the first frame update
-    void Start()
-    {
-        gameManager = GameManager.Instanse;
-        transform.position = new Vector3(0, 0, 0);
-        cam = UnityEngine.Camera.main;
-    }
+    //void Start()
+    //{
+    //    gameManager = GameManager.Instanse;
+    //    transform.position = new Vector3(0, 0, 0);
+    //    cam = UnityEngine.Camera.main;
+    //}
    
    
 

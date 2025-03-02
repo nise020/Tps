@@ -23,7 +23,7 @@ public abstract partial class Monster : Charactor
 
     public MonsterType eType;
 
-    protected AI aIState = global::AI.Create;
+    protected AiState aIState = global::AiState.Create;
 
     Transform creatTabObj;//ÃÑ¾Ë ÀúÀåÅÇ
 

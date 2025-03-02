@@ -81,7 +81,7 @@ public enum Scene //예전에는 앞에 sScene을 붙여야 했다
    End,
 
 }
-public enum AI //AI 상태
+public enum AiState //AI 상태
 {
     Create,
     Search,

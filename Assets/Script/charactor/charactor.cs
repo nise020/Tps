@@ -5,6 +5,28 @@ using UnityEngine;
 
 public abstract partial class Charactor : Actor
 {
+    //델리게이트
+    //지연이 걸리는 부분에 사용
+
+    //Action: 패치관련
+    //Funtion
+    //Task: ADK,동기화,싱크(async)
+    //Const
+
+
+    //대리자
+    //system.Func<object,bool> UpteAction = null;
+    //UpteAction = 함수연결
+    //system.Action<bool> FinishAction = null;
+    //FinishAction = 함수연결
+    //delegaet void CallBack();
+    //CallBack callback = null;
+    //callback = 함수연결
+    //async -> await // 비동기
+    //변수 호출시 연결된 함시 실행
+
+
+
     //캐릭터
     //스텟 사용
     //clone 오브젝트 적극 사용 
@@ -22,17 +44,33 @@ public abstract partial class Charactor : Actor
     protected float burstCool;//버스트 쿨타임
     [SerializeField] CharactorType type = CharactorType.None;
 
-
+    protected virtual void OnTriggerEnter(Collider other)//세분화 필요
+    {
+        Collider myColl = gameObject.GetComponent<Collider>();
+        if (myColl.gameObject.layer == Delivery.LayerNameEnum(LayerTag.Monster))//몬스터일 경우
+        {
+            if (other.gameObject.layer == Delivery.LayerNameEnum(LayerTag.Player))
+            {
+                attack();
+            }
+            else if (other.gameObject.layer == Delivery.LayerNameEnum(LayerTag.Bullet))//피격
+            {
+                hpCheck();
+            }
+        }
+        else if (myColl.gameObject.layer == Delivery.LayerNameEnum(LayerTag.Player))//플레이어 일 경우
+        {
+            if (other.gameObject.layer == Delivery.LayerNameEnum(LayerTag.Monster))//피격
+            {
+                hpCheck();
+            }
+        }
+    }
     protected void inIt() 
     {
         hP = STATE.MaxHP;
         cheHP = hP;
         maxHP = hP;
-    }
-
-    protected override void OnTriggerEnter(Collider other) 
-    {
-        base.OnTriggerEnter(other);
     }
 
     public void Hit() 
@@ -41,13 +79,15 @@ public abstract partial class Charactor : Actor
     }
     protected virtual void hpCheck() 
     {
-        if (cheHP == hP) return;
+        //if (cheHP == hP) return;
+        hP = hP - 1;//1은 바꿔야함
+        Debug.Log("Hit");
         if (cheHP >= hP)
         {
             cheHP = hP;
             if (hP==0) 
             {
-                dead();
+                Invoke("dead",1f);
             }
         }
     }
@@ -56,10 +96,14 @@ public abstract partial class Charactor : Actor
         if (type == CharactorType.Player) 
         {
             Shared.BattelMgr.PlayerAlive = false;
+            hP = maxHP;
+            cheHP = maxHP;
             gameObject.SetActive(false);
         }
         else 
         {
+            hP = maxHP;
+            cheHP = maxHP;
             gameObject.SetActive(false);
         }
     }

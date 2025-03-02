@@ -22,7 +22,7 @@ public partial class Monster : Charactor
     }
     public void AttackEndAnim(int _value)
     {
-        if (_value != 0 && eType == MonsterType.Spider)
+        if (_value != 0)
         {
             //AI.moveing = true;
             mobAnimator.SetInteger("Attack", 0);

@@ -44,10 +44,12 @@ public abstract partial class Monster : Charactor
     }
     protected override void dead() 
     {
-        Shared.BattelMgr.monsterData.Remove(mobKey);
-        GameObject go = Instantiate(deadEffect, transform.position, Quaternion.identity, creatTabObj);
-        StartCoroutine(EffectTime(go));
+        //Shared.BattelMgr.monsterData.Remove(mobKey);
+        //GameObject go = Instantiate(deadEffect, transform.position, Quaternion.identity, creatTabObj);
+        //StartCoroutine(EffectTime(go));
+        mobAnimator.SetInteger("Death", 1);
         inIt();
+        Shared.BattelMgr.Resurrection(mobKey);
         gameObject.SetActive(false);
     }
     IEnumerator EffectTime(GameObject _obj) 
@@ -96,7 +98,7 @@ public abstract partial class Monster : Charactor
             Quaternion endRot = Quaternion.LookRotation(dir);
             gameObject.transform.localRotation = Quaternion.Lerp(startRot, endRot, RotSpeed);//* Time.deltaTime
 
-            gameObject.transform.position += dir * speed * Time.deltaTime;
+            gameObject.transform.position += new Vector3(dir.x,0, dir.z) * speed * Time.deltaTime;
         }
         else
         {
@@ -107,4 +109,52 @@ public abstract partial class Monster : Charactor
             checkPos = false;
         }
     }
+
+    //public void Pattern(MonsterType _enum)
+    //{
+    //    if (_enum == MonsterType.Sphere)//구체 일 경우
+    //    {
+    //        if (moveing == false) return;
+    //        if (moveing == true)//Animation Event
+    //        {
+    //            MONSTER.DirectAttack(MONSTER.gameObject, targetPos);
+    //        }
+    //        //계속 이동하는 문제 있음
+    //        Vector3 myPos = MONSTER.gameObject.transform.position;
+    //        float distanse = Vector3.Distance(myPos, targetPos);
+    //        float targetvalue = MONSTER.attackDistanse;//사정거리
+
+    //        if (distanse < 1.0f)
+    //        {
+    //            animator.SetInteger("Close", 0);
+    //            animator.SetInteger("AttackDilray", 1);
+    //            moveing = false;
+    //            aIState = AI.Reset;
+    //        }
+
+    //    }
+    //    else if (_enum == MonsterType.Spider)//거미일 경우 
+    //    {
+    //        if (attackCheck == false)
+    //        {
+    //            GameObject go = Delivery.Instantiator(MONSTER.MobGrenade, eyePos.position, Quaternion.identity, creatTab);
+    //            //리소스 재활용
+    //            MONSTER.granaidAttack(MONSTER.gameObject.transform.position, targetPos, go);
+    //            animator.SetInteger("Attack", 0);
+    //            attackCheck = true;
+    //        }
+
+
+    //        //추가적으로 던져야 하기 떄문에 AddForce를 추가해야함
+    //        //Instantiator가 아닌 SetActive를 사용해서 리소스를 재사용 해야함
+    //        //aIState = AI.Reset;
+    //    }
+    //    else if (_enum == MonsterType.Dron)//드론일 경우 
+    //    {
+    //        MONSTER.DirectAttack(MONSTER.gameObject, targetPos);
+    //        animator.SetInteger("Attack", 0);
+    //        aIState = AI.Reset;
+    //    }
+    //}
+
 }

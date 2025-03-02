@@ -79,19 +79,7 @@ public partial class HpBar : MonoBehaviour
     {
         if (Shared.BattelMgr.GetMonsterPosition(key, out Vector3 pos) == true)
         {
-            //Vector3 screenPosition = mainCam.WorldToScreenPoint(pos + new Vector3(0, 2.0f, 0));
-            //rectTransform.anchoredPosition = screenPosition;
             transform.LookAt(transform.position + mainCam.transform.forward);
-
-
-
-
-
-
-            //Vector3 screenPosition = mainCam.WorldToScreenPoint(pos + new Vector3(0, 2.0f, 0));
-            //rectTransform.anchoredPosition = screenPosition;
-            //rectTransform.LookAt(rectTransform.position + mainCam.transform.rotation * Vector3.forward,
-            //                mainCam.transform.rotation * Vector3.up);
         }
         else { return; }
     }

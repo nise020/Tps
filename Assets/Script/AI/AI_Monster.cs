@@ -34,23 +34,23 @@ public partial class AiMonster : AiBase
     //캐릭터에서 AI를 호출할 필요
 
     
-    public override void State(ref AI _aIState)
+    public override void State(ref AiState _aIState)
     {
         switch (aIState)
         {
-            case AI.Create:
+            case AiState.Create:
                 Create();
                 break;
-            case AI.Search:
+            case AiState.Search:
                 Search();
                 break;
-            case AI.Move:
+            case AiState.Move:
                 Move();
                 break;
-            case AI.Attack:
+            case AiState.Attack:
                 Attack();
                 break;
-            case AI.Reset:
+            case AiState.Reset:
                 Reset();
                 break;
         }
@@ -65,18 +65,22 @@ public partial class AiMonster : AiBase
         creatTab = Shared.BattelMgr.creatTab;
         eyePos = MONSTER.eyeObj.transform;
         startPos = MONSTER.gameObject.transform.position;
-        aIState = AI.Search;
+        aIState = AiState.Search;
     }
 
-    float viewDistance = 5f;
+    float viewDistance = 10f;
     float viewAngle = 60f;   
 
     protected override void Search()//공격할 대상 찾기
     {
+        Debug.Log($"Search");
         if (searchAnim == false)
         {
             searchAnim = true;
-            animator.SetInteger("Search", 1);
+            if (MobType != MonsterType.Dron) 
+            {
+                animator.SetInteger("Search", 1);
+            }
         }
 
         MONSTER.readySearch(ref searching);//서치
@@ -89,17 +93,24 @@ public partial class AiMonster : AiBase
         {
             if (col.gameObject.layer == Delivery.LayerNameEnum(LayerTag.Player))
             {
+                animator.SetInteger("Search", 0);
                 Vector3 directionToTarget = (col.transform.position - MONSTER.gameObject.transform.position).normalized;
                 float angleBetween = Vector3.Angle(MONSTER.gameObject.transform.forward, directionToTarget);
 
-                if (angleBetween < viewAngle * 0.5f) // 시야각 내에 있는지 확인
-                {
-                    moveAnim = false;
-                    targetPos = col.transform.position;//Vector3
-                    aIState = AI.Attack;
+                moveAnim = false;
+                targetPos = col.transform.position;//Vector3
+                aIState = AiState.Attack;
 
-                    searchAnim = false;//clear
-                }
+                searchAnim = false;//clear
+
+                //if (angleBetween < viewAngle * 0.5f) // 시야각 내에 있는지 확인
+                //{
+                //    moveAnim = false;
+                //    targetPos = col.transform.position;//Vector3
+                //    aIState = AI.Attack;
+
+                //    searchAnim = false;//clear
+                //}
             }
         }
 
@@ -134,6 +145,7 @@ public partial class AiMonster : AiBase
             }
         }
 
+        //ONSTER.Pattern(MobType);
         Pattern(MobType);
 
     }
@@ -151,12 +163,10 @@ public partial class AiMonster : AiBase
             float distanse = Vector3.Distance(myPos, targetPos);
             float targetvalue = MONSTER.attackDistanse;//사정거리
 
-            if (distanse < 1.0f)
+            if (distanse <= 1.0f)
             {
-                animator.SetInteger("Close", 0);
-                animator.SetInteger("AttackDilray", 1);
                 moveing = false;
-                aIState = AI.Reset;
+                aIState = AiState.Reset;
             }
 
         }
@@ -167,11 +177,10 @@ public partial class AiMonster : AiBase
                 GameObject go = Delivery.Instantiator(MONSTER.MobGrenade, eyePos.position, Quaternion.identity, creatTab);
                 //리소스 재활용
                 MONSTER.granaidAttack(MONSTER.gameObject.transform.position, targetPos, go);
-                animator.SetInteger("Attack", 0);
+
+                aIState = AiState.Reset;
                 attackCheck = true;
             }
-
-
             //추가적으로 던져야 하기 떄문에 AddForce를 추가해야함
             //Instantiator가 아닌 SetActive를 사용해서 리소스를 재사용 해야함
             //aIState = AI.Reset;
@@ -180,7 +189,7 @@ public partial class AiMonster : AiBase
         {
             MONSTER.DirectAttack(MONSTER.gameObject, targetPos);
             animator.SetInteger("Attack", 0);
-            aIState = AI.Reset;
+            aIState = AiState.Reset;
         }
     }
 
@@ -192,7 +201,7 @@ public partial class AiMonster : AiBase
         moveing = false;
         attackOn = true;
         targetNumber = 0;
-        aIState = AI.Search;
+        aIState = AiState.Search;
 
     }
 

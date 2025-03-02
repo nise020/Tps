@@ -9,7 +9,7 @@ public partial class AiBase
 
     protected Monster MONSTER;
     protected Skill_Monster SKILL;
-    protected AI aIState = AI.Create;
+    protected AiState aIState = AiState.Create;
     protected MonsterType MobType;
     protected GameObject startObj;
 
@@ -27,46 +27,46 @@ public partial class AiBase
         SKILL = _SKILL;
     }
 
-    public virtual void State(ref AI _aIState) 
+    public virtual void State(ref AiState _aIState) 
     {
         switch (aIState)
         {
-            case AI.Create:
+            case AiState.Create:
                 Create();
                 break;
-            case AI.Search:
+            case AiState.Search:
                 Search();
                 break;
-            case AI.Move:
+            case AiState.Move:
                 Move();
                 break;
-            case AI.Attack:
+            case AiState.Attack:
                 Attack();
                 break;
-            case AI.Reset:
+            case AiState.Reset:
                 Reset();
                 break;
         }
     }
     protected virtual void Create() 
     {
-        aIState = AI.Search;
+        aIState = AiState.Search;
     }
     protected virtual void Search() 
     {
-        aIState = AI.Attack;
+        aIState = AiState.Attack;
     }
     protected virtual void Move() 
     {
-        aIState = AI.Move;
+        aIState = AiState.Move;
     }
     protected virtual void Attack()
     {
-        aIState = AI.Reset;
+        aIState = AiState.Reset;
     }
     protected virtual void Reset() 
     {
-        aIState = AI.Search;
+        aIState = AiState.Search;
     }
 }
     

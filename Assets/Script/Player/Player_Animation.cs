@@ -30,7 +30,6 @@ public partial class Player : Charactor
         else
         {
             return;
-            rigid.velocity = Vector3.zero;
         }
     }
     private void sideWalk(float _move) 

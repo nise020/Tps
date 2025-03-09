@@ -9,7 +9,6 @@ public partial class Player : Charactor
 {
     Vector3 Vector = new Vector3(0, 1.5f, 0);
     public Vector3 movePos = Vector3.zero;
-    float moveSpeed = 3.0f;
     Rigidbody rigid;
     Animator playerAnim;
     Gun gun;
@@ -46,7 +45,7 @@ public partial class Player : Charactor
     string Name;
 
     //AnimatorStateInfo animStateInfo;
-    CharactorType charactor = CharactorType.Player;
+    ObjectType charactor = ObjectType.Player;
     protected void LoadSkill() 
     {
         switch (GunEnumType)
@@ -72,6 +71,7 @@ public partial class Player : Charactor
     protected override void Start()
     {
         STATE.init(charactor);
+        inIt();
         rigid = GetComponent<Rigidbody>();
         gun = GetComponentInChildren<Gun>();
         playerAnim = GetComponentInChildren<Animator>();
@@ -95,7 +95,7 @@ public partial class Player : Charactor
         bool value2 = Input.GetMouseButtonUp(0);
         if ((value1))
         {
-            attack();
+            hit();
         }
         else if (value2 || gun.nowbullet <= 0)
         {
@@ -111,7 +111,7 @@ public partial class Player : Charactor
     {
         move();
     }
-    protected override void attack()
+    protected override void hit()
     {
         Vector3 AimPos = Shared.BattelMgr.CamAim.transform.position;
         Vector3 AimDirection = Shared.BattelMgr.CamAim.transform.forward;
@@ -160,9 +160,9 @@ public partial class Player : Charactor
         gun.reLoed = false;
         yield return null;
     }
-    protected override void hpCheck() 
+    protected override void checkHp() 
     {
-        base.hpCheck();
+        base.checkHp();
     }
     protected override void dead() 
     {

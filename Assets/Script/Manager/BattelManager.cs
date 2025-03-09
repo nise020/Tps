@@ -77,7 +77,7 @@ public class BattelManager : MonoBehaviour
         PlayerAlive = true;
 
         playerCam.transform.position = PLAYER.transform.position;
-        MOVECAM.PlayerObj = PLAYER.gameObject;
+        MOVECAM.PlayerObj = playerUpper.gameObject;
         //Gun
 
         //monster

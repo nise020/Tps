@@ -9,17 +9,17 @@ public partial class State
     //player
     //gun
     //moneter
-    public void init(CharactorType charactor) 
+    public void init(ObjectType _obj) 
     {
         playerState();
-        Debug.Log($"charactor={charactor}\n" +
+        Debug.Log($"charactor={_obj}\n" +
             $",monster={monster}\n" +
             $",MaxHP={MaxHP}\n" +
             $",Attack={Attack}\n" +
             $",Defense={Defense}\n" +
             $",Movespeed{Movespeed}");
     }
-    CharactorType charactor;
+    ObjectType objType;
     MonsterType monster = MonsterType.Defolt;
 
     public float hP;//보여지는 체력
@@ -29,9 +29,9 @@ public partial class State
     public int Attack;//공격력
     public int Defense;//방어력
     public float Movespeed;//이동속도
-    public void charactorType(CharactorType _eNum)
+    public void InitStateType(ObjectType _eNum)
     {
-        charactor = _eNum;
+        objType = _eNum;
     }
     public void monsterType(MonsterType _eNum)
     {
@@ -45,7 +45,7 @@ public partial class State
         Defense = 30;
         Movespeed = 10;
     }
-    public void monsterState(MonsterType _monster)
+    public void MonsterState(MonsterType _monster)
     {
         switch (_monster)
         {

@@ -57,7 +57,6 @@ public abstract partial class Monster : Charactor
 
 
     [Header("다리,이동 관련(FlyingMob 제외)")]
-    public float moveSpeed = 10.0f;//임시
     [SerializeField] GameObject footObj;
     [SerializeField] protected bool groundCheck = false;
     [SerializeField] protected float leagh;

@@ -6,18 +6,24 @@ using UnityEngine;
 public abstract partial class Monster : Charactor
 {
     [SerializeField] MonsterType monster;
+    Condition condition = Condition.health;//상태패턴
     protected override void Start()//Actor에 이동
     {
         base.Start();
-        STATE.monsterState(monster);
         mobAnimator = GetComponent<Animator>();
         //NowHp();
         creatTabObj = Shared.BattelMgr.creatTab;//오브젝트 생성 탭(ex.총알)
         mobRigid = GetComponent<Rigidbody>();
         mobColl = GetComponent<Collider>();
+        if (mobColl == null) 
+        {
+            mobColl = GetComponentInChildren<Collider>();
+        }
         boxColl = GetComponentInChildren<BoxCollider>();//발
         AI.init(this, SKILL);
         AI.Type(eType);
+
+        STATE.MonsterState(monster);
         inIt();
     }
     private void FixedUpdate()

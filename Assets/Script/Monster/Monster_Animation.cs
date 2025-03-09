@@ -12,7 +12,8 @@ public partial class Monster : Charactor
         {
             mobAnimator.SetInteger("Walk", 1);
             Debug.Log("PointMoveAnim");
-            AI.searching = true;
+            AI.searchingOnOff = true;
+            //AI.searching = SearchState.Move;
             //mobAnimator.SetInteger("Search", 0);
         }
     }

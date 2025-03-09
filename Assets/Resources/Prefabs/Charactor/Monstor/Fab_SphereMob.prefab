@@ -12,8 +12,7 @@ GameObject:
   - component: {fileID: 2914542211161757420}
   - component: {fileID: 3471114786846679897}
   - component: {fileID: 3856479672889137451}
-  - component: {fileID: 1596817396162512916}
-  - component: {fileID: 3090203451582293535}
+  - component: {fileID: 1108413615700136039}
   m_Layer: 8
   m_Name: Fab_SphereMob
   m_TagString: Untagged
@@ -71,11 +70,13 @@ MonoBehaviour:
   number: 0
   eyeObj: {fileID: 5769457745513742089}
   attackDistanse: 0
-  moveSpeed: 10
   footObj: {fileID: 0}
   groundCheck: 0
   leagh: 0.06
   mobRigid: {fileID: 0}
+  viewDistance: 10
+  viewAngle: 40
+  debugColor: {r: 1, g: 0, b: 0, a: 1}
   jumpOn: 0
   maxEyeObj: {fileID: 0}
 --- !u!95 &3471114786846679897
@@ -126,7 +127,7 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 112
   m_CollisionDetection: 0
---- !u!135 &1596817396162512916
+--- !u!135 &1108413615700136039
 SphereCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -145,28 +146,7 @@ SphereCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Radius: 0.04851401
-  m_Center: {x: 0, y: 0, z: 0}
---- !u!135 &3090203451582293535
-SphereCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8506997544264202415}
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_IsTrigger: 1
-  m_ProvidesContacts: 0
-  m_Enabled: 1
-  serializedVersion: 3
-  m_Radius: 0.01
+  m_Radius: 0.05
   m_Center: {x: 0, y: 0, z: 0}
 --- !u!1001 &3820108723295000198
 PrefabInstance:

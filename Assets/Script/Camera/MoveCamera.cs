@@ -7,6 +7,7 @@ public partial class MoveCamera : MonoBehaviour
     public GameObject PlayerObj;
     GameObject attackAim;
     Vector3 camPos;
+    Quaternion aimRot;
     UnityEngine.Camera cam;
     public Animation Shake;
     public Animator camAnim;
@@ -15,6 +16,9 @@ public partial class MoveCamera : MonoBehaviour
     public float Distans = 0.0f;
     public float Hight = 0.0f;
     public float aim = 0.0f;
+
+    public float QxValu;
+    public float QyValu;
 
     public float rotSensitive = 10.0f;
     public float limitRot = 55.0f;
@@ -64,14 +68,14 @@ public partial class MoveCamera : MonoBehaviour
         if (attackModeOn == true)
         {
             camPos = new Vector3(aim, Hight, Distans);
-
+            //aimRot = new Quaternion(QxValu, QyValu, Quaternion.kEpsilon, Quaternion.kEpsilon);
             float xRot = Input.GetAxis("Mouse X") * rotSensitive;
             float yRot = Input.GetAxis("Mouse Y") * rotSensitive;
 
             xValue += xRot;
             yValue -= yRot;
 
-            Quaternion rotation = Quaternion.Euler(yValue, xValue, 0);
+            Quaternion rotation = Quaternion.Euler(yValue+ QxValu, xValue+ QyValu, 0);
             yValue = Mathf.Clamp(yValue, -attacklimitRot, attacklimitRot);
 
             gameObject.transform.localPosition = PlayerObj.transform.position + rotation * camPos;

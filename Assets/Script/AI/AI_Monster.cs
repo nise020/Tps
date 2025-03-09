@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Threading;
 using Unity.VisualScripting;
+using UnityEditor;
 using UnityEngine;
 using UnityEngine.ProBuilder.Shapes;
 
@@ -20,12 +21,16 @@ public partial class AiMonster : AiBase
     bool searchAnim = false;
     bool moveAnim = false;
     public bool moveing = false;
-    public bool searching = false;
+    public bool searchingOnOff = false;
     bool attackCheck = false;
     List<Vector3> searchPosObj;
     Vector3 startPos = Vector3.zero;
     
     int moveNumber = 0;
+    public SearchState searching = SearchState.Move;
+
+
+
     //Monster_Skill SKILL = new Monster_Skill();
 
     //private eMobType MOBTYPE;
@@ -33,7 +38,7 @@ public partial class AiMonster : AiBase
     //FSM
     //캐릭터에서 AI를 호출할 필요
 
-    
+
     public override void State(ref AiState _aIState)
     {
         switch (aIState)
@@ -69,51 +74,60 @@ public partial class AiMonster : AiBase
     }
 
     float viewDistance = 10f;
-    float viewAngle = 60f;   
-
+    float viewAngle = 60f;
+    public float sphereRadius = 1.0f; // 구 반지름
+    public LayerMask playerLayer;
     protected override void Search()//공격할 대상 찾기
     {
         Debug.Log($"Search");
         if (searchAnim == false)
         {
             searchAnim = true;
-            if (MobType != MonsterType.Dron) 
+            if (MobType != MonsterType.Dron)
             {
                 animator.SetInteger("Search", 1);
             }
+            searching = SearchState.Stop;
         }
+        //현제 에러가 나는 이유는 PointMoveAnim에서 OnOff를 제어 하고 있지만
+        //Walk 애니메이션이 상시 실행 되고 있는 부분이다
 
-        MONSTER.readySearch(ref searching);//서치
-        //Debug.Log($"Search");
-        Collider[] hitColliders = Physics.OverlapSphere(MONSTER.gameObject.transform.position, viewDistance);
+        //애니메이션 끝나는 부분에 SearchState.Stop을 걸어보기
 
-        if (hitColliders == null) { return; }
+        //if (searching == SearchState.Move) 
+        //{
+        //    animator.SetInteger("Search", 0);
+        //    animator.SetInteger("Walk", 1);
+        //    MONSTER.NextPoint(ref searchingOnOff);//서치
+        //}
+        //else if (searching == SearchState.Stop) 
+        //{
+        //    animator.SetInteger("Search", 1);
+        //    animator.SetInteger("Walk", 0);
+        //}
 
-        foreach (Collider col in hitColliders)
+
+
+        RaycastHit hit;
+
+        Vector3 position = MONSTER.gameObject.transform.position;
+        Vector3 direction = MONSTER.gameObject.transform.forward;
+
+        if (Physics.SphereCast(position, sphereRadius, direction, out hit, viewDistance)) 
         {
-            if (col.gameObject.layer == Delivery.LayerNameEnum(LayerTag.Player))
+            int layer = hit.collider.gameObject.layer;
+            if (layer != Delivery.LayerNameEnum(LayerTag.Player)) { return; }
+
+            if (layer == Delivery.LayerNameEnum(LayerTag.Player))
             {
-                animator.SetInteger("Search", 0);
-                Vector3 directionToTarget = (col.transform.position - MONSTER.gameObject.transform.position).normalized;
-                float angleBetween = Vector3.Angle(MONSTER.gameObject.transform.forward, directionToTarget);
-
                 moveAnim = false;
-                targetPos = col.transform.position;//Vector3
+                animator.SetInteger("Search", 0);
                 aIState = AiState.Attack;
-
+                targetPos = hit.collider.gameObject.transform.position;//Vector3
                 searchAnim = false;//clear
-
-                //if (angleBetween < viewAngle * 0.5f) // 시야각 내에 있는지 확인
-                //{
-                //    moveAnim = false;
-                //    targetPos = col.transform.position;//Vector3
-                //    aIState = AI.Attack;
-
-                //    searchAnim = false;//clear
-                //}
             }
         }
-
+        MONSTER.NextPoint(ref searchingOnOff);//서치
     }
     //Vector3
 
@@ -130,7 +144,7 @@ public partial class AiMonster : AiBase
 
     protected override void Attack()//공격
     {
-        animator.SetInteger("Attack", 1);
+        //animator.SetInteger("Attack", 1);
         Debug.Log($"Attack");
         //Pattern();
 
@@ -143,6 +157,7 @@ public partial class AiMonster : AiBase
             {
                 animator.SetInteger("Close", 1);
             }
+            animator.SetInteger("Attack", 1);
         }
 
         //ONSTER.Pattern(MobType);
@@ -202,7 +217,6 @@ public partial class AiMonster : AiBase
         attackOn = true;
         targetNumber = 0;
         aIState = AiState.Search;
-
     }
 
     

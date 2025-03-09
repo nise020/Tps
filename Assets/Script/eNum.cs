@@ -97,11 +97,25 @@ public enum MonsterType //몬스터 태그
     Spider,
     Sphere
 }
-public enum CharactorType 
+public enum Condition //몬스터의 상태패턴
+{
+    health,
+    hard,
+}
+public enum SearchState 
+{
+    Stop,
+    Move
+
+}
+public enum ObjectType 
 {
     None,
     Player,
     Monster,
+    Gun,
+    Bullet_Player,
+    Bullet_Monster,
 }
 public enum GunTags
 {

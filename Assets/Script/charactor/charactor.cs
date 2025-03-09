@@ -34,15 +34,22 @@ public abstract partial class Charactor : Actor
     protected float hP;//실제 체력
     protected float cheHP;//보여지는 체력
     protected float maxHP;//최대체력
-    [SerializeField] protected float CharactorId = 0;//최대체력
+    [SerializeField] protected float CharactorId = 0;
     [SerializeField] GameObject hpBar;//uiHp
     protected State STATE = new State();
+
+
+
+
+    protected int attack;//공격력
+    protected int defense;//방어력
+    protected float moveSpeed;//이동속도
 
     protected float skillCool_1;//1번 스킬쿨타임
     protected float skillCool_2;//2번 스킬쿨타임
     protected float buff;//버프
     protected float burstCool;//버스트 쿨타임
-    [SerializeField] CharactorType type = CharactorType.None;
+    [SerializeField] ObjectType type = ObjectType.None;
 
     protected virtual void OnTriggerEnter(Collider other)//세분화 필요
     {
@@ -51,18 +58,18 @@ public abstract partial class Charactor : Actor
         {
             if (other.gameObject.layer == Delivery.LayerNameEnum(LayerTag.Player))
             {
-                attack();
+                hit();
             }
             else if (other.gameObject.layer == Delivery.LayerNameEnum(LayerTag.Bullet))//피격
             {
-                hpCheck();
+                checkHp();
             }
         }
         else if (myColl.gameObject.layer == Delivery.LayerNameEnum(LayerTag.Player))//플레이어 일 경우
         {
             if (other.gameObject.layer == Delivery.LayerNameEnum(LayerTag.Monster))//피격
             {
-                hpCheck();
+                checkHp();
             }
         }
     }
@@ -71,18 +78,18 @@ public abstract partial class Charactor : Actor
         hP = STATE.MaxHP;
         cheHP = hP;
         maxHP = hP;
+        moveSpeed = STATE.Movespeed;
+        attack = STATE.Attack;
+        defense = STATE.Defense;
     }
 
-    public void Hit() 
-    {
 
-    }
-    protected virtual void hpCheck() 
+    protected virtual void checkHp() 
     {
         //if (cheHP == hP) return;
         hP = hP - 1;//1은 바꿔야함
         Debug.Log("Hit");
-        if (cheHP >= hP)
+        if (cheHP >= hP && hP >= 0)
         {
             cheHP = hP;
             if (hP==0) 
@@ -93,7 +100,7 @@ public abstract partial class Charactor : Actor
     }
     protected virtual void dead() //사망 상태
     {
-        if (type == CharactorType.Player) 
+        if (type == ObjectType.Player) 
         {
             Shared.BattelMgr.PlayerAlive = false;
             hP = maxHP;
@@ -111,7 +118,7 @@ public abstract partial class Charactor : Actor
     {
 
     }
-    protected virtual void attack() 
+    protected virtual void hit() 
     {
 
     }

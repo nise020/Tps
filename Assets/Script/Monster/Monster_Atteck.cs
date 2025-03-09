@@ -20,8 +20,7 @@ public abstract partial class Monster : Charactor
         StartCoroutine(Throu(_start, _end, _obj));
     }
     IEnumerator Throu(Vector3 _start,Vector3 _end,GameObject _obj) 
-    {
-        
+    {    
         float elapsed = 0;
 
         while (elapsed < throuTime)
@@ -37,9 +36,9 @@ public abstract partial class Monster : Charactor
         }
         _obj.transform.position = _end;
     }
-    protected override void hpCheck()
+    protected override void checkHp()
     {
-        base.hpCheck();
+        base.checkHp();
         HPBAR.SetHp(maxHP,cheHP);
     }
     protected override void dead() 
@@ -64,11 +63,11 @@ public abstract partial class Monster : Charactor
    // public bool SearchCheack = false;
     float RotSpeed = 30;
     bool checkPos = false;
-    public void readySearch(ref bool _value)//공격할 대상 찾기
+    public void NextPoint(ref bool _value)//공격할 대상 찾기
     {
         if (!_value) { return; }
-        mobAnimator.SetInteger("Search", 0);
         //재정의
+        mobAnimator.SetInteger("Search", 0);
         float speed = moveSpeed;
         if (movePos.Count == 0) 
         {
@@ -82,7 +81,8 @@ public abstract partial class Monster : Charactor
 
         if (checkPos == false) 
         {
-            targetPos = gameObject.transform.position + movePos[moveNumber];//에러
+            targetPos = gameObject.transform.position + movePos[moveNumber];
+            //위치를 지정해줄 필요가 있음
             checkPos = true;
         }
         Vector3 nowPos = gameObject.transform.position;
@@ -91,7 +91,6 @@ public abstract partial class Monster : Charactor
 
         if (value > 0.1f)//Move
         {
-
             Vector3 dir = (targetPos - nowPos).normalized;
 
             Quaternion startRot = Quaternion.LookRotation(gameObject.transform.forward);
@@ -104,9 +103,9 @@ public abstract partial class Monster : Charactor
         {
             mobAnimator.SetInteger("Walk", 0);
             mobAnimator.SetInteger("Search", 1);
-            _value = false;
             moveNumber += 1;
             checkPos = false;
+            _value = false;
         }
     }
 

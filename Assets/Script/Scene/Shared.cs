@@ -9,23 +9,23 @@ public static class Shared //메모
     //싱글톤,static<--정적으로 접근하는 패턴,과거에 메모리를 계산하기 위해서 사용
     public static GameManager GameManager;
     public static SceneMgr SceneMgr;
-    public static BattelManager BattelMgr;
-    public static AtlasManager AtlasMgr;
-    public static SoundMgr SoundMgr;
+    public static BattelManager BattelManager;
+    public static AtlasManager AtlasManager;
+    public static SoundManager SoundManager;
     public static ShakeCamera ShakeCamera;
     public static MainCamera MainCamera;
-    public static TableMgr TableMgr;
+    public static TableManager TableManager;
     public static BattelUI BattelUI;
     public static FaidInOut FaidInOut;
 
-    public static TableMgr InutTableMgr() 
+    public static TableManager InutTableMgr() 
     {
-        if (TableMgr == null)
+        if (TableManager == null)
         {
-            TableMgr = new TableMgr();
-            TableMgr.Init();
+            TableManager = new TableManager();
+            TableManager.Init();
         }
-        return TableMgr;
+        return TableManager;
     }
     //private void Awake()//예시
     //{

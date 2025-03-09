@@ -9,7 +9,7 @@ public class BattelManager : MonoBehaviour
 {
     public BattelUI ui;
     //public Camera playerCam;
-    [SerializeField] GameObject playerCam;
+    //[SerializeField] GameObject playerCam;
     public MoveCamera MOVECAM;
     public GameObject CamAim;
 
@@ -76,8 +76,8 @@ public class BattelManager : MonoBehaviour
         PLAYER.gameObject.transform.position = startPointObj.gameObject.transform.position;
         PlayerAlive = true;
 
-        playerCam.transform.position = PLAYER.transform.position;
-        MOVECAM.PlayerObj = playerUpper.gameObject;
+        //playerCam.transform.position = PLAYER.transform.position;
+        //MOVECAM.PlayerObj = PLAYER.gameObject;
         //Gun
 
         //monster
@@ -185,9 +185,9 @@ public class BattelManager : MonoBehaviour
 
     private void Awake()
     {
-        if (Shared.BattelMgr == null)
+        if (Shared.BattelManager == null)
         {
-            Shared.BattelMgr = this;
+            Shared.BattelManager = this;
             //SceneMgr ΩÃ±€≈Ê
             DontDestroyOnLoad(gameObject);
         }
@@ -199,6 +199,7 @@ public class BattelManager : MonoBehaviour
 
     public void Resurrection(int _number) 
     {
-        Invoke("monsterData[_number].gameObject.SetActive(true)",10f);
+        monsterData[_number].gameObject.SetActive(true);
+        //Invoke("monsterData[_number].gameObject.SetActive(true)",10f);
     }
 }

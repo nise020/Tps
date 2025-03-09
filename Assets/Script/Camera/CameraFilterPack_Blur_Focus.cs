@@ -45,7 +45,7 @@ public class CameraFilterPack_Blur_Focus : MonoBehaviour
     private void Awake()
     {
         //MyPlayer2DPos = Shared.Zone.transform;//stage=Zone or charactor
-        MyPlayer2DPos = Shared.BattelMgr.PLAYER.gameObject.transform;//stage=Zone or charactor
+        MyPlayer2DPos = Shared.BattelManager.PLAYER.gameObject.transform;//stage=Zone or charactor
 
         ChangeCenterX = CenterX;
         ChangeCenterY = CenterY;
@@ -99,7 +99,7 @@ public class CameraFilterPack_Blur_Focus : MonoBehaviour
     {
         if(Application.isPlaying)
         {
-            if(Shared.BattelMgr.GameOver)
+            if(Shared.BattelManager.GameOver)
             {
                 DieUpdate();
                 return;

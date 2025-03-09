@@ -21,7 +21,7 @@ public partial class State
     }
     ObjectType objType;
     MonsterType monster = MonsterType.Defolt;
-
+    GunType gun = global::GunType.None;
     public float hP;//보여지는 체력
     public float cheHP;//체크할 체력
 
@@ -37,13 +37,38 @@ public partial class State
     {
         monster = _eNum;
     }
-
+    public void gunType(GunType _eNum)
+    {
+        gun = _eNum;
+    }
     private void playerState() 
     {
         MaxHP = 100;
         Attack = 30;
         Defense = 30;
         Movespeed = 10;
+    }
+    public void MonsterState(GunType _eNum)
+    {
+        switch (_eNum)
+        {
+            case GunType.AR:
+                Attack = 30;
+                Defense = 30;
+                break;
+            case GunType.SG:
+                Attack = 30;
+                Defense = 30;
+                break;
+            case GunType.SR:
+                Attack = 30;
+                Movespeed = 10;
+                break;
+        }
+        Debug.Log($"\n" +
+            $",monster={_eNum}\n" +
+            $",Attack={Attack}\n" +
+            $",Movespeed{Movespeed}");
     }
     public void MonsterState(MonsterType _monster)
     {

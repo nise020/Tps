@@ -4,14 +4,13 @@ using UnityEngine;
 
 public partial class MoveCamera : MonoBehaviour
 {
-    public GameObject PlayerObj;
-    GameObject attackAim;
+    Player PlayerObj;
     Vector3 camPos;
     Quaternion aimRot;
     UnityEngine.Camera cam;
     public Animation Shake;
     public Animator camAnim;
-
+    PlayerType playerType = PlayerType.None;
 
     public float Distans = 0.0f;
     public float Hight = 0.0f;
@@ -37,6 +36,8 @@ public partial class MoveCamera : MonoBehaviour
             camRotOn == false || 
             attackModeOn == true) return;
 
+        //playerType == PlayerType.Gunner
+
         float xRot = Input.GetAxis("Mouse X") * rotSensitive;
         float yRot = Input.GetAxis("Mouse Y") * rotSensitive;
 
@@ -45,14 +46,36 @@ public partial class MoveCamera : MonoBehaviour
 
         yValue = Mathf.Clamp(yValue, -limitRot, limitRot);
         Vector3 distans = new Vector3(0, 0, Distans);
-        //transform.rotation = Quaternion.Euler(yValue, xValue, 0);
         Quaternion rotation = Quaternion.Euler(yValue, xValue, 0);
-        transform.localPosition = PlayerObj.transform.position + rotation * distans;
+        transform.position = PlayerObj.transform.position + rotation * distans;
 
-        transform.LookAt(PlayerObj.transform.position);
-        PlayerObj.transform.rotation = rotation;
+        //transform.LookAt(PlayerObj.transform.position);
+        gameObject.transform.rotation = rotation;
         //Cursor.lockState = CursorLockMode.None;
         //return transform.rotation;
+    }
+    private void shootCamera(bool _value)
+    {
+        if (_value == true)
+        {
+            //playerType == PlayerType.Gunner
+
+            camPos = new Vector3(aim, Hight, Distans);
+            float xRot = Input.GetAxis("Mouse X") * rotSensitive;
+            float yRot = Input.GetAxis("Mouse Y") * rotSensitive;
+
+            xValue += xRot;
+            yValue -= yRot;
+            yValue = Mathf.Clamp(yValue, -attacklimitRot, attacklimitRot);
+
+            Quaternion rotation = Quaternion.Euler(yValue, xValue, 0);
+            PlayerObj.transform.rotation = rotation;
+
+            //gameObject.transform.localPosition = PlayerObj.transform.position + rotation * camPos;
+
+            //gameObject.transform.rotation = rotation;
+        }
+        else { return; }
     }
     private void shootMode()
     {
@@ -62,35 +85,17 @@ public partial class MoveCamera : MonoBehaviour
         {
             attackModeOn = !attackModeOn;
         }
-    }
-    private void shootCamera()
-    {
-        if (attackModeOn == true)
-        {
-            camPos = new Vector3(aim, Hight, Distans);
-            //aimRot = new Quaternion(QxValu, QyValu, Quaternion.kEpsilon, Quaternion.kEpsilon);
-            float xRot = Input.GetAxis("Mouse X") * rotSensitive;
-            float yRot = Input.GetAxis("Mouse Y") * rotSensitive;
 
-            xValue += xRot;
-            yValue -= yRot;
+        //여기 중간에 부드럽게 카메라 위치를 이동시킬 블ㄹ렌드 효과가 필ㄴ요함
 
-            Quaternion rotation = Quaternion.Euler(yValue+ QxValu, xValue+ QyValu, 0);
-            yValue = Mathf.Clamp(yValue, -attacklimitRot, attacklimitRot);
-
-            gameObject.transform.localPosition = PlayerObj.transform.position + rotation * camPos;
-            gameObject.transform.rotation = rotation;
-            PlayerObj.transform.rotation = rotation;
-
-        }
-        else { return; }
+        shootCamera(attackModeOn);
     }
     void Start()
     {
+        PlayerObj = GetComponentInParent<Player>();
         camAnim = GetComponentInParent<Animator>();
         //Cursor.lockState = CursorLockMode.Locked;
         //Cursor.visible = false;
-        attackAim = Shared.BattelMgr.CamAim;
         //transform.LookAt(PlayerObj.transform);
     }
 
@@ -98,8 +103,8 @@ public partial class MoveCamera : MonoBehaviour
     private void LateUpdate()
     {
         //showCursue();
+
         shootMode();
-        shootCamera();
         camRot();
     }
     public void cameraShakeAnim(bool _anim) 

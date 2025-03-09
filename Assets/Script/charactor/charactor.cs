@@ -44,12 +44,12 @@ public abstract partial class Charactor : Actor
     protected int attack;//공격력
     protected int defense;//방어력
     protected float moveSpeed;//이동속도
+    [SerializeField] ObjectType type = ObjectType.None;
 
     protected float skillCool_1;//1번 스킬쿨타임
     protected float skillCool_2;//2번 스킬쿨타임
     protected float buff;//버프
     protected float burstCool;//버스트 쿨타임
-    [SerializeField] ObjectType type = ObjectType.None;
 
     protected virtual void OnTriggerEnter(Collider other)//세분화 필요
     {
@@ -102,7 +102,7 @@ public abstract partial class Charactor : Actor
     {
         if (type == ObjectType.Player) 
         {
-            Shared.BattelMgr.PlayerAlive = false;
+            Shared.BattelManager.PlayerAlive = false;
             hP = maxHP;
             cheHP = maxHP;
             gameObject.SetActive(false);

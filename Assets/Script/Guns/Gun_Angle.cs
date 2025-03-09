@@ -41,6 +41,9 @@ public partial class Gun : Actor
             go.transform.position = gunHoleObj.transform.position;
             Bullet_Player plBullet = go.GetComponent<Bullet_Player>();
             plBullet.targetPos = _pos.normalized;
+            //수정 필요
+            go.transform.rotation = Quaternion.Euler(gameObject.transform.forward);
+           
             go.SetActive(true);
 
 
@@ -50,7 +53,7 @@ public partial class Gun : Actor
             RapidTimer = 0.0f;
             Invoke("go.SetActive(false)", 3f);
 
-            Shared.BattelMgr.MOVECAM.cameraShakeAnim(true);//Animation
+            Shared.BattelManager.MOVECAM.cameraShakeAnim(true);//Animation
 
 
         }

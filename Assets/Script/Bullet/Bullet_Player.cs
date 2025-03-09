@@ -51,17 +51,4 @@ public partial class Bullet_Player : MonoBehaviour
         }
         gameObject.transform.position = BULLET.moveing(transform.position, targetPos, BulletType, speed);
     }
-
-
-
-    //protected override void GunTargetRaycast()
-    //{
-    //    Ray ray = cam.ScreenPointToRay(Input.mousePosition);
-    //    if (Physics.Raycast(ray, out hit))
-    //    {
-
-    //    }
-    //    //Vector3 ray = cam.ScreenToWorldPoint(Input.mousePosition);
-    //    //if (Physics.Raycast(transform.position,ray, out RaycastHit hit))
-    //}
 }

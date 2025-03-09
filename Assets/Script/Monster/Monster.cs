@@ -12,7 +12,7 @@ public abstract partial class Monster : Charactor
         base.Start();
         mobAnimator = GetComponent<Animator>();
         //NowHp();
-        creatTabObj = Shared.BattelMgr.creatTab;//¿ÀºêÁ§Æ® »ý¼º ÅÇ(ex.ÃÑ¾Ë)
+        creatTabObj = Shared.BattelManager.creatTab;//¿ÀºêÁ§Æ® »ý¼º ÅÇ(ex.ÃÑ¾Ë)
         mobRigid = GetComponent<Rigidbody>();
         mobColl = GetComponent<Collider>();
         if (mobColl == null) 

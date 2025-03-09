@@ -108,6 +108,12 @@ public enum SearchState
     Move
 
 }
+public enum PlayerType
+{
+    None,
+    Wariar,
+    Gunner
+}
 public enum ObjectType 
 {
     None,
@@ -117,8 +123,9 @@ public enum ObjectType
     Bullet_Player,
     Bullet_Monster,
 }
-public enum GunTags
+public enum GunType
 {
+    None,
     AR,//º“√—
     MG,//∏”Ω≈∞«
     SMG,//±‚∞£¥‹√—

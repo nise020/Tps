@@ -19,14 +19,14 @@ public partial class Gun : Actor
     protected override void Start()
     {
         GunBulletType();
-        ui = Shared.BattelMgr.ui;
+        ui = Shared.BattelManager.ui;
         PLAYER = GetComponentInParent<Player>();
         //playerUpperBody = PLAYER.playerSpine;
         beforeMyGunTrs = gameObject.transform.position;
         beforeMyGunRot = transform.rotation.eulerAngles;
 
         gunObjRot = gunObj.transform.rotation.eulerAngles;
-        magazine = Shared.BattelMgr.creatTab.gameObject;
+        magazine = Shared.BattelManager.creatTab.gameObject;
 
         creatbullet();
     }
@@ -40,6 +40,7 @@ public partial class Gun : Actor
             bulletData.Add(bulletcount, go);
             bulletcount++;
         }
+        Debug.Log($"{bullet}");
         bulletcount = 0;
     }
 

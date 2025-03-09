@@ -67,7 +67,7 @@ public partial class AiMonster : AiBase
 
         searchPosObj = MONSTER.movePos;//List
 
-        creatTab = Shared.BattelMgr.creatTab;
+        creatTab = Shared.BattelManager.creatTab;
         eyePos = MONSTER.eyeObj.transform;
         startPos = MONSTER.gameObject.transform.position;
         aIState = AiState.Search;
@@ -190,7 +190,7 @@ public partial class AiMonster : AiBase
             if (attackCheck == false)
             {
                 GameObject go = Delivery.Instantiator(MONSTER.MobGrenade, eyePos.position, Quaternion.identity, creatTab);
-                //리소스 재활용
+                //리소스 재활용 해야 하기 떄문에 수정필요
                 MONSTER.granaidAttack(MONSTER.gameObject.transform.position, targetPos, go);
 
                 aIState = AiState.Reset;

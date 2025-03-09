@@ -9,9 +9,9 @@ public class Table_Reload : MonoBehaviour
     //TableMgr tableMgr = new TableMgr();
     static public void PerserTableCsv() 
     {
-        Shared.TableMgr = new TableMgr();
-        Shared.TableMgr.Init();
-        Shared.TableMgr.Save();
+        Shared.TableManager = new TableManager();
+        Shared.TableManager.Init();
+        Shared.TableManager.Save();
 
     }
 

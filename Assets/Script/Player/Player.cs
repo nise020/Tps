@@ -3,16 +3,19 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
-using static System.Net.Mime.MediaTypeNames;
 
 public partial class Player : Charactor
 {
+    MoveCamera viewcam;
     Vector3 Vector = new Vector3(0, 1.5f, 0);
     public Vector3 movePos = Vector3.zero;
     Rigidbody rigid;
     Animator playerAnim;
     Gun gun;
     bool runstate = false;
+
+
+    [SerializeField] PlayerType playerType = PlayerType.None;
 
     //public GameObject playerSpine;
 
@@ -41,7 +44,7 @@ public partial class Player : Charactor
     protected float RerodingTimer = 0.0f;
 
     Skill_Add SKILLADD = new Skill_Add();
-    protected GunTags GunEnumType;//다른곳에서 전달 받기
+    protected GunType GunEnumType;//다른곳에서 전달 받기
     string Name;
 
     //AnimatorStateInfo animStateInfo;
@@ -50,19 +53,19 @@ public partial class Player : Charactor
     {
         switch (GunEnumType)
         {
-            case GunTags.AR:
+            case GunType.AR:
                 SKILLADD.UseBurstSkill(1, pluse_bullet, attackValue, burst_RunTime,burstCool);
                 break;
-            case GunTags.MG:
+            case GunType.MG:
                 SKILLADD.UseBurstSkill(2, pluse_bullet, attackValue, burst_RunTime, burstCool);
                 break;
-            case GunTags.SG:
+            case GunType.SG:
                 SKILLADD.UseBurstSkill(3, pluse_bullet, attackValue, burst_RunTime, burstCool);
                 break;
-            case GunTags.SMG:
+            case GunType.SMG:
                 SKILLADD.UseBurstSkill(4, pluse_bullet, attackValue, burst_RunTime, burstCool);
                 break;
-            case GunTags.SR:
+            case GunType.SR:
                 SKILLADD.UseBurstSkill(5, pluse_bullet, attackValue, burst_RunTime, burstCool);
                 break;
         }
@@ -70,6 +73,7 @@ public partial class Player : Charactor
 
     protected override void Start()
     {
+        viewcam = Shared.BattelManager.MOVECAM;
         STATE.init(charactor);
         inIt();
         rigid = GetComponent<Rigidbody>();
@@ -77,7 +81,7 @@ public partial class Player : Charactor
         playerAnim = GetComponentInChildren<Animator>();
         Maincam = UnityEngine.Camera.main;
         Shared.InutTableMgr();
-        Table_Charactor.Info info = Shared.TableMgr.Character.Get(1);
+        Table_Charactor.Info info = Shared.TableManager.Character.Get(1);
         Name = info.Img;
     }
 
@@ -90,7 +94,6 @@ public partial class Player : Charactor
     void Update()
     {
         runcheck();
-        attackRot();
         bool value1 = Input.GetMouseButton(0);
         bool value2 = Input.GetMouseButtonUp(0);
         if ((value1))
@@ -99,7 +102,7 @@ public partial class Player : Charactor
         }
         else if (value2 || gun.nowbullet <= 0)
         {
-            Shared.BattelMgr.MOVECAM.cameraShakeAnim(false);
+            viewcam.cameraShakeAnim(false);
             playerAnim.SetInteger("Attack", 0);
         }
         reloding();
@@ -113,25 +116,22 @@ public partial class Player : Charactor
     }
     protected override void hit()
     {
-        Vector3 AimPos = Shared.BattelMgr.CamAim.transform.position;
-        Vector3 AimDirection = Shared.BattelMgr.CamAim.transform.forward;
-        //string text = ($"{PlayerAnimParameters.Attack}");
-        if (Physics.Raycast(AimPos, AimDirection, out RaycastHit hit))
+        if (playerType == PlayerType.Gunner) 
         {
-            float value = Vector3.Dot(AimDirection.normalized, gun.gunHoleObj.transform.forward.normalized);
-            if (value <= 1.0f && gun.reLoed == false && gun.nowbullet >= 0)
+            Vector3 AimDirection = gun.gameObject.transform.forward;
+            if (gun.reLoed == false && gun.nowbullet >= 0)
             {
                 playerAnim.SetLayerWeight(attackLayerIndex, 1.0f);
                 playerAnim.SetInteger("Attack", 1);
-                gun.GunAttack(AimDirection);//에러
+                gun.GunAttack(AimDirection);
             }
-            else if (gun.reLoed == true || gun.nowbullet <= 0)
+            else if (gun.nowbullet <= 0)
             {
-                Shared.BattelMgr.MOVECAM.cameraShakeAnim(false);
+                Shared.BattelManager.MOVECAM.cameraShakeAnim(false);
                 playerAnim.SetInteger("Attack", 0);
             }
-            else { return; }
         }
+       
     }
     public void reloding() 
     {
@@ -166,14 +166,14 @@ public partial class Player : Charactor
     }
     protected override void dead() 
     {
-        Shared.BattelMgr.PlayerAlive = false;
+        Shared.BattelManager.PlayerAlive = false;
         gameObject.SetActive(false);
     }
 
 
     public void attackRot() 
     {
-        Vector3 pos = Shared.BattelMgr.CamAim.transform.forward;
+        Vector3 pos = Shared.BattelManager.CamAim.transform.forward;
         transform.rotation = Quaternion.Euler(pos); 
     }
 }

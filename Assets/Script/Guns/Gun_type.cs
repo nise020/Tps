@@ -10,7 +10,7 @@ public partial class Gun : Actor
     public int nowbullet;//ÃÑ¾Ë°¹¼ö
     protected int pluse_bullet;//Ãß°¡ÇÒ ÃÑ¾Ë°¹¼ö
     protected int RelodingBullet;
-    [SerializeField] GunTags GunEnumType;
+    [SerializeField] GunType GunEnumType;
     protected int srGunDmg;
 
 
@@ -25,17 +25,13 @@ public partial class Gun : Actor
     //[SerializeField, Tooltip("Auto Butten")] Button AutoBut;
     public void GunBulletType()//ÃÑÀÇ Á¾·ù
     {
-        if (GunEnumType == GunTags.MG)
-        {
-            bullet = 300;
-            ChargeingTime = 0.1f;
-        }
-        else if (GunEnumType == GunTags.SMG)
+
+        if (GunEnumType == GunType.SMG)
         {
             bullet = 30;
             ChargeingTime = 0.2f;
         }
-        else if (GunEnumType == GunTags.SR)
+        else if (GunEnumType == GunType.SR)
         {
             bullet = 5;
             //Â÷Áö ºñ·Ê ´ë¹ÌÁö ¹®±¸ Ãß°¡ ÆÈ¿ä

@@ -121,7 +121,7 @@ MonoBehaviour:
   angleOn: 0
   bullet: 0
   nowbullet: 0
-  GunEnumType: 2
+  GunEnumType: 3
 --- !u!1001 &9141356711389082837
 PrefabInstance:
   m_ObjectHideFlags: 0

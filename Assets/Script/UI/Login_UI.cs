@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public partial class Login : Actor
+public partial class Login : MonoBehaviour
 {
     [Header("LoginScene")]
     [SerializeField] GameObject LoginObj;
@@ -14,9 +14,7 @@ public partial class Login : Actor
     //IEnumerator Laoding;
     string IDKey;
     string UserPassKey;
-    // Start is called before the first frame update
 
-    
     public void LoginPrecces()
     {
         if ((IdText.text == "" || IdText.text.Length <= 0)&&

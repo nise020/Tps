@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Granad : Actor
+public class Granad : Item
 {
     Vector3 GranadPos;
     public Vector3 startPos;
@@ -11,7 +11,7 @@ public class Granad : Actor
     {
         GameObject go = Instantiate(explotionObj,transform.position,Quaternion.identity);
     }
-    protected override void Start()
+    private void Start()
     {
         //Torque<--È¸Àü·Â
         GranadPos = startPos;

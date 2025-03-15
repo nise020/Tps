@@ -4,7 +4,7 @@ using UnityEngine;
 using UnityEngine.Video;
 using UnityEngine.UI;
 
-public partial class Ui_Title : Actor
+public partial class Ui_Title : MonoBehaviour
 {
     public VideoPlayer VIDEOPLAYER;
     public RawImage RAWIMG;
@@ -12,7 +12,7 @@ public partial class Ui_Title : Actor
     VideoClip clip = null;
     private void Start()
     {
-        //StartCoroutine(playingVideo());
+        StartCoroutine(playingVideo());
     }
     IEnumerator SetVideo() 
     {

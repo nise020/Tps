@@ -14,10 +14,23 @@ public partial class Player : Charactor
     Gun gun;
     bool runstate = false;
 
-
+    [SerializeField] GameObject HandObj;
+    [SerializeField] GameObject weapon;
+    [SerializeField] GameObject scabbard;
     [SerializeField] PlayerType playerType = PlayerType.None;
-
-    //public GameObject playerSpine;
+    public void playerTypInite(PlayerType _type) 
+    {
+        _type = playerType;
+    }
+    PlayerControll playerControll = PlayerControll.Off;
+    public void playerOnOff(PlayerControll _type)
+    {
+        playerControll = _type;
+    }
+    bool mouseClick => Input.GetMouseButton(0);
+    bool mouseClickUp => Input.GetMouseButtonUp(0);
+    bool mouseClickDown => Input.GetMouseButtonDown(0);
+    bool reloadOn => Input.GetKeyDown(KeyCode.R);
 
     [Header("¹«±â")]
     [SerializeField] GameObject WeaponPrefab;
@@ -32,7 +45,7 @@ public partial class Player : Charactor
     [Header("½ºÅÝ")]
     float burst_RunTime;
     int attackValue;
-    UnityEngine.Camera Maincam;
+    //UnityEngine.Camera Maincam;
 
     protected int pluse_bullet;
     protected int RelodingBullet;
@@ -71,18 +84,20 @@ public partial class Player : Charactor
         }
     }
 
-    protected override void Start()
+    private void Start()
     {
         viewcam = Shared.BattelManager.MOVECAM;
         STATE.init(charactor);
-        inIt();
+        stateInIt();
         rigid = GetComponent<Rigidbody>();
-        gun = GetComponentInChildren<Gun>();
         playerAnim = GetComponentInChildren<Animator>();
-        Maincam = UnityEngine.Camera.main;
         Shared.InutTableMgr();
         Table_Charactor.Info info = Shared.TableManager.Character.Get(1);
         Name = info.Img;
+        if (playerType == PlayerType.Gunner)
+        {
+            gun = GetComponentInChildren<Gun>();
+        }
     }
 
 
@@ -94,61 +109,58 @@ public partial class Player : Charactor
     void Update()
     {
         runcheck();
-        bool value1 = Input.GetMouseButton(0);
-        bool value2 = Input.GetMouseButtonUp(0);
-        if ((value1))
+        if ((mouseClick))
         {
-            hit();
+            attack();
         }
-        else if (value2 || gun.nowbullet <= 0)
+        else if (playerType == PlayerType.Gunner)//¶¼¸é ÀÚµ¿À¸·Î
         {
-            viewcam.cameraShakeAnim(false);
-            playerAnim.SetInteger("Attack", 0);
+            if (mouseClickUp || gun.nowbullet <= 0)
+            {
+                viewcam.cameraShakeAnim(false);
+                playerAnim.SetInteger("Attack", 0);
+            }
         }
-        reloding();
-        closeAttackCheack();
-        shitdownCheak();
+        reloding(playerType);//¸®·Îµå
+        shitdownCheak();//¾É±â
         ////Time.timeScale = 0;//Faraim Speed up,Down
     }
     private void FixedUpdate()
     {
-        move();
+        move(playerControll);
     }
-    protected override void hit()
+    protected override void attack()
     {
-        if (playerType == PlayerType.Gunner) 
+        if (playerType == PlayerType.Gunner)
         {
             Vector3 AimDirection = gun.gameObject.transform.forward;
             if (gun.reLoed == false && gun.nowbullet >= 0)
             {
                 playerAnim.SetLayerWeight(attackLayerIndex, 1.0f);
-                playerAnim.SetInteger("Attack", 1);
+                AttackAnim(1);
                 gun.GunAttack(AimDirection);
             }
-            else if (gun.nowbullet <= 0)
-            {
-                Shared.BattelManager.MOVECAM.cameraShakeAnim(false);
-                playerAnim.SetInteger("Attack", 0);
-            }
+        }
+        else if (playerType == PlayerType.Warrior) 
+        {
+            closeAttackCheack();
         }
        
     }
-    public void reloding() 
+    public void reloding(PlayerType _type) 
     {
-        //string text = ($"{PlayerAnimParameters.Reload}");
-        //string text2 = ($"{playerAnimInfoName.reloading}");
-        bool reload = Input.GetKeyDown(KeyCode.R);
-        if (reload || gun.nowbullet <= 0)
+        if (_type != PlayerType.Gunner) { return; }
+
+        if (reloadOn || gun.nowbullet <= 0)
         {
-            gun.reLoed = true;
             playerAnim.SetLayerWeight(attackLayerIndex, 1.0f);
             playerAnim.SetInteger("Reload", 1);
         }
 
-        if (gun.reLoed)
-        {
-            animCheck("Reload", "reloading");
-        }
+        //if (gun.reLoed)
+        //{
+        //    animCheck("Reload", "reloading");
+        //}
 
     }
  

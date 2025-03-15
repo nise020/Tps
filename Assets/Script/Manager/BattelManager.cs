@@ -14,6 +14,7 @@ public class BattelManager : MonoBehaviour
     public GameObject CamAim;
 
     public bool GameOver = false;
+    ObjectType objType = ObjectType.None;
 
     [Header("Player")]
     //한글 꼭 지우기
@@ -21,6 +22,7 @@ public class BattelManager : MonoBehaviour
     public bool PlayerAlive = false;
     public GameObject playerUpper;//상체
     public GameObject playerHand;//오른손
+    PlayerControll playerControll = PlayerControll.Off;
 
     [Header("Gun")]
     public Gun GUN;
@@ -73,12 +75,16 @@ public class BattelManager : MonoBehaviour
     private void creatObject() 
     {
         //player
+        PlayerControll controll = PlayerControll.On;
+
         PLAYER.gameObject.transform.position = startPointObj.gameObject.transform.position;
+        PLAYER.playerOnOff(controll);
         PlayerAlive = true;
 
         //playerCam.transform.position = PLAYER.transform.position;
         //MOVECAM.PlayerObj = PLAYER.gameObject;
         //Gun
+        
 
         //monster
         spownListArrange(STAGE[stageLevel]);
@@ -93,10 +99,10 @@ public class BattelManager : MonoBehaviour
             LayerMask Layer = spawnPoint.gameObject.layer;
             string layerName = LayerMask.LayerToName(Layer);
 
-            spawnByType(layerName, spawnPoint.position, mincount,Maxcount);
+            spawnByType(layerName, spawnPoint.position, mincount,Maxcount, objType);
         }
     }
-    private void spawnByType(string _layername, Vector3 _spawnTrs,int _min,int _max)
+    private void spawnByType(string _layername, Vector3 _spawnTrs,int _min,int _max,ObjectType _type)
     {
         if (_min >= _max) { return; }
 
@@ -114,13 +120,15 @@ public class BattelManager : MonoBehaviour
                 monsterType = sphereMob.gameObject;
                 break;
         }
-
         GameObject go = Instantiate(monsterType, _spawnTrs, Quaternion.identity, creatTab);
+        _type = ObjectType.Monster;
 
         Monster monster = go.GetComponent<Monster>();
         monsterData.Add(monsterCount, go);
-        monster.mobKey = monsterCount;
-        monster.deadEffect = exflotionEffect;
+        monster.mobIndex(monsterCount);
+        monster.creatTab(creatTab);
+        monster.TypeInit(_type);
+        monster.BomEffect(exflotionEffect);
         HpBarValue(hpBarCanvers, Maxcount, monsterCount, monster);
         monsterCount += 1;
 

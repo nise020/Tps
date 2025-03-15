@@ -8,7 +8,7 @@ public abstract partial class Monster : Charactor
     public void DirectAttack(GameObject _obj,Vector3 _pos) 
     {
         Vector3 myPos = _obj.transform.position;
-        float speed = moveSpeed;
+        float speed = speedValue;
         _obj.transform.position += (new Vector3(_pos.x,0, _pos.z) - myPos).normalized * speed * Time.deltaTime;
     }
 
@@ -47,7 +47,7 @@ public abstract partial class Monster : Charactor
         //GameObject go = Instantiate(deadEffect, transform.position, Quaternion.identity, creatTabObj);
         //StartCoroutine(EffectTime(go));
         mobAnimator.SetInteger("Death", 1);
-        inIt();
+        stateInIt();
         Shared.BattelManager.Resurrection(mobKey);
         gameObject.SetActive(false);
     }
@@ -68,7 +68,7 @@ public abstract partial class Monster : Charactor
         if (!_value) { return; }
         //재정의
         mobAnimator.SetInteger("Search", 0);
-        float speed = moveSpeed;
+        float speed = speedValue;
         if (movePos.Count == 0) 
         {
             Debug.Log("이동할 위치를 찾을수 없음");

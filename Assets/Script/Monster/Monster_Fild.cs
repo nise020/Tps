@@ -21,25 +21,29 @@ public abstract partial class Monster : Charactor
 
 
 
-    public MonsterType eType;
+    protected MonsterType monsterType;
 
     protected AiState aIState = global::AiState.Create;
 
-    Transform creatTabObj;//총알 저장탭
+    protected Transform creatTabObj;//총알 저장탭
+    public void creatTab(Transform _tab) 
+    {
+        creatTabObj = _tab;
+    }
 
     [Header("몬스터의 정보")]
     Dictionary<int, HpBar> hpBarData = new Dictionary<int, HpBar>();
 
     public int mobKey = 0;
-    public GameObject deadEffect;
-    //public void keyAdd(Dictionary<int, HpBar> _data,int _value)
-    //{
-    //    _data.Add(_value, new HpBar());
-    //}
-    //public void hpAdd() 
-    //{
-    //    hpBarData.Clear();
-    //}
+    public void mobIndex(int _key) 
+    {
+        mobKey = _key;
+    } 
+    protected GameObject deadEffect;
+    public void BomEffect(GameObject _effect) 
+    {
+        deadEffect = _effect;  
+    }
     [Header("공격할 물체(공통)")]
     public GameObject AttackArm;//공격의 시작점이 될 팔
     protected bool NumberOn = false;
@@ -60,9 +64,7 @@ public abstract partial class Monster : Charactor
     [SerializeField] GameObject footObj;
     [SerializeField] protected bool groundCheck = false;
     [SerializeField] protected float leagh;
-    public Rigidbody mobRigid;
-    Color leaghColor;
-    BoxCollider boxColl;
-    Collider mobColl;
+    public Rigidbody monsterRigid;
+    protected Collider monsterColl;
     //public Vector3 startPos;
 }

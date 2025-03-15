@@ -1,3 +1,4 @@
+using Photon.Pun.Demo.SlotRacer;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -6,6 +7,28 @@ using UnityEngine.UI;
 
 public partial class BattelUI : MonoBehaviour
 {
+    PlayerType playerType;
+    PlayerControll playerControll;
+    public void CharactorControlButten() 
+    {
+        GameObject go = Shared.BattelManager.PLAYER.gameObject;
+        Player player = go.GetComponent<Player>();
+        player.playerTypInite(playerType);
+        if (playerType == PlayerType.Warrior)
+        {
+            playerControll = PlayerControll.On;
+
+            player.playerOnOff(playerControll);
+        }
+        else if (playerType == PlayerType.Gunner)
+        {
+            playerControll = PlayerControll.On;
+
+            player.playerOnOff(playerControll);
+        }
+    }
+
+
     UnityEngine.Camera cam;
     [SerializeField] Image mainCursur;
     [SerializeField] Button autoBut;

@@ -2,6 +2,8 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SocialPlatforms.Impl;
+using UnityEngine.UIElements;
 
 public partial class Player : Charactor
 {
@@ -12,9 +14,40 @@ public partial class Player : Charactor
      bool shitOn = false;
     Playerstate upperState = Playerstate.Null;
     Playerstate lowerState = Playerstate.Null;
-
-    protected override void move()
+    public void ContinuousAttack() 
     {
+
+    }
+    public void ReloadOut() 
+    {
+        //AnimationEvent
+        playerAnim.SetLayerWeight(attackLayerIndex, 1.0f);
+        playerAnim.SetInteger("Reload", 0);
+    }
+    public void GetSword()
+    {
+        //AnimationEvent
+        //Sword sword = GetComponentInChildren<Sword>();
+        //GameObject go = sword.gameObject;
+        GameObject go = weapon.gameObject;
+        go.transform.SetParent(HandObj.gameObject.transform);
+        go.transform.localPosition = Vector3.zero;
+    }
+    public void ClearlSword()
+    {
+        //AnimationEvent
+        //Sword sword = GetComponentInChildren<Sword>();
+        //GameObject go = sword.gameObject;
+        GameObject go = weapon.gameObject;
+        go.transform.SetParent(scabbard.gameObject.transform);
+        go.transform.localPosition = Vector3.zero;
+    }
+    protected override void move(PlayerControll _value)
+    {
+        if (_value == PlayerControll.Off) 
+        {
+            return; 
+        }
         Vector3 movePos = new Vector3(Input.GetAxisRaw("Horizontal"), 0, Input.GetAxisRaw("Vertical"));
 
         moveAnim(movePos.z);
@@ -23,7 +56,7 @@ public partial class Player : Charactor
 
         if (movePos.magnitude > 0.1f)
         {
-            float speed = runstate ? moveSpeed * 2 : moveSpeed;
+            float speed = runstate ? speedValue * 2 : speedValue;
             transform.localPosition += direction * (speed) * Time.deltaTime;
             //rigid.velocity = direction * speed;
         }
@@ -47,18 +80,29 @@ public partial class Player : Charactor
     {
         if (runstate == false && _move != 0.0)//Off
         {
-            walkAnim(playerAnim, _move);
+            walkAnim(_move);
         }
         else if (runstate == true && _move != 0.0)
         {
-            runAnim(playerAnim, _move);
+            runAnim(_move);
         }
         else if (_move == 0)
         {
             clearAnim();
         }
     }
-    private void runAnim(Animator _anim, float _move)
+    private void AttackAnim(float _move)
+    {
+        if (_move > 0)//Off
+        {
+            playerAnim.SetInteger("Attack", (int)_move);
+        }
+        else if (_move < 0)
+        {
+            playerAnim.SetInteger("Attack", (int)_move);
+        }
+    }
+    private void runAnim(float _move)
     {
         if (_move > 0)//Off
         {
@@ -69,7 +113,7 @@ public partial class Player : Charactor
             playerAnim.SetInteger("Back", (int)_move);
         }
     }
-    private void walkAnim(Animator _anim, float _move)
+    private void walkAnim(float _move)
     {
         if (_move > 0)
         {

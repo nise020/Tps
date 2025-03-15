@@ -9,7 +9,7 @@ public abstract partial class Monster : Charactor
         base.OnTriggerEnter(other);
         if (aIState == AiState.Attack)
         {
-            if (monster == MonsterType.Sphere)
+            if (monsterType == MonsterType.Sphere)
             {
                 mobAnimator.SetInteger("Close", 0);
                 mobAnimator.SetInteger("AttackDilray", 1);
@@ -48,13 +48,13 @@ public abstract partial class Monster : Charactor
         if (Physics.Raycast(transform.position, Vector3.down, out RaycastHit hit, leagh, layerName))
         {
             _check = true;
-            mobRigid.useGravity = false;
+            monsterRigid.useGravity = false;
             Debug.DrawLine(transform.position, hit.point, Color.red);
         }
         else
         {
             _check = false;
-            mobRigid.useGravity = true;
+            monsterRigid.useGravity = true;
             Debug.DrawLine(transform.position, hit.point, Color.red);
         }
         return _check;

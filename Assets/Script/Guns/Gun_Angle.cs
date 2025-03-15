@@ -4,7 +4,7 @@ using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UI;
 
-public partial class Gun : Actor
+public partial class Gun : Item
 {
     BattelUI ui;
     public bool reLoed = false;

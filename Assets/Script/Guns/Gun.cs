@@ -5,27 +5,18 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public partial class Gun : Actor
+public partial class Gun : Item
 {
-    Vector3 beforeMyGunTrs;//해당스크립트의 pos
-    Vector3 beforeMyGunRot;//해당스크립트의 rot
-    Vector3 gunObjRot;//총 오브젝트의 pos
-
     public Dictionary<int, GameObject> bulletData = new Dictionary<int, GameObject>();
     public int bulletcount;
 
     Player PLAYER;
     //GameObject playerUpperBody;
-    protected override void Start()
+    private void Start()
     {
         GunBulletType();
         ui = Shared.BattelManager.ui;
         PLAYER = GetComponentInParent<Player>();
-        //playerUpperBody = PLAYER.playerSpine;
-        beforeMyGunTrs = gameObject.transform.position;
-        beforeMyGunRot = transform.rotation.eulerAngles;
-
-        gunObjRot = gunObj.transform.rotation.eulerAngles;
         magazine = Shared.BattelManager.creatTab.gameObject;
 
         creatbullet();

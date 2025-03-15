@@ -4,7 +4,7 @@ using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class Loading : Actor
+public class Loading : MonoBehaviour
 {
     float LodingTime = 10.0f;
     [SerializeField] Image maxImg;

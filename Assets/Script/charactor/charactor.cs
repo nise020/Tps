@@ -1,3 +1,4 @@
+using Photon.Pun.Demo.SlotRacer;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -36,15 +37,7 @@ public abstract partial class Charactor : Actor
     protected float maxHP;//최대체력
     [SerializeField] protected float CharactorId = 0;
     [SerializeField] GameObject hpBar;//uiHp
-    protected State STATE = new State();
 
-
-
-
-    protected int attack;//공격력
-    protected int defense;//방어력
-    protected float moveSpeed;//이동속도
-    [SerializeField] ObjectType type = ObjectType.None;
 
     protected float skillCool_1;//1번 스킬쿨타임
     protected float skillCool_2;//2번 스킬쿨타임
@@ -58,7 +51,7 @@ public abstract partial class Charactor : Actor
         {
             if (other.gameObject.layer == Delivery.LayerNameEnum(LayerTag.Player))
             {
-                hit();
+                attack();
             }
             else if (other.gameObject.layer == Delivery.LayerNameEnum(LayerTag.Bullet))//피격
             {
@@ -73,14 +66,14 @@ public abstract partial class Charactor : Actor
             }
         }
     }
-    protected void inIt() 
+    protected void stateInIt() 
     {
         hP = STATE.MaxHP;
         cheHP = hP;
         maxHP = hP;
-        moveSpeed = STATE.Movespeed;
-        attack = STATE.Attack;
-        defense = STATE.Defense;
+        speedValue = STATE.Movespeed;
+        atkValue = STATE.Attack;
+        defVAlue = STATE.Defense;
     }
 
 
@@ -100,7 +93,7 @@ public abstract partial class Charactor : Actor
     }
     protected virtual void dead() //사망 상태
     {
-        if (type == ObjectType.Player) 
+        if (objType == ObjectType.Player) 
         {
             Shared.BattelManager.PlayerAlive = false;
             hP = maxHP;
@@ -114,11 +107,11 @@ public abstract partial class Charactor : Actor
             gameObject.SetActive(false);
         }
     }
-    protected virtual void move() 
+    protected virtual void move(PlayerControll _value) 
     {
 
     }
-    protected virtual void hit() 
+    protected virtual void attack() 
     {
 
     }

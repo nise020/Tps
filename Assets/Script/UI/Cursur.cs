@@ -4,9 +4,9 @@ using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
 
-public class Cursur : Actor
+public class Cursur : MonoBehaviour
 {
-    //UnityEngine.Camera cam;
+    Camera cam;
     [SerializeField] BoxCollider2D coll;
     [SerializeField] CapsuleCollider2D[] MobColl;//몬스터의 콜라이더
     [SerializeField] GameObject gunHoie;
@@ -38,12 +38,12 @@ public class Cursur : Actor
     //    }
     //}
     // Update is called once per frame
-    void Update()
-    {
-        //MobHit();
-        //sight();
-        //cursurCheck();
-    }
+    //void Update()
+    //{
+    //    //MobHit();
+    //    //sight();
+    //    //cursurCheck();
+    //}
     private void sight() 
     {
         Vector3 vactor = cam.ScreenToWorldPoint(Input.mousePosition);

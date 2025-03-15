@@ -18,6 +18,16 @@ public enum PlayerAnimParameters
     Right,
     Left
 }
+public enum PlayerControll
+{
+    Off,
+    On,
+}
+public enum GunState 
+{
+    Attack,
+    Reload,
+}
 public enum MobAnim
 {
     Idle,
@@ -106,12 +116,11 @@ public enum SearchState
 {
     Stop,
     Move
-
 }
 public enum PlayerType
 {
     None,
-    Wariar,
+    Warrior,
     Gunner
 }
 public enum ObjectType 

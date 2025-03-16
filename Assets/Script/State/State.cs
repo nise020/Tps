@@ -17,7 +17,7 @@ public partial class State
             $",MaxHP={MaxHP}\n" +
             $",Attack={Attack}\n" +
             $",Defense={Defense}\n" +
-            $",Movespeed{Movespeed}");
+            $",Movespeed{Speed}");
     }
     ObjectType objType;
     MonsterType monster = MonsterType.Defolt;
@@ -28,7 +28,7 @@ public partial class State
     public float MaxHP;//최대체력
     public int Attack;//공격력
     public int Defense;//방어력
-    public float Movespeed;//이동속도
+    public float Speed;//이동속도
     public void InitStateType(ObjectType _eNum)
     {
         objType = _eNum;
@@ -41,12 +41,16 @@ public partial class State
     {
         gun = _eNum;
     }
+
+
+
+
     private void playerState() 
     {
         MaxHP = 100;
         Attack = 30;
         Defense = 30;
-        Movespeed = 10;
+        Speed = 10;
     }
     public void MonsterState(GunType _eNum)
     {
@@ -62,13 +66,13 @@ public partial class State
                 break;
             case GunType.SR:
                 Attack = 30;
-                Movespeed = 10;
+                Speed = 10;
                 break;
         }
         Debug.Log($"\n" +
             $",monster={_eNum}\n" +
             $",Attack={Attack}\n" +
-            $",Movespeed{Movespeed}");
+            $",Movespeed{Speed}");
     }
     public void MonsterState(MonsterType _monster)
     {
@@ -78,19 +82,19 @@ public partial class State
                 MaxHP = 30;
                 Attack = 30;
                 Defense = 30;
-                Movespeed = 3;
+                Speed = 3;
                 break;
             case MonsterType.Dron:
                 MaxHP = 20;
                 Attack = 30;
                 Defense = 30;
-                Movespeed = 5;
+                Speed = 5;
                 break;
             case MonsterType.Sphere:
                 MaxHP = 50;
                 Attack = 30;
                 Defense = 30;
-                Movespeed = 10;
+                Speed = 10;
                 break;
         }
         Debug.Log($"\n" +
@@ -98,7 +102,7 @@ public partial class State
             $",MaxHP={MaxHP}\n" +
             $",Attack={Attack}\n" +
             $",Defense={Defense}\n" +
-            $",Movespeed{Movespeed}");
+            $",Movespeed{Speed}");
     }
     public void Hit()
     {

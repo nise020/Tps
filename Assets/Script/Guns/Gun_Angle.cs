@@ -54,8 +54,6 @@ public partial class Gun : Item
             Invoke("go.SetActive(false)", 3f);
 
             Shared.BattelManager.MOVECAM.cameraShakeAnim(true);//Animation
-
-
         }
     }
     public Quaternion AimGun(GameObject _player,Vector3 _hitPos)//Aim 오브젝트를 기준으로 바꿔야함

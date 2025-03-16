@@ -19,6 +19,8 @@ public class BattelManager : MonoBehaviour
     [Header("Player")]
     //한글 꼭 지우기
     public Player PLAYER;
+    public Warrior WARRIOR;
+    public Gunner GUNNER;
     public bool PlayerAlive = false;
     public GameObject playerUpper;//상체
     public GameObject playerHand;//오른손

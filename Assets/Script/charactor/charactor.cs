@@ -51,18 +51,18 @@ public abstract partial class Charactor : Actor
         {
             if (other.gameObject.layer == Delivery.LayerNameEnum(LayerTag.Player))
             {
-                attack();
+                nomalAttack();
             }
             else if (other.gameObject.layer == Delivery.LayerNameEnum(LayerTag.Bullet))//피격
             {
-                checkHp();
+                checkHp(other);
             }
         }
         else if (myColl.gameObject.layer == Delivery.LayerNameEnum(LayerTag.Player))//플레이어 일 경우
         {
             if (other.gameObject.layer == Delivery.LayerNameEnum(LayerTag.Monster))//피격
             {
-                checkHp();
+                checkHp(other);
             }
         }
     }
@@ -71,16 +71,16 @@ public abstract partial class Charactor : Actor
         hP = STATE.MaxHP;
         cheHP = hP;
         maxHP = hP;
-        speedValue = STATE.Movespeed;
+        speedValue = STATE.Speed;
         atkValue = STATE.Attack;
         defVAlue = STATE.Defense;
     }
 
 
-    protected virtual void checkHp() 
+    protected virtual void checkHp(Collider other) 
     {
         //if (cheHP == hP) return;
-        hP = hP - 1;//1은 바꿔야함
+        Damage(other);
         Debug.Log("Hit");
         if (cheHP >= hP && hP >= 0)
         {
@@ -111,8 +111,18 @@ public abstract partial class Charactor : Actor
     {
 
     }
-    protected virtual void attack() 
+    protected virtual void nomalAttack() 
     {
 
     }
+    protected virtual void skillAttack() 
+    {
+
+    }
+    protected virtual void Damage(Collider other)
+    {
+        //other
+        hP = hP - 1;//1은 바꿔야함
+    }
+
 }

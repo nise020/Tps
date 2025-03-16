@@ -9,25 +9,29 @@ public partial class BattelUI : MonoBehaviour
 {
     PlayerType playerType;
     PlayerControll playerControll;
-    public void CharactorControlButten() 
+    public void CharactorControlButten1()//warrior 
     {
-        GameObject go = Shared.BattelManager.PLAYER.gameObject;
-        Player player = go.GetComponent<Player>();
+        GameObject go1 = Shared.BattelManager.WARRIOR.gameObject;
+        Player player = go1.GetComponent<Player>();
         player.playerTypInite(playerType);
         if (playerType == PlayerType.Warrior)
         {
             playerControll = PlayerControll.On;
-
             player.playerOnOff(playerControll);
         }
-        else if (playerType == PlayerType.Gunner)
+    }
+    public void CharactorControlButten2()//gunner
+    {
+        GameObject go = Shared.BattelManager.GUNNER.gameObject;
+        Player player = go.GetComponent<Player>();
+        player.playerTypInite(playerType);
+        if (playerType == PlayerType.Gunner)
         {
             playerControll = PlayerControll.On;
 
             player.playerOnOff(playerControll);
         }
     }
-
 
     UnityEngine.Camera cam;
     [SerializeField] Image mainCursur;

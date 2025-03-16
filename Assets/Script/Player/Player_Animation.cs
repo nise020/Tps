@@ -124,7 +124,7 @@ public partial class Player : Charactor
             playerAnim.SetInteger("Back", (int)_move);
         }
     }
-    private void runcheck()
+    protected void runcheck()
     {
         bool cheack = Input.GetKeyDown(KeyCode.Mouse1);
         if (cheack)
@@ -154,7 +154,7 @@ public partial class Player : Charactor
             playerAnim.SetInteger("Shit", 0);
         }
     }
-    private void shitdownCheak()
+    protected virtual void shitdownCheak()
     {
         bool cheak = Input.GetKeyDown(KeyCode.Z);
         if (cheak)

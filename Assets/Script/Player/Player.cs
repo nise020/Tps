@@ -6,18 +6,19 @@ using UnityEngine.UI;
 
 public partial class Player : Charactor
 {
-    MoveCamera viewcam;
+    protected MoveCamera viewcam;
     Vector3 Vector = new Vector3(0, 1.5f, 0);
     public Vector3 movePos = Vector3.zero;
-    Rigidbody rigid;
-    Animator playerAnim;
-    Gun gun;
+    protected Rigidbody rigid;
+    protected Animator playerAnim;
+    protected Gun gun;
     bool runstate = false;
 
     [SerializeField] GameObject HandObj;
     [SerializeField] GameObject weapon;
     [SerializeField] GameObject scabbard;
-    [SerializeField] PlayerType playerType = PlayerType.None;
+    protected PlayerType playerType;
+    //스토레이지
     public void playerTypInite(PlayerType _type) 
     {
         _type = playerType;
@@ -27,10 +28,12 @@ public partial class Player : Charactor
     {
         playerControll = _type;
     }
-    bool mouseClick => Input.GetMouseButton(0);
-    bool mouseClickUp => Input.GetMouseButtonUp(0);
-    bool mouseClickDown => Input.GetMouseButtonDown(0);
-    bool reloadOn => Input.GetKeyDown(KeyCode.R);
+    protected bool mouseClick => Input.GetMouseButton(0);
+    protected bool mouseClickUp => Input.GetMouseButtonUp(0);
+    protected bool mouseClickDown => Input.GetMouseButtonDown(0);
+    protected bool reloadOn => Input.GetKeyDown(KeyCode.R);
+    protected bool Skill1 => Input.GetKeyDown(KeyCode.Q);
+    protected bool Skill2 => Input.GetKeyDown(KeyCode.E);
 
     [Header("무기")]
     [SerializeField] GameObject WeaponPrefab;
@@ -56,36 +59,18 @@ public partial class Player : Charactor
     protected float RerodingTime = 0.0f;
     protected float RerodingTimer = 0.0f;
 
-    Skill_Add SKILLADD = new Skill_Add();
-    protected GunType GunEnumType;//다른곳에서 전달 받기
-    string Name;
+    //Skill_Add SKILLADD = new Skill_Add();
+    //protected GunType GunEnumType;//다른곳에서 전달 받기
+    protected string Name;
 
     //AnimatorStateInfo animStateInfo;
-    ObjectType charactor = ObjectType.Player;
-    protected void LoadSkill() 
-    {
-        switch (GunEnumType)
-        {
-            case GunType.AR:
-                SKILLADD.UseBurstSkill(1, pluse_bullet, attackValue, burst_RunTime,burstCool);
-                break;
-            case GunType.MG:
-                SKILLADD.UseBurstSkill(2, pluse_bullet, attackValue, burst_RunTime, burstCool);
-                break;
-            case GunType.SG:
-                SKILLADD.UseBurstSkill(3, pluse_bullet, attackValue, burst_RunTime, burstCool);
-                break;
-            case GunType.SMG:
-                SKILLADD.UseBurstSkill(4, pluse_bullet, attackValue, burst_RunTime, burstCool);
-                break;
-            case GunType.SR:
-                SKILLADD.UseBurstSkill(5, pluse_bullet, attackValue, burst_RunTime, burstCool);
-                break;
-        }
-    }
+    protected ObjectType charactor = ObjectType.Player;
 
-    private void Start()
+    protected SkillStrategy skillStrategy = new SkillStrategy();
+
+    protected virtual void Start()
     {
+        playerType = PlayerType.Gunner;
         viewcam = Shared.BattelManager.MOVECAM;
         STATE.init(charactor);
         stateInIt();
@@ -94,10 +79,7 @@ public partial class Player : Charactor
         Shared.InutTableMgr();
         Table_Charactor.Info info = Shared.TableManager.Character.Get(1);
         Name = info.Img;
-        if (playerType == PlayerType.Gunner)
-        {
-            gun = GetComponentInChildren<Gun>();
-        }
+        gun = GetComponentInChildren<Gun>();
     }
 
 
@@ -106,36 +88,53 @@ public partial class Player : Charactor
         base.OnTriggerEnter(other);
     }
     // Update is called once per frame
-    void Update()
-    {
-        runcheck();
-        if ((mouseClick))
-        {
-            attack();
-        }
-        else if (playerType == PlayerType.Gunner)//떼면 자동으로
-        {
-            if (mouseClickUp || gun.nowbullet <= 0)
-            {
-                viewcam.cameraShakeAnim(false);
-                playerAnim.SetInteger("Attack", 0);
-            }
-        }
-        reloding(playerType);//리로드
-        shitdownCheak();//앉기
-        ////Time.timeScale = 0;//Faraim Speed up,Down
-    }
+    //private void Update()
+    //{
+    //    runcheck();
+    //    if ((mouseClick))
+    //    {
+    //        attack();
+    //    }
+    //    else if (playerType == PlayerType.Gunner)//떼면 자동으로
+    //    {
+    //        if (mouseClickUp || gun.nowbullet <= 0)
+    //        {
+    //            viewcam.cameraShakeAnim(false);
+    //            playerAnim.SetInteger("Attack", 0);
+    //        }
+    //    }
+    //    reloding(playerType);//리로드
+    //    shitdownCheak();//앉기
+    //    ////Time.timeScale = 0;//Faraim Speed up,Down
+    //}
     private void FixedUpdate()
     {
         move(playerControll);
     }
-    protected override void attack()
+    protected override void skillAttack() 
     {
+        if (Skill1)
+        {
+            skillStrategy.Skill(1);
+            //playerAnim.SetInteger("Skill1", 1);
+        }
+        else if (Skill2)
+        {
+            skillStrategy.Skill(2);
+            playerAnim.SetInteger("Skill2", 1);
+        }
+        else { return; }
+        
+    }
+    protected override void nomalAttack()
+    {
+        //base.nomalAttack();
         if (playerType == PlayerType.Gunner)
         {
-            Vector3 AimDirection = gun.gameObject.transform.forward;
+            gun = GetComponentInChildren<Gun>();
             if (gun.reLoed == false && gun.nowbullet >= 0)
             {
+                Vector3 AimDirection = gun.gameObject.transform.forward;
                 playerAnim.SetLayerWeight(attackLayerIndex, 1.0f);
                 AttackAnim(1);
                 gun.GunAttack(AimDirection);
@@ -172,10 +171,10 @@ public partial class Player : Charactor
         gun.reLoed = false;
         yield return null;
     }
-    protected override void checkHp() 
-    {
-        base.checkHp();
-    }
+    //protected override void checkHp() 
+    //{
+    //    base.checkHp();
+    //}
     protected override void dead() 
     {
         Shared.BattelManager.PlayerAlive = false;

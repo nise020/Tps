@@ -36,11 +36,11 @@ public abstract partial class Monster : Charactor
         }
         _obj.transform.position = _end;
     }
-    protected override void checkHp()
-    {
-        base.checkHp();
-        HPBAR.SetHp(maxHP,cheHP);
-    }
+    //protected override void checkHp()
+    //{
+    //    base.checkHp();
+    //    HPBAR.SetHp(maxHP,cheHP);
+    //}
     protected override void dead() 
     {
         //Shared.BattelMgr.monsterData.Remove(mobKey);

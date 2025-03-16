@@ -229,7 +229,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 795172783068780014}
-  - component: {fileID: 2076552735488103266}
+  - component: {fileID: 1150174055782837369}
   - component: {fileID: 7541716180109616060}
   - component: {fileID: 4268791606964638330}
   - component: {fileID: 8459113771296724178}
@@ -258,7 +258,7 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: -0.69, y: 0, z: 0}
---- !u!114 &2076552735488103266
+--- !u!114 &1150174055782837369
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -267,7 +267,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 6590099433310919523}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e6208191cdf996d4a9bcef356eb6b200, type: 3}
+  m_Script: {fileID: 11500000, guid: 2881e48d055dae74eb875049ee936918, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   CharactorId: 0
@@ -276,8 +276,7 @@ MonoBehaviour:
   HandObj: {fileID: 0}
   weapon: {fileID: 0}
   scabbard: {fileID: 0}
-  playerType: 2
-  WeaponPrefab: {fileID: 4383385586661319670, guid: 494318586390ca24b9f2bd507d02ccf8, type: 3}
+  WeaponPrefab: {fileID: 7208749909875244897}
   shortSword: {fileID: 0}
   AimtransPos: {fileID: 0}
   ControlBtn: {fileID: 0}
@@ -1220,5 +1219,10 @@ PrefabInstance:
 --- !u!4 &6755744555101140211 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 369101448470390884, guid: 494318586390ca24b9f2bd507d02ccf8, type: 3}
+  m_PrefabInstance: {fileID: 6403685664172137623}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &7208749909875244897 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 4383385586661319670, guid: 494318586390ca24b9f2bd507d02ccf8, type: 3}
   m_PrefabInstance: {fileID: 6403685664172137623}
   m_PrefabAsset: {fileID: 0}

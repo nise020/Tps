@@ -4607,7 +4607,7 @@ GameObject:
   m_Component:
   - component: {fileID: 6493731982192539638}
   - component: {fileID: 936311123916893580}
-  - component: {fileID: 4747028675885231990}
+  - component: {fileID: 3803771784800452900}
   m_Layer: 7
   m_Name: ElfArden
   m_TagString: Untagged
@@ -4671,7 +4671,7 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
---- !u!114 &4747028675885231990
+--- !u!114 &3803771784800452900
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -4680,7 +4680,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 5860747143582428492}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e6208191cdf996d4a9bcef356eb6b200, type: 3}
+  m_Script: {fileID: 11500000, guid: e20974e26718e8f4d8ae8e9af3220e8b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   CharactorId: 0
@@ -4689,7 +4689,7 @@ MonoBehaviour:
   HandObj: {fileID: 3030046733820555207}
   weapon: {fileID: 7729946385528572145}
   scabbard: {fileID: 2254864859513338690}
-  playerType: 0
+  playerType: 1
   WeaponPrefab: {fileID: 0}
   shortSword: {fileID: 0}
   AimtransPos: {fileID: 0}

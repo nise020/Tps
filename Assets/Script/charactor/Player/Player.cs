@@ -17,9 +17,13 @@ public partial class Player : Charactor
     [SerializeField] GameObject HandObj;
     [SerializeField] GameObject weapon;
     [SerializeField] GameObject scabbard;
-    protected PlayerType playerType;
+    protected PlayerEnum playerType;
     //스토레이지
-    public void playerTypInite(PlayerType _type) 
+
+    SkillRunning skillCheck = SkillRunning.SkillOff;
+
+
+    public void playerTypInite(PlayerEnum _type) 
     {
         _type = playerType;
     }
@@ -48,6 +52,7 @@ public partial class Player : Charactor
     [Header("스텟")]
     float burst_RunTime;
     int attackValue;
+    int attackReset;
     //UnityEngine.Camera Maincam;
 
     protected int pluse_bullet;
@@ -70,18 +75,18 @@ public partial class Player : Charactor
 
     protected virtual void Start()
     {
-        playerType = PlayerType.Gunner;
+        //playerType = PlayerType.Gunner;
         viewcam = Shared.BattelManager.MOVECAM;
         STATE.init(charactor);
         stateInIt();
         rigid = GetComponent<Rigidbody>();
         playerAnim = GetComponentInChildren<Animator>();
-        Shared.InutTableMgr();
-        Table_Charactor.Info info = Shared.TableManager.Character.Get(1);
-        Name = info.Img;
-        gun = GetComponentInChildren<Gun>();
     }
-
+    protected override void stateInIt() 
+    {
+        base.stateInIt();
+        attackReset = attackValue;
+    }
 
     protected override void OnTriggerEnter(Collider other)
     {
@@ -111,25 +116,50 @@ public partial class Player : Charactor
     {
         move(playerControll);
     }
-    protected override void skillAttack() 
+    protected override void playerSkillAttack(PlayerEnum _type) 
     {
         if (Skill1)
         {
-            skillStrategy.Skill(1);
-            //playerAnim.SetInteger("Skill1", 1);
+            if (skillCheck == SkillRunning.SkillOff)
+            {
+                skillStrategy.Skill(playerType, 1, attackValue);
+                skillCheck = SkillRunning.SkillOn;
+                //playerAnim.SetInteger("Skill1", 1);
+                playerAnim.SetInteger("", 1);
+                Invoke("SkillValueReset", 3);//clear
+            }
+            else 
+            {
+                return;
+            }
         }
         else if (Skill2)
         {
-            skillStrategy.Skill(2);
-            playerAnim.SetInteger("Skill2", 1);
+            if (skillCheck == SkillRunning.SkillOff)
+            {
+                skillStrategy.Skill(playerType, 2, attackValue);
+                skillCheck = SkillRunning.SkillOn;
+                //playerAnim.SetInteger("Skill1", 1);
+                playerAnim.SetInteger("", 1);
+                Invoke("SkillValueReset", 3);//clear
+            }
+            else
+            {
+                return;
+            }
         }
         else { return; }
         
     }
+    protected void SkillValueReset() 
+    {
+        attackValue = attackReset;
+        skillCheck = SkillRunning.SkillOff;
+    }
     protected override void nomalAttack()
     {
         //base.nomalAttack();
-        if (playerType == PlayerType.Gunner)
+        if (playerType == PlayerEnum.Gunner)
         {
             gun = GetComponentInChildren<Gun>();
             if (gun.reLoed == false && gun.nowbullet >= 0)
@@ -137,18 +167,18 @@ public partial class Player : Charactor
                 Vector3 AimDirection = gun.gameObject.transform.forward;
                 playerAnim.SetLayerWeight(attackLayerIndex, 1.0f);
                 AttackAnim(1);
-                gun.GunAttack(AimDirection);
+                gun.Attack(AimDirection);
             }
         }
-        else if (playerType == PlayerType.Warrior) 
+        else if (playerType == PlayerEnum.Warrior) 
         {
             closeAttackCheack();
         }
        
     }
-    public void reloding(PlayerType _type) 
+    public void reloding(PlayerEnum _type) 
     {
-        if (_type != PlayerType.Gunner) { return; }
+        if (_type != PlayerEnum.Gunner) { return; }
 
         if (reloadOn || gun.nowbullet <= 0)
         {

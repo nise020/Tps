@@ -3,7 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public partial class Gun : Item
+public partial class Gun : Weapon
 {
 
     public int bullet;//ÃÑ¾Ë°¹¼ö

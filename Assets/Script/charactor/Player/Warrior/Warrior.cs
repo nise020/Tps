@@ -7,18 +7,20 @@ public partial class Warrior : Player
     //SkillStrategy SkillStrategy = new SkillStrategy();
     protected override void Start()
     {
-        playerType = PlayerType.Warrior;
+        playerType = PlayerEnum.Warrior;
         viewcam = Shared.BattelManager.MOVECAM;
         STATE.init(charactor);
         stateInIt();
         rigid = GetComponent<Rigidbody>();
         playerAnim = GetComponentInChildren<Animator>();
         Shared.InutTableMgr();
-        Table_Charactor.Info info = Shared.TableManager.Character.Get(1);
+        Table_Charactor.Info info = Shared.TableManager.Character.Get(0);
         Name = info.Img;
-        //gun = GetComponentInChildren<Gun>();
     }
-
+    protected override void playerSkillAttack(PlayerEnum _type)
+    {
+        base.playerSkillAttack(_type);
+    }
     private void Update()
     {
         runcheck();
@@ -27,6 +29,7 @@ public partial class Warrior : Player
             nomalAttack();
         }
         shitdownCheak();//¾É±â
+        //playerSkillAttack(playerType);
         ////Time.timeScale = 0;//Faraim Speed up,Down
     }
     protected override void shitdownCheak()

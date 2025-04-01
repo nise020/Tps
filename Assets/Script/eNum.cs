@@ -18,6 +18,11 @@ public enum PlayerAnimParameters
     Right,
     Left
 }
+public enum SkillRunning 
+{
+    SkillOn,
+    SkillOff
+}
 public enum PlayerControll
 {
     Off,
@@ -44,6 +49,12 @@ public enum mobAnimInfoName
     Open,
     Stop,
     Walk
+}
+public enum WeaponEnum 
+{
+    None,
+    Gun,
+    Sword
 }
 public enum playerAnimInfoName
 {
@@ -117,7 +128,7 @@ public enum SearchState
     Stop,
     Move
 }
-public enum PlayerType
+public enum PlayerEnum
 {
     None,
     Warrior,

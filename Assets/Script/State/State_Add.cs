@@ -2,23 +2,22 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public partial class State : MonoBehaviour
+public partial class State : StateBase
 {
-    public void PluseAtk(int _value) 
+    protected override void PluseAtk(int _value)
     {
         Attack = Attack + _value;
     }
-    public void PluseDef(int _value)
+    protected override void PluseDef(int _value)
     {
         Defense = Defense + _value;
     }
-    public void PluseSpe(int _value)
+    protected override void PluseSpe(int _value)
     {
         Speed = Speed + _value;
     }
-    public void PluseMaxHp(int _value)
+    protected override void PluseMaxHp(int _value)
     {
         MaxHP = MaxHP + _value;
     }
-
 }

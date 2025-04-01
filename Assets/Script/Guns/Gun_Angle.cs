@@ -4,7 +4,7 @@ using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UI;
 
-public partial class Gun : Item
+public partial class Gun : Weapon
 {
     BattelUI ui;
     public bool reLoed = false;
@@ -32,7 +32,8 @@ public partial class Gun : Item
             else { return; }
         }
     }
-    public void GunAttack(Vector3 _pos)
+
+    public override void Attack(Vector3 _pos)
     {
         RapidTimer += Time.deltaTime;
         if (RapidTimer > RapidTime)

@@ -14,17 +14,21 @@ public partial class Player : Charactor
      bool shitOn = false;
     Playerstate upperState = Playerstate.Null;
     Playerstate lowerState = Playerstate.Null;
+    public void skillAnimation()//AnimationEvent
+    {
+
+    }
     public void ContinuousAttack() 
     {
 
     }
-    public void ReloadOut() 
+    public void ReloadOut()//AnimationEvent
     {
         //AnimationEvent
         playerAnim.SetLayerWeight(attackLayerIndex, 1.0f);
         playerAnim.SetInteger("Reload", 0);
     }
-    public void GetSword()
+    public void GetSword()//AnimationEvent
     {
         //AnimationEvent
         //Sword sword = GetComponentInChildren<Sword>();
@@ -33,7 +37,7 @@ public partial class Player : Charactor
         go.transform.SetParent(HandObj.gameObject.transform);
         go.transform.localPosition = Vector3.zero;
     }
-    public void ClearlSword()
+    public void ClearlSword()//AnimationEvent
     {
         //AnimationEvent
         //Sword sword = GetComponentInChildren<Sword>();

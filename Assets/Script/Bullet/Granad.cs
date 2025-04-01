@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Granad : Item
+public class Granad : Weapon
 {
     Vector3 GranadPos;
     public Vector3 startPos;

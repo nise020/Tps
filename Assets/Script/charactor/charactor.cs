@@ -1,4 +1,3 @@
-using Photon.Pun.Demo.SlotRacer;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -66,16 +65,19 @@ public abstract partial class Charactor : Actor
             }
         }
     }
-    protected void stateInIt() 
+    protected virtual void stateInIt() 
     {
-        hP = STATE.MaxHP;
+        hP = STATE.ViewHp;
         cheHP = hP;
         maxHP = hP;
-        speedValue = STATE.Speed;
-        atkValue = STATE.Attack;
-        defVAlue = STATE.Defense;
+        speedValue = STATE.ViewSpeed;
+        atkValue = STATE.ViewAttack;
+        defVAlue = STATE.ViewDefense;
     }
+    protected void footRayCheck() //중력구현
+    {
 
+    }
 
     protected virtual void checkHp(Collider other) 
     {
@@ -115,7 +117,7 @@ public abstract partial class Charactor : Actor
     {
 
     }
-    protected virtual void skillAttack() 
+    protected virtual void playerSkillAttack(PlayerEnum _type) 
     {
 
     }

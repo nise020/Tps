@@ -4,8 +4,9 @@ using UnityEditor;
 using UnityEngine;
 using UnityEngine.TextCore.Text;
 
-public partial class State
+public partial class State : StateBase
 {
+
     //player
     //gun
     //moneter
@@ -14,21 +15,26 @@ public partial class State
         playerState();
         Debug.Log($"charactor={_obj}\n" +
             $",monster={monster}\n" +
-            $",MaxHP={MaxHP}\n" +
-            $",Attack={Attack}\n" +
-            $",Defense={Defense}\n" +
-            $",Movespeed{Speed}");
+            $",MaxHP={ViewHp}\n" +
+            $",Attack={ViewAttack}\n" +
+            $",Defense={ViewDefense}\n" +
+            $",Movespeed{ViewSpeed}");
     }
     ObjectType objType;
     MonsterType monster = MonsterType.Defolt;
     GunType gun = global::GunType.None;
-    public float hP;//보여지는 체력
-    public float cheHP;//체크할 체력
+    WeaponEnum WeaponType = WeaponEnum.None;
+    public float ViewHp => hP;
+    public int ViewAttack => Attack;
+    public int ViewDefense => Defense;//방어력
+    public float ViewSpeed => Speed;//이동속도
 
-    public float MaxHP;//최대체력
-    public int Attack;//공격력
-    public int Defense;//방어력
-    public float Speed;//이동속도
+
+
+
+    [Header("Weapon")]
+    public int WeaponAttack;//공격력
+    //[Header("Monster")]
     public void InitStateType(ObjectType _eNum)
     {
         objType = _eNum;
@@ -41,7 +47,18 @@ public partial class State
     {
         gun = _eNum;
     }
-
+    public void WeaponState(WeaponEnum _type)
+    {
+        switch (_type)
+        {
+            case WeaponEnum.Gun:
+                WeaponAttack = 10 ;
+                break;
+            case WeaponEnum.Sword:
+                WeaponAttack = 20;
+                break;
+        }
+    }
 
 
 

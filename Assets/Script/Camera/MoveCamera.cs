@@ -10,7 +10,7 @@ public partial class MoveCamera : MonoBehaviour
     UnityEngine.Camera cam;
     public Animation Shake;
     public Animator camAnim;
-    PlayerType playerType = PlayerType.None;
+    PlayerEnum playerType = PlayerEnum.None;
 
     public float Distans = 0.0f;
     public float Hight = 0.0f;

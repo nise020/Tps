@@ -1,12 +1,12 @@
-using Photon.Pun.Demo.Asteroids;
 using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public partial class Gun : Item
+public partial class Gun : Weapon
 {
+    
     public Dictionary<int, GameObject> bulletData = new Dictionary<int, GameObject>();
     public int bulletcount;
 
@@ -14,6 +14,7 @@ public partial class Gun : Item
     //GameObject playerUpperBody;
     private void Start()
     {
+        WeaponType = WeaponEnum.Gun;
         GunBulletType();
         ui = Shared.BattelManager.ui;
         PLAYER = GetComponentInParent<Player>();
@@ -31,7 +32,6 @@ public partial class Gun : Item
             bulletData.Add(bulletcount, go);
             bulletcount++;
         }
-        Debug.Log($"{bullet}");
         bulletcount = 0;
     }
 

@@ -7,14 +7,14 @@ using UnityEngine.UI;
 
 public partial class BattelUI : MonoBehaviour
 {
-    PlayerType playerType;
+    PlayerEnum playerType;
     PlayerControll playerControll;
     public void CharactorControlButten1()//warrior 
     {
         GameObject go1 = Shared.BattelManager.WARRIOR.gameObject;
         Player player = go1.GetComponent<Player>();
         player.playerTypInite(playerType);
-        if (playerType == PlayerType.Warrior)
+        if (playerType == PlayerEnum.Warrior)
         {
             playerControll = PlayerControll.On;
             player.playerOnOff(playerControll);
@@ -25,7 +25,7 @@ public partial class BattelUI : MonoBehaviour
         GameObject go = Shared.BattelManager.GUNNER.gameObject;
         Player player = go.GetComponent<Player>();
         player.playerTypInite(playerType);
-        if (playerType == PlayerType.Gunner)
+        if (playerType == PlayerEnum.Gunner)
         {
             playerControll = PlayerControll.On;
 

@@ -79,7 +79,7 @@ public abstract partial class Charactor : Actor
 
     }
 
-    protected virtual void checkHp(Collider other) 
+    protected virtual void checkHp(Collider other) //수정 필요
     {
         //if (cheHP == hP) return;
         Damage(other);
@@ -117,7 +117,7 @@ public abstract partial class Charactor : Actor
     {
 
     }
-    protected virtual void playerSkillAttack(PlayerEnum _type) 
+    protected virtual void skillAttack(PlayerEnum _type) 
     {
 
     }

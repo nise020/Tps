@@ -12,7 +12,7 @@ public partial class Player : Charactor
     protected Rigidbody rigid;
     protected Animator playerAnim;
     protected Gun gun;
-    bool runstate = false;
+    bool runValue = false;
 
     [SerializeField] GameObject HandObj;
     [SerializeField] GameObject weapon;
@@ -23,18 +23,30 @@ public partial class Player : Charactor
     SkillRunning skillCheck = SkillRunning.SkillOff;
 
 
-    public void playerTypInite(PlayerEnum _type) 
+    public void playerTypeInite(out PlayerEnum _type) 
     {
         _type = playerType;
     }
-    PlayerControll playerControll = PlayerControll.Off;
-    public void playerOnOff(PlayerControll _type)
+    protected PlayerControll playerControll = PlayerControll.Off;
+    public void playerControllCheck(PlayerControll _type)
     {
         playerControll = _type;
+    }
+    public bool playerEnumCheck(PlayerEnum _player) 
+    {
+        if (_player == playerType)
+        {
+            return true;
+        }
+        else 
+        {
+            return false; 
+        }
     }
     protected bool mouseClick => Input.GetMouseButton(0);
     protected bool mouseClickUp => Input.GetMouseButtonUp(0);
     protected bool mouseClickDown => Input.GetMouseButtonDown(0);
+    protected bool RunCheck => Input.GetKeyDown(KeyCode.Mouse1);
     protected bool reloadOn => Input.GetKeyDown(KeyCode.R);
     protected bool Skill1 => Input.GetKeyDown(KeyCode.Q);
     protected bool Skill2 => Input.GetKeyDown(KeyCode.E);
@@ -72,13 +84,17 @@ public partial class Player : Charactor
     protected ObjectType charactor = ObjectType.Player;
 
     protected SkillStrategy skillStrategy = new SkillStrategy();
-
+    AudioListener audioListener => GetComponentInChildren<AudioListener>();
     protected virtual void Start()
     {
         //playerType = PlayerType.Gunner;
-        viewcam = Shared.BattelManager.MOVECAM;
         STATE.init(charactor);
         stateInIt();
+        if (playerControll == PlayerControll.Off) 
+        {
+            viewcam.gameObject.SetActive(false);
+            audioListener.enabled = false;//나중에 수정
+        }
         rigid = GetComponent<Rigidbody>();
         playerAnim = GetComponentInChildren<Animator>();
     }
@@ -92,40 +108,21 @@ public partial class Player : Charactor
     {
         base.OnTriggerEnter(other);
     }
-    // Update is called once per frame
-    //private void Update()
-    //{
-    //    runcheck();
-    //    if ((mouseClick))
-    //    {
-    //        attack();
-    //    }
-    //    else if (playerType == PlayerType.Gunner)//떼면 자동으로
-    //    {
-    //        if (mouseClickUp || gun.nowbullet <= 0)
-    //        {
-    //            viewcam.cameraShakeAnim(false);
-    //            playerAnim.SetInteger("Attack", 0);
-    //        }
-    //    }
-    //    reloding(playerType);//리로드
-    //    shitdownCheak();//앉기
-    //    ////Time.timeScale = 0;//Faraim Speed up,Down
-    //}
+
     private void FixedUpdate()
     {
         move(playerControll);
     }
-    protected override void playerSkillAttack(PlayerEnum _type) 
+    protected override void skillAttack(PlayerEnum _type) 
     {
         if (Skill1)
         {
             if (skillCheck == SkillRunning.SkillOff)
             {
-                skillStrategy.Skill(playerType, 1, attackValue);
+                //skillStrategy.Skill(playerType, 1, attackValue);
                 skillCheck = SkillRunning.SkillOn;
                 //playerAnim.SetInteger("Skill1", 1);
-                playerAnim.SetInteger("", 1);
+                playerAnim.SetInteger("AttackSkill", 1);
                 Invoke("SkillValueReset", 3);//clear
             }
             else 
@@ -140,7 +137,7 @@ public partial class Player : Charactor
                 skillStrategy.Skill(playerType, 2, attackValue);
                 skillCheck = SkillRunning.SkillOn;
                 //playerAnim.SetInteger("Skill1", 1);
-                playerAnim.SetInteger("", 1);
+                playerAnim.SetInteger("BuffSkill", 1);
                 Invoke("SkillValueReset", 3);//clear
             }
             else
@@ -167,7 +164,7 @@ public partial class Player : Charactor
                 Vector3 AimDirection = gun.gameObject.transform.forward;
                 playerAnim.SetLayerWeight(attackLayerIndex, 1.0f);
                 AttackAnim(1);
-                gun.Attack(AimDirection);
+                gun.Attack(viewcam,AimDirection);
             }
         }
         else if (playerType == PlayerEnum.Warrior) 
@@ -210,7 +207,10 @@ public partial class Player : Charactor
         Shared.BattelManager.PlayerAlive = false;
         gameObject.SetActive(false);
     }
-
+    public void init(out MoveCamera _camera) 
+    {
+        _camera = viewcam; 
+    }
 
     public void attackRot() 
     {

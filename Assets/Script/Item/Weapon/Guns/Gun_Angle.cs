@@ -33,7 +33,7 @@ public partial class Gun : Weapon
         }
     }
 
-    public override void Attack(Vector3 _pos)
+    public override void Attack(MoveCamera _camera,Vector3 _pos)
     {
         RapidTimer += Time.deltaTime;
         if (RapidTimer > RapidTime)
@@ -54,7 +54,7 @@ public partial class Gun : Weapon
             RapidTimer = 0.0f;
             Invoke("go.SetActive(false)", 3f);
 
-            Shared.BattelManager.MOVECAM.cameraShakeAnim(true);//Animation
+            _camera.cameraShakeAnim(true);//Animation
         }
     }
     public Quaternion AimGun(GameObject _player,Vector3 _hitPos)//Aim 오브젝트를 기준으로 바꿔야함

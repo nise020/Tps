@@ -79,7 +79,7 @@ public partial class AiMonster : AiBase
     public LayerMask playerLayer;
     protected override void Search()//공격할 대상 찾기
     {
-        Debug.Log($"Search");
+        //Debug.Log($"Search");
         if (searchAnim == false)
         {
             searchAnim = true;

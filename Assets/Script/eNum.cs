@@ -23,6 +23,18 @@ public enum SkillRunning
     SkillOn,
     SkillOff
 }
+public enum WeaponState 
+{
+    None,
+    Sword_On,
+    Sword_Off,
+
+}
+public enum RunState 
+{
+    Run_On, 
+    Run_Off
+}
 public enum PlayerControll
 {
     Off,

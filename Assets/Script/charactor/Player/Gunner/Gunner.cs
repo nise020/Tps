@@ -2,8 +2,6 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.TextCore.Text;
-using static Cinemachine.CinemachineStoryboard;
-using static UIWidget;
 
 public partial class Gunner : Player
 {
@@ -11,22 +9,25 @@ public partial class Gunner : Player
     protected override void Start()
     {
         playerType = PlayerEnum.Gunner;
+        playerControll = PlayerControll.On;
+
+        viewcam = GetComponentInChildren<MoveCamera>();
         gun = GetComponentInChildren<Gun>();
         Shared.InutTableMgr();
         Table_Charactor.Info info = Shared.TableManager.Character.Get(1);
-        Name = info.Img;
-        base.Start();
+        //Name = info.Img;
         skillStrategy.PlayerInit(this);
-        skillStrategy.WeaponInit(gun);
+        //skillStrategy.WeaponInit(gun);
+        base.Start();
     }
-    protected override void playerSkillAttack(PlayerEnum _type) 
+    protected override void skillAttack(PlayerEnum _type) 
     {
-        base.playerSkillAttack(_type);
+        base.skillAttack(_type);
     }
     private void Update()
     {
-        runcheck();
-        playerSkillAttack(playerType);
+        runcheck(RunCheck);
+        skillAttack(playerType);
         if ((mouseClick))
         {
             nomalAttack();

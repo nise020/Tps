@@ -234,7 +234,7 @@ GameObject:
   - component: {fileID: 4268791606964638330}
   - component: {fileID: 8459113771296724178}
   m_Layer: 7
-  m_Name: Fab_Soljer
+  m_Name: Fab_Gunner
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

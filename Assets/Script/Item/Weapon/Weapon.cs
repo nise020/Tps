@@ -11,11 +11,11 @@ public partial class Weapon : Actor
     {
         WeaponType = _type;
     }
-    public virtual void Attack() 
+    public virtual void Attack()//sword 
     {
 
     }
-    public virtual void Attack(Vector3 _pos)
+    public virtual void Attack(MoveCamera _camera,Vector3 _pos)//Gun
     {
 
     }

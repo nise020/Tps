@@ -49,10 +49,7 @@ public partial class MoveCamera : MonoBehaviour
         Quaternion rotation = Quaternion.Euler(yValue, xValue, 0);
         transform.position = PlayerObj.transform.position + rotation * distans;
 
-        //transform.LookAt(PlayerObj.transform.position);
         gameObject.transform.rotation = rotation;
-        //Cursor.lockState = CursorLockMode.None;
-        //return transform.rotation;
     }
     private void shootCamera(bool _value)
     {
@@ -70,10 +67,6 @@ public partial class MoveCamera : MonoBehaviour
 
             Quaternion rotation = Quaternion.Euler(yValue, xValue, 0);
             PlayerObj.transform.rotation = rotation;
-
-            //gameObject.transform.localPosition = PlayerObj.transform.position + rotation * camPos;
-
-            //gameObject.transform.rotation = rotation;
         }
         else { return; }
     }

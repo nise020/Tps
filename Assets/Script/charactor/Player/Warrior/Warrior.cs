@@ -8,22 +8,22 @@ public partial class Warrior : Player
     protected override void Start()
     {
         playerType = PlayerEnum.Warrior;
-        viewcam = Shared.BattelManager.MOVECAM;
-        STATE.init(charactor);
-        stateInIt();
-        rigid = GetComponent<Rigidbody>();
-        playerAnim = GetComponentInChildren<Animator>();
+        weaponState = WeaponState.Sword_Off;
+        viewcam = GetComponentInChildren<MoveCamera>();
         Shared.InutTableMgr();
         Table_Charactor.Info info = Shared.TableManager.Character.Get(0);
         Name = info.Img;
+        skillStrategy.PlayerInit(this);
+        //skillStrategy.WeaponInit(gun);
+        base.Start();
     }
-    protected override void playerSkillAttack(PlayerEnum _type)
+    protected override void skillAttack(PlayerEnum _type)
     {
-        base.playerSkillAttack(_type);
+        base.skillAttack(_type);
     }
     private void Update()
     {
-        runcheck();
+        runcheck(RunCheck);
         if ((mouseClick))
         {
             nomalAttack();
@@ -32,6 +32,7 @@ public partial class Warrior : Player
         //playerSkillAttack(playerType);
         ////Time.timeScale = 0;//Faraim Speed up,Down
     }
+
     protected override void shitdownCheak()
     {
         base.shitdownCheak();

@@ -14,9 +14,14 @@ public partial class Player : Charactor
      bool shitOn = false;
     Playerstate upperState = Playerstate.Null;
     Playerstate lowerState = Playerstate.Null;
+
+    protected SkillRunning Skillcheck = SkillRunning.SkillOff;
+    protected WeaponState weaponState = WeaponState.None;
+    protected RunState runState = RunState.Run_Off;
+
     public void skillAnimation()//AnimationEvent
     {
-
+        Skillcheck = SkillRunning.SkillOff;
     }
     public void ContinuousAttack() 
     {
@@ -30,18 +35,12 @@ public partial class Player : Charactor
     }
     public void GetSword()//AnimationEvent
     {
-        //AnimationEvent
-        //Sword sword = GetComponentInChildren<Sword>();
-        //GameObject go = sword.gameObject;
         GameObject go = weapon.gameObject;
         go.transform.SetParent(HandObj.gameObject.transform);
         go.transform.localPosition = Vector3.zero;
     }
     public void ClearlSword()//AnimationEvent
     {
-        //AnimationEvent
-        //Sword sword = GetComponentInChildren<Sword>();
-        //GameObject go = sword.gameObject;
         GameObject go = weapon.gameObject;
         go.transform.SetParent(scabbard.gameObject.transform);
         go.transform.localPosition = Vector3.zero;
@@ -53,14 +52,11 @@ public partial class Player : Charactor
             return; 
         }
         Vector3 movePos = new Vector3(Input.GetAxisRaw("Horizontal"), 0, Input.GetAxisRaw("Vertical"));
-
-        moveAnim(movePos.z);
-        sideWalk(movePos.x);
         Vector3 direction = transform.TransformDirection(movePos.normalized);
 
         if (movePos.magnitude > 0.1f)
         {
-            float speed = runstate ? speedValue * 2 : speedValue;
+            float speed = runValue ? speedValue * 2 : speedValue;
             transform.localPosition += direction * (speed) * Time.deltaTime;
             //rigid.velocity = direction * speed;
         }
@@ -68,9 +64,14 @@ public partial class Player : Charactor
         {
             return;
         }
+        //All
+        //moveAnim(movePos.z);
+        //Gunner
+        //sideWalkAnim(movePos.x, playerType);
     }
-    private void sideWalk(float _move) 
+    protected void sideWalkAnim(float _move, PlayerEnum _type) 
     {
+        if (_type != PlayerEnum.Gunner) return;
         if (_move > 0) 
         {
             playerAnim.SetInteger("Right", (int)_move);
@@ -80,22 +81,22 @@ public partial class Player : Charactor
             playerAnim.SetInteger("Left", (int)_move);
         }
     }
-    private void moveAnim(float _move)
+    protected void moveAnim(float _move)
     {
-        if (runstate == false && _move != 0.0)//Off
+        if (runState == RunState.Run_Off && _move != 0.0)//Off
         {
-            walkAnim(_move);
+            walkAnim(_move, weaponState);
         }
-        else if (runstate == true && _move != 0.0)
+        else if (runState == RunState.Run_On && _move != 0.0)
         {
             runAnim(_move);
         }
         else if (_move == 0)
         {
-            clearAnim();
+            clearWalkAnim(playerType);
         }
     }
-    private void AttackAnim(float _move)
+    protected void AttackAnim(float _move)
     {
         if (_move > 0)//Off
         {
@@ -106,7 +107,7 @@ public partial class Player : Charactor
             playerAnim.SetInteger("Attack", (int)_move);
         }
     }
-    private void runAnim(float _move)
+    protected void runAnim(float _move)
     {
         if (_move > 0)//Off
         {
@@ -117,34 +118,81 @@ public partial class Player : Charactor
             playerAnim.SetInteger("Back", (int)_move);
         }
     }
-    private void walkAnim(float _move)
+    protected void walkAnim(float _move, WeaponState _state)
     {
-        if (_move > 0)
+        if (_state == WeaponState.Sword_On)//Warrior 
         {
-            playerAnim.SetInteger("Walk", (int)_move);
+            if (_move > 0)
+            {
+                playerAnim.SetInteger("WeaponWalk", (int)_move);
+            }
+            else if (_move < 0)
+            {
+                playerAnim.SetInteger("Back", (int)_move);
+            }
         }
-        else if (_move < 0)
+        else if (_state == WeaponState.Sword_Off)//Warrior
         {
-            playerAnim.SetInteger("Back", (int)_move);
+            if (_move > 0)
+            {
+                playerAnim.SetInteger("Walk", (int)_move);
+            }
+            else if (_move < 0)
+            {
+                playerAnim.SetInteger("Back", (int)_move);
+            }
+        }
+        else if (_state == WeaponState.None)//Gunner
+        {
+            if (_move > 0)
+            {
+                playerAnim.SetInteger("Walk", (int)_move);
+            }
+            else if (_move < 0)
+            {
+                playerAnim.SetInteger("Back", (int)_move);
+            }
         }
     }
-    protected void runcheck()
+    protected void runcheck(bool _cheack)
     {
-        bool cheack = Input.GetKeyDown(KeyCode.Mouse1);
-        if (cheack)
+        if (_cheack)
         {
-            runstate = !runstate;
-            clearAnim();
+            runValue = !runValue;
+            runState = RunState.Run_On;
+            clearWalkAnim(playerType);
         }
         else { return; }
     }
-    private void clearAnim() 
+    public void ClearAllAnimation(PlayerEnum type)//PlayerChange
     {
-        playerAnim.SetInteger("Walk", 0);
-        playerAnim.SetInteger("Back", 0);
-        playerAnim.SetInteger("Run", 0);
-        playerAnim.SetInteger("Right", 0);
-        playerAnim.SetInteger("Left", 0);
+        if (type == PlayerEnum.Gunner) 
+        {
+            playerAnim.SetInteger("Walk", 0);
+            playerAnim.SetInteger("Back", 0);
+            playerAnim.SetInteger("Run", 0);
+            playerAnim.SetInteger("Right", 0);
+            playerAnim.SetInteger("Left", 0);
+        }
+        else if (type == PlayerEnum.Warrior) 
+        {
+            
+        }
+    }
+    private void clearWalkAnim(PlayerEnum _type) 
+    {
+        if (_type == PlayerEnum.Gunner)
+        {
+            playerAnim.SetInteger("Walk", 0);
+            playerAnim.SetInteger("Back", 0);
+            playerAnim.SetInteger("Run", 0);
+            playerAnim.SetInteger("Right", 0);
+            playerAnim.SetInteger("Left", 0);
+        }
+        else if (_type == PlayerEnum.Warrior) 
+        {
+
+        }
     }
     private void shitdownAnim(bool _check)
     {

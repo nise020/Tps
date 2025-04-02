@@ -8,9 +8,7 @@ using UnityEngine.Networking;
 public class BattelManager : MonoBehaviour
 {
     public BattelUI ui;
-    //public Camera playerCam;
-    //[SerializeField] GameObject playerCam;
-    public MoveCamera MOVECAM;
+    //public List<MoveCamera> MOVECAM;
     public GameObject CamAim;
 
     public bool GameOver = false;
@@ -80,7 +78,7 @@ public class BattelManager : MonoBehaviour
         PlayerControll controll = PlayerControll.On;
 
         PLAYER.gameObject.transform.position = startPointObj.gameObject.transform.position;
-        PLAYER.playerOnOff(controll);
+        PLAYER.playerControllCheck(controll);
         PlayerAlive = true;
 
         //playerCam.transform.position = PLAYER.transform.position;

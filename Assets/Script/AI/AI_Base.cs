@@ -2,14 +2,17 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using static UnityEditor.Experimental.GraphView.GraphView;
 
 public partial class AiBase
     //MonoBehaviour//유니티에서 할당하는 메모리를 사용하겠다
 {
 
     protected Monster MONSTER;
+    protected Player PLAYER;
     protected Skill_Monster SKILL;
-    protected AiState aIState = AiState.Create;
+    protected MonsterAiState aIState = MonsterAiState.Create;
+    protected NpcAiState npcAi = NpcAiState.Search;
     protected MonsterType MobType;
     protected GameObject startObj;
 
@@ -26,47 +29,90 @@ public partial class AiBase
         MONSTER = _Monster;
         SKILL = _SKILL;
     }
-
-    public virtual void State(ref AiState _aIState) 
+    public void init(Player _player)
+    {
+        PLAYER = _player;
+    }
+    public virtual void State(ref MonsterAiState _aIState) 
     {
         switch (aIState)
         {
-            case AiState.Create:
+            case MonsterAiState.Create:
                 Create();
                 break;
-            case AiState.Search:
+            case MonsterAiState.Search:
                 Search();
                 break;
-            case AiState.Move:
+            case MonsterAiState.Move:
                 Move();
                 break;
-            case AiState.Attack:
+            case MonsterAiState.Attack:
                 Attack();
                 break;
-            case AiState.Reset:
+            case MonsterAiState.Reset:
+                Reset();
+                break;
+        }
+    }
+    public virtual void State(CharctorStateEnum _state, Player _player)
+    {
+        if (_state == CharctorStateEnum.Player) return;
+        switch (npcAi)
+        {
+            case NpcAiState.Search:
+                Search();
+                break;
+            case NpcAiState.Move_Player:
+                Move();
+                break;
+            case NpcAiState.Attack:
+                Attack();
+                break;
+            case NpcAiState.Reset:
                 Reset();
                 break;
         }
     }
     protected virtual void Create() 
     {
-        aIState = AiState.Search;
+        aIState = MonsterAiState.Search;
     }
     protected virtual void Search() 
     {
-        aIState = AiState.Attack;
+        aIState = MonsterAiState.Attack;
     }
     protected virtual void Move() 
     {
-        aIState = AiState.Move;
+        aIState = MonsterAiState.Move;
     }
     protected virtual void Attack()
     {
-        aIState = AiState.Reset;
+        aIState = MonsterAiState.Reset;
     }
     protected virtual void Reset() 
     {
-        aIState = AiState.Search;
+        aIState = MonsterAiState.Search;
+    }
+
+    protected virtual void Create(Player _obj)
+    {
+        npcAi = NpcAiState.Search;
+    }
+    protected virtual void Search(Player _obj,Vector3 _pos)
+    {
+        npcAi = NpcAiState.Attack;
+    }
+    protected virtual void Move(Player _obj, Vector3 _pos)
+    {
+        npcAi = NpcAiState.Move_Player;
+    }
+    protected virtual void Attack(Player _obj)
+    {
+        npcAi = NpcAiState.Reset;
+    }
+    public static int LayerNameEnum(LayerName layer)
+    {
+        return LayerMask.NameToLayer(layer.ToString());
     }
 }
     

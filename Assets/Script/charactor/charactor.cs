@@ -46,20 +46,20 @@ public abstract partial class Charactor : Actor
     protected virtual void OnTriggerEnter(Collider other)//세분화 필요
     {
         Collider myColl = gameObject.GetComponent<Collider>();
-        if (myColl.gameObject.layer == Delivery.LayerNameEnum(LayerTag.Monster))//몬스터일 경우
+        if (myColl.gameObject.layer == Delivery.LayerNameEnum(LayerName.Monster))//몬스터일 경우
         {
-            if (other.gameObject.layer == Delivery.LayerNameEnum(LayerTag.Player))
+            if (other.gameObject.layer == Delivery.LayerNameEnum(LayerName.Player))
             {
-                nomalAttack();
+                //Attack();
             }
-            else if (other.gameObject.layer == Delivery.LayerNameEnum(LayerTag.Bullet))//피격
+            else if (other.gameObject.layer == Delivery.LayerNameEnum(LayerName.Bullet))//피격
             {
                 checkHp(other);
             }
         }
-        else if (myColl.gameObject.layer == Delivery.LayerNameEnum(LayerTag.Player))//플레이어 일 경우
+        else if (myColl.gameObject.layer == Delivery.LayerNameEnum(LayerName.Player))//플레이어 일 경우
         {
-            if (other.gameObject.layer == Delivery.LayerNameEnum(LayerTag.Monster))//피격
+            if (other.gameObject.layer == Delivery.LayerNameEnum(LayerName.Monster))//피격
             {
                 checkHp(other);
             }
@@ -109,15 +109,15 @@ public abstract partial class Charactor : Actor
             gameObject.SetActive(false);
         }
     }
-    protected virtual void move(PlayerControll _value) 
+    protected virtual void move(CharctorStateEnum _value) 
     {
 
     }
-    protected virtual void nomalAttack() 
+    protected virtual void attack(CharctorStateEnum _state) 
     {
 
     }
-    protected virtual void skillAttack(PlayerEnum _type) 
+    protected virtual void skillAttack(PlayerjobEnum _type) 
     {
 
     }

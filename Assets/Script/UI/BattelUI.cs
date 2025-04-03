@@ -10,16 +10,16 @@ using UnityEngine.UI;
 public partial class BattelUI : MonoBehaviour
 {
     MoveCamera MOVECAMERA;
-    PlayerEnum playerType;
-    PlayerControll playerControll;
-    public void PlayerCameraCheck(Player _player, PlayerControll _check) 
+    PlayerjobEnum playerType;
+    //PlayerControll playerControll;
+    public void PlayerCameraCheck(Player _player, CharctorStateEnum _check) 
     {
         _player.init(out MOVECAMERA);
-        if (_check == PlayerControll.On)
+        if (_check == CharctorStateEnum.Player)
         {
             MOVECAMERA.gameObject.SetActive(true);
         }
-        else 
+        else //npc
         {
             MOVECAMERA.gameObject.SetActive(false);
         }
@@ -27,51 +27,52 @@ public partial class BattelUI : MonoBehaviour
     }
     public void CharactorControllButten1()//warrior 
     {
-        playerType = PlayerEnum.Warrior;
+        CharctorStateEnum charctorState = CharctorStateEnum.Player;
+        playerType = PlayerjobEnum.Warrior;
         Warrior warrior = Shared.BattelManager.WARRIOR;
         Gunner gunner = Shared.BattelManager.GUNNER;
 
         if (warrior.playerEnumCheck(playerType) == true)
         {
-            playerControll = PlayerControll.On;
-            warrior.playerControllCheck(playerControll);
-            PlayerCameraCheck(warrior, playerControll);
+            //PlayerControllState controllState = PlayerControllState.On;
+            warrior.playerControllCheck(charctorState);
+            PlayerCameraCheck(warrior, charctorState);
 
-            playerType = PlayerEnum.Gunner;
+            playerType = PlayerjobEnum.Gunner;
             if (gunner.playerEnumCheck(playerType) == true)
             {
-                playerControll = PlayerControll.Off;
-                AnotherPlayerReset(gunner, playerType, playerControll);
+                charctorState = CharctorStateEnum.Npc;
+                AnotherPlayerReset(gunner, playerType, charctorState);
             }
         }
     }
     public void CharactorControllButten2()//gunner
     {
-        playerType = PlayerEnum.Gunner;
+        CharctorStateEnum charctorState = CharctorStateEnum.Player;
+        playerType = PlayerjobEnum.Gunner;
         Warrior warrior = Shared.BattelManager.WARRIOR;
         Gunner gunner = Shared.BattelManager.GUNNER;
 
         if (gunner.playerEnumCheck(playerType) == true)
         {
-            playerControll = PlayerControll.On;
-            gunner.playerControllCheck(playerControll);
-            PlayerCameraCheck(gunner, playerControll);
+            //PlayerControllState controllState = PlayerControllState.On;
+            gunner.playerControllCheck(charctorState);
+            PlayerCameraCheck(gunner, charctorState);
 
-            playerType = PlayerEnum.Warrior;
+            playerType = PlayerjobEnum.Warrior;
             if (warrior.playerEnumCheck(playerType) == true) 
             {
-                playerControll = PlayerControll.Off;
-                AnotherPlayerReset(warrior, playerType, playerControll);
+                charctorState = CharctorStateEnum.Npc;
+                AnotherPlayerReset(warrior, playerType, charctorState);
             }
         }
     }
-    public void AnotherPlayerReset(Player _player, PlayerEnum _type, PlayerControll _check) 
+    public void AnotherPlayerReset(Player _player, PlayerjobEnum _type, CharctorStateEnum _check) 
     {
-        _player.playerTypeInite(out _type);//load
-        _player.ClearAllAnimation(_type);
-        playerControll = PlayerControll.Off;
-        PlayerCameraCheck(_player, _check);
-        _player.playerControllCheck(_check);
+        //_player.playerTypeInite(out _type);//load
+        _player.ClearAllAnimation(_type);//Animation reset
+        PlayerCameraCheck(_player, _check);//Camera On_Off
+        _player.playerControllCheck(_check);//Controll Off
     }
     UnityEngine.Camera cam;
     [SerializeField] Image mainCursur;

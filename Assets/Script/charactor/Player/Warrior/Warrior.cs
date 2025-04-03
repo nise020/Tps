@@ -7,28 +7,34 @@ public partial class Warrior : Player
     //SkillStrategy SkillStrategy = new SkillStrategy();
     protected override void Start()
     {
-        playerType = PlayerEnum.Warrior;
+        base.Start();
+        playerType = PlayerjobEnum.Warrior;
         weaponState = WeaponState.Sword_Off;
-        viewcam = GetComponentInChildren<MoveCamera>();
         Shared.InutTableMgr();
         Table_Charactor.Info info = Shared.TableManager.Character.Get(0);
         Name = info.Img;
         skillStrategy.PlayerInit(this);
         //skillStrategy.WeaponInit(gun);
-        base.Start();
     }
-    protected override void skillAttack(PlayerEnum _type)
+    protected override void skillAttack(PlayerjobEnum _type)
     {
         base.skillAttack(_type);
     }
     private void Update()
     {
         runcheck(RunCheck);
-        if ((mouseClick))
+        if (charctorState == CharctorStateEnum.Player)
         {
-            nomalAttack();
+            if ((mouseClick))
+            {
+                attack(charctorState);
+            }
+            shitdownCheak();//¾É±â
         }
-        shitdownCheak();//¾É±â
+        else 
+        {
+            return;
+        }
         //playerSkillAttack(playerType);
         ////Time.timeScale = 0;//Faraim Speed up,Down
     }

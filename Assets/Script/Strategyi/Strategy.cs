@@ -9,9 +9,9 @@ public abstract partial class Strategy
     protected Weapon Weapon;
 
     protected WeaponEnum WeaponType = WeaponEnum.None;
-    protected PlayerEnum playerType = PlayerEnum.None;
+    protected PlayerjobEnum playerType = PlayerjobEnum.None;
     protected int DamegeUp;
-    abstract public void Skill(PlayerEnum _type , int _number, int _damageValue);
+    abstract public void Skill(PlayerjobEnum _type , int _number, int _damageValue);
     public void init(State _state) 
     {
         State = _state;
@@ -24,7 +24,7 @@ public abstract partial class Strategy
     {
         Weapon = _gun;
     }
-    public void InitType(PlayerEnum _type)
+    public void InitType(PlayerjobEnum _type)
     {
         playerType = _type;
     }

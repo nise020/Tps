@@ -10,7 +10,7 @@ public class Delivery : MonoBehaviour
     {
         return Instantiate(_OBJ, _pos, _quater, _parent);
     }
-    public static int LayerNameEnum(LayerTag layer) 
+    public static int LayerNameEnum(LayerName layer) 
     {
         return LayerMask.NameToLayer(layer.ToString());
     }

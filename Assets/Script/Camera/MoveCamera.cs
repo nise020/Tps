@@ -4,13 +4,14 @@ using UnityEngine;
 
 public partial class MoveCamera : MonoBehaviour
 {
-    Player PlayerObj;
+    //Player PlayerObj;
+    GameObject viewObj;
     Vector3 camPos;
     Quaternion aimRot;
     UnityEngine.Camera cam;
     public Animation Shake;
     public Animator camAnim;
-    PlayerEnum playerType = PlayerEnum.None;
+    PlayerjobEnum playerType = PlayerjobEnum.None;
 
     public float Distans = 0.0f;
     public float Hight = 0.0f;
@@ -30,9 +31,13 @@ public partial class MoveCamera : MonoBehaviour
     float yValue = 0;
 
     public bool attackModeOn = false;
+    public void viewObjInit(GameObject _obj) 
+    {
+        viewObj = _obj;
+    }
     public void camRot()
     {
-        if (PlayerObj == null || 
+        if (viewObj == null || 
             camRotOn == false || 
             attackModeOn == true) return;
 
@@ -47,7 +52,7 @@ public partial class MoveCamera : MonoBehaviour
         yValue = Mathf.Clamp(yValue, -limitRot, limitRot);
         Vector3 distans = new Vector3(0, 0, Distans);
         Quaternion rotation = Quaternion.Euler(yValue, xValue, 0);
-        transform.position = PlayerObj.transform.position + rotation * distans;
+        transform.position = viewObj.transform.position + rotation * distans;
 
         gameObject.transform.rotation = rotation;
     }
@@ -66,13 +71,13 @@ public partial class MoveCamera : MonoBehaviour
             yValue = Mathf.Clamp(yValue, -attacklimitRot, attacklimitRot);
 
             Quaternion rotation = Quaternion.Euler(yValue, xValue, 0);
-            PlayerObj.transform.rotation = rotation;
+            viewObj.transform.rotation = rotation;
         }
         else { return; }
     }
     private void shootMode()
     {
-        if (PlayerObj == null) return;
+        if (viewObj == null) return;
         
         if (Input.GetKeyDown(KeyCode.Space))
         {
@@ -85,7 +90,7 @@ public partial class MoveCamera : MonoBehaviour
     }
     void Start()
     {
-        PlayerObj = GetComponentInParent<Player>();
+        //PlayerObj = GetComponentInParent<Player>();
         camAnim = GetComponentInParent<Animator>();
         //Cursor.lockState = CursorLockMode.Locked;
         //Cursor.visible = false;

@@ -45,33 +45,10 @@ public partial class Player : Charactor
         go.transform.SetParent(scabbard.gameObject.transform);
         go.transform.localPosition = Vector3.zero;
     }
-    protected override void move(PlayerControll _value)
+   
+    protected void sideWalkAnim(float _move, PlayerjobEnum _type) 
     {
-        if (_value == PlayerControll.Off) 
-        {
-            return; 
-        }
-        Vector3 movePos = new Vector3(Input.GetAxisRaw("Horizontal"), 0, Input.GetAxisRaw("Vertical"));
-        Vector3 direction = transform.TransformDirection(movePos.normalized);
-
-        if (movePos.magnitude > 0.1f)
-        {
-            float speed = runValue ? speedValue * 2 : speedValue;
-            transform.localPosition += direction * (speed) * Time.deltaTime;
-            //rigid.velocity = direction * speed;
-        }
-        else
-        {
-            return;
-        }
-        //All
-        //moveAnim(movePos.z);
-        //Gunner
-        //sideWalkAnim(movePos.x, playerType);
-    }
-    protected void sideWalkAnim(float _move, PlayerEnum _type) 
-    {
-        if (_type != PlayerEnum.Gunner) return;
+        if (_type != PlayerjobEnum.Gunner) return;
         if (_move > 0) 
         {
             playerAnim.SetInteger("Right", (int)_move);
@@ -164,9 +141,9 @@ public partial class Player : Charactor
         }
         else { return; }
     }
-    public void ClearAllAnimation(PlayerEnum type)//PlayerChange
+    public void ClearAllAnimation(PlayerjobEnum type)//PlayerChange
     {
-        if (type == PlayerEnum.Gunner) 
+        if (type == PlayerjobEnum.Gunner) 
         {
             playerAnim.SetInteger("Walk", 0);
             playerAnim.SetInteger("Back", 0);
@@ -174,14 +151,14 @@ public partial class Player : Charactor
             playerAnim.SetInteger("Right", 0);
             playerAnim.SetInteger("Left", 0);
         }
-        else if (type == PlayerEnum.Warrior) 
+        else if (type == PlayerjobEnum.Warrior) 
         {
             
         }
     }
-    private void clearWalkAnim(PlayerEnum _type) 
+    private void clearWalkAnim(PlayerjobEnum _type) 
     {
-        if (_type == PlayerEnum.Gunner)
+        if (_type == PlayerjobEnum.Gunner)
         {
             playerAnim.SetInteger("Walk", 0);
             playerAnim.SetInteger("Back", 0);
@@ -189,7 +166,7 @@ public partial class Player : Charactor
             playerAnim.SetInteger("Right", 0);
             playerAnim.SetInteger("Left", 0);
         }
-        else if (_type == PlayerEnum.Warrior) 
+        else if (_type == PlayerjobEnum.Warrior) 
         {
 
         }

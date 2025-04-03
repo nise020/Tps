@@ -22,7 +22,7 @@ public class BattelManager : MonoBehaviour
     public bool PlayerAlive = false;
     public GameObject playerUpper;//상체
     public GameObject playerHand;//오른손
-    PlayerControll playerControll = PlayerControll.Off;
+    PlayerControllState playerControll = PlayerControllState.Off;
 
     [Header("Gun")]
     public Gun GUN;
@@ -75,7 +75,7 @@ public class BattelManager : MonoBehaviour
     private void creatObject() 
     {
         //player
-        PlayerControll controll = PlayerControll.On;
+        CharctorStateEnum controll = CharctorStateEnum.Player;
 
         PLAYER.gameObject.transform.position = startPointObj.gameObject.transform.position;
         PLAYER.playerControllCheck(controll);

@@ -21,8 +21,8 @@ public partial class Bullet_Player : MonoBehaviour
     RaycastHit hit;//총알이 맞출 목표
     private void OnTriggerEnter(Collider other)
     {
-        if (other.gameObject.layer == Delivery.LayerNameEnum(LayerTag.Monster) ||
-                other.gameObject.layer == Delivery.LayerNameEnum(LayerTag.Cover))
+        if (other.gameObject.layer == Delivery.LayerNameEnum(LayerName.Monster) ||
+                other.gameObject.layer == Delivery.LayerNameEnum(LayerName.Cover))
         {
             gameObject.transform.localPosition = new Vector3();
             gameObject.SetActive(false);

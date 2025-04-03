@@ -7,13 +7,13 @@ public abstract partial class Monster : Charactor
     protected override void OnTriggerEnter(Collider other)
     {
         base.OnTriggerEnter(other);
-        if (aIState == AiState.Attack)
+        if (aIState == MonsterAiState.Attack)
         {
             if (monsterType == MonsterType.Sphere)
             {
                 mobAnimator.SetInteger("Close", 0);
                 mobAnimator.SetInteger("AttackDilray", 1);
-                aIState = AiState.Reset;
+                aIState = MonsterAiState.Reset;
             }
         }
     }

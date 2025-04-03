@@ -18,8 +18,8 @@ public partial class Bullet_Monster : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        if (other.gameObject.layer == Delivery.LayerNameEnum(LayerTag.Player) ||
-                other.gameObject.layer == Delivery.LayerNameEnum(LayerTag.Cover))
+        if (other.gameObject.layer == Delivery.LayerNameEnum(LayerName.Player) ||
+                other.gameObject.layer == Delivery.LayerNameEnum(LayerName.Cover))
         {
             gameObject.transform.localPosition = new Vector3();
             gameObject.SetActive(false);

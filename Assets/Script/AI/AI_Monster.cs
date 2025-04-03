@@ -39,23 +39,23 @@ public partial class AiMonster : AiBase
     //캐릭터에서 AI를 호출할 필요
 
 
-    public override void State(ref AiState _aIState)
+    public override void State(ref MonsterAiState _aIState)
     {
         switch (aIState)
         {
-            case AiState.Create:
+            case MonsterAiState.Create:
                 Create();
                 break;
-            case AiState.Search:
+            case MonsterAiState.Search:
                 Search();
                 break;
-            case AiState.Move:
+            case MonsterAiState.Move:
                 Move();
                 break;
-            case AiState.Attack:
+            case MonsterAiState.Attack:
                 Attack();
                 break;
-            case AiState.Reset:
+            case MonsterAiState.Reset:
                 Reset();
                 break;
         }
@@ -70,7 +70,7 @@ public partial class AiMonster : AiBase
         creatTab = Shared.BattelManager.creatTab;
         eyePos = MONSTER.eyeObj.transform;
         startPos = MONSTER.gameObject.transform.position;
-        aIState = AiState.Search;
+        aIState = MonsterAiState.Search;
     }
 
     float viewDistance = 10f;
@@ -116,13 +116,13 @@ public partial class AiMonster : AiBase
         if (Physics.SphereCast(position, sphereRadius, direction, out hit, viewDistance)) 
         {
             int layer = hit.collider.gameObject.layer;
-            if (layer != Delivery.LayerNameEnum(LayerTag.Player)) { return; }
+            if (layer != Delivery.LayerNameEnum(LayerName.Player)) { return; }
 
-            if (layer == Delivery.LayerNameEnum(LayerTag.Player))
+            if (layer == Delivery.LayerNameEnum(LayerName.Player))
             {
                 moveAnim = false;
                 animator.SetInteger("Search", 0);
-                aIState = AiState.Attack;
+                aIState = MonsterAiState.Attack;
                 targetPos = hit.collider.gameObject.transform.position;//Vector3
                 searchAnim = false;//clear
             }
@@ -181,7 +181,7 @@ public partial class AiMonster : AiBase
             if (distanse <= 1.0f)
             {
                 moveing = false;
-                aIState = AiState.Reset;
+                aIState = MonsterAiState.Reset;
             }
 
         }
@@ -193,7 +193,7 @@ public partial class AiMonster : AiBase
                 //리소스 재활용 해야 하기 떄문에 수정필요
                 MONSTER.granaidAttack(MONSTER.gameObject.transform.position, targetPos, go);
 
-                aIState = AiState.Reset;
+                aIState = MonsterAiState.Reset;
                 attackCheck = true;
             }
             //추가적으로 던져야 하기 떄문에 AddForce를 추가해야함
@@ -204,7 +204,7 @@ public partial class AiMonster : AiBase
         {
             MONSTER.DirectAttack(MONSTER.gameObject, targetPos);
             animator.SetInteger("Attack", 0);
-            aIState = AiState.Reset;
+            aIState = MonsterAiState.Reset;
         }
     }
 
@@ -216,7 +216,7 @@ public partial class AiMonster : AiBase
         moveing = false;
         attackOn = true;
         targetNumber = 0;
-        aIState = AiState.Search;
+        aIState = MonsterAiState.Search;
     }
 
     

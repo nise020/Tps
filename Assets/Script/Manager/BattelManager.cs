@@ -7,7 +7,7 @@ using UnityEngine.Networking;
 
 public class BattelManager : MonoBehaviour
 {
-    public BattelUI ui;
+    public UI_Battel ui;
     //public List<MoveCamera> MOVECAM;
     public GameObject CamAim;
 
@@ -46,7 +46,7 @@ public class BattelManager : MonoBehaviour
     public Dictionary<int, GameObject> monsterData = new Dictionary<int, GameObject>();
 
     [Header("Defolt 생성 지점")]
-    [SerializeField] BattelUI BATTELUI;
+    [SerializeField] UI_Battel BATTELUI;
 
     [Header("CreatTab")]
     public Transform creatTab;
@@ -67,7 +67,10 @@ public class BattelManager : MonoBehaviour
     //죽으면 비활성화
     //일정 시간 후 부활(위치는 원래 위치)
     //몬스터나 플레이어 생성시 사용할 아이템도 생성
-    
+    public void Playerinit() 
+    {
+
+    }
     private void Start()
     {
         creatObject();
@@ -78,7 +81,7 @@ public class BattelManager : MonoBehaviour
         CharctorStateEnum controll = CharctorStateEnum.Player;
 
         PLAYER.gameObject.transform.position = startPointObj.gameObject.transform.position;
-        PLAYER.playerControllCheck(controll);
+        PLAYER.PlayerControllChange(controll);
         PlayerAlive = true;
 
         //playerCam.transform.position = PLAYER.transform.position;

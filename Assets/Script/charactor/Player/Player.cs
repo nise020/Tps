@@ -11,7 +11,7 @@ public partial class Player : Charactor
     protected MonsterAiState aIState = MonsterAiState.Create;
     protected Rigidbody rigid;
     protected Animator playerAnim;
-    protected Gun gun;
+    protected Gun GUN;
     bool runValue = false;
     protected BoxCollider cameraViewObj;
     [SerializeField] GameObject HandObj;
@@ -29,9 +29,12 @@ public partial class Player : Charactor
     protected bool reloadOn => Input.GetKeyDown(KeyCode.R);
 
 
-    [Header("무기")]
+    [Header("Weapon")]
     [SerializeField] GameObject WeaponPrefab;
     [SerializeField] GameObject shortSword;
+    [Header("Key")]
+    int PlayerKey;
+    
 
     //[SerializeField] Transform WeapontransPos;//무기
 
@@ -66,12 +69,12 @@ public partial class Player : Charactor
     protected virtual void Start()
     {
         //playerType = PlayerType.Gunner;
-        STATE.init(charactor);
+        STATUS.init(charactor);//State
         stateInIt();
         viewcam = GetComponentInChildren<MoveCamera>();
         cameraViewObj = GetComponentInChildren<BoxCollider>();
-        viewcam.viewObjInit(cameraViewObj.gameObject);
-        PLAYERAI.init(this);
+        viewcam.viewObjInit(cameraViewObj.gameObject);//viewPoint
+        PLAYERAI.init(this);//FSM
         rigid = GetComponent<Rigidbody>();
         playerAnim = GetComponentInChildren<Animator>();
     }
@@ -92,16 +95,13 @@ public partial class Player : Charactor
         PLAYERAI.State(charctorState,this);
     }
 
-   
-    //protected override void checkHp() 
-    //{
-    //    base.checkHp();
-    //}
-
     public void init(out MoveCamera _camera) 
     {
         _camera = viewcam; 
     }
-
+    public void TypeInit(CharactorJobEnum _type) 
+    {
+        playerType = _type;
+    }
 
 }

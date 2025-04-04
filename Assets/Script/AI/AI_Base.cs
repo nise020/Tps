@@ -62,7 +62,7 @@ public partial class AiBase
             case NpcAiState.Search:
                 Search();
                 break;
-            case NpcAiState.Move_Player:
+            case NpcAiState.Move:
                 Move();
                 break;
             case NpcAiState.Attack:
@@ -104,7 +104,7 @@ public partial class AiBase
     }
     protected virtual void Move(Player _obj, Vector3 _pos)
     {
-        npcAi = NpcAiState.Move_Player;
+        npcAi = NpcAiState.Move;
     }
     protected virtual void Attack(Player _obj)
     {

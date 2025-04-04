@@ -4,19 +4,22 @@ using UnityEngine;
 
 public partial class Player : Charactor
 {
-    protected PlayerControllState playerControll = PlayerControllState.Off;
-    protected CharctorStateEnum charctorState = CharctorStateEnum.Npc;
-    protected PlayerjobEnum playerType;
-    public void playerTypeInite(out PlayerjobEnum _type)
+    //protected PlayerControllState playerControll = PlayerControllState.Off;
+    [SerializeField] protected CharctorStateEnum charctorState;
+    protected CharactorJobEnum playerType;
+    public void PlayerTypeInite(out CharactorJobEnum _type)
     {
         _type = playerType;
     }
-    public void playerControllCheck(CharctorStateEnum _type)
+    public void PlayerControllChange(CharctorStateEnum _type)
     {
         charctorState = _type;
     }
-
-    public bool playerEnumCheck(PlayerjobEnum _player)
+    public void PlayerControllChack(out CharctorStateEnum _type)
+    {
+        _type = charctorState;
+    }
+    public bool CharactorEnumCheck(CharactorJobEnum _player)
     {
         if (_player == playerType)
         {
@@ -27,6 +30,17 @@ public partial class Player : Charactor
             return false;
         }
     }
+    //public bool playerenumcheck(CharctorStateEnum _player)
+    //{
+    //    //if (_player == CharctorStateEnum)//Npc
+    //    //{
+    //    //    return true;
+    //    //}
+    //    //else
+    //    //{
+    //    //    return false;
+    //    //}
+    //}
     protected override void dead()
     {
         Shared.BattelManager.PlayerAlive = false;

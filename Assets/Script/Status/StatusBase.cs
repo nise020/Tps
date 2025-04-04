@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class StateBase 
+public class StatusBase 
 {
     [Header("Player")]
     protected float hP;//보여지는 체력

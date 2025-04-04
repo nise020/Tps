@@ -15,7 +15,7 @@ public static class Shared //¸Þ¸ð
     public static ShakeCamera ShakeCamera;
     public static MainCamera MainCamera;
     public static TableManager TableManager;
-    public static BattelUI BattelUI;
+    public static UI_Battel BattelUI;
     public static FaidInOut FaidInOut;
 
     public static TableManager InutTableMgr() 

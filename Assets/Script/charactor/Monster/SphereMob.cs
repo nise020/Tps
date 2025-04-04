@@ -20,7 +20,7 @@ public partial class SphereMob : Monster
         AI.init(this, SKILL);
         AI.Type(monsterType);
 
-        STATE.MonsterState(monsterType);
+        STATUS.MonsterState(monsterType);
         stateInIt();
 
     }

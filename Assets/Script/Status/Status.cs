@@ -4,7 +4,7 @@ using UnityEditor;
 using UnityEngine;
 using UnityEngine.TextCore.Text;
 
-public partial class State : StateBase
+public partial class Status : StatusBase
 {
 
     //player

@@ -46,9 +46,9 @@ public partial class Player : Charactor
         go.transform.localPosition = Vector3.zero;
     }
    
-    protected void sideWalkAnim(float _move, PlayerjobEnum _type) 
+    protected void sideWalkAnim(float _move, CharactorJobEnum _type) 
     {
-        if (_type != PlayerjobEnum.Gunner) return;
+        if (_type != CharactorJobEnum.Gunner) return;
         if (_move > 0) 
         {
             playerAnim.SetInteger("Right", (int)_move);
@@ -141,9 +141,9 @@ public partial class Player : Charactor
         }
         else { return; }
     }
-    public void ClearAllAnimation(PlayerjobEnum type)//PlayerChange
+    public void ClearAllAnimation(CharactorJobEnum type)//PlayerChange
     {
-        if (type == PlayerjobEnum.Gunner) 
+        if (type == CharactorJobEnum.Gunner) 
         {
             playerAnim.SetInteger("Walk", 0);
             playerAnim.SetInteger("Back", 0);
@@ -151,14 +151,14 @@ public partial class Player : Charactor
             playerAnim.SetInteger("Right", 0);
             playerAnim.SetInteger("Left", 0);
         }
-        else if (type == PlayerjobEnum.Warrior) 
+        else if (type == CharactorJobEnum.Warrior) 
         {
             
         }
     }
-    private void clearWalkAnim(PlayerjobEnum _type) 
+    private void clearWalkAnim(CharactorJobEnum _type) 
     {
-        if (_type == PlayerjobEnum.Gunner)
+        if (_type == CharactorJobEnum.Gunner)
         {
             playerAnim.SetInteger("Walk", 0);
             playerAnim.SetInteger("Back", 0);
@@ -166,7 +166,7 @@ public partial class Player : Charactor
             playerAnim.SetInteger("Right", 0);
             playerAnim.SetInteger("Left", 0);
         }
-        else if (_type == PlayerjobEnum.Warrior) 
+        else if (_type == CharactorJobEnum.Warrior) 
         {
 
         }

@@ -6,7 +6,7 @@ using UnityEngine.UI;
 
 public partial class Gun : Weapon
 {
-    BattelUI ui;
+    UI_Battel ui;
     public bool reLoed = false;
 
     [SerializeField] float gunRazer;
@@ -39,6 +39,10 @@ public partial class Gun : Weapon
         if (RapidTimer > RapidTime)
         {
             GameObject go = bulletData[bulletcount];
+            if (bulletData[bulletcount] == null) 
+            {
+                return;
+            }
             go.transform.position = gunHoleObj.transform.position;
             Bullet_Player plBullet = go.GetComponent<Bullet_Player>();
             plBullet.targetPos = _pos.normalized;

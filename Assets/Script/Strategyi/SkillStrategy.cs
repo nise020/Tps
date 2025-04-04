@@ -6,17 +6,17 @@ public partial class SkillStrategy : Strategy
 {
     Gun GUNS;
 
-    public override void Skill(PlayerjobEnum _type, int _skillNumber,int _damageValue)
+    public override void Skill(CharactorJobEnum _type, int _skillNumber,int _damageValue)
     {
         switch (_type)
         {
-            case PlayerjobEnum.Gunner:
+            case CharactorJobEnum.Gunner:
                 GunnerSkill(_skillNumber, _damageValue);
                 break;
-            case PlayerjobEnum.Warrior:
+            case CharactorJobEnum.Warrior:
                 WarriorSkill(_skillNumber, _damageValue);
                 break;
-            case PlayerjobEnum.None:
+            case CharactorJobEnum.None:
                 return;
 
         }

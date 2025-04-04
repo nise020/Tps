@@ -10,16 +10,17 @@ public partial class Gunner : Player
     protected override void Start()
     {
         base.Start();
-        playerType = PlayerjobEnum.Gunner;
-        playerControll = PlayerControllState.On; 
-        gun = GetComponentInChildren<Gun>();
+        //playerType = CharactorJobEnum.Gunner;
+        charctorState = CharctorStateEnum.Player;
+        //playerControll = PlayerControllState.On; 
+        GUN = GetComponentInChildren<Gun>();
         Shared.InutTableMgr();
         Table_Charactor.Info info = Shared.TableManager.Character.Get(1);
         //Name = info.Img;
         skillStrategy.PlayerInit(this);
         //skillStrategy.WeaponInit(gun);
     }
-    protected override void skillAttack(PlayerjobEnum _type) 
+    protected override void skillAttack(CharactorJobEnum _type) 
     {
         base.skillAttack(_type);
     }
@@ -37,9 +38,9 @@ public partial class Gunner : Player
             {
                 attack(charctorState);
             }
-            else if (playerType == PlayerjobEnum.Gunner)//떼면 자동으로
+            else if (playerType == CharactorJobEnum.Gunner)//떼면 자동으로
             {
-                if (mouseClickUp || gun.nowbullet <= 0)
+                if (mouseClickUp || GUN.nowbullet <= 0)
                 {
                     viewcam.cameraShakeAnim(false);
                     playerAnim.SetInteger("Attack", 0);

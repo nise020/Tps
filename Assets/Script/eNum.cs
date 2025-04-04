@@ -125,8 +125,7 @@ public enum MonsterAiState //Monster AI 상태
 public enum NpcAiState //Npc AI 상태
 {
     Search,
-    Move_Player,
-    Move_Monster,
+    Move,
     Attack,
     Reset,
 }
@@ -147,7 +146,7 @@ public enum SearchState
     Stop,
     Move
 }
-public enum PlayerjobEnum
+public enum CharactorJobEnum
 {
     None,
     Warrior,
@@ -173,7 +172,8 @@ public enum SceneName
 public enum CharctorStateEnum 
 {
     Npc,
-    Player
+    Player,
+    AutoMode
 }
 public enum GunType
 {

@@ -5,10 +5,12 @@ using UnityEngine;
 public partial class Warrior : Player
 {
     //SkillStrategy SkillStrategy = new SkillStrategy();
+    
     protected override void Start()
     {
         base.Start();
-        playerType = PlayerjobEnum.Warrior;
+        //playerType = CharactorJobEnum.Warrior;
+        charctorState = CharctorStateEnum.Npc;
         weaponState = WeaponState.Sword_Off;
         Shared.InutTableMgr();
         Table_Charactor.Info info = Shared.TableManager.Character.Get(0);
@@ -16,7 +18,7 @@ public partial class Warrior : Player
         skillStrategy.PlayerInit(this);
         //skillStrategy.WeaponInit(gun);
     }
-    protected override void skillAttack(PlayerjobEnum _type)
+    protected override void skillAttack(CharactorJobEnum _type)
     {
         base.skillAttack(_type);
     }

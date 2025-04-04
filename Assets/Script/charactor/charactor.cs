@@ -67,12 +67,12 @@ public abstract partial class Charactor : Actor
     }
     protected virtual void stateInIt() 
     {
-        hP = STATE.ViewHp;
+        hP = STATUS.ViewHp;
         cheHP = hP;
         maxHP = hP;
-        speedValue = STATE.ViewSpeed;
-        atkValue = STATE.ViewAttack;
-        defVAlue = STATE.ViewDefense;
+        speedValue = STATUS.ViewSpeed;
+        atkValue = STATUS.ViewAttack;
+        defVAlue = STATUS.ViewDefense;
     }
     protected void footRayCheck() //중력구현
     {
@@ -113,11 +113,15 @@ public abstract partial class Charactor : Actor
     {
 
     }
+    protected virtual void move(CharctorStateEnum _value, Player _player)
+    {
+
+    }
     protected virtual void attack(CharctorStateEnum _state) 
     {
 
     }
-    protected virtual void skillAttack(PlayerjobEnum _type) 
+    protected virtual void skillAttack(CharactorJobEnum _type) 
     {
 
     }

@@ -5,8 +5,8 @@ using UnityEngine;
 public partial class Weapon : Actor
 {
     protected WeaponEnum WeaponType = WeaponEnum.None;
-    protected PlayerjobEnum PlayerType;
-    State Weaponstate = new State();
+    protected CharactorJobEnum PlayerType;
+    Status Weaponstate = new Status();
     public void init(WeaponEnum _type) 
     {
         WeaponType = _type;
@@ -23,7 +23,7 @@ public partial class Weapon : Actor
     {
 
     }
-    protected virtual void ControllWeapon(PlayerjobEnum _type) 
+    protected virtual void ControllWeapon(CharactorJobEnum _type) 
     {
 
     }   

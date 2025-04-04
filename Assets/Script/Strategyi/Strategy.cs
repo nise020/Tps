@@ -4,15 +4,15 @@ using UnityEngine;
 
 public abstract partial class Strategy 
 {
-    protected State State;
+    protected Status State;
     protected Player PLAYER;
     protected Weapon Weapon;
 
     protected WeaponEnum WeaponType = WeaponEnum.None;
-    protected PlayerjobEnum playerType = PlayerjobEnum.None;
+    protected CharactorJobEnum playerType = CharactorJobEnum.None;
     protected int DamegeUp;
-    abstract public void Skill(PlayerjobEnum _type , int _number, int _damageValue);
-    public void init(State _state) 
+    abstract public void Skill(CharactorJobEnum _type , int _number, int _damageValue);
+    public void init(Status _state) 
     {
         State = _state;
     }
@@ -24,7 +24,7 @@ public abstract partial class Strategy
     {
         Weapon = _gun;
     }
-    public void InitType(PlayerjobEnum _type)
+    public void InitType(CharactorJobEnum _type)
     {
         playerType = _type;
     }

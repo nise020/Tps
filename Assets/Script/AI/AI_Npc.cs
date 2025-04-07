@@ -6,16 +6,14 @@ using UnityEngine.EventSystems;
 
 public class AI_Npc : AiBase
 {
-    Player FollowPlayerObj;
-    float speed = 0.0f;
     Vector3 tagetPos = new Vector3(0f,0f,0f);
-    public void PlayerItit(Player _player) 
+    public override void State(CharctorStateEnum _state, Player _player,out NpcAiState _Ai)
     {
-        FollowPlayerObj = _player;
-    }
-    public override void State(CharctorStateEnum _state, Player _player)
-    {
-        if (_state == CharctorStateEnum.Player) return;
+        if (_state == CharctorStateEnum.Player) 
+        {
+            _Ai = npcAi;
+            return;
+        } 
         switch (npcAi)
         {
             case NpcAiState.Search:
@@ -31,39 +29,26 @@ public class AI_Npc : AiBase
                 Reset();
                 break;
         }
+        _Ai = npcAi;
     }
     float viewDistance = 10f;
     float viewAngle = 60f;
     public float sphereRadius = 50.0f;
     protected override void Search(Player _obj,Vector3 _pos)
     {
-        Debug.Log($"Search");
-
-        RaycastHit hit;
-        if (Physics.SphereCast(_obj.transform.position, sphereRadius, _obj.transform.forward, out hit, viewDistance))
+        _obj.Move_Npc();
+        if (_obj.SearchCheck(out _pos) == true)
         {
-            //방향이 다르기 떄문에 수정 필요
-            int layer = hit.collider.gameObject.layer;
-            if (layer == Delivery.LayerNameEnum(LayerName.Monster))
-            {
-                hit.point = tagetPos;
-                npcAi = NpcAiState.Move;
-            }
+            npcAi = NpcAiState.Move;
         }
         else //Not Find Monster
         {
             return;
-            //npcAi = NpcAiState.Move;
         }
-        //Debug.DrawRay(_obj.transform.position, _obj.transform.forward,Color.red,0);
-        Debug.DrawLine(_obj.transform.position, hit.point, Color.red,0);
-        //else { return; }
-        //주변에 몬스터가 없으면 플레이어를 따라 다니고
-        //주변에 몬스터가 있으면 따라가서 줘 팬다
     }
     protected override void Move(Player _obj, Vector3 _pos)
     {
-        if (_obj.Move_Attack() == true)
+        if (_obj.TargetMove(_pos) == true)
         {
             npcAi = NpcAiState.Attack;
         }
@@ -71,7 +56,6 @@ public class AI_Npc : AiBase
     protected override void Attack(Player _obj)
     {
         _obj.AutoAttack();
-        //애니메이션 이벤트도 추가 필요
         npcAi = NpcAiState.Reset;
     }
     protected override void Reset()

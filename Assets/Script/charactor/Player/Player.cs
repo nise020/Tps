@@ -8,7 +8,7 @@ public partial class Player : Charactor
 {
     protected MoveCamera viewcam;
     protected AI_Npc PLAYERAI= new AI_Npc();
-    protected MonsterAiState aIState = MonsterAiState.Create;
+    protected NpcAiState aIState = NpcAiState.Search;
     protected Rigidbody rigid;
     protected Animator playerAnim;
     protected Gun GUN;
@@ -75,7 +75,7 @@ public partial class Player : Charactor
         cameraViewObj = GetComponentInChildren<BoxCollider>();
         viewcam.viewObjInit(cameraViewObj.gameObject);//viewPoint
         PLAYERAI.init(this);//FSM
-        rigid = GetComponent<Rigidbody>();
+        rigid = GetComponent<Rigidbody>();//Kinematic Controll
         playerAnim = GetComponentInChildren<Animator>();
     }
     protected override void stateInIt() 
@@ -92,16 +92,17 @@ public partial class Player : Charactor
     private void FixedUpdate()
     {
         move(charctorState);
-        PLAYERAI.State(charctorState,this);
+        PLAYERAI.State(charctorState,this, out aIState);
     }
 
     public void init(out MoveCamera _camera) 
     {
         _camera = viewcam; 
     }
-    public void TypeInit(CharactorJobEnum _type) 
+    public void TypeInit(CharactorJobEnum _type,int _key) 
     {
         playerType = _type;
+        PlayerKey = _key;
     }
 
 }

@@ -10,11 +10,11 @@ public partial class Warrior : Player
     {
         base.Start();
         //playerType = CharactorJobEnum.Warrior;
-        charctorState = CharctorStateEnum.Npc;
+        //charctorState = CharctorStateEnum.Npc;
         weaponState = WeaponState.Sword_Off;
         Shared.InutTableMgr();
         Table_Charactor.Info info = Shared.TableManager.Character.Get(0);
-        Name = info.Img;
+        //Name = info.Img;
         skillStrategy.PlayerInit(this);
         //skillStrategy.WeaponInit(gun);
     }

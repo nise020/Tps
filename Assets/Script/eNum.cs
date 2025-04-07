@@ -13,10 +13,26 @@ public enum PlayerAnimParameters
     Reload,
     Attack,
     Back,
-    Close,
     Shit,
     Right,
-    Left
+    Left,
+    WeaponWalk,
+    Close,
+
+}
+
+public enum MonsterAnimParameters
+{
+    Walk,
+    Run,
+    Attack,
+    Close,
+    Search,
+    Idle,
+    Serch,
+    Open,
+    Stop,
+
 }
 public enum SkillRunning 
 {
@@ -53,25 +69,20 @@ public enum MobAnim
     AttackDilray,
     Walk
 }
-public enum mobAnimInfoName
-{
-    Idle,
-    Attack,
-    Serch,
-    Open,
-    Stop,
-    Walk
-}
+
 public enum WeaponEnum 
 {
     None,
     Gun,
     Sword
 }
-public enum playerAnimInfoName
+public enum PlayerAnimName
 {
+    Attack,
     closeAttack,
-    reloading
+    reloading,
+    AttackSkill,
+    BuffSkill
 }
 public enum CameraAnim 
 {

@@ -85,7 +85,7 @@ public partial class AiMonster : AiBase
             searchAnim = true;
             if (MobType != MonsterType.Dron)
             {
-                animator.SetInteger("Search", 1);
+                animator.SetInteger(MonsterAnimParameters.Search.ToString(), 1);
             }
             searching = SearchState.Stop;
         }
@@ -121,7 +121,7 @@ public partial class AiMonster : AiBase
             if (layer == Delivery.LayerNameEnum(LayerName.Player))
             {
                 moveAnim = false;
-                animator.SetInteger("Search", 0);
+                animator.SetInteger(MonsterAnimParameters.Search.ToString(), 0);
                 aIState = MonsterAiState.Attack;
                 targetPos = hit.collider.gameObject.transform.position;//Vector3
                 searchAnim = false;//clear
@@ -151,13 +151,13 @@ public partial class AiMonster : AiBase
         if (moveAnim == false)//Animation Event
         {
             moveAnim = true;
-            animator.SetInteger("Search", 0);// Serching X
-            animator.SetInteger("Walk", 0);
+            animator.SetInteger(MonsterAnimParameters.Search.ToString(), 0);// Serching X
+            animator.SetInteger(MonsterAnimParameters.Walk.ToString(), 0);
             if (MobType == MonsterType.Sphere) 
             {
-                animator.SetInteger("Close", 1);
+                animator.SetInteger(MonsterAnimParameters.Close.ToString(), 1);
             }
-            animator.SetInteger("Attack", 1);
+            animator.SetInteger(MonsterAnimParameters.Attack.ToString(), 1);
         }
 
         //ONSTER.Pattern(MobType);
@@ -203,7 +203,7 @@ public partial class AiMonster : AiBase
         else if (_enum == MonsterType.Dron)//드론일 경우 
         {
             MONSTER.DirectAttack(MONSTER.gameObject, targetPos);
-            animator.SetInteger("Attack", 0);
+            animator.SetInteger(MonsterAnimParameters.Attack.ToString(), 0);
             aIState = MonsterAiState.Reset;
         }
     }

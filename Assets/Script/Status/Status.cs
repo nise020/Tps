@@ -13,12 +13,12 @@ public partial class Status : StatusBase
     public void init(ObjectType _obj) 
     {
         playerState();
-        Debug.Log($"charactor={_obj}\n" +
-            $",monster={monster}\n" +
-            $",MaxHP={ViewHp}\n" +
-            $",Attack={ViewAttack}\n" +
-            $",Defense={ViewDefense}\n" +
-            $",Movespeed{ViewSpeed}");
+        //Debug.Log($"charactor={_obj}\n" +
+        //    $",monster={monster}\n" +
+        //    $",MaxHP={ViewHp}\n" +
+        //    $",Attack={ViewAttack}\n" +
+        //    $",Defense={ViewDefense}\n" +
+        //    $",Movespeed{ViewSpeed}");
     }
     ObjectType objType;
     MonsterType monster = MonsterType.Defolt;

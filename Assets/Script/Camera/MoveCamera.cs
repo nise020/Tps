@@ -25,12 +25,23 @@ public partial class MoveCamera : MonoBehaviour
     public float attacklimitRot = 55.0f;
     public float rotTime = 1.5f;
 
-    public bool camRotOn = false;
+    [SerializeField] bool camRotOn = false;
+    [SerializeField] bool GunModeOn = false;
 
     float xValue = 0;
     float yValue = 0;
 
-    public bool attackModeOn = false;
+    public bool GunModeCheck() 
+    {
+        if (GunModeOn) 
+        {
+            return true;
+        }
+        else 
+        {
+            return false;
+        }
+    }
     public void viewObjInit(GameObject _obj) 
     {
         viewObj = _obj;
@@ -39,7 +50,7 @@ public partial class MoveCamera : MonoBehaviour
     {
         if (viewObj == null || 
             camRotOn == false || 
-            attackModeOn == true) return;
+            GunModeOn == true) return;
 
         //playerType == PlayerType.Gunner
 
@@ -81,12 +92,12 @@ public partial class MoveCamera : MonoBehaviour
         
         if (Input.GetKeyDown(KeyCode.Space))
         {
-            attackModeOn = !attackModeOn;
+            GunModeOn = !GunModeOn;
         }
 
         //여기 중간에 부드럽게 카메라 위치를 이동시킬 블ㄹ렌드 효과가 필ㄴ요함
 
-        shootCamera(attackModeOn);
+        shootCamera(GunModeOn);
     }
     void Start()
     {

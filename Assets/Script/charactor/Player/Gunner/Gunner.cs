@@ -11,7 +11,7 @@ public partial class Gunner : Player
     {
         base.Start();
         //playerType = CharactorJobEnum.Gunner;
-        charctorState = CharctorStateEnum.Player;
+        //charctorState = CharctorStateEnum.Player;
         //playerControll = PlayerControllState.On; 
         GUN = GetComponentInChildren<Gun>();
         Shared.InutTableMgr();

@@ -56,11 +56,18 @@ public partial class Gun : Weapon
             nowbullet--;
       
             RapidTimer = 0.0f;
-            Invoke("go.SetActive(false)", 3f);
-
+            //Invoke("go.SetActive(false)", 3f);
+            StartCoroutine(HideObject(go, 3f));
             _camera.cameraShakeAnim(true);//Animation
         }
     }
+
+    private IEnumerator HideObject(GameObject go, float seconds)
+    {
+        yield return new WaitForSeconds(seconds);
+        go.SetActive(false);
+    }
+
     public Quaternion AimGun(GameObject _player,Vector3 _hitPos)//Aim 오브젝트를 기준으로 바꿔야함
     {
         Vector3 targetPos = _hitPos;

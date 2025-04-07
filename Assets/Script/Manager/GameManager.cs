@@ -25,9 +25,9 @@ public class GameManager : MonoBehaviour
 
     [Header("Monster")]
     [SerializeField] GameObject[] MobObj;
+    int Playerbullet;
 
  
-    int Playerbullet;
     public void onbtnTitle() 
     {
         //SceneManager.LoadScene("Login");
@@ -46,23 +46,22 @@ public class GameManager : MonoBehaviour
     }
     public void FindPlayer() 
     {
-        int value = PlayerCount.Count;
-        for (int i = 0; i < value; i++) 
+        foreach (KeyValuePair<Player, int> playerData in PlayerCount)
         {
-            //Player player = 
-
+            Player player = playerData.Key;
+            player.PlayerControllChack(out CharctorStateEnum _type);
+            if (_type == CharctorStateEnum.Player) 
+            {
+                PLAYER = playerData.Key;
+                break;
+            }
+            //int count = playerData.Value;
         }
     }
 
     public Vector3 PlayerPos(Vector3 _pos)
     {
-        if (PLAYER == null)
-        {
-            return _pos;
-            //FindPlayer();
-        }
-        _pos = PLAYER.gameObject.transform.position.normalized;
-        _pos = new Vector3(_pos.x, 0.0f, _pos.z);
+        _pos = PLAYER.gameObject.transform.position;
         return _pos;
     }
     public void CharctorContoll(Player _player, CharctorStateEnum _state) 
@@ -70,12 +69,12 @@ public class GameManager : MonoBehaviour
         _player.PlayerControllChange(_state);//On,Off
         if (_state == CharctorStateEnum.Player) 
         {
-            PLAYER = _player;
+            PLAYER = _player;         
         }
     }
     private void CharctorTypeAdd(Player _player, CharactorJobEnum _type) 
     {
-        _player.TypeInit(_type);
+        _player.TypeInit(_type, playerKey);
         PlayerCount.Add(_player, playerKey);
         playerKey += 1;
     }
@@ -88,7 +87,7 @@ public class GameManager : MonoBehaviour
     {
         CharctorTypeAdd(GUNNER, CharactorJobEnum.Gunner);
         CharctorTypeAdd(WARRIOR, CharactorJobEnum.Warrior);
-        //FindPlayer();
+        FindPlayer();
     }
 
     

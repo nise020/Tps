@@ -54,9 +54,14 @@ public partial class AiBase
                 break;
         }
     }
-    public virtual void State(CharctorStateEnum _state, Player _player)
+    public virtual void State(CharctorStateEnum _state, Player _player,out NpcAiState _Ai)
     {
-        if (_state == CharctorStateEnum.Player) return;
+        if (_state == CharctorStateEnum.Player) 
+        {
+            _Ai = new NpcAiState();
+            return;
+        } 
+
         switch (npcAi)
         {
             case NpcAiState.Search:
@@ -72,6 +77,7 @@ public partial class AiBase
                 Reset();
                 break;
         }
+        _Ai = new NpcAiState();
     }
     protected virtual void Create() 
     {

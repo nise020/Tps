@@ -3130,6 +3130,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Fab_Warrior
       objectReference: {fileID: 0}
+    - target: {fileID: 830379591912329776, guid: e4882e1f7f91ad14db38f42cec51330d, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 1407168758240057250, guid: e4882e1f7f91ad14db38f42cec51330d, type: 3}
       propertyPath: m_RootOrder
       value: 22

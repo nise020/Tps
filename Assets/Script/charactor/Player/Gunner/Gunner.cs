@@ -9,11 +9,11 @@ public partial class Gunner : Player
     
     protected override void Start()
     {
+        GUN = GetComponentInChildren<Gun>();
         base.Start();
         //playerType = CharactorJobEnum.Gunner;
         //charctorState = CharctorStateEnum.Player;
         //playerControll = PlayerControllState.On; 
-        GUN = GetComponentInChildren<Gun>();
         Shared.InutTableMgr();
         Table_Charactor.Info info = Shared.TableManager.Character.Get(1);
         //Name = info.Img;
@@ -44,7 +44,7 @@ public partial class Gunner : Player
                 if (mouseClickUp || GUN.nowbullet <= 0)
                 {
                     viewcam.cameraShakeAnim(false);
-                    playerAnim.SetInteger("Attack", 0);
+                    playerAnim.SetInteger(PlayerAnimParameters.Attack.ToString(), 0);
                 }
             }
             reloding(playerType);//¸®·Îµå

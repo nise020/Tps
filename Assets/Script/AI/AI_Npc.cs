@@ -36,7 +36,8 @@ public class AI_Npc : AiBase
     public float sphereRadius = 50.0f;
     protected override void Search(Player _obj,Vector3 _pos)
     {
-        _obj.Move_Npc();
+        Shared.GameManager.PlayerData(out Player _player);
+        _obj.Move_Npc(_player);
         
         //Que
         //Time

@@ -223,9 +223,9 @@ public enum LayerName
 }
 public enum PositionObjectState 
 {
+    Empty,
     None,
-    position_empty,
-    position_full,
+    Occupied
 }
 public enum PlayerWalkState 
 {
@@ -233,11 +233,28 @@ public enum PlayerWalkState
     Walk_On,
     Walk_Off,
 }
+public enum NpcWalkState
+{
+    None,
+    Walk,
+    Run,
+}
+public enum FindMoveObject
+{
+    None,
+    Find
+}
 public enum Layer //예전에는 앞에 sScene을 붙여야 했다
 {
     Cover,
     Player,
     Bullet,
+}
+public enum InputType //예전에는 앞에 sScene을 붙여야 했다
+{
+    Click,      // GetMouseButtonDown
+    Hold,       // GetMouseButton
+    Release     // GetMouseButtonUp
 }
 
 

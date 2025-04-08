@@ -60,6 +60,7 @@ public partial class Player : Charactor
     protected virtual void Start()
     {
         //playerType = PlayerType.Gunner;
+        slotAdd();//Nps state data
         STATUS.init(charactor);//State
         stateInIt();
         viewcam = GetComponentInChildren<MoveCamera>();

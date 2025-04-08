@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
+using WebSocketSharp;
 
 public partial class Player : Charactor
 {
@@ -9,32 +10,32 @@ public partial class Player : Charactor
     //Input 기능을 사용할 경우 Que를 사용해서 저장 후에 순차적으로
     //처리하게 하지 않으면 입력값이 소실 된다
 
-    //일정 시간이 지나도 가만히(움직이지 아노으면) 있으면 안 움직인가는 판단
+    //일정 시간이 지나도 가만히(움직이지 않으면) 있으면 안 움직인가는 판단
     //분산시스템
-    float playerStopDistanseValue = 1.0f;
+    float playerStopDistanseValue = 0.3f;
     float playerRunDistanseValue = 10.0f;
     float playerWalkDistanseValue = 5.0f;
     protected PlayerWalkState playerWalkState = PlayerWalkState.None;
+    protected NpcWalkState npcWalkState = NpcWalkState.Walk;
     protected float walkTimer = 0;
     protected float walkTime = 3.0f;
 
     Queue<Vector3> fsmPosQue = new Queue<Vector3>();
-    public void Move_Npc()
+    public void Move_Npc(Player _player)
     {
         //동일한 위치로 이동이 불가(플레이어 위치에 정확히 이동이 불가) 할 경우 플레이어 뒤쪽 위치에 이동
         //불가 하지 않을 경우 해당 위치로 계속 이동
         PlayerWalkState state = PlayerWalkState.None;
-        Shared.GameManager.PlayerData(out Player _player);
+        //Shared.GameManager.PlayerData(out Player _player);
         //
-
-        if (_player.PlayerWalkSateInit(state) == false) //player Stop
+        if (_player.PlayerWalkSateInit() == false) //player Stop
         {
             return;
         }
-        else if(_player.PlayerWalkSateInit(state) == true)//player Walk
+        else if(_player.PlayerWalkSateInit() == true)//player Walk
         {
-            _player.PositionObjectInit(out List<GameObject> _objects);
-
+            //_player.PositionObjectInit(out List<GameObject> _objects);
+            _player.PointSearch();
             //targetPos = Shared.GameManager.PlayerPos(targetPos);
             targetPos = _player.gameObject.transform.position;
 
@@ -54,33 +55,37 @@ public partial class Player : Charactor
             Quaternion rotation = Quaternion.LookRotation(disTance.normalized);
             gameObject.transform.rotation = Quaternion.Slerp(gameObject.transform.rotation, rotation, Time.deltaTime * rotSpeed);
 
-            if (Vector3.Distance(gameObject.transform.position, disTance) <= playerStopDistanseValue)//거리가 엄청 가까울때
+            float dist = Vector3.Distance(gameObject.transform.position, stopPoint);
+
+            if (dist <= playerStopDistanseValue)
             {
-                playerAnim.SetInteger(PlayerAnimParameters.Walk.ToString(), 0);
-                fsmPosQue.Dequeue();
-                //StartCoroutine(point());
-                return;
+                if (fsmPosQue.Count == 0)
+                {
+                    return;
+                }
+                else 
+                {
+                    fsmPosQue.Dequeue();
+                    return;
+                }
             }
-            else if (Vector3.Distance(gameObject.transform.position, disTance) <= playerRunDistanseValue &&
-                     Vector3.Distance(gameObject.transform.position, disTance) >= playerWalkDistanseValue) 
+            else if (dist <= playerRunDistanseValue && dist >= playerWalkDistanseValue)
             {
-                playerAnim.SetInteger(PlayerAnimParameters.Run.ToString(), 0);
                 playerAnim.SetInteger(PlayerAnimParameters.Walk.ToString(), 1);
+                playerAnim.SetInteger(PlayerAnimParameters.Run.ToString(), 0);
             }
-            else if (Vector3.Distance(gameObject.transform.position, disTance) >= playerRunDistanseValue)
+            else if (dist >= playerRunDistanseValue)
             {
                 playerAnim.SetInteger(PlayerAnimParameters.Run.ToString(), 1);
-                //예외 처리가 필요함
+                playerAnim.SetInteger(PlayerAnimParameters.Walk.ToString(), 0);
             }
             gameObject.transform.position += disTance.normalized * speedValue * Time.deltaTime;
         }
         
     }
-    public bool PlayerWalkSateInit(PlayerWalkState _state) 
+    public bool PlayerWalkSateInit() 
     {
-        _state = playerWalkState;
-
-        if (_state == PlayerWalkState.Walk_Off)
+        if (playerWalkState == PlayerWalkState.Walk_Off)
         {
             return false;
         }
@@ -89,17 +94,23 @@ public partial class Player : Charactor
             return true; 
         }
     }
-    IEnumerator point()
+    public void PointSearch() 
     {
-        Shared.GameManager.PlayerData(out Player _player);
-        _player.PositionObjectInit(out List<GameObject> _objects);
-        for (int number = 0; number < _objects.Count; number++) 
+        StartCoroutine(pointSearch());
+    }
+    public IEnumerator pointSearch()
+    {
+        foreach (KeyValuePair<GameObject, SlotData> slotData in slotStates) 
         {
-            GameObject go = _objects[number];
-
+            GameObject slotObj = slotData.Key;
+            SlotData data = slotData.Value;
+            if (slotData.Value.ObjectState == PositionObjectState.None) 
+            {
+                yield return slotData.Key;
+            }
+            Transform pos = data.SlotTransform;
         }
-
-        yield return null;
+        yield return null;//None
     }
     public void PositionObjectInit(out List<GameObject> _objects)
     {

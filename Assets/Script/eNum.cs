@@ -1,6 +1,6 @@
 using System.Collections.Generic;
 
-public enum bulletType
+public enum BulletType
 {
     Mobbullet,
         Playerbullet,
@@ -213,8 +213,26 @@ public enum LayerName
     MobBullet,
     MobGranid,
     BackGround,
+    SpawnSpider,
+    SpawnDron,
+    SpawnSphere,
+    Sward,
+    ViewPoint,
+    BackPosition1,
+    BackPosition2
 }
-
+public enum PositionObjectState 
+{
+    None,
+    position_empty,
+    position_full,
+}
+public enum PlayerWalkState 
+{
+    None,
+    Walk_On,
+    Walk_Off,
+}
 public enum Layer //예전에는 앞에 sScene을 붙여야 했다
 {
     Cover,

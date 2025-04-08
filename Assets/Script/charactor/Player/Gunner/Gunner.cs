@@ -26,6 +26,7 @@ public partial class Gunner : Player
     }
     private void Update()
     {
+        move(charctorState);
         runcheck(RunCheck);
         skillAttack(playerType);
 

@@ -76,7 +76,9 @@ public abstract partial class Charactor : Actor
     }
     protected void footRayCheck() //중력구현
     {
-
+        //init
+        //update
+        //Renderring
     }
 
     protected virtual void checkHp(Collider other) //수정 필요

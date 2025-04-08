@@ -244,4 +244,29 @@ public partial class Player : Charactor
             playerAnim.SetInteger(_parameterText, 0);
         }
     }
+    public void reloding(CharactorJobEnum _type)
+    {
+        if (_type != CharactorJobEnum.Gunner) { return; }
+
+        if (reloadOn || GUN.nowbullet <= 0)
+        {
+            playerAnim.SetLayerWeight(attackLayerIndex, 1.0f);
+            playerAnim.SetInteger("Reload", 1);
+        }
+
+        //if (gun.reLoed)
+        //{
+        //    animCheck("Reload", "reloading");
+        //}
+
+    }
+
+    IEnumerator reLoadout(int _index)
+    {
+        GUN.nowbullet = GUN.bullet;
+        GUN.bulletcount = 0;
+        playerAnim.SetLayerWeight(_index, 0.0f);
+        GUN.reLoed = false;
+        yield return null;
+    }
 }

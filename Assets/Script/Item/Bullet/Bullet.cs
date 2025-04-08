@@ -11,14 +11,14 @@ public partial class Bullet
     //RaycastHit hit;//총알이 맞출 목표
     //public bulletType BulletType;
 
-    public Vector3 moveing(Vector3 _myPos, Vector3 _targetPos, bulletType _tag,float _speed)//대거 수정 필요
+    public Vector3 moveing(Vector3 _myPos, Vector3 _targetPos, BulletType _tag,float _speed)//대거 수정 필요
     {
-        if (_tag == bulletType.MobGranad || _tag == bulletType.Mobbullet)
+        if (_tag == BulletType.MobGranad || _tag == BulletType.Mobbullet)
         {
             Vector3 direction = (_targetPos - _myPos).normalized;
             _myPos += direction * _speed * Time.deltaTime;
         }
-        else if (_tag == bulletType.Playerbullet)//세분화 필요
+        else if (_tag == BulletType.Playerbullet)//세분화 필요
         {
             //Vector3 direction = (_targetPos - _myPos).normalized;
             _myPos += _targetPos.normalized * _speed * Time.deltaTime;

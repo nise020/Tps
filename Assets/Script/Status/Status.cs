@@ -67,7 +67,7 @@ public partial class Status : StatusBase
         MaxHP = 100;
         Attack = 30;
         Defense = 30;
-        Speed = 10;
+        Speed = 5;
     }
     public void MonsterState(GunType _eNum)
     {

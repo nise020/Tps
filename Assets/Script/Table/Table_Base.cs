@@ -69,7 +69,7 @@ public class Table_Base
         b.Serialize(stream, _Obj);
 
         stream.Close();
-
+        
     }
     protected CSVReader GetCSVReader(string _Name) 
     {

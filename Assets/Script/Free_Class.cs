@@ -18,4 +18,14 @@ public class SaveData
     //public List<string> dataPassworld;//List 형태
     //Add 도 또 하나의 방법
 }
+public class PositionMove
+{
+    public Vector3 position;
+    public float time;
+    public PositionMove(Vector3 _pos, float _time)
+    {
+        position = _pos;
+        time = _time;   
+    }
+}
 

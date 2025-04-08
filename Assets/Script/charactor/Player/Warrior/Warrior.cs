@@ -24,6 +24,7 @@ public partial class Warrior : Player
     }
     private void Update()
     {
+        move(charctorState);
         runcheck(RunCheck);
         if (charctorState == CharctorStateEnum.Player)
         {

@@ -37,6 +37,10 @@ public class AI_Npc : AiBase
     protected override void Search(Player _obj,Vector3 _pos)
     {
         _obj.Move_Npc();
+        
+        //Que
+        //Time
+        //Vector
         if (_obj.SearchCheck(out _pos) == true)
         {
             npcAi = NpcAiState.Move;

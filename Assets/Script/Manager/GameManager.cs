@@ -58,7 +58,10 @@ public class GameManager : MonoBehaviour
             //int count = playerData.Value;
         }
     }
-
+    public void PlayerData(out Player _player) 
+    {
+        _player = PLAYER;
+    }
     public Vector3 PlayerPos(Vector3 _pos)
     {
         _pos = PLAYER.gameObject.transform.position;

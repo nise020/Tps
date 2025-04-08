@@ -19,15 +19,6 @@ public partial class Player : Charactor
     [SerializeField] GameObject scabbard;
     //스토레이지
 
-    
-
-    
-    protected bool mouseClick => Input.GetMouseButton(0);
-    protected bool mouseClickUp => Input.GetMouseButtonUp(0);
-    protected bool mouseClickDown => Input.GetMouseButtonDown(0);
-    protected bool RunCheck => Input.GetKeyDown(KeyCode.Mouse1);
-    protected bool reloadOn => Input.GetKeyDown(KeyCode.R);
-
 
     [Header("Weapon")]
     [SerializeField] GameObject WeaponPrefab;
@@ -91,7 +82,6 @@ public partial class Player : Charactor
 
     private void FixedUpdate()
     {
-        move(charctorState);
         PLAYERAI.State(charctorState,this, out aIState);
     }
 

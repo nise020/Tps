@@ -6,7 +6,7 @@ using UnityEngine;
 public partial class Bullet_Monster : MonoBehaviour
 {
     Bullet BULLET = new Bullet();
-    bulletType BulletType = bulletType.Mobbullet;
+    BulletType BulletType = BulletType.Mobbullet;
     public Vector3 targetPos;//공격할 목표
 
     [Header("총알 관련 항목")]

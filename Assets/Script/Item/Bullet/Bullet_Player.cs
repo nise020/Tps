@@ -6,7 +6,7 @@ using UnityEngine;
 public partial class Bullet_Player : MonoBehaviour
 {
     Bullet BULLET = new Bullet();
-    bulletType BulletType = bulletType.Playerbullet;
+    BulletType BulletType = BulletType.Playerbullet;
     public Vector3 targetPos;//공격할 목표
     //public float Speed = 0.0f;
 

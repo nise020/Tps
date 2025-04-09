@@ -8,6 +8,7 @@ public partial class Player : Charactor
 {
     protected MoveCamera viewcam;
     protected AI_Npc PLAYERAI= new AI_Npc();
+    //protected Slot SlotData= new Slot();
     protected NpcAiState aIState = NpcAiState.Search;
     protected Rigidbody rigid;
     protected Animator playerAnim;
@@ -60,12 +61,17 @@ public partial class Player : Charactor
     protected virtual void Start()
     {
         //playerType = PlayerType.Gunner;
-        slotAdd();//Nps state data
+        slotinit();//Nps state data
         STATUS.init(charactor);//State
         stateInIt();
-        viewcam = GetComponentInChildren<MoveCamera>();
         cameraViewObj = GetComponentInChildren<BoxCollider>();
+        viewcam = GetComponentInChildren<MoveCamera>();
         viewcam.viewObjInit(cameraViewObj.gameObject);//viewPoint
+        if (charctorState == CharctorStateEnum.Npc)
+        {
+            viewcam.gameObject.SetActive(false);
+            //Shared.BattelUI.PlayerCameraCheck(this, charctorState);
+        }
         PLAYERAI.init(this);//FSM
         rigid = GetComponent<Rigidbody>();//Kinematic Controll
         playerAnim = GetComponentInChildren<Animator>();

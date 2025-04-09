@@ -86,6 +86,7 @@ public partial class Player : Charactor
     }
     protected void runAnim(float _move)
     {
+        //if(playerType ==CharactorJobEnum.None)
         if (_move > 0)//Off
         {
             playerAnim.SetInteger(PlayerAnimParameters.Run.ToString(), (int)_move);

@@ -2,27 +2,23 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public partial class Player : Charactor
+public class Slot : MonoBehaviour
 {
     protected GameObject rightObj;
     protected GameObject reftObj;
     protected List<GameObject> moveObj = new List<GameObject>();
-    //protected Dictionary<GameObject, SlotData> slotStates = new Dictionary<GameObject, SlotData>();
-    protected Queue<SlotData> slotDatas = new Queue<SlotData>();
-    //아틀라스
-    //큐
-    //리스트
+    protected Dictionary<GameObject, SlotData> slotStates = new Dictionary<GameObject, SlotData>();
     protected FindMoveObject findMoveObject = FindMoveObject.None;
 
     int keynumber = 0;
 
     protected class SlotData
     {
-        public GameObject FootholdObject = null;
-        public PositionObjectState ObjectState = PositionObjectState.None; // 현재 비어 있는지 여부
-        //public GameObject FootholdObj = null;
+        public Transform SlotTransform; // 위치 참조
+        public PositionObjectState ObjectState = PositionObjectState.Empty; // 현재 비어 있는지 여부
+        public GameObject FootholdObj = null;
     }
-    public void slotinit()
+    protected void slotAdd()
     {
         Transform[] children = GetComponentsInChildren<Transform>();
         foreach (Transform child in children)
@@ -33,7 +29,7 @@ public partial class Player : Charactor
                 rightObj = child.gameObject;
                 addSlot(rightObj);
             }
-            else if (layer == LayerMask.NameToLayer(LayerName.BackPosition2.ToString()))
+            else if (layer == LayerMask.NameToLayer(LayerName.BackPosition1.ToString()))
             {
                 reftObj = child.gameObject;
                 addSlot(reftObj);
@@ -43,12 +39,11 @@ public partial class Player : Charactor
     protected void addSlot(GameObject _obj)
     {
         moveObj.Add(_obj);
-        SlotData slotData = new SlotData()
+        slotStates[_obj] = new SlotData()
         {
-            FootholdObject = _obj.gameObject,
-            ObjectState = PositionObjectState.Empty,
-            //FootholdObj = null
+            SlotTransform = _obj.transform,
+            ObjectState = PositionObjectState.None,
+            FootholdObj = null
         };
-        slotDatas.Enqueue(slotData);
     }
 }

@@ -6,9 +6,8 @@ public partial class Player : Charactor
 {
     Player followPlayerObj;
     
-    float rotSpeed = 10.0f;//나중에 조정
+    float rotSpeed = 20.0f;//나중에 조정
     float distancingValue = 3.0f;
-    Vector3 targetPos = new Vector3();
     SkillRunning skillCheck = SkillRunning.SkillOff;
 
     [SerializeField] Vector3 playerStopDistansePos;

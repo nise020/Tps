@@ -17,7 +17,7 @@ public class AI_Npc : AiBase
         switch (npcAi)
         {
             case NpcAiState.Search:
-                Search(_player, tagetPos);
+                Search(_player);
                 break;
             case NpcAiState.Move://¼±»§ÇÊ½Â
                 Move(_player, tagetPos);
@@ -34,7 +34,7 @@ public class AI_Npc : AiBase
     float viewDistance = 10f;
     float viewAngle = 60f;
     public float sphereRadius = 50.0f;
-    protected override void Search(Player _obj,Vector3 _pos)
+    protected override void Search(Player _obj)
     {
         Shared.GameManager.PlayerData(out Player _player);
         _obj.Move_Npc(_player);
@@ -42,8 +42,9 @@ public class AI_Npc : AiBase
         //Que
         //Time
         //Vector
-        if (_obj.SearchCheck(out _pos) == true)
+        if (_obj.SearchCheck(out tagetPos) == true)
         {
+            Debug.Log($"npcAi={npcAi}");
             npcAi = NpcAiState.Move;
         }
         else //Not Find Monster

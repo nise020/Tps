@@ -61,7 +61,6 @@ public partial class Player : Charactor
     protected virtual void Start()
     {
         //playerType = PlayerType.Gunner;
-        slotinit();//Nps state data
         STATUS.init(charactor);//State
         stateInIt();
         cameraViewObj = GetComponentInChildren<BoxCollider>();
@@ -75,6 +74,7 @@ public partial class Player : Charactor
         PLAYERAI.init(this);//FSM
         rigid = GetComponent<Rigidbody>();//Kinematic Controll
         playerAnim = GetComponentInChildren<Animator>();
+        slotinit();
     }
     protected override void stateInIt() 
     {

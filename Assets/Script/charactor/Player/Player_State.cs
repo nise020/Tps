@@ -24,20 +24,17 @@ public partial class Player : Charactor
         //float radius = 8f;
         //float fieldOfView = 90f;
         Collider[] hits = Physics.OverlapSphere(transform.position, radius);
-
-        foreach (var hit in hits)
+        foreach (Collider hit in hits)
         {
             if (hit.gameObject.layer == Delivery.LayerNameEnum(LayerName.Monster))
             {
-                Vector3 dirToTarget = (hit.transform.position - transform.position).normalized;
-                float angle = Vector3.Angle(transform.forward, dirToTarget);
-
-                if (angle < fieldOfView / 2f)
-                {
-                    //Debug.Log("시야 내 적 발견: " + hit.name);
-                    _pos = hit.gameObject.transform.position;
-                    return true;
-                }
+                _pos = hit.gameObject.transform.position;
+                return true;
+            }
+            else 
+            {
+                _pos = new Vector3();
+                return false; 
             }
         }
         _pos = new Vector3();

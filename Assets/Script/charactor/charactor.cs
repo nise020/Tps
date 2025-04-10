@@ -111,6 +111,10 @@ public abstract partial class Charactor : Actor
             gameObject.SetActive(false);
         }
     }
+    protected virtual void search() 
+    {
+
+    }
     protected virtual void move(CharctorStateEnum _value) 
     {
 

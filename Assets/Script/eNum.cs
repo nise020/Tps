@@ -206,6 +206,7 @@ public enum SoljerTags
 
 public enum LayerName 
 {
+    None,
     Monster,
     Player,
     Cover,

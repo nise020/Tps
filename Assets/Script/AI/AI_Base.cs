@@ -104,7 +104,7 @@ public partial class AiBase
     {
         npcAi = NpcAiState.Search;
     }
-    protected virtual void Search(Player _obj,Vector3 _pos)
+    protected virtual void Search(Player _obj)
     {
         npcAi = NpcAiState.Attack;
     }

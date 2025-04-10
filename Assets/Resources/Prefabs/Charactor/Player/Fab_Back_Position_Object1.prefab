@@ -9,6 +9,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6111340560853190230}
+  - component: {fileID: 4802412703858455863}
   m_Layer: 18
   m_Name: Fab_Back_Position_Object1
   m_TagString: Untagged
@@ -29,5 +30,20 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: -1
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &4802412703858455863
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8188329029766124794}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0b66b741f0947c9449f32ff71188ff9a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  SlotTransform: {fileID: 0}
+  ObjectState: 1
+  FootholdObj: {fileID: 0}

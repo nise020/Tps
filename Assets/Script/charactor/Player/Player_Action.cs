@@ -16,9 +16,9 @@ public partial class Player : Charactor
     Queue <Time> fsmMoveTime = new Queue<Time>();
     List<GameObject> backPositionObject;//my position Object
 
-    protected override void skillAttack(CharactorJobEnum _type)
+    protected override void skillAttack1(CharactorJobEnum _type)
     {
-        if (Skill1)
+        if (_type == CharactorJobEnum.Warrior)
         {
             if (skillCheck == SkillRunning.SkillOff)
             {
@@ -33,7 +33,41 @@ public partial class Player : Charactor
                 return;
             }
         }
-        else if (Skill2)
+        else if (_type == CharactorJobEnum.Gunner)
+        {
+            if (skillCheck == SkillRunning.SkillOff)
+            {
+                skillStrategy.Skill(playerType, 2, attackValue);
+                skillCheck = SkillRunning.SkillOn;
+                //playerAnim.SetInteger("Skill1", 1);
+                playerAnim.SetInteger(PlayerAnimName.BuffSkill.ToString(), 1);
+                Invoke("SkillValueReset", 3);//clear
+            }
+            else
+            {
+                return;
+            }
+        }
+        else { return; }
+    }
+    protected override void skillAttack2(CharactorJobEnum _type)
+    {
+        if (_type == CharactorJobEnum.Warrior)
+        {
+            if (skillCheck == SkillRunning.SkillOff)
+            {
+                //skillStrategy.Skill(playerType, 1, attackValue);
+                skillCheck = SkillRunning.SkillOn;
+                //playerAnim.SetInteger("Skill1", 1);
+                playerAnim.SetInteger(PlayerAnimName.AttackSkill.ToString(), 1);
+                Invoke("SkillValueReset", 3);//clear
+            }
+            else
+            {
+                return;
+            }
+        }
+        else if (_type == CharactorJobEnum.Gunner)
         {
             if (skillCheck == SkillRunning.SkillOff)
             {
@@ -90,7 +124,7 @@ public partial class Player : Charactor
     }
     public void AutoAttack()
     {
-
+        AttackAnim(1);
     }
 
 }

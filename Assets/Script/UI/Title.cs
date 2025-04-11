@@ -15,7 +15,7 @@ public partial class Title : MonoBehaviour
 
     public void OnbtnTitle() //예시
     {
-        Shared.SceneMgr.chageScene(Scene.Lobby);
+        Shared.SceneManager.chageScene(Scene.Lobby);
     }
     //void Start()
     //{
@@ -39,11 +39,11 @@ public partial class Title : MonoBehaviour
     }
     public void BackUpId() 
     {
-        Shared.SceneMgr.savePasskey(out PasswordKey);
+        Shared.SceneManager.savePasskey(out PasswordKey);
         //PasswordKey = ActKey;
 
         if (PasswordKey.Length < 0 || PasswordKey== "" || PasswordKey==null) { return; }
-        Shared.SceneMgr.GetPlayerPrefsStringKey(PasswordKey);
+        Shared.SceneManager.GetPlayerPrefsStringKey(PasswordKey);
         //Laoding = Passwordcheck();
         StartCoroutine(Passwordcheck());
         Debug.Log($"PassKey={PasswordKey}");
@@ -51,7 +51,7 @@ public partial class Title : MonoBehaviour
     public void LoginView()
     {
         //StartBut.interactable = true;
-        Shared.SceneMgr.chageScene(Scene.Login);
+        Shared.SceneManager.chageScene(Scene.Login);
     }
     IEnumerator Passwordcheck()
     {
@@ -62,6 +62,6 @@ public partial class Title : MonoBehaviour
         Debug.Log($"{PasswordKey}님의 계정 정보를 확인되었습니다.");
         yield return new WaitForSeconds(2);
 
-        Shared.SceneMgr.chageScene(Scene.Loading);
+        Shared.SceneManager.chageScene(Scene.Loading);
     }
 }

@@ -46,10 +46,11 @@ public enum WeaponState
     Sword_Off,
 
 }
-public enum RunState 
+public enum NpcRunState 
 {
     Run_On, 
-    Run_Off
+    Run_Off,
+    Stop
 }
 public enum PlayerControllState
 {
@@ -132,6 +133,12 @@ public enum MonsterAiState //Monster AI 상태
     Move,
     Attack,
     Reset,
+}
+public enum MonsterSpownLayer //Monster AI 상태
+{
+    SpawnSpider,
+    SpawnDron,
+    SpawnSphere,
 }
 public enum NpcAiState //Npc AI 상태
 {
@@ -234,6 +241,11 @@ public enum PlayerWalkState
     Walk_On,
     Walk_Off,
 }
+public enum RunState
+{
+    Walk,
+    Run,
+}
 public enum NpcWalkState
 {
     None,
@@ -251,7 +263,14 @@ public enum Layer //예전에는 앞에 sScene을 붙여야 했다
     Player,
     Bullet,
 }
-public enum InputType //예전에는 앞에 sScene을 붙여야 했다
+public enum MouseInputType //예전에는 앞에 sScene을 붙여야 했다
+{
+    None,
+    Click,      // GetMouseButtonDown
+    Hold,       // GetMouseButton
+    Release     // GetMouseButtonUp
+}
+public enum KeybordInputType //예전에는 앞에 sScene을 붙여야 했다
 {
     Click,      // GetMouseButtonDown
     Hold,       // GetMouseButton

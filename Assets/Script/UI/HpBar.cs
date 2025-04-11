@@ -77,7 +77,7 @@ public partial class HpBar : MonoBehaviour
 
     private void chasePlayer()
     {
-        if (Shared.BattelManager.GetMonsterPosition(key, out Vector3 pos) == true)
+        if (Shared.MonsterManager.GetMonsterPosition(key, out Vector3 pos) == true)
         {
             transform.LookAt(transform.position + mainCam.transform.forward);
         }

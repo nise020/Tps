@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 4908765436970732495}
   - component: {fileID: 6627277562896800721}
   m_Layer: 0
-  m_Name: Fab_SceneMgr
+  m_Name: Fab_SceneManager
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

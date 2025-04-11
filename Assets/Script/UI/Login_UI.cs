@@ -28,8 +28,8 @@ public partial class Login : MonoBehaviour
         Debug.Log("5초 후 로비 화면으로 이동합니다");
         IDKey = IdText.text;
         UserPassKey = PasswordText.text;
-        Shared.SceneMgr.SetPlayerPrefsStringKey(IDKey, UserPassKey);
-        Shared.SceneMgr.PassKey = UserPassKey;
+        Shared.SceneManager.SetPlayerPrefsStringKey(IDKey, UserPassKey);
+        Shared.SceneManager.PassKey = UserPassKey;
         //Shared.SceneMgr.SaveFile(UserPassKey);
         //ActKey = UserPassKey;
 
@@ -39,7 +39,7 @@ public partial class Login : MonoBehaviour
         Debug.Log($"UserPassKey={UserPassKey},IDKey={IDKey}");
 
         LoginBut.interactable = true;
-        Shared.SceneMgr.chageScene(Scene.Loading);
+        Shared.SceneManager.chageScene(Scene.Loading);
 
 
     }

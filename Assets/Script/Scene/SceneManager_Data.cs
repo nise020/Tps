@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using UnityEngine;
 
-public partial class SceneMgr : MonoBehaviour
+public partial class SceneManager : MonoBehaviour
 {
     [SerializeField]//제이슨 파일 등록
     public void dataSave() 

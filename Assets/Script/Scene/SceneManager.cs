@@ -4,7 +4,7 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
-public partial class SceneMgr : MonoBehaviour
+public partial class SceneManager : MonoBehaviour
 { 
     Scene Scene = Scene.Title;
 
@@ -15,9 +15,9 @@ public partial class SceneMgr : MonoBehaviour
     IEnumerator Laoding;
     private void Awake()
     {
-        if (Shared.SceneMgr == null)
+        if (Shared.SceneManager == null)
         {
-            Shared.SceneMgr = this;
+            Shared.SceneManager = this;
             //SceneMgr ╫л╠шеФ
             DontDestroyOnLoad(gameObject);
         }
@@ -51,7 +51,7 @@ Application.Quit();
     {
         Shared.FaidInOut.ActiveFade(true, () =>
         {
-            Shared.SceneMgr.chageScene((Scene.Battle));//юс╫ц
+            Shared.SceneManager.chageScene((Scene.Battle));//юс╫ц
             Shared.FaidInOut.ActiveFade(false, null);
         });
     }

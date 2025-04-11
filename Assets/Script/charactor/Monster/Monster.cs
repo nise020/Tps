@@ -10,7 +10,7 @@ public abstract partial class Monster : Charactor
     protected virtual void FixedUpdate()
     {
         if (AI == null) { return; }
-        AI.State(ref aIState);
+        //AI.State(ref aIState);
         CameraInMonsterCheck();
     }
     protected HpBar HPBAR = new HpBar();

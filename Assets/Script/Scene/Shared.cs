@@ -8,7 +8,7 @@ public static class Shared //메모
     //MonoBehaviour를 상속하지 않는다
     //싱글톤,static<--정적으로 접근하는 패턴,과거에 메모리를 계산하기 위해서 사용
     public static GameManager GameManager;
-    public static SceneMgr SceneMgr;
+    public static SceneManager SceneManager;
     public static BattelManager BattelManager;
     public static AtlasManager AtlasManager;
     public static SoundManager SoundManager;
@@ -17,6 +17,8 @@ public static class Shared //메모
     public static TableManager TableManager;
     public static UI_Battel BattelUI;
     public static FaidInOut FaidInOut;
+    public static InputManager InputManager;
+    public static MonsterManager MonsterManager;
 
     public static TableManager InutTableMgr() 
     {

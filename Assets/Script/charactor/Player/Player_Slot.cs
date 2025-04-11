@@ -18,7 +18,9 @@ public partial class Player : Charactor
     protected FindMoveObject findMoveObject = FindMoveObject.None;
     List<Slot> slotList = new List<Slot>();
     int keynumber = 0;
-
+    //검색
+    //정렬
+    //이동
     public void slotinit()
     {
         //Transform[] children = GetComponentsInChildren<Transform>();

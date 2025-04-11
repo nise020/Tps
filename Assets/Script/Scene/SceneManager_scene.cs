@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
-public partial class SceneMgr : MonoBehaviour
+public partial class SceneManager : MonoBehaviour
 {
     public void chageScene(Scene _e, bool _Loading = false)
     {
@@ -16,19 +16,19 @@ public partial class SceneMgr : MonoBehaviour
         {
             case Scene.Title:
                 //SceneManager.LoadScene("Title");
-                SceneManager.LoadScene(SceneName.Title.ToString());
+                UnityEngine.SceneManagement.SceneManager.LoadScene(SceneName.Title.ToString());
                 break;
             case Scene.Login:
                 //SceneManager.LoadScene("Login");
-                SceneManager.LoadScene(SceneName.Login.ToString());
+                UnityEngine.SceneManagement.SceneManager.LoadScene(SceneName.Login.ToString());
                 break;
             case Scene.Lobby:
                 //SceneManager.LoadScene("Lobby");
-                SceneManager.LoadScene(SceneName.Lobby.ToString());
+                UnityEngine.SceneManagement.SceneManager.LoadScene(SceneName.Lobby.ToString());
                 break;
             case Scene.Battle:
                 //SceneManager.LoadScene("Battle");
-                SceneManager.LoadScene(SceneName.Battle.ToString());
+                UnityEngine.SceneManagement.SceneManager.LoadScene(SceneName.Battle.ToString());
                 break;
         }
     }

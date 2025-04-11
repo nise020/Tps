@@ -73,7 +73,7 @@ public class BattelManager : MonoBehaviour
     }
     private void Start()
     {
-        creatObject();
+        //creatObject();
     }
     private void creatObject() 
     {

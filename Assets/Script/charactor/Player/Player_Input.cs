@@ -1,18 +1,71 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public partial class Player : Charactor
 {
-    Input_Base input_Base = new Input_Base();
+    
+    protected void inputrocessing() 
+    {
+        int keyinPut = Shared.InputManager.keyinPutQueBase.Count;
+        int mouseinPut = Shared.InputManager.mouseQueBase.Count;
+        int moveinPut = Shared.InputManager.moveQueBase.Count;
+
+        if (keyinPut == 0 && mouseinPut == 0 && moveinPut == 0) { return; }
+
+        while (keyinPut > 0)//key 
+        {
+            KeyCode type = Shared.InputManager.keyinPutQueBase.Dequeue();
+            switch (type)
+            {
+                case KeyCode.Mouse1:
+                    WalkStateChange(runState);
+                    break;
+                case KeyCode.R:
+                    reloding(playerType);//¸®·Îµå;
+                    break;
+                case KeyCode.Q:
+                    skillAttack1(playerType);//SkillQ
+                    break;
+                case KeyCode.E:
+                    skillAttack2(playerType);//SkillE
+                    break;
+            }
+        }
+        while (mouseinPut > 0)//mouseClick
+        {
+            MouseInputType type = Shared.InputManager.mouseQueBase.Dequeue();
+            MouseInputType type2 = Shared.InputManager.mouseQueBase.Peek();
+            switch (type) 
+            {
+                case MouseInputType.Click://mouseClick
+                    ;
+                    break;
+                case MouseInputType.Release://mouseClickUp
+                    ;
+                    break;
+                case MouseInputType.Hold://mouseClickDown
+                    ;
+                    break;
+            }
+                
+        }
+        while (Shared.InputManager.moveQueBase.Count > 0)//move
+        {
+            Vector3 type = Shared.InputManager.moveQueBase.Dequeue();
+            move(charctorState,type);
+            //Shared.InputManager.moveQueBase.Dequeue();
+        }
+    }
+
+
+
+
+    InputManager input_Base = new InputManager();
     protected Queue<KeyCode> keyinPutQue => input_Base.keyinPutQueBase;
-    protected Queue<InputType> mouseQue => input_Base.mouseQueBase;
+    protected Queue<MouseInputType> mouseQue => input_Base.mouseQueBase;
     protected Queue<Vector3> moveQue => input_Base.moveQueBase;
-
-
-
-
-
     protected bool mouseClick => Input.GetMouseButton(0);
     protected bool mouseClickUp => Input.GetMouseButtonUp(0);
     protected bool mouseClickDown => Input.GetMouseButtonDown(0);

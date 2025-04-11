@@ -13,7 +13,7 @@ public partial class Player : Charactor
     protected Rigidbody rigid;
     protected Animator playerAnim;
     protected Gun GUN;
-    bool runValue = false;
+    //bool runValue = false;
     protected BoxCollider cameraViewObj;
     [SerializeField] GameObject HandObj;
     [SerializeField] GameObject weapon;

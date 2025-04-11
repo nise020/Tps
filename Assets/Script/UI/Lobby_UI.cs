@@ -11,7 +11,7 @@ public partial class Lobby : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        TitleLoadBut.onClick.AddListener(()=>Shared.SceneMgr.chageScene(Scene.Title));//임시
+        TitleLoadBut.onClick.AddListener(()=>Shared.SceneManager.chageScene(Scene.Title));//임시
     }
 
 

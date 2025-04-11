@@ -30,7 +30,7 @@ public class Loading : MonoBehaviour
         maxImg.fillAmount = 1.0f;
         if (maxImg.fillAmount == 1.0f) 
         {
-            Shared.SceneMgr.chageScene(Scene.Lobby);
+            Shared.SceneManager.chageScene(Scene.Lobby);
         }
 
 

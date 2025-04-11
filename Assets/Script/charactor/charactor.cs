@@ -115,7 +115,7 @@ public abstract partial class Charactor : Actor
     {
 
     }
-    protected virtual void move(CharctorStateEnum _value) 
+    protected virtual void move(CharctorStateEnum _value,Vector3 _pos) 
     {
 
     }
@@ -127,7 +127,11 @@ public abstract partial class Charactor : Actor
     {
 
     }
-    protected virtual void skillAttack(CharactorJobEnum _type) 
+    protected virtual void skillAttack1(CharactorJobEnum _type) 
+    {
+
+    }
+    protected virtual void skillAttack2(CharactorJobEnum _type)
     {
 
     }

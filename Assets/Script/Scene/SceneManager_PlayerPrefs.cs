@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public partial class SceneMgr : MonoBehaviour
+public partial class SceneManager : MonoBehaviour
 {
     //계정 만들기
     //런쳐파일

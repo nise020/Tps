@@ -20,15 +20,16 @@ public partial class Gunner : Player
         skillStrategy.PlayerInit(this);
         //skillStrategy.WeaponInit(gun);
     }
-    protected override void skillAttack(CharactorJobEnum _type) 
+    protected override void skillAttack1(CharactorJobEnum _type) 
     {
-        base.skillAttack(_type);
+        //base.skillAttack(_type);
     }
     private void Update()
     {
-        move(charctorState);
-        runcheck(RunCheck);
-        skillAttack(playerType);
+        inputrocessing();
+        //WalkStateChange(playerWalkState);
+        //move(charctorState);
+        //skillAttack1(playerType);
 
         ////Time.timeScale = 0;//Faraim Speed up,Down
         ///

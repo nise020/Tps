@@ -18,14 +18,15 @@ public partial class Warrior : Player
         skillStrategy.PlayerInit(this);
         //skillStrategy.WeaponInit(gun);
     }
-    protected override void skillAttack(CharactorJobEnum _type)
+    protected override void skillAttack1(CharactorJobEnum _type)
     {
-        base.skillAttack(_type);
+        //base.skillAttack(_type);
     }
     private void Update()
     {
-        move(charctorState);
-        runcheck(RunCheck);
+        //inputrocessing();
+        //move(charctorState);
+        //runcheck(RunCheck);
         if (charctorState == CharctorStateEnum.Player)
         {
             if ((mouseClick))

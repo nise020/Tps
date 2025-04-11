@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using System.IO;
 
-public partial class SceneMgr: MonoBehaviour
+public partial class SceneManager: MonoBehaviour
 {
     string FilePath = "Test.txt";
 

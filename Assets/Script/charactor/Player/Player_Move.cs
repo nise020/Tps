@@ -2,8 +2,6 @@ using System.Collections;
 using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
-using WebSocketSharp;
-using static UnityEditor.Experimental.GraphView.GraphView;
 
 public partial class Player : Charactor
 {
@@ -26,6 +24,10 @@ public partial class Player : Charactor
     LayerName layerName = LayerName.None;
     public void Move_Npc(Player _player)
     {
+        //플레이어의 거리에 따라 달리고 걷는게 가능 하지만 찔끔 움직이면 움직임이 더딘다
+        //: 개선이 필요함
+
+
         //동일한 위치로 이동이 불가(플레이어 위치에 정확히 이동이 불가) 할 경우 플레이어 뒤쪽 위치에 이동
         //불가 하지 않을 경우 해당 위치로 계속 이동
         //PlayerWalkState state = PlayerWalkState.None;
@@ -66,21 +68,19 @@ public partial class Player : Charactor
 
         if (dist > runDistanseValue)//run
         {
+            npcRunStateAnim(dist); 
             gameObject.transform.position += disTance.normalized * speedValue * 2 * Time.deltaTime;
-            playerAnim.SetInteger(PlayerAnimParameters.Run.ToString(), 1);
-            playerAnim.SetInteger(PlayerAnimParameters.Walk.ToString(), 0);
             return;
         }
         else if (dist <= runDistanseValue && dist >= playerStopDistanseValue)//walk
         {
+            npcRunStateAnim(dist);
             gameObject.transform.position += disTance.normalized * speedValue * Time.deltaTime;
-            playerAnim.SetInteger(PlayerAnimParameters.Walk.ToString(), 1);
-            playerAnim.SetInteger(PlayerAnimParameters.Run.ToString(), 0);
             return;
         }
         else if (dist <= playerStopDistanseValue)//&& PLAYER.playerwalksateinit() == false
         {
-            playerAnim.SetInteger(PlayerAnimParameters.Walk.ToString(), 0);
+            npcRunStateAnim(dist);
             #region Player Follow
             if (fsmPosQue.Count == 0)
             {
@@ -100,20 +100,7 @@ public partial class Player : Charactor
     {
         return movePosition;
     }
-    //public Vector3 MovePointSearch() 
-    //{
-    //    SlotData slot = slotDatas.Peek();
-    //    if (slot.ObjectState == PositionObjectState.Empty)
-    //    {
-    //        PositionObjectState state = PositionObjectState.Occupied;
-    //        slot.ObjectState = state;
-    //        GameObject go = slot.FootholdObject;
-    //        movePosition = go.transform.position;
-    //        slotDatas.Dequeue();
-    //    }
-    //    return movePosition;
-    //}
-
+   
     public bool playerwalksateinit()//player state object
     {
         if (playerWalkState == PlayerWalkState.Walk_Off)
@@ -125,43 +112,37 @@ public partial class Player : Charactor
             return true;
         }
     }
-    //public Vector3 MovePointSearchInit(Vector3 _pos)//Player State Object init
-    //{
-    //    if (_pos == null)
-    //    {
-    //        movePointSearch(out _pos);
-    //    }
-    //    else //
-    //    {
-
-    //    }
-    //    movePointSearch(out _pos);
-    //    return _pos;
-    //}
-    //private bool ObjectCheck() 
-    //{
-
-    //}
-
+    
     public void PositionObjectInit(out List<GameObject> _objects)
     {
         _objects = backPositionObject;
     }
-    public bool TargetMove(Vector3 _pos)
+    public bool AttackDistanseCheck(float value) 
     {
-        float value = Vector3.Distance(transform.position, _pos);
-        if (value < 0.1)//값을 상수가 아닌값으로 수정 필요
+        if (value <= 0.1)//값을 상수가 아닌값으로 수정 필요
         {
+            value = 0;
             return true;
         }
-
-        Quaternion targetRotation = Quaternion.LookRotation(_pos);
-        transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, Time.deltaTime * rotSpeed);
-        _pos.y = 0.0f;
-        transform.position += _pos.normalized * speedValue * Time.deltaTime;
         return false;
     }
-    protected override void move(CharctorStateEnum _value)//Controll
+    public float TargetMove(Vector3 _pos)
+    {
+        Vector3 stopPoint = _pos;
+        Vector3 disTance = (stopPoint - gameObject.transform.position);
+
+        Quaternion rotation = Quaternion.LookRotation(disTance.normalized);
+        gameObject.transform.rotation = Quaternion.Slerp(gameObject.transform.rotation, rotation, Time.deltaTime * rotSpeed);
+
+        gameObject.transform.position += disTance * speedValue * Time.deltaTime;
+        float value = Vector3.Distance(gameObject.transform.position, _pos);
+
+        playerAnim.SetInteger(PlayerAnimParameters.Run.ToString(), 0);
+        playerAnim.SetInteger(PlayerAnimParameters.Walk.ToString(), 0);
+
+        return value;
+    }
+    protected override void move(CharctorStateEnum _value,Vector3 _pos)//Controll
     {
         if (_value == CharctorStateEnum.Npc)
         {
@@ -171,11 +152,15 @@ public partial class Player : Charactor
         {
             //Vector3 direction = transform.TransformDirection(inPutPos.normalized);
 
-            if (inPutPos.magnitude > 0.1f)
+            if (_pos.magnitude > 0.1f)
             {
                 playerWalkState = PlayerWalkState.Walk_On;
                 notWalkTimer = 0.0f;
-                float speed = runValue ? speedValue * 2 : speedValue;
+                float speed = speedValue;
+                if (runState==RunState.Run) 
+                {
+                    speed = speedValue * 2;
+                }
                 //transform.localPosition += direction * (speed) * Time.deltaTime;
                 //rigid.velocity = direction * speed;
 
@@ -222,7 +207,36 @@ public partial class Player : Charactor
         //sideWalkAnim(movePos.x, playerType);
     }
 
+    //public Vector3 MovePointSearchInit(Vector3 _pos)//Player State Object init
+    //{
+    //    if (_pos == null)
+    //    {
+    //        movePointSearch(out _pos);
+    //    }
+    //    else //
+    //    {
 
+    //    }
+    //    movePointSearch(out _pos);
+    //    return _pos;
+    //}
+    //private bool ObjectCheck() 
+    //{
+
+    //}
+    //public Vector3 MovePointSearch() 
+    //{
+    //    SlotData slot = slotDatas.Peek();
+    //    if (slot.ObjectState == PositionObjectState.Empty)
+    //    {
+    //        PositionObjectState state = PositionObjectState.Occupied;
+    //        slot.ObjectState = state;
+    //        GameObject go = slot.FootholdObject;
+    //        movePosition = go.transform.position;
+    //        slotDatas.Dequeue();
+    //    }
+    //    return movePosition;
+    //}
 
 
 

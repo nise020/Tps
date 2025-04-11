@@ -1,9 +1,9 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
-using UnityEngine.SocialPlatforms.Impl;
-using UnityEngine.UIElements;
+using UnityEngine.InputSystem.LowLevel;
 
 public partial class Player : Charactor
 {
@@ -17,8 +17,7 @@ public partial class Player : Charactor
 
     protected SkillRunning Skillcheck = SkillRunning.SkillOff;
     protected WeaponState weaponState = WeaponState.None;
-    protected RunState runState = RunState.Run_Off;
-
+    protected NpcRunState npcRunState = NpcRunState.Run_Off;
     public void skillAnimation()//AnimationEvent
     {
         Skillcheck = SkillRunning.SkillOff;
@@ -58,13 +57,13 @@ public partial class Player : Charactor
             playerAnim.SetInteger(PlayerAnimParameters.Left.ToString(), (int)_move);
         }
     }
-    protected void moveAnim(float _move)
+    protected void moveAnim(NpcRunState _runState,float _move)
     {
-        if (runState == RunState.Run_Off && _move != 0.0)//Off
+        if (_runState == NpcRunState.Run_Off && _move != 0.0)//Off
         {
-            walkAnim(_move, weaponState);
+            WeaponWalkAnim(_move, weaponState);
         }
-        else if (runState == RunState.Run_On && _move != 0.0)
+        else if (_runState == NpcRunState.Run_On && _move != 0.0)
         {
             runAnim(_move);
         }
@@ -96,7 +95,41 @@ public partial class Player : Charactor
             playerAnim.SetInteger(PlayerAnimParameters.Back.ToString(), (int)_move);
         }
     }
-    protected void walkAnim(float _move, WeaponState _state)
+    protected void npcRunStateAnim(float dist)
+    {
+        if (dist > runDistanseValue && npcRunState != NpcRunState.Run_On)//run
+        {
+            npcRunState = NpcRunState.Run_On;
+            playerAnim.SetInteger(PlayerAnimParameters.Run.ToString(), 1);
+            playerAnim.SetInteger(PlayerAnimParameters.Walk.ToString(), 0);
+            return;
+        }
+        else if (dist <= runDistanseValue && dist >= playerStopDistanseValue && npcRunState != NpcRunState.Run_Off)//walk
+        {
+            npcRunState = NpcRunState.Run_Off;
+            playerAnim.SetInteger(PlayerAnimParameters.Walk.ToString(), 1);
+            playerAnim.SetInteger(PlayerAnimParameters.Run.ToString(), 0);
+            return;
+        }
+        else if (dist <= playerStopDistanseValue && npcRunState != NpcRunState.Stop)//&& PLAYER.playerwalksateinit() == false
+        {
+            npcRunState = NpcRunState.Stop;
+            playerAnim.SetInteger(PlayerAnimParameters.Walk.ToString(), 0);
+        }
+        else { return; }
+    }
+    protected void walkAnimCheck(float _move) 
+    {
+        if (_move > 0)
+        {
+            playerAnim.SetInteger(PlayerAnimParameters.Walk.ToString(), (int)_move);
+        }
+        else if (_move < 0)
+        {
+            playerAnim.SetInteger(PlayerAnimParameters.Walk.ToString(), (int)_move);
+        }
+    }
+    protected void WeaponWalkAnim(float _move, WeaponState _state)
     {
         if (_state == WeaponState.Sword_On)//Warrior 
         {
@@ -132,15 +165,21 @@ public partial class Player : Charactor
             }
         }
     }
-    protected void runcheck(bool _cheack)
+    protected RunState runState = RunState.Walk;
+    protected void WalkStateChange(RunState _cheack)
     {
-        if (_cheack)
+        if (_cheack == RunState.Walk)//Walk_Off State
         {
-            runValue = !runValue;
-            runState = RunState.Run_On;
+            _cheack = RunState.Run;
+            runState = _cheack;
             clearWalkAnim(playerType);
         }
-        else { return; }
+        else if (_cheack == RunState.Run)//Walk_On State
+        {
+            _cheack = RunState.Walk;
+            runState = _cheack;
+            clearWalkAnim(playerType);
+        }
     }
     public void ClearAllAnimation(CharactorJobEnum type)//PlayerChange
     {

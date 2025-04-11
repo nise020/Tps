@@ -34,17 +34,18 @@ public class AI_Npc : AiBase
     float viewDistance = 10f;
     float viewAngle = 60f;
     public float sphereRadius = 50.0f;
+    
     protected override void Search(Player _obj)
     {
+        
         Shared.GameManager.PlayerData(out Player _player);
         _obj.Move_Npc(_player);
-        
+        Debug.Log($"npcAi={npcAi}");
         //Que
         //Time
         //Vector
         if (_obj.SearchCheck(out tagetPos) == true)
         {
-            Debug.Log($"npcAi={npcAi}");
             npcAi = NpcAiState.Move;
         }
         else //Not Find Monster
@@ -54,20 +55,23 @@ public class AI_Npc : AiBase
     }
     protected override void Move(Player _obj, Vector3 _pos)
     {
-        if (_obj.TargetMove(_pos) == true)
+        Debug.Log($"npcAi={npcAi}");
+        float value = _obj.TargetMove(_pos);
+        if (_obj.AttackDistanseCheck(value) == true)//Move
         {
             npcAi = NpcAiState.Attack;
         }
     }
     protected override void Attack(Player _obj)
     {
+        Debug.Log($"npcAi={npcAi}");
         _obj.AutoAttack();
         npcAi = NpcAiState.Reset;
     }
     protected override void Reset()
     {
         tagetPos = new Vector3();
-        npcAi = NpcAiState.Search;
+        //npcAi = NpcAiState.Search;
     }
 
 }

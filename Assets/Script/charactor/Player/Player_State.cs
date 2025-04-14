@@ -23,22 +23,12 @@ public partial class Player : Charactor
     {
         //float radius = 8f;
         //float fieldOfView = 90f;
-
-        string layer = LayerName.Monster.ToString();//8
-        int layermask = LayerMask.GetMask(layer);
-        Collider[] hits = Physics.OverlapSphere(transform.position, radius, layermask);
-        foreach (Collider hit in hits)
+        Vector3 position = Shared.MonsterManager.monsterSearch(gameObject, radius);
+        float distance = Vector3.Distance(position,gameObject.transform.position);
+        if (radius > distance) 
         {
-            if (hit.gameObject.layer == Delivery.LayerNameEnum(LayerName.Monster))
-            {
-                _pos = hit.gameObject.transform.position;
-                return true;
-            }
-            //else 
-            //{
-            //    _pos = new Vector3();
-            //    return false; 
-            //}
+            _pos = position;
+            return true;
         }
         _pos = Vector3.zero;
         return false;

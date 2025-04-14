@@ -1,0 +1,35 @@
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+
+public partial class Gunner : Player
+{
+    protected override void walkAnim(RunState _runState, Vector3 _pos)
+    {
+        if (_pos.x == 1)//rigrt
+        {
+            playerAnim.SetInteger(PlayerAnimParameters.Right.ToString(), (int)_pos.x);
+        }
+        else if (_pos.x == -1)//left
+        {
+            playerAnim.SetInteger(PlayerAnimParameters.Left.ToString(), (int)_pos.x);
+        }
+        else if (_pos.z == 1)//front
+        {
+            if (_runState == RunState.Walk)
+            {
+                playerWalkState = PlayerWalkState.Walk_On;
+                playerAnim.SetInteger(PlayerAnimParameters.Walk.ToString(), (int)_pos.z);
+            }
+            else if (_runState == RunState.Run)
+            {
+                playerRunState = PlayerRunState.Run_On;
+                playerAnim.SetInteger(PlayerAnimParameters.Run.ToString(), (int)_pos.z);
+            }
+        }
+        else if (_pos.z == -1)//back
+        {
+            playerAnim.SetInteger(PlayerAnimParameters.Back.ToString(), (int)_pos.z);
+        }
+    }
+}

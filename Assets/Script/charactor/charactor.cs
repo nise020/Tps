@@ -123,7 +123,7 @@ public abstract partial class Charactor : Actor
     {
 
     }
-    protected virtual void attack(CharctorStateEnum _state) 
+    protected virtual void attack(CharctorStateEnum _state, CharactorJobEnum _job) 
     {
 
     }

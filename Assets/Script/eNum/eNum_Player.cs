@@ -3,8 +3,8 @@ using System.Collections.Generic;
 public enum BulletType
 {
     Mobbullet,
-        Playerbullet,
-        MobGranad,
+    Playerbullet,
+    MobGranad,
 }
 public enum PlayerAnimParameters 
 {
@@ -21,55 +21,12 @@ public enum PlayerAnimParameters
 
 }
 
-public enum MonsterAnimParameters
-{
-    Walk,
-    Run,
-    Attack,
-    Close,
-    Search,
-    Idle,
-    Serch,
-    Open,
-    Stop,
-
-}
 public enum SkillRunning 
 {
     SkillOn,
     SkillOff
 }
-public enum WeaponState 
-{
-    None,
-    Sword_On,
-    Sword_Off,
 
-}
-public enum NpcRunState 
-{
-    Run_On, 
-    Run_Off,
-    Stop
-}
-public enum PlayerControllState
-{
-    Off,
-    On,
-}
-public enum GunState 
-{
-    Attack,
-    Reload,
-}
-public enum MobAnim
-{
-    Idle,
-    Attack,
-    Serch,
-    AttackDilray,
-    Walk
-}
 
 public enum WeaponEnum 
 {
@@ -77,43 +34,25 @@ public enum WeaponEnum
     Gun,
     Sword
 }
+
 public enum PlayerAnimName
 {
     Attack,
     closeAttack,
     reloading,
     AttackSkill,
-    BuffSkill
+    BuffSkill,
+    Shit,
+
 }
 public enum CameraAnim 
 {
     Shake
 }
-public enum Playerstate
+public enum PlayerCameraMode
 {
-    Null,
-    Run,
-    CloseAttack,
-    ShitDown,
-    Reload,
-    Attack,
-}
-public enum Characterstate 
-{
-    Health,
-    Dead
-}
-public enum eState 
-{
-    //HP,//체력
-    //MaxHP,//최대체력
-    //movespeed,//이동속도
-    //attack,//공격력
-    //Defens,//방어력
-    SkillCool_1,//1번 스킬쿨타임
-    SkillCool_2,//2번 스킬쿨타임
-    Buff,//버프
-    BurstCool,//버스트 쿨타임
+    CameraRotationMode,
+    GunAttackMode,
 }
 
 public enum Scene //예전에는 앞에 sScene을 붙여야 했다
@@ -126,44 +65,13 @@ public enum Scene //예전에는 앞에 sScene을 붙여야 했다
    End,
 
 }
-public enum MonsterAiState //Monster AI 상태
-{
-    Create,
-    Search,
-    Move,
-    Attack,
-    Reset,
-}
-public enum MonsterSpownLayer //Monster AI 상태
-{
-    SpawnSpider,
-    SpawnDron,
-    SpawnSphere,
-}
-public enum NpcAiState //Npc AI 상태
-{
-    Search,
-    Move,
-    Attack,
-    Reset,
-}
-public enum MonsterType //몬스터 태그
-{
-    Defolt,
-    Dron,
-    Spider,
-    Sphere
-}
+
 public enum Condition //몬스터의 상태패턴
 {
     health,
     hard,
 }
-public enum SearchState 
-{
-    Stop,
-    Move
-}
+
 public enum CharactorJobEnum
 {
     None,
@@ -229,29 +137,7 @@ public enum LayerName
     BackPosition1,
     BackPosition2
 }
-public enum PositionObjectState 
-{
-    Empty,
-    None,
-    Occupied
-}
-public enum PlayerWalkState 
-{
-    None,
-    Walk_On,
-    Walk_Off,
-}
-public enum RunState
-{
-    Walk,
-    Run,
-}
-public enum NpcWalkState
-{
-    None,
-    Walk,
-    Run,
-}
+
 public enum FindMoveObject
 {
     None,

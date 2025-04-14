@@ -61,7 +61,7 @@ public partial class UI_Battel : MonoBehaviour
     public void AnotherPlayerReset(Player _player, CharactorJobEnum _type, CharctorStateEnum _check) 
     {
         //_player.playerTypeInite(out _type);//Load
-        _player.ClearAllAnimation(_type);//Animation reset
+        //_player.ClearAllAnimation(_type);//Animation reset
         PlayerCameraCheck(_player, _check);//Camera On_Off
         Shared.GameManager.CharctorContoll(_player, CharctorStateEnum.Npc);//Controll Off
     }

@@ -1,21 +1,34 @@
+ï»¿using Cinemachine.Utility;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 public class MonsterManager : MonoBehaviour
 {
-    //¸ó½ºÅÍ¸¦ µñ¼Ç¾î¸®·Î °ü¸®
-    //¸ó½ºÅÍÀÇ °Å¸®¸¦ ÃøÁ¤ÇÒ ¸®½ºÆ® ±¸ÇöÇØ¼­ °ü¸®
+    [Header("Spown")]
+    [SerializeField] List<GameObject> STAGE;
+    [SerializeField, Tooltip("ìŠ¤í°í•  ëª»ìŠ¤í„° ìˆ«ì")] int Maxcount = 1;
+    public Dictionary<int, GameObject> monsterData = new Dictionary<int, GameObject>();
+    
+    int stageLevel = 0;
+    int mincount = 0;
+    ObjectType objType = ObjectType.None;
+
+    //ëª¬ìŠ¤í„°ë¥¼ ë”•ì…˜ì–´ë¦¬ë¡œ ê´€ë¦¬
+    //ëª¬ìŠ¤í„°ì˜ ê±°ë¦¬ë¥¼ ì¸¡ì •í•  ë¦¬ìŠ¤íŠ¸ êµ¬í˜„í•´ì„œ ê´€ë¦¬
     private void Awake()
     {
         if (Shared.MonsterManager == null)
         {
             Shared.MonsterManager = this;
+            DontDestroyOnLoad(gameObject);
         }
         else
         {
             Destroy(this);
         }
+        //creatObject();
     }
 
     private void Start()
@@ -24,31 +37,43 @@ public class MonsterManager : MonoBehaviour
     }
     private void creatObject()
     {
-        //player
-        CharctorStateEnum controll = CharctorStateEnum.Player;
-
-        //PLAYER.gameObject.transform.position = startPointObj.gameObject.transform.position;
-        //PLAYER.PlayerControllChange(controll);
-        //PlayerAlive = true;
-
-        //playerCam.transform.position = PLAYER.transform.position;
-        //MOVECAM.PlayerObj = PLAYER.gameObject;
-        //Gun
-
-
         //monster
         spownListArrange(STAGE[stageLevel]);
-
-        //GameObject monster = Instantiate(GUN.gameObject, transform.position, Quaternion.identity, creatTab);
-
     }
-    [Header("Spown")]
-    [SerializeField] List<GameObject> STAGE;
-    [SerializeField, Tooltip("½ºÆùÇÒ ¸ø½ºÅÍ ¼ıÀÚ")] int Maxcount = 1;
-    public Dictionary<int, GameObject> monsterData = new Dictionary<int, GameObject>();
-    int stageLevel = 0;
-    int mincount = 0;
-    ObjectType objType = ObjectType.None;
+    public Vector3 monsterSearch(GameObject _playerObj,float _radius) 
+    {
+        List<Monster> nearbyMonsters = new List<Monster>();
+
+        foreach (Monster monster in MonsterList)
+        {
+            float dist = Vector3.Distance(monster.transform.position, _playerObj.transform.position);
+            if (dist <= _radius)
+            {
+                nearbyMonsters.Add(monster);
+            }
+        }
+        if (nearbyMonsters.Count == 0)
+        {
+            return Vector3.zero;//none
+        }
+        nearbyMonsters.Sort((a, b) =>
+        {
+            float distA = Vector3.Distance(a.transform.position, _playerObj.transform.position);
+            float distB = Vector3.Distance(b.transform.position, _playerObj.transform.position);
+
+            int compareDist = distA.CompareTo(distB);
+            if (compareDist != 0)
+            {
+                return compareDist;//distanse
+            }
+            else
+            {
+                return a.name.CompareTo(b.name);//name
+            }
+        });
+
+        return nearbyMonsters[0].transform.position;
+    }
     private void spownListArrange(GameObject _stage)
     {
         foreach (Transform spawnPoint in _stage.transform)
@@ -66,6 +91,7 @@ public class MonsterManager : MonoBehaviour
     [SerializeField] GameObject hpBarCanvers;
     [SerializeField] HpBar hpBarObj;
     [SerializeField] GameObject exflotionEffect;
+    List<Monster> MonsterList = new List<Monster>();
     public Dictionary<int, GameObject> hpData = new Dictionary<int, GameObject>();
     int monsterCount = 0;
 
@@ -77,7 +103,7 @@ public class MonsterManager : MonoBehaviour
 
         _min += 1;
         GameObject monsterType = null;
-        switch (_layername) //¼öÁ¤ ÇÊ¿ä
+        switch (_layername) //ìˆ˜ì • í•„ìš”
         {
             case "SpawnSpider":
                 monsterType = SpiderMob.gameObject;
@@ -100,7 +126,7 @@ public class MonsterManager : MonoBehaviour
         monster.BomEffect(exflotionEffect);
         HpBarValue(hpBarCanvers, Maxcount, monsterCount, monster);
         monsterCount += 1;
-
+        MonsterList.Add(monster);
     }
     public void HpBarValue(GameObject _hpBarCanvers, int _max, int _min, Monster _monster)
     {

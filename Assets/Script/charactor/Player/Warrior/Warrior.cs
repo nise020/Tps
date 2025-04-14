@@ -29,11 +29,12 @@ public partial class Warrior : Player
         //runcheck(RunCheck);
         if (charctorState == CharctorStateEnum.Player)
         {
+            inputrocessing();
             if ((mouseClick))
             {
-                attack(charctorState);
+                //attack(charctorState);
             }
-            shitdownCheak();//¾É±â
+            //shitdownCheak();//¾É±â
         }
         else 
         {

@@ -5,16 +5,17 @@ using UnityEngine;
 
 public partial class Player : Charactor
 {
-    
+    protected RunState runState = RunState.Walk;
+    protected AttackState attackState = AttackState.None;
     protected void inputrocessing() 
     {
-        int keyinPut = Shared.InputManager.keyinPutQueBase.Count;
-        int mouseinPut = Shared.InputManager.mouseQueBase.Count;
-        int moveinPut = Shared.InputManager.moveQueBase.Count;
+        //int keyinPut = Shared.InputManager.keyinPutQueBase.Count;
+        //int mouseinPut = Shared.InputManager.mouseQueBase.Count;
+        //int moveinPut = Shared.InputManager.moveQueBase.Count;
 
-        if (keyinPut == 0 && mouseinPut == 0 && moveinPut == 0) { return; }
+        //if (keyinPut == 0 && mouseinPut == 0 && moveinPut == 0) { return; }
 
-        while (keyinPut > 0)//key 
+        while (Shared.InputManager.keyinPutQueBase.Count > 0)//key 
         {
             KeyCode type = Shared.InputManager.keyinPutQueBase.Dequeue();
             switch (type)
@@ -31,41 +32,67 @@ public partial class Player : Charactor
                 case KeyCode.E:
                     skillAttack2(playerType);//SkillE
                     break;
+                case KeyCode.Z:
+                    shitdownCheak();//shitdown
+                    break;
+                case KeyCode.Space:
+                    cameraModeChange();
+                    break;
             }
         }
-        while (mouseinPut > 0)//mouseClick
+        while (Shared.InputManager.mouseQueBase.Count > 0)//mouseClick == Attack
         {
             MouseInputType type = Shared.InputManager.mouseQueBase.Dequeue();
-            MouseInputType type2 = Shared.InputManager.mouseQueBase.Peek();
             switch (type) 
             {
                 case MouseInputType.Click://mouseClick
-                    ;
+                    attack(charctorState, playerType);
                     break;
                 case MouseInputType.Release://mouseClickUp
+                    if (attackState == AttackState.AttackOn)
+                    {
+                        AttackAnim(0);
+                        attackState = AttackState.AttackOff;
+                    }
                     ;
                     break;
                 case MouseInputType.Hold://mouseClickDown
+                    if (attackState == AttackState.AttackOn) 
+                    {
+                        AttackAnim(0);
+                        attackState = AttackState.AttackOff;
+                    }
                     ;
                     break;
             }
                 
         }
+        if (Shared.InputManager.moveQueBase.Count == 0) 
+        {
+            clearWalkAnim(playerType);
+        }
         while (Shared.InputManager.moveQueBase.Count > 0)//move
         {
             Vector3 type = Shared.InputManager.moveQueBase.Dequeue();
             move(charctorState,type);
-            //Shared.InputManager.moveQueBase.Dequeue();
         }
+
+        notWalkTimer += Time.deltaTime;
+        if (notWalkTimer > notWalkTime &&
+            playerWalkState == PlayerWalkState.Walk_On)
+        {
+            playerWalkState = PlayerWalkState.Walk_Off;
+        }
+        
     }
 
 
 
 
-    InputManager input_Base = new InputManager();
-    protected Queue<KeyCode> keyinPutQue => input_Base.keyinPutQueBase;
-    protected Queue<MouseInputType> mouseQue => input_Base.mouseQueBase;
-    protected Queue<Vector3> moveQue => input_Base.moveQueBase;
+    //InputManager input_Base = new InputManager();
+    //protected Queue<KeyCode> keyinPutQue => input_Base.keyinPutQueBase;
+    //protected Queue<MouseInputType> mouseQue => input_Base.mouseQueBase;
+    //protected Queue<Vector3> moveQue => input_Base.moveQueBase;
     protected bool mouseClick => Input.GetMouseButton(0);
     protected bool mouseClickUp => Input.GetMouseButtonUp(0);
     protected bool mouseClickDown => Input.GetMouseButtonDown(0);

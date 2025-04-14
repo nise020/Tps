@@ -30,7 +30,7 @@ public partial class MoveCamera : MonoBehaviour
 
     float xValue = 0;
     float yValue = 0;
-
+    [SerializeField] PlayerCameraMode playerCameraMode = PlayerCameraMode.CameraRotationMode;
     public bool GunModeCheck() 
     {
         if (GunModeOn) 
@@ -46,11 +46,13 @@ public partial class MoveCamera : MonoBehaviour
     {
         viewObj = _obj;
     }
+    public void CameraModeInit(PlayerCameraMode _mode)
+    {
+        playerCameraMode = _mode;
+    }
     public void camRot()
     {
-        if (viewObj == null || 
-            camRotOn == false || 
-            GunModeOn == true) return;
+        if (viewObj == null) return;
 
         //playerType == PlayerType.Gunner
 
@@ -69,22 +71,17 @@ public partial class MoveCamera : MonoBehaviour
     }
     private void shootCamera(bool _value)
     {
-        if (_value == true)
-        {
-            //playerType == PlayerType.Gunner
+        if (viewObj == null) return;
+        camPos = new Vector3(aim, Hight, Distans);
+        float xRot = Input.GetAxis("Mouse X") * rotSensitive;
+        float yRot = Input.GetAxis("Mouse Y") * rotSensitive;
 
-            camPos = new Vector3(aim, Hight, Distans);
-            float xRot = Input.GetAxis("Mouse X") * rotSensitive;
-            float yRot = Input.GetAxis("Mouse Y") * rotSensitive;
+        xValue += xRot;
+        yValue -= yRot;
+        yValue = Mathf.Clamp(yValue, -attacklimitRot, attacklimitRot);
 
-            xValue += xRot;
-            yValue -= yRot;
-            yValue = Mathf.Clamp(yValue, -attacklimitRot, attacklimitRot);
-
-            Quaternion rotation = Quaternion.Euler(yValue, xValue, 0);
-            viewObj.transform.rotation = rotation;
-        }
-        else { return; }
+        Quaternion rotation = Quaternion.Euler(yValue, xValue, 0);
+        viewObj.transform.rotation = rotation;
     }
     private void shootMode()
     {
@@ -112,9 +109,14 @@ public partial class MoveCamera : MonoBehaviour
     private void LateUpdate()
     {
         //showCursue();
-
-        shootMode();
-        camRot();
+        if (playerCameraMode == PlayerCameraMode.CameraRotationMode)
+        {
+            camRot();
+        }
+        else if (playerCameraMode == PlayerCameraMode.GunAttackMode) 
+        {
+            shootMode();
+        }
     }
     public void cameraShakeAnim(bool _anim) 
     {

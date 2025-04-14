@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using static UnityEditor.SceneView;
 
 public partial class Player : Charactor
 {
@@ -9,7 +10,7 @@ public partial class Player : Charactor
     float rotSpeed = 20.0f;//나중에 조정
     float distancingValue = 3.0f;
     SkillRunning skillCheck = SkillRunning.SkillOff;
-
+    PlayerCameraMode cameraMode = PlayerCameraMode.CameraRotationMode;
     [SerializeField] Vector3 playerStopDistansePos;
     int movetimeCount;
     float timeValue;
@@ -91,29 +92,39 @@ public partial class Player : Charactor
         playerAnim.SetInteger(PlayerAnimName.AttackSkill.ToString(), 0);
         playerAnim.SetInteger(PlayerAnimName.BuffSkill.ToString(), 0);
     }
-    protected override void attack(CharctorStateEnum _state)
+    protected void cameraModeChange() 
     {
-        if (_state == CharctorStateEnum.Npc)
+        if (cameraMode == PlayerCameraMode.CameraRotationMode) 
         {
-            //Vector3 pos = new Vector3();
-            //pos = Shared.GameManager.FindPlayer(pos);
+            cameraMode = PlayerCameraMode.GunAttackMode;
+            viewcam.CameraModeInit(cameraMode);
         }
-        else if (_state == CharctorStateEnum.Player) 
+        else if (cameraMode == PlayerCameraMode.GunAttackMode)
         {
-            if (playerType == CharactorJobEnum.Gunner)
+            cameraMode = PlayerCameraMode.CameraRotationMode;
+            viewcam.CameraModeInit(cameraMode);
+        }
+    }
+    protected override void attack(CharctorStateEnum _state, CharactorJobEnum _job)
+    {
+        if (_state == CharctorStateEnum.Player) 
+        {
+            if (_job == CharactorJobEnum.Gunner)
             {
-                GUN = GetComponentInChildren<Gun>();
-                if (GUN.reLoed == false && GUN.nowbullet >= 0)
+                if (reloadState == ReloadState.ReloadOn || GUN.nowbullet <= 0) 
                 {
-                    Vector3 AimDirection = GUN.gameObject.transform.forward;
-                    playerAnim.SetLayerWeight(attackLayerIndex, 1.0f);
-                    AttackAnim(1);
-                    GUN.Attack(viewcam, AimDirection);
+                    Debug.Log($"bullet = {GUN.nowbullet}");
+                    return ;
                 }
+                attackState = AttackState.AttackOn;
+                Vector3 AimDirection = GUN.gameObject.transform.forward;
+                playerAnim.SetLayerWeight(attackLayerIndex, 1.0f);
+                AttackAnim(1);
+                GUN.Attack(viewcam, AimDirection);
+                playerAnim.SetLayerWeight(attackLayerIndex, 0.0f);
             }
-            else if (playerType == CharactorJobEnum.Warrior)
+            else if (_job == CharactorJobEnum.Warrior)
             {
-                //closeAttackCheack();
                 AttackAnim(1);
             }
         }

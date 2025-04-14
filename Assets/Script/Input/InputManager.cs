@@ -32,6 +32,8 @@ public class InputManager : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.R)) keyinPutQueBase.Enqueue(KeyCode.R);//reloadOn
         if (Input.GetKeyDown(KeyCode.Q)) keyinPutQueBase.Enqueue(KeyCode.Q);//Skill1
         if (Input.GetKeyDown(KeyCode.E)) keyinPutQueBase.Enqueue(KeyCode.E);//Skill2
+        if (Input.GetKeyDown(KeyCode.Z)) keyinPutQueBase.Enqueue(KeyCode.Z);//shitdown
+        if (Input.GetKeyDown(KeyCode.Space)) keyinPutQueBase.Enqueue(KeyCode.Space);//Space
 
         Vector3 move = new Vector3(Input.GetAxisRaw("Horizontal"), 0, Input.GetAxisRaw("Vertical"));
         if (move.magnitude > 0.1f) moveQueBase.Enqueue(move);

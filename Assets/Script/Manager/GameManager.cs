@@ -20,7 +20,7 @@ public class GameManager : MonoBehaviour
     [SerializeField] Gunner GUNNER;
     [SerializeField] Warrior WARRIOR;
     Player[] PlayerObj;//플블 번호
-
+    [SerializeField] GameObject startPointObj;
 
 
     [Header("Monster")]
@@ -91,6 +91,7 @@ public class GameManager : MonoBehaviour
         CharctorTypeAdd(GUNNER, CharactorJobEnum.Gunner);
         CharctorTypeAdd(WARRIOR, CharactorJobEnum.Warrior);
         FindPlayer();
+        PLAYER.gameObject.transform.position = startPointObj.gameObject.transform.position;
     }
 
     

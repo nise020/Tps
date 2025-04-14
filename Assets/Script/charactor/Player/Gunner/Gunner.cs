@@ -26,7 +26,10 @@ public partial class Gunner : Player
     }
     private void Update()
     {
-        inputrocessing();
+        if (charctorState == CharctorStateEnum.Player) 
+        {
+            inputrocessing();
+        }
         //WalkStateChange(playerWalkState);
         //move(charctorState);
         //skillAttack1(playerType);
@@ -38,7 +41,7 @@ public partial class Gunner : Player
         {
             if ((mouseClick))
             {
-                attack(charctorState);
+                //attack(charctorState);
             }
             else if (playerType == CharactorJobEnum.Gunner)//떼면 자동으로
             {
@@ -48,8 +51,8 @@ public partial class Gunner : Player
                     playerAnim.SetInteger(PlayerAnimParameters.Attack.ToString(), 0);
                 }
             }
-            reloding(playerType);//리로드
-            shitdownCheak();//앉기
+            //reloding(playerType);//리로드
+            //shitdownCheak();//앉기
         }
         else
         {

@@ -14,8 +14,11 @@ public partial class Player : Charactor
     float walkDistanseValue = 10.0f;
     float playerStopDistanseValue = 0.2f;
     protected PlayerWalkState playerWalkState = PlayerWalkState.None;
+    protected PlayerRunState playerRunState = PlayerRunState.None;
+    protected PlayerShitState playerShitState = PlayerShitState.None;
     protected NpcWalkState npcWalkState = NpcWalkState.Walk;
     protected FindMoveObject objectInfo = FindMoveObject.None;
+    
     protected float notWalkTimer = 0;
     protected float notWalkTime = 3.0f;
     protected Vector3 movePosition = new Vector3();
@@ -150,14 +153,17 @@ public partial class Player : Charactor
         }
         else if (_value == CharctorStateEnum.Player)
         {
-            //Vector3 direction = transform.TransformDirection(inPutPos.normalized);
-
+            if (playerShitState == PlayerShitState.ShitDown) 
+            {
+                shitdownCheak();
+                playerShitState = PlayerShitState.ShitUP;
+            }
             if (_pos.magnitude > 0.1f)
             {
                 playerWalkState = PlayerWalkState.Walk_On;
                 notWalkTimer = 0.0f;
                 float speed = speedValue;
-                if (runState==RunState.Run) 
+                if (runState == RunState.Run) 
                 {
                     speed = speedValue * 2;
                 }
@@ -192,19 +198,12 @@ public partial class Player : Charactor
 
 
             }
-            else
-            {
-                notWalkTimer += Time.deltaTime;
-                if (notWalkTimer > notWalkTime)
-                {
-                    playerWalkState = PlayerWalkState.Walk_Off;
-                }
-            }
         }
+        walkAnim(runState, _pos);
         //All
-        //moveAnim(movePos.z);
+        //moveAnim(_pos.z);
         //Gunner
-        //sideWalkAnim(movePos.x, playerType);
+        //walkAnim(runState, playerType);
     }
 
     //public Vector3 MovePointSearchInit(Vector3 _pos)//Player State Object init

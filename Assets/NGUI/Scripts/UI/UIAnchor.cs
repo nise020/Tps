@@ -30,7 +30,7 @@ public class UIAnchor : MonoBehaviour
 	/// Camera used to determine the anchor bounds. Set automatically if none was specified.
 	/// </summary>
 
-	public Camera uiCamera = null;
+	public UnityEngine.Camera uiCamera = null;
 
 	/// <summary>
 	/// Object used to determine the container's bounds. Overwrites the camera-based anchoring if the value was specified.

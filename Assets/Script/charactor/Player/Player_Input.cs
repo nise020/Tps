@@ -14,17 +14,17 @@ public partial class Player : Charactor
         //int moveinPut = Shared.InputManager.moveQueBase.Count;
 
         //if (keyinPut == 0 && mouseinPut == 0 && moveinPut == 0) { return; }
-
-        while (Shared.InputManager.keyinPutQueBase.Count > 0)//key 
+        
+        while (Shared.InputManager.KeyinPutQueBase.Count > 0)//key 
         {
-            KeyCode type = Shared.InputManager.keyinPutQueBase.Dequeue();
+            KeyCode type = Shared.InputManager.KeyinPutQueBase.Dequeue();
             switch (type)
             {
                 case KeyCode.Mouse1:
                     WalkStateChange(runState);
                     break;
                 case KeyCode.R:
-                    reloding(playerType);//¸®·Îµå;
+                    RSkill(playerType);
                     break;
                 case KeyCode.Q:
                     skillAttack1(playerType);//SkillQ
@@ -40,9 +40,9 @@ public partial class Player : Charactor
                     break;
             }
         }
-        while (Shared.InputManager.mouseQueBase.Count > 0)//mouseClick == Attack
+        while (Shared.InputManager.MouseInputQueBase.Count > 0)//mouseClick == Attack
         {
-            MouseInputType type = Shared.InputManager.mouseQueBase.Dequeue();
+            MouseInputType type = Shared.InputManager.MouseInputQueBase.Dequeue();
             switch (type) 
             {
                 case MouseInputType.Click://mouseClick
@@ -67,15 +67,18 @@ public partial class Player : Charactor
             }
                 
         }
-        if (Shared.InputManager.moveQueBase.Count == 0) 
+        if (Shared.InputManager.MoveQueBase.Count == 0) 
         {
             clearWalkAnim(playerType);
         }
-        while (Shared.InputManager.moveQueBase.Count > 0)//move
+        while (Shared.InputManager.MoveQueBase.Count > 0)//move
         {
-            Vector3 type = Shared.InputManager.moveQueBase.Dequeue();
+            Vector3 type = Shared.InputManager.MoveQueBase.Dequeue();
             move(charctorState,type);
         }
+        
+
+
 
         notWalkTimer += Time.deltaTime;
         if (notWalkTimer > notWalkTime &&

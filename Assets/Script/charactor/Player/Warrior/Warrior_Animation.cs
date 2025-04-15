@@ -21,4 +21,22 @@ public partial class Warrior : Player
             playerAnim.SetInteger(PlayerAnimParameters.Run.ToString(), 1);
         }
     }
+
+    protected override void clearWalkAnim(CharactorJobEnum _type)
+    {
+        if (playerWalkState == PlayerWalkState.Walk_On)
+        {
+            playerWalkState = PlayerWalkState.Walk_Off;
+        }
+        else if (playerRunState == PlayerRunState.Run_On)
+        {
+            playerRunState = PlayerRunState.Run_Off;
+        }
+        else { return; }
+
+        if (_type == CharactorJobEnum.Warrior)
+        {
+            playerAnim.SetInteger(PlayerAnimParameters.Walk.ToString(), 0);
+        }
+    }
 }

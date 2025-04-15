@@ -37,7 +37,6 @@ public class AI_Npc : AiBase
     
     protected override void Search(Player _obj)
     {
-        
         Shared.GameManager.PlayerData(out Player _player);
         _obj.Move_Npc(_player);
         Debug.Log($"npcAi={npcAi}");

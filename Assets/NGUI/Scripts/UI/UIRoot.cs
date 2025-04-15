@@ -243,7 +243,7 @@ public class UIRoot : MonoBehaviour
 		if (oc != null)
 		{
 			Debug.LogWarning("UIRoot should not be active at the same time as UIOrthoCamera. Disabling UIOrthoCamera.", oc);
-			Camera cam = oc.gameObject.GetComponent<Camera>();
+            UnityEngine.Camera cam = oc.gameObject.GetComponent<UnityEngine.Camera>();
 			oc.enabled = false;
 			if (cam != null) cam.orthographicSize = 1f;
 		}

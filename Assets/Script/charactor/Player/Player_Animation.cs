@@ -9,8 +9,8 @@ using UnityEngine.InputSystem.LowLevel;
 public partial class Player : Charactor
 {
     [Header("Animator Info")]
-    int attackLayerIndex = 1;
-    int BaseLayerIndex = 0;
+    protected int attackLayerIndex = 1;
+    protected int BaseLayerIndex = 0;
     [SerializeField] bool shitCheack = false;
     [SerializeField] bool closeCheck = false;
      bool shitOn = false;
@@ -27,17 +27,11 @@ public partial class Player : Charactor
     {
 
     }
-    public void reloding(CharactorJobEnum _type)
+    protected virtual void RSkill(CharactorJobEnum _type)
     {
-        if (_type != CharactorJobEnum.Gunner) { return; }
 
-        if (reloadOn || GUN.nowbullet <= 0)
-        {
-            playerAnim.SetLayerWeight(attackLayerIndex, 1.0f);
-            playerAnim.SetInteger(PlayerAnimParameters.Reload.ToString(), 1);
-        }
     }
-    public void ReloadOut()//AnimationEvent
+    protected virtual void ReloadOut()//AnimationEvent
     {
         //AnimationEvent
         reloadState = ReloadState.ReloadOff;
@@ -214,45 +208,19 @@ public partial class Player : Charactor
             clearWalkAnim(playerType);
         }
     }
-    public void ClearAllAnimation(CharactorJobEnum type)//PlayerChange
-    {
-        if (type == CharactorJobEnum.Gunner) 
-        {
-            playerAnim.SetInteger(PlayerAnimParameters.Walk.ToString(),0);
-            playerAnim.SetInteger(PlayerAnimParameters.Back.ToString(),0);
-            playerAnim.SetInteger(PlayerAnimParameters.Run.ToString(),0);
-            playerAnim.SetInteger(PlayerAnimParameters.Right.ToString(),0);
-            playerAnim.SetInteger(PlayerAnimParameters.Left.ToString(),0);
-        }
-        else if (type == CharactorJobEnum.Warrior) 
-        {
-            
-        }
-    }
-    private void clearWalkAnim(CharactorJobEnum _type) 
+    protected virtual void clearWalkAnim(CharactorJobEnum _type) 
     {
         if (playerWalkState == PlayerWalkState.Walk_On)
         {
             playerWalkState = PlayerWalkState.Walk_Off;
+            playerAnim.SetInteger(PlayerAnimParameters.Walk.ToString(), 0);
         }
         else if (playerRunState == PlayerRunState.Run_On)
         {
             playerRunState = PlayerRunState.Run_Off;
+            playerAnim.SetInteger(PlayerAnimParameters.Run.ToString(), 0);
         }
         else { return; }
-
-        if (_type == CharactorJobEnum.Gunner)
-        {
-            playerAnim.SetInteger(PlayerAnimParameters.Walk.ToString(), 0);
-            playerAnim.SetInteger(PlayerAnimParameters.Back.ToString(), 0);
-            playerAnim.SetInteger(PlayerAnimParameters.Run.ToString(), 0);
-            playerAnim.SetInteger(PlayerAnimParameters.Right.ToString(), 0);
-            playerAnim.SetInteger(PlayerAnimParameters.Left.ToString(), 0);
-        }
-        else if (_type == CharactorJobEnum.Warrior) 
-        {
-            playerAnim.SetInteger(PlayerAnimParameters.Walk.ToString(), 0);
-        }
     }
     private void shitdownAnim(bool _check)
     {
@@ -271,19 +239,6 @@ public partial class Player : Charactor
     {
         shitCheack = !shitCheack;
         shitdownAnim(shitCheack);
-    }
-    private void closeAttackCheack()
-    {
-        bool check = Input.GetKeyDown(KeyCode.Q);
-        if (check)
-        {
-            closeCheck = !closeCheck;
-        }
-
-        if (closeCheck)
-        {
-            closeSwordAttack(closeCheck);
-        }
     }
     public void closeSwordAttack(bool _check)//bug check
     {
@@ -319,6 +274,19 @@ public partial class Player : Charactor
             playerAnim.SetInteger(_parameterText, 0);
         }
     }
+    private void closeAttackCheack()
+    {
+        bool check = Input.GetKeyDown(KeyCode.Q);
+        if (check)
+        {
+            closeCheck = !closeCheck;
+        }
+
+        if (closeCheck)
+        {
+            closeSwordAttack(closeCheck);
+        }
+    }
     IEnumerator reLoadout(int _index)
     {
         GUN.nowbullet = GUN.bullet;
@@ -326,5 +294,20 @@ public partial class Player : Charactor
         playerAnim.SetLayerWeight(_index, 0.0f);
         GUN.reLoed = false;
         yield return null;
+    }
+    public void ClearAllAnimation(CharactorJobEnum type)//PlayerChange
+    {
+        if (type == CharactorJobEnum.Gunner) 
+        {
+            playerAnim.SetInteger(PlayerAnimParameters.Walk.ToString(),0);
+            playerAnim.SetInteger(PlayerAnimParameters.Back.ToString(),0);
+            playerAnim.SetInteger(PlayerAnimParameters.Run.ToString(),0);
+            playerAnim.SetInteger(PlayerAnimParameters.Right.ToString(),0);
+            playerAnim.SetInteger(PlayerAnimParameters.Left.ToString(),0);
+        }
+        else if (type == CharactorJobEnum.Warrior) 
+        {
+            
+        }
     }
 }

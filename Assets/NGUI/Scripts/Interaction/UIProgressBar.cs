@@ -49,7 +49,7 @@ public class UIProgressBar : UIWidgetContainer
 
 	protected Transform mTrans;
 	protected bool mIsDirty = false;
-	protected Camera mCam;
+	protected UnityEngine.Camera mCam;
 	protected float mOffset = 0f;
 
 	/// <summary>
@@ -74,7 +74,7 @@ public class UIProgressBar : UIWidgetContainer
 	/// Camera used to draw the scroll bar.
 	/// </summary>
 
-	public Camera cachedCamera { get { if (mCam == null) mCam = NGUITools.FindCameraForLayer(gameObject.layer); return mCam; } }
+	public UnityEngine.Camera cachedCamera { get { if (mCam == null) mCam = NGUITools.FindCameraForLayer(gameObject.layer); return mCam; } }
 
 	/// <summary>
 	/// Widget used for the foreground.

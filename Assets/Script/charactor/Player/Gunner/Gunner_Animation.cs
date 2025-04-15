@@ -32,4 +32,27 @@ public partial class Gunner : Player
             playerAnim.SetInteger(PlayerAnimParameters.Back.ToString(), (int)_pos.z);
         }
     }
+
+    protected override void clearWalkAnim(CharactorJobEnum _type)
+    {
+        if (playerWalkState == PlayerWalkState.Walk_On)
+        {
+            playerWalkState = PlayerWalkState.Walk_Off;
+        }
+        else if (playerRunState == PlayerRunState.Run_On)
+        {
+            playerRunState = PlayerRunState.Run_Off;
+        }
+        else { return; }
+
+        if (_type == CharactorJobEnum.Gunner)
+        {
+            playerAnim.SetInteger(PlayerAnimParameters.Walk.ToString(), 0);
+            playerAnim.SetInteger(PlayerAnimParameters.Back.ToString(), 0);
+            playerAnim.SetInteger(PlayerAnimParameters.Run.ToString(), 0);
+            playerAnim.SetInteger(PlayerAnimParameters.Right.ToString(), 0);
+            playerAnim.SetInteger(PlayerAnimParameters.Left.ToString(), 0);
+        }
+    }
+
 }

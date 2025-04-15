@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
 
-public abstract partial class Monster : Charactor
+public partial class Monster : Charactor
 {
     public void DirectAttack(GameObject _obj,Vector3 _pos) 
     {

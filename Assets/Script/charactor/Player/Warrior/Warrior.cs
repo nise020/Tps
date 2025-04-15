@@ -18,10 +18,7 @@ public partial class Warrior : Player
         skillStrategy.PlayerInit(this);
         //skillStrategy.WeaponInit(gun);
     }
-    protected override void skillAttack1(CharactorJobEnum _type)
-    {
-        //base.skillAttack(_type);
-    }
+
     private void Update()
     {
         //inputrocessing();

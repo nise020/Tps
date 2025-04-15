@@ -6,7 +6,7 @@ public partial class SphereMob : Monster
 {
     private void Start()
     {
-        cam = Camera.main;
+        cam = UnityEngine.Camera.main;
         monsterType = MonsterType.Sphere;
 
         mobAnimator = GetComponent<Animator>();

@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public abstract partial class Monster : Charactor
+public partial class Monster : Charactor
 {
     BattelManager BATTELMANAGER;
     [Header("공격할 물체(공통)")]

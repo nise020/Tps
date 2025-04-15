@@ -7,7 +7,7 @@ public partial class DronMob : Monster
     // Start is called before the first frame update
     private void Start()
     {
-        cam = Camera.main;
+        cam = UnityEngine.Camera.main;
         monsterType = MonsterType.Dron;
         mobAnimator = GetComponent<Animator>();
         creatTabObj = Shared.BattelManager.creatTab;//¿ÀºêÁ§Æ® »ý¼º ÅÇ(ex.ÃÑ¾Ë)

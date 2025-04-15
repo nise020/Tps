@@ -9,7 +9,7 @@ using UnityEngine;
 public class WindowAutoYaw : MonoBehaviour
 {
 	public int updateOrder = 0;
-	public Camera uiCamera;
+	public UnityEngine.Camera uiCamera;
 	public float yawAmount = 20f;
 
 	Transform mTrans;

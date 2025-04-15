@@ -10,21 +10,21 @@ using UnityEngine;
 /// </summary>
 
 [ExecuteInEditMode]
-[RequireComponent(typeof(Camera))]
+[RequireComponent(typeof(UnityEngine.Camera))]
 [AddComponentMenu("NGUI/UI/Viewport Camera")]
 public class UIViewport : MonoBehaviour
 {
-	public Camera sourceCamera;
+	public UnityEngine.Camera sourceCamera;
 	public Transform topLeft;
 	public Transform bottomRight;
 	public float fullSize = 1f;
 
-	Camera mCam;
+    UnityEngine.Camera mCam;
 
 	void Start ()
 	{
-		mCam = GetComponent<Camera>();
-		if (sourceCamera == null) sourceCamera = Camera.main;
+        mCam = GetComponent<UnityEngine.Camera>();
+		if (sourceCamera == null) sourceCamera = UnityEngine.Camera.main;
 	}
 
 	void LateUpdate ()

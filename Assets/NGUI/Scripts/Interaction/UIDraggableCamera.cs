@@ -9,7 +9,7 @@ using UnityEngine;
 /// Works together with UIDragCamera script, allowing you to drag a secondary camera while keeping it constrained to a certain area.
 /// </summary>
 
-[RequireComponent(typeof(Camera))]
+[RequireComponent(typeof(UnityEngine.Camera))]
 [AddComponentMenu("NGUI/Interaction/Draggable Camera")]
 public class UIDraggableCamera : MonoBehaviour
 {
@@ -49,7 +49,7 @@ public class UIDraggableCamera : MonoBehaviour
 
 	public float momentumAmount = 35f;
 
-	Camera mCam;
+    UnityEngine.Camera mCam;
 	Transform mTrans;
 	bool mPressed = false;
 	Vector2 mMomentum = Vector2.zero;
@@ -70,7 +70,7 @@ public class UIDraggableCamera : MonoBehaviour
 
 	void Start ()
 	{
-		mCam = GetComponent<Camera>();
+        mCam = GetComponent<UnityEngine.Camera>();
 		mTrans = transform;
 		mRoot = NGUITools.FindInParents<UIRoot>(gameObject);
 

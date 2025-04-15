@@ -6,7 +6,7 @@ using UnityEngine.UI;
 
 public partial class Player : Charactor
 {
-    protected MoveCamera viewcam;
+    protected PlayerCamera viewcam;
     protected AI_Npc PLAYERAI= new AI_Npc();
     //protected Slot SlotData= new Slot();
     protected NpcAiState aIState = NpcAiState.Search;
@@ -36,8 +36,8 @@ public partial class Player : Charactor
 
     [Header("½ºÅÝ")]
     float burst_RunTime;
-    int attackValue;
-    int attackReset;
+    protected int attackValue;
+    protected int attackReset;
     //UnityEngine.Camera Maincam;
 
     protected int pluse_bullet;
@@ -64,7 +64,7 @@ public partial class Player : Charactor
         STATUS.init(charactor);//State
         stateInIt();
         cameraViewObj = GetComponentInChildren<BoxCollider>();
-        viewcam = GetComponentInChildren<MoveCamera>();
+        viewcam = GetComponentInChildren<PlayerCamera>();
         viewcam.viewObjInit(cameraViewObj.gameObject);//viewPoint
         if (charctorState == CharctorStateEnum.Npc)
         {
@@ -73,7 +73,7 @@ public partial class Player : Charactor
         }
         PLAYERAI.init(this);//FSM
         rigid = GetComponent<Rigidbody>();//Kinematic Controll
-        playerAnim = GetComponentInChildren<Animator>();
+        playerAnim = GetComponent<Animator>();
         slotinit();
     }
     protected override void stateInIt() 
@@ -92,7 +92,7 @@ public partial class Player : Charactor
         PLAYERAI.State(charctorState,this, out aIState);
     }
 
-    public void init(out MoveCamera _camera) 
+    public void init(out PlayerCamera _camera) 
     {
         _camera = viewcam; 
     }

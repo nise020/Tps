@@ -15,7 +15,7 @@ public partial class Weapon : Actor
     {
 
     }
-    public virtual void Attack(MoveCamera _camera,Vector3 _pos)//Gun
+    public virtual void Attack(PlayerCamera _camera,Vector3 _pos)//Gun
     {
 
     }

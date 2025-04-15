@@ -50,6 +50,8 @@ public class MonsterManager : MonoBehaviour
             if (dist <= _radius)
             {
                 nearbyMonsters.Add(monster);
+                //nomallize
+                //Vector
             }
         }
         if (nearbyMonsters.Count == 0)

@@ -16,7 +16,7 @@ public class UICursor : MonoBehaviour
 	static public UICursor instance;
 
 	// Camera used to draw this cursor
-	public Camera uiCamera;
+	public UnityEngine.Camera uiCamera;
 
 	Transform mTrans;
 	UISprite mSprite;

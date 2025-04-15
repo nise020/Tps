@@ -17,7 +17,7 @@ public partial class HpBar : MonoBehaviour
     //Vector3 posiTion = new Vector3(0,0.5f,0);
 
     public Vector3 offset;
-    private Camera mainCam;
+    private UnityEngine.Camera mainCam;
     private RectTransform rectTransform;
     Canvas canvas;
     public void inIt(Charactor charactor) 
@@ -33,7 +33,7 @@ public partial class HpBar : MonoBehaviour
     private void Start()
     {
         initHp();
-        mainCam = Camera.main;
+        mainCam = UnityEngine.Camera.main;
         rectTransform = GetComponent<RectTransform>();
         canvas = GetComponentInParent<Canvas>();
     }

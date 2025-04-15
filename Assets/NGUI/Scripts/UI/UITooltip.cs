@@ -10,7 +10,7 @@ public class UITooltip : MonoBehaviour
 {
 	static protected UITooltip mInstance;
 
-	public Camera uiCamera;
+	public UnityEngine.Camera uiCamera;
 	public UILabel text;
 	public UISprite background;
 	public float appearSpeed = 10f;

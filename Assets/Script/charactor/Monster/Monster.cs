@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Threading;
 using UnityEngine;
 
-public abstract partial class Monster : Charactor
+public partial class Monster : Charactor
 {
     Condition condition = Condition.health;//상태패턴
 

@@ -24,14 +24,25 @@ public partial class Player : Charactor
         //float radius = 8f;
         //float fieldOfView = 90f;
         Vector3 position = Shared.MonsterManager.monsterSearch(gameObject, radius);
-        float distance = Vector3.Distance(position,gameObject.transform.position);
-        if (radius > distance) 
+        if (position == Vector3.zero)
         {
-            _pos = position;
-            return true;
+            _pos = Vector3.zero;
+            return false;
         }
-        _pos = Vector3.zero;
-        return false;
+        else 
+        {
+            float distance = Vector3.Distance(position, gameObject.transform.position);
+            if (radius >= distance)
+            {
+                _pos = position;
+                return true;
+            }
+            else
+            {
+                _pos = Vector3.zero;
+                return false;
+            }
+        }
     }
     public void PlayerTypeInite(out CharactorJobEnum _type)
     {

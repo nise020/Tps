@@ -100,8 +100,8 @@ static public class NGUITools
 
 				if (mListener == null)
 				{
-					Camera cam = Camera.main;
-					if (cam == null) cam = GameObject.FindObjectOfType(typeof(Camera)) as Camera;
+                    UnityEngine.Camera cam = UnityEngine.Camera.main;
+					if (cam == null) cam = GameObject.FindObjectOfType(typeof(UnityEngine.Camera)) as UnityEngine.Camera;
 					if (cam != null) mListener = cam.gameObject.AddComponent<AudioListener>();
 				}
 			}
@@ -195,11 +195,11 @@ static public class NGUITools
 	/// Find the camera responsible for drawing the objects on the specified layer.
 	/// </summary>
 
-	static public Camera FindCameraForLayer (int layer)
+	static public UnityEngine.Camera FindCameraForLayer (int layer)
 	{
 		int layerMask = 1 << layer;
 
-		Camera cam;
+        UnityEngine.Camera cam;
 
 		for (int i = 0; i < UICamera.list.size; ++i)
 		{
@@ -208,15 +208,15 @@ static public class NGUITools
 				return cam;
 		}
 
-		cam = Camera.main;
+		cam = UnityEngine.Camera.main;
 		if (cam && (cam.cullingMask & layerMask) != 0) return cam;
 
 #if UNITY_4_3
 		Camera[] cameras = NGUITools.FindActive<Camera>();
 		for (int i = 0, imax = cameras.Length; i < imax; ++i)
 #else
-		Camera[] cameras = new Camera[Camera.allCamerasCount];
-		int camerasFound = Camera.GetAllCameras(cameras);
+        UnityEngine.Camera[] cameras = new UnityEngine.Camera[UnityEngine.Camera.allCamerasCount];
+		int camerasFound = UnityEngine.Camera.GetAllCameras(cameras);
 		for (int i = 0; i < camerasFound; ++i)
 #endif
 		{
@@ -788,8 +788,8 @@ static public class NGUITools
 
 		if (panel == null)
 		{
-			// Find other active cameras in the scene
-			Camera[] cameras = NGUITools.FindActive<Camera>();
+            // Find other active cameras in the scene
+            UnityEngine.Camera[] cameras = NGUITools.FindActive<UnityEngine.Camera>();
 
 			float depth = -1f;
 			bool colorCleared = false;
@@ -797,7 +797,7 @@ static public class NGUITools
 
 			for (int i = 0; i < cameras.Length; ++i)
 			{
-				Camera c = cameras[i];
+                UnityEngine.Camera c = cameras[i];
 
 				// If the color is being cleared, we won't need to
 				if (c.clearFlags == CameraClearFlags.Color ||
@@ -811,8 +811,8 @@ static public class NGUITools
 				c.cullingMask = (c.cullingMask & (~mask));
 			}
 
-			// Create a camera that will draw the UI
-			Camera cam = NGUITools.AddChild<Camera>(root.gameObject, false);
+            // Create a camera that will draw the UI
+            UnityEngine.Camera cam = NGUITools.AddChild<UnityEngine.Camera>(root.gameObject, false);
 			cam.gameObject.AddComponent<UICamera>();
 			cam.clearFlags = colorCleared ? CameraClearFlags.Depth : CameraClearFlags.Color;
 			cam.backgroundColor = Color.grey;
@@ -1438,7 +1438,7 @@ static public class NGUITools
 	/// Get sides relative to the specified camera. The order is left, top, right, bottom.
 	/// </summary>
 
-	static public Vector3[] GetSides (this Camera cam)
+	static public Vector3[] GetSides (this UnityEngine.Camera cam)
 	{
 		return cam.GetSides(Mathf.Lerp(cam.nearClipPlane, cam.farClipPlane, 0.5f), null);
 	}
@@ -1447,7 +1447,7 @@ static public class NGUITools
 	/// Get sides relative to the specified camera. The order is left, top, right, bottom.
 	/// </summary>
 
-	static public Vector3[] GetSides (this Camera cam, float depth)
+	static public Vector3[] GetSides (this UnityEngine.Camera cam, float depth)
 	{
 		return cam.GetSides(depth, null);
 	}
@@ -1456,7 +1456,7 @@ static public class NGUITools
 	/// Get sides relative to the specified camera. The order is left, top, right, bottom.
 	/// </summary>
 
-	static public Vector3[] GetSides (this Camera cam, Transform relativeTo)
+	static public Vector3[] GetSides (this UnityEngine.Camera cam, Transform relativeTo)
 	{
 		return cam.GetSides(Mathf.Lerp(cam.nearClipPlane, cam.farClipPlane, 0.5f), relativeTo);
 	}
@@ -1465,7 +1465,7 @@ static public class NGUITools
 	/// Get sides relative to the specified camera. The order is left, top, right, bottom.
 	/// </summary>
 
-	static public Vector3[] GetSides (this Camera cam, float depth, Transform relativeTo)
+	static public Vector3[] GetSides (this UnityEngine.Camera cam, float depth, Transform relativeTo)
 	{
 		//if (cam.isOrthoGraphic)
 		{
@@ -1512,7 +1512,7 @@ static public class NGUITools
 	/// Get the camera's world-space corners. The order is bottom-left, top-left, top-right, bottom-right.
 	/// </summary>
 
-	static public Vector3[] GetWorldCorners (this Camera cam)
+	static public Vector3[] GetWorldCorners (this UnityEngine.Camera cam)
 	{
 		float depth = Mathf.Lerp(cam.nearClipPlane, cam.farClipPlane, 0.5f);
 		return cam.GetWorldCorners(depth, null);
@@ -1522,7 +1522,7 @@ static public class NGUITools
 	/// Get the camera's world-space corners. The order is bottom-left, top-left, top-right, bottom-right.
 	/// </summary>
 
-	static public Vector3[] GetWorldCorners (this Camera cam, float depth)
+	static public Vector3[] GetWorldCorners (this UnityEngine.Camera cam, float depth)
 	{
 		return cam.GetWorldCorners(depth, null);
 	}
@@ -1531,7 +1531,7 @@ static public class NGUITools
 	/// Get the camera's world-space corners. The order is bottom-left, top-left, top-right, bottom-right.
 	/// </summary>
 
-	static public Vector3[] GetWorldCorners (this Camera cam, Transform relativeTo)
+	static public Vector3[] GetWorldCorners (this UnityEngine.Camera cam, Transform relativeTo)
 	{
 		return cam.GetWorldCorners(Mathf.Lerp(cam.nearClipPlane, cam.farClipPlane, 0.5f), relativeTo);
 	}
@@ -1540,7 +1540,7 @@ static public class NGUITools
 	/// Get the camera's world-space corners. The order is bottom-left, top-left, top-right, bottom-right.
 	/// </summary>
 
-	static public Vector3[] GetWorldCorners (this Camera cam, float depth, Transform relativeTo)
+	static public Vector3[] GetWorldCorners (this UnityEngine.Camera cam, float depth, Transform relativeTo)
 	{
 		//if (cam.isOrthoGraphic)
 		{

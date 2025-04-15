@@ -6,7 +6,7 @@ using UnityEngine;
 
 public class Cursur : MonoBehaviour
 {
-    Camera cam;
+    UnityEngine.Camera cam;
     [SerializeField] BoxCollider2D coll;
     [SerializeField] CapsuleCollider2D[] MobColl;//몬스터의 콜라이더
     [SerializeField] GameObject gunHoie;

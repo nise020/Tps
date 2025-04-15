@@ -33,7 +33,7 @@ public partial class Gun : Weapon
         }
     }
 
-    public override void Attack(MoveCamera _camera,Vector3 _pos)
+    public override void Attack(PlayerCamera _camera,Vector3 _pos)
     {
         RapidTimer += Time.deltaTime;
         if (RapidTimer > RapidTime)

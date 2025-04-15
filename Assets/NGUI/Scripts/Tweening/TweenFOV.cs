@@ -9,16 +9,16 @@ using UnityEngine;
 /// Tween the camera's field of view.
 /// </summary>
 
-[RequireComponent(typeof(Camera))]
+[RequireComponent(typeof(UnityEngine.Camera))]
 [AddComponentMenu("NGUI/Tween/Tween Field of View")]
 public class TweenFOV : UITweener
 {
 	public float from = 45f;
 	public float to = 45f;
 
-	Camera mCam;
+    UnityEngine.Camera mCam;
 
-	public Camera cachedCamera { get { if (mCam == null) mCam = GetComponent<Camera>(); return mCam; } }
+	public UnityEngine.Camera cachedCamera { get { if (mCam == null) mCam = GetComponent<UnityEngine.Camera>(); return mCam; } }
 
 	[System.Obsolete("Use 'value' instead")]
 	public float fov { get { return this.value; } set { this.value = value; } }

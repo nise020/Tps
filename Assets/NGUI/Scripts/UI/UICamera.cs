@@ -37,7 +37,7 @@ using UnityEditor;
 
 [ExecuteInEditMode]
 [AddComponentMenu("NGUI/UI/NGUI Event System (UICamera)")]
-[RequireComponent(typeof(Camera))]
+[RequireComponent(typeof(UnityEngine.Camera))]
 public class UICamera : MonoBehaviour
 {
 	public enum ControlScheme
@@ -69,7 +69,7 @@ public class UICamera : MonoBehaviour
 		public Vector2 delta;			// Delta since last update
 		public Vector2 totalDelta;		// Delta since the event started being tracked
 
-		public Camera pressedCam;		// Camera that the OnPress(true) was fired with
+		public UnityEngine.Camera pressedCam;		// Camera that the OnPress(true) was fired with
 
 		public GameObject last;			// Last object under the touch or mouse
 		public GameObject current;		// Current game object under the touch or mouse
@@ -316,7 +316,7 @@ public class UICamera : MonoBehaviour
 	/// Last camera active prior to sending out the event. This will always be the camera that actually sent out the event.
 	/// </summary>
 
-	static public Camera currentCamera = null;
+	static public UnityEngine.Camera currentCamera = null;
 
 	/// <summary>
 	/// Current control scheme. Set automatically when events arrive.
@@ -400,8 +400,8 @@ public class UICamera : MonoBehaviour
 	// Tooltip widget (mouse only)
 	GameObject mTooltip = null;
 
-	// Mouse input is turned off on iOS
-	Camera mCam = null;
+    // Mouse input is turned off on iOS
+    UnityEngine.Camera mCam = null;
 	float mTooltipTime = 0f;
 	float mNextRaycast = 0f;
 
@@ -415,7 +415,7 @@ public class UICamera : MonoBehaviour
 	/// Caching is always preferable for performance.
 	/// </summary>
 
-	public Camera cachedCamera { get { if (mCam == null) mCam = GetComponent<Camera>(); return mCam; } }
+	public UnityEngine.Camera cachedCamera { get { if (mCam == null) mCam = GetComponent<UnityEngine.Camera>(); return mCam; } }
 
 	/// <summary>
 	/// Set to 'true' just before OnDrag-related events are sent. No longer needed, but kept for backwards compatibility.
@@ -573,7 +573,7 @@ public class UICamera : MonoBehaviour
 	/// Convenience function that returns the main HUD camera.
 	/// </summary>
 
-	static public Camera mainCamera
+	static public UnityEngine.Camera mainCamera
 	{
 		get
 		{
@@ -906,7 +906,7 @@ public class UICamera : MonoBehaviour
 		for (int i = 0; i < list.size; ++i)
 		{
 			UICamera cam = list.buffer[i];
-			Camera uc = cam.cachedCamera;
+            UnityEngine.Camera uc = cam.cachedCamera;
 			if ((uc != null) && (uc.cullingMask & layerMask) != 0) return cam;
 		}
 		return null;

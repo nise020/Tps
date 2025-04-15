@@ -29,7 +29,7 @@ public partial class Player : Charactor
     {
         //플레이어의 거리에 따라 달리고 걷는게 가능 하지만 찔끔 움직이면 움직임이 더딘다
         //: 개선이 필요함
-
+        //y값이 다르면 문제가 생김
 
         //동일한 위치로 이동이 불가(플레이어 위치에 정확히 이동이 불가) 할 경우 플레이어 뒤쪽 위치에 이동
         //불가 하지 않을 경우 해당 위치로 계속 이동
@@ -62,13 +62,13 @@ public partial class Player : Charactor
         //Vector3 stopPoint = targetPos;
         Vector3 stopPoint = vector;
         Vector3 disTance = (stopPoint - gameObject.transform.position);
+        disTance.y = 0.0f;//일시적
 
         //player Direction
         Quaternion rotation = Quaternion.LookRotation(disTance.normalized);
         gameObject.transform.rotation = Quaternion.Slerp(gameObject.transform.rotation, rotation, Time.deltaTime * rotSpeed);
 
         float dist = Vector3.Distance(gameObject.transform.position, stopPoint);
-
         if (dist > runDistanseValue)//run
         {
             npcRunStateAnim(dist); 
@@ -170,7 +170,7 @@ public partial class Player : Charactor
                 //transform.localPosition += direction * (speed) * Time.deltaTime;
                 //rigid.velocity = direction * speed;
 
-                if (viewcam.GunModeCheck() == false)//nomal
+                if (cameraMode == PlayerCameraMode.CameraRotationMode)//nomal
                 {
                     Vector3 moveDir = inPutPos; // World
 
@@ -179,9 +179,9 @@ public partial class Player : Charactor
                     //moveDir.z = moveDir.z - distancingValue;
                     transform.position += moveDir * speed * Time.deltaTime;
                 }
-                else if (viewcam.GunModeCheck() == true)//Shoot
+                else if (cameraMode == PlayerCameraMode.GunAttackMode)//Shoot
                 {
-                    Transform cam = transform.GetComponentInChildren<Camera>().transform;
+                    Transform cam = transform.GetComponentInChildren<UnityEngine.Camera>().transform;
 
                     Vector3 camForward = cam.forward;
                     Vector3 camRight = cam.right;
@@ -191,8 +191,8 @@ public partial class Player : Charactor
                     Vector3 moveDir = camForward.normalized * inPutPos.z + camRight.normalized * inPutPos.x;
 
                     Quaternion targetRotation = Quaternion.LookRotation(moveDir.normalized);
-                    transform.rotation = Quaternion.Lerp(transform.rotation, targetRotation, Time.deltaTime * rotSpeed); // 회전속도 예: 10f
-                    moveDir.z = moveDir.z - distancingValue;
+                    //transform.rotation = Quaternion.Lerp(transform.rotation, targetRotation, Time.deltaTime * rotSpeed); // 회전속도 예: 10f
+                    //moveDir.z = moveDir.z - distancingValue;
                     transform.position += moveDir * speed * Time.deltaTime;
                 }
 

@@ -8,7 +8,7 @@ using UnityEngine.UI;
 
 public partial class UI_Battel : MonoBehaviour
 {
-    MoveCamera MOVECAMERA;
+    PlayerCamera MOVECAMERA;
     CharactorJobEnum playerType;
     //PlayerControll playerControll;
     public void PlayerCameraCheck(Player _player, CharctorStateEnum _check) 

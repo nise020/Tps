@@ -680,7 +680,7 @@ static public class NGUIMath
 	/// Determine the distance from the mouse position to the world rectangle specified by the 4 points.
 	/// </summary>
 
-	static public float DistanceToRectangle (Vector3[] worldPoints, Vector2 mousePos, Camera cam)
+	static public float DistanceToRectangle (Vector3[] worldPoints, Vector2 mousePos, UnityEngine.Camera cam)
 	{
 		Vector2[] screenPoints = new Vector2[4];
 		for (int i = 0; i < 4; ++i)
@@ -1054,7 +1054,7 @@ static public class NGUIMath
 	static public Vector2 ScreenToPixels (Vector2 pos, Transform relativeTo)
 	{
 		int layer = relativeTo.gameObject.layer;
-		Camera cam = NGUITools.FindCameraForLayer(layer);
+        UnityEngine.Camera cam = NGUITools.FindCameraForLayer(layer);
 
 		if (cam == null)
 		{
@@ -1077,7 +1077,7 @@ static public class NGUIMath
 		if (relativeTo.parent != null)
 			relativeTo = relativeTo.parent;
 
-		Camera cam = NGUITools.FindCameraForLayer(layer);
+        UnityEngine.Camera cam = NGUITools.FindCameraForLayer(layer);
 
 		if (cam == null)
 		{
@@ -1096,7 +1096,7 @@ static public class NGUIMath
 	/// You can then assign the widget's localPosition to the returned value.
 	/// </summary>
 
-	static public Vector3 WorldToLocalPoint (Vector3 worldPos, Camera worldCam, Camera uiCam, Transform relativeTo)
+	static public Vector3 WorldToLocalPoint (Vector3 worldPos, UnityEngine.Camera worldCam, UnityEngine.Camera uiCam, Transform relativeTo)
 	{
 		worldPos = worldCam.WorldToViewportPoint(worldPos);
 		worldPos = uiCam.ViewportToWorldPoint(worldPos);
@@ -1114,7 +1114,7 @@ static public class NGUIMath
 	/// <param name="worldCam">Camera that is able to see the worldPos</param>
 	/// <param name="myCam">Camera that is able to see the transform this function is called on</param>
 
-	static public void OverlayPosition (this Transform trans, Vector3 worldPos, Camera worldCam, Camera myCam)
+	static public void OverlayPosition (this Transform trans, Vector3 worldPos, UnityEngine.Camera worldCam, UnityEngine.Camera myCam)
 	{
 		worldPos = worldCam.WorldToViewportPoint(worldPos);
 		worldPos = myCam.ViewportToWorldPoint(worldPos);
@@ -1129,9 +1129,9 @@ static public class NGUIMath
 	/// <param name="worldPos">World position, visible by the worldCam</param>
 	/// <param name="worldCam">Camera that is able to see the worldPos</param>
 
-	static public void OverlayPosition (this Transform trans, Vector3 worldPos, Camera worldCam)
+	static public void OverlayPosition (this Transform trans, Vector3 worldPos, UnityEngine.Camera worldCam)
 	{
-		Camera myCam = NGUITools.FindCameraForLayer(trans.gameObject.layer);
+        UnityEngine.Camera myCam = NGUITools.FindCameraForLayer(trans.gameObject.layer);
 		if (myCam != null) trans.OverlayPosition(worldPos, worldCam, myCam);
 	}
 
@@ -1143,8 +1143,8 @@ static public class NGUIMath
 
 	static public void OverlayPosition (this Transform trans, Transform target)
 	{
-		Camera myCam = NGUITools.FindCameraForLayer(trans.gameObject.layer);
-		Camera worldCam = NGUITools.FindCameraForLayer(target.gameObject.layer);
+        UnityEngine.Camera myCam = NGUITools.FindCameraForLayer(trans.gameObject.layer);
+        UnityEngine.Camera worldCam = NGUITools.FindCameraForLayer(target.gameObject.layer);
 		if (myCam != null && worldCam != null) trans.OverlayPosition(target.position, worldCam, myCam);
 	}
 }

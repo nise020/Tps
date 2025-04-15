@@ -23,7 +23,7 @@ public abstract class UIRect : MonoBehaviour
 		public UIRect rect;
 
 		[System.NonSerialized]
-		public Camera targetCam;
+		public UnityEngine.Camera targetCam;
 
 		public AnchorPoint () { }
 		public AnchorPoint (float relative) { this.relative = relative; }
@@ -186,7 +186,7 @@ public abstract class UIRect : MonoBehaviour
 	UIRoot mRoot;
 	UIRect mParent;
 	bool mRootSet = false;
-	protected Camera mCam;
+	protected UnityEngine.Camera mCam;
 
 	/// <summary>
 	/// Game object gets cached for speed. Can't simply return 'mGo' set in Awake because this function may be called on a prefab.
@@ -204,7 +204,7 @@ public abstract class UIRect : MonoBehaviour
 	/// Camera used by anchors.
 	/// </summary>
 
-	public Camera anchorCamera { get { if (!mAnchorsCached) ResetAnchors(); return mCam; } }
+	public UnityEngine.Camera anchorCamera { get { if (!mAnchorsCached) ResetAnchors(); return mCam; } }
 
 	/// <summary>
 	/// Whether the rectangle is currently anchored fully on all sides.

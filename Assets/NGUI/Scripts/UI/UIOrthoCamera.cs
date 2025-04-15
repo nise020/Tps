@@ -13,16 +13,16 @@ using UnityEngine;
 /// </summary>
 
 [ExecuteInEditMode]
-[RequireComponent(typeof(Camera))]
+[RequireComponent(typeof(UnityEngine.Camera))]
 [AddComponentMenu("NGUI/UI/Orthographic Camera")]
 public class UIOrthoCamera : MonoBehaviour
 {
-	Camera mCam;
+    UnityEngine.Camera mCam;
 	Transform mTrans;
 
 	void Start ()
 	{
-		mCam = GetComponent<Camera>();
+        mCam = GetComponent<UnityEngine.Camera>();
 		mTrans = transform;
 		mCam.orthographic = true;
 	}

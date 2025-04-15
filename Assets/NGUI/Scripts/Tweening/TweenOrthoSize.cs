@@ -9,20 +9,20 @@ using UnityEngine;
 /// Tween the camera's orthographic size.
 /// </summary>
 
-[RequireComponent(typeof(Camera))]
+[RequireComponent(typeof(UnityEngine.Camera))]
 [AddComponentMenu("NGUI/Tween/Tween Orthographic Size")]
 public class TweenOrthoSize : UITweener
 {
 	public float from = 1f;
 	public float to = 1f;
 
-	Camera mCam;
+    UnityEngine.Camera mCam;
 
 	/// <summary>
 	/// Camera that's being tweened.
 	/// </summary>
 
-	public Camera cachedCamera { get { if (mCam == null) GetComponent<Camera>(); return mCam; } }
+	public UnityEngine.Camera cachedCamera { get { if (mCam == null) GetComponent<UnityEngine.Camera>(); return mCam; } }
 
 	[System.Obsolete("Use 'value' instead")]
 	public float orthoSize { get { return this.value; } set { this.value = value; } }

@@ -2,11 +2,12 @@ using System.Collections;
 using System.Collections.Generic;
 using Unity.Mathematics;
 using UnityEngine;
+using static UIWidget;
 
 public partial class PlayerCamera : CameraBase
 {
     //Player PlayerObj;
-    GameObject viewObj;
+    Transform viewObj;
     Vector3 camPos;
     Quaternion aimRot;
     public Animation Shake;
@@ -32,7 +33,7 @@ public partial class PlayerCamera : CameraBase
     float yValue = 0;
     [SerializeField] PlayerCameraMode playerCameraMode = PlayerCameraMode.CameraRotationMode;
     public Queue<float> MouseScrollQueBase => Shared.InputManager.MouseScrollQueBase;
-    public Queue<Vector3> MouseMoveQueBase => Shared.InputManager.MouseMoveQueBase;
+    public Queue<Vector2> MouseMoveQueBase => Shared.InputManager.MouseMoveQueBase;
     Camera thisCamera;
     public float minFOV = 40f;
     public float maxFOV = 80f;
@@ -48,34 +49,42 @@ public partial class PlayerCamera : CameraBase
             return false;
         }
     }
-    public void viewObjInit(GameObject _obj) 
-    {
-        viewObj = _obj;
-    }
+    //public void viewObjInit(GameObject _obj) 
+    //{
+    //    viewObj = _obj;
+    //}
     public void CameraModeInit(PlayerCameraMode _mode)
     {
         playerCameraMode = _mode;
     }
-    public void camRot(Vector3 _pos)//수정 필요
+    public void camRot(Vector2 _pos)//수정 필요
     {
         if (viewObj == null) return;
 
         //playerType == PlayerType.Gunner
 
-        float xRot = Input.GetAxis("Mouse X") * rotSensitive;
-        float yRot = Input.GetAxis("Mouse Y") * rotSensitive;
-        //float xRot = _pos.x * rotSensitive;
-        //float yRot = _pos.y * rotSensitive;
+        //float xRot = Input.GetAxis("Mouse X") * rotSensitive;
+        //float yRot = Input.GetAxis("Mouse Y") * rotSensitive;
+        float xRot = _pos.x * rotSensitive;
+        float yRot = _pos.y * rotSensitive;
 
         xValue += xRot;
         yValue -= yRot;
 
         yValue = Mathf.Clamp(yValue, -limitRot, limitRot);
-        Vector3 distans = new Vector3(0, 0, Distans);
-        Quaternion rotation = Quaternion.Euler(yValue, xValue, 0);
-        transform.position = viewObj.transform.position + rotation * distans;
+        Vector3 distans = new Vector3(0, 0, -Distans);
 
-        gameObject.transform.localRotation = rotation;
+        //Vector3 distans = Quaternion.Euler(yValue, xValue, 0) * new Vector3(0, 0, -Distans);
+        //transform.position = viewObj.transform.position +  distans;
+
+        //gameObject.transform.rotation = Quaternion.LookRotation(viewObj.transform.position - transform.position);
+
+        Quaternion rotation = Quaternion.Euler(yValue, xValue, 0);
+        //transform.rotation = rotation;
+        viewObj.rotation = rotation;
+
+        transform.position = viewObj.position + rotation * distans;
+        transform.LookAt(viewObj);
         //Vector3 offset = rotation * new Vector3(0, 0, -Distans);
         //transform.position = viewObj.transform.position + offset;
 
@@ -112,6 +121,7 @@ public partial class PlayerCamera : CameraBase
         //Cursor.lockState = CursorLockMode.Locked;
         //Cursor.visible = false;
         //transform.LookAt(PlayerObj.transform);
+        viewObj = transform.parent;
         camAnim = GetComponentInParent<Animator>();
         thisCamera = GetComponent<Camera>();
         //Shared.CameraManager.CameraAdd(this);
@@ -126,7 +136,7 @@ public partial class PlayerCamera : CameraBase
         }
         while (MouseMoveQueBase.Count > 0)//key 
         {
-            Vector3 type = MouseMoveQueBase.Dequeue();
+            Vector2 type = MouseMoveQueBase.Dequeue();
             if (playerCameraMode == PlayerCameraMode.CameraRotationMode)
             {
                 camRot(type);
@@ -141,7 +151,7 @@ public partial class PlayerCamera : CameraBase
     private void LateUpdate()
     {
         MainCamerainitEvent();
-        
+        //camRot(Vector3.zero);
     }
     public void cameraShakeAnim(bool _anim) 
     {

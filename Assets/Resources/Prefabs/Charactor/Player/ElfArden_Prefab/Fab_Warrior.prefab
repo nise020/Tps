@@ -648,7 +648,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5860747143582428492, guid: be18a0c0638334a47b0b4d895249486c, type: 3}
       propertyPath: m_Name
-      value: ElfArden
+      value: Model
       objectReference: {fileID: 0}
     - target: {fileID: 5860747143582428492, guid: be18a0c0638334a47b0b4d895249486c, type: 3}
       propertyPath: m_Layer

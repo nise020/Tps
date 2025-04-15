@@ -31,8 +31,8 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
-  - {fileID: 5688876086347094271}
   - {fileID: 3288347913406870532}
+  - {fileID: 5688876086347094271}
   - {fileID: 716351765571989626}
   - {fileID: 8171279448462785456}
   - {fileID: 162193429646263332}
@@ -380,7 +380,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: f23be60aa6b7bbf4eb0255d85e6d7546, type: 3}
       propertyPath: m_Name
-      value: Ch15_nonPBR
+      value: Model
       objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: f23be60aa6b7bbf4eb0255d85e6d7546, type: 3}
       propertyPath: m_Layer
@@ -899,15 +899,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4938761094361405481, guid: a7c525cdfb0dee34982abf65cb8b7fba, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 1.9200001
-      objectReference: {fileID: 0}
-    - target: {fileID: 4938761094361405481, guid: a7c525cdfb0dee34982abf65cb8b7fba, type: 3}
-      propertyPath: m_LocalPosition.y
-      value: -3.25
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4938761094361405481, guid: a7c525cdfb0dee34982abf65cb8b7fba, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 16.16
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4938761094361405481, guid: a7c525cdfb0dee34982abf65cb8b7fba, type: 3}
       propertyPath: m_LocalRotation.w

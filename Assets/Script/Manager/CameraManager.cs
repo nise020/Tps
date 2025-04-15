@@ -5,7 +5,7 @@ using UnityEngine;
 public class CameraManager : MonoBehaviour
 {
     public Queue <float> MouseScrollQueBase => Shared.InputManager.MouseScrollQueBase;
-    public Queue<Vector3> MouseMoveQueBase => Shared.InputManager.MouseMoveQueBase;
+    public Queue<Vector2> MouseMoveQueBase => Shared.InputManager.MouseMoveQueBase;
     List<PlayerCamera> cameras = new List<PlayerCamera>();
     Camera MainCam = null;
     private void Awake()

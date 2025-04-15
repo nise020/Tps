@@ -27,11 +27,6 @@ public partial class Warrior : Player
         if (charctorState == CharctorStateEnum.Player)
         {
             inputrocessing();
-            if ((mouseClick))
-            {
-                //attack(charctorState);
-            }
-            //shitdownCheak();//¾É±â
         }
         else 
         {

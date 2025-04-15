@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.UIElements;
 
 public partial class Player : Charactor
 {
@@ -46,7 +47,6 @@ public partial class Player : Charactor
         //movePosition = PLAYER.MovePointSearchInit(movePosition);//movePosition
 
         movePosition = _player.SlotPositionUpdate(layerName);
-
         if (!fsmPosQue.Contains(movePosition))//value != Vector3 or null
         {
             fsmPosQue.Enqueue(movePosition);//value Plus
@@ -167,28 +167,28 @@ public partial class Player : Charactor
                 {
                     speed = speedValue * 2;
                 }
-                //transform.localPosition += direction * (speed) * Time.deltaTime;
-                //rigid.velocity = direction * speed;
 
                 if (cameraMode == PlayerCameraMode.CameraRotationMode)//nomal
                 {
-                    Vector3 moveDir = inPutPos; // World
+                    Vector3 moveDir = _pos; // World
+                    moveDir.y = 0;
+                    moveDir.Normalize();
+                    transform.position += transform.TransformDirection(moveDir) * speed * Time.deltaTime;
 
-                    Quaternion targetRotation = Quaternion.LookRotation(moveDir.normalized);
-                    transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, Time.deltaTime * rotSpeed); // 회전속도: 10 정도 추천
-                    //moveDir.z = moveDir.z - distancingValue;
-                    transform.position += moveDir * speed * Time.deltaTime;
+                    Quaternion targetRotation = Quaternion.LookRotation(transform.TransformDirection(moveDir.normalized));
+                    targetRotation *= Quaternion.Euler(0, 60f, 0);//Animation Calibration Value
+                    charactorModelTrs.rotation = Quaternion.Slerp(charactorModelTrs.rotation, targetRotation, Time.deltaTime * rotSpeed);
                 }
                 else if (cameraMode == PlayerCameraMode.GunAttackMode)//Shoot
                 {
-                    Transform cam = transform.GetComponentInChildren<UnityEngine.Camera>().transform;
+                    Transform cam = transform.GetComponentInChildren<Camera>().transform;
 
                     Vector3 camForward = cam.forward;
                     Vector3 camRight = cam.right;
                     camForward.y = 0;
                     camRight.y = 0;
 
-                    Vector3 moveDir = camForward.normalized * inPutPos.z + camRight.normalized * inPutPos.x;
+                    Vector3 moveDir = camForward.normalized * _pos.z + camRight.normalized * _pos.x;
 
                     Quaternion targetRotation = Quaternion.LookRotation(moveDir.normalized);
                     //transform.rotation = Quaternion.Lerp(transform.rotation, targetRotation, Time.deltaTime * rotSpeed); // 회전속도 예: 10f
@@ -205,7 +205,43 @@ public partial class Player : Charactor
         //Gunner
         //walkAnim(runState, playerType);
     }
+    protected float gravityValue = - 9.81f;
+    Vector3 velocity;
+    CapsuleCollider CpasuleColl;
+    [SerializeField] float groundCheckLenght;
+    float groundCheckRadius = 0.3f;
+    GroundTouchState GroundTouchState = GroundTouchState.GroundNoneTouch;
+    protected void groundCheak() 
+    {
+        int layer = LayerMask.NameToLayer(LayerName.Ground.ToString());
+        bool isGround = Physics.SphereCast(transform.position, groundCheckRadius, Vector3.down, 
+            out RaycastHit hit, groundCheckLenght + 0.1f, layer);
 
+        if (isGround)
+        {
+            if (GroundTouchState == GroundTouchState.GroundNoneTouch) 
+            {
+                GroundTouchState = GroundTouchState.GroundTouch;
+            }
+            if (velocity.y < 0)
+                velocity.y = 0f;
+        }
+        else
+        {
+            if (GroundTouchState == GroundTouchState.GroundTouch)
+            {
+                GroundTouchState = GroundTouchState.GroundNoneTouch;
+            }
+            velocity.y += gravityValue * Time.deltaTime;
+        }
+        transform.position += velocity * Time.deltaTime;
+    }
+    float jumpValue = 5f;
+    protected void jump(GroundTouchState _state) 
+    {
+
+    }
+}
     //public Vector3 MovePointSearchInit(Vector3 _pos)//Player State Object init
     //{
     //    if (_pos == null)
@@ -240,4 +276,4 @@ public partial class Player : Charactor
 
 
 
-}
+

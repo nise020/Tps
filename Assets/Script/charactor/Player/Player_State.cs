@@ -9,15 +9,15 @@ public partial class Player : Charactor
     protected CharactorJobEnum playerType;
     float radius = 10.0f;
     float fieldOfView = 90f;
-    private void OnDrawGizmos()
-    {
-        if (!Application.isPlaying) return;
-        //Gizmos.color = Color.red;
-        //Gizmos.DrawWireCube(mTarget.transform.position, Vector3.one * 0.5f);
+    //private void OnDrawGizmos()
+    //{
+    //    if (!Application.isPlaying) return;
+    //    //Gizmos.color = Color.red;
+    //    //Gizmos.DrawWireCube(mTarget.transform.position, Vector3.one * 0.5f);
 
-        Gizmos.color = Color.blue;
-        Gizmos.DrawWireSphere(this.transform.position, radius);
-    }
+    //    Gizmos.color = Color.blue;
+    //    Gizmos.DrawWireSphere(this.transform.position, radius);
+    //}
 
     public bool SearchCheck(out Vector3 _pos) //매니저 한테서 서치 하는 방향으로 고치기 필요
     {

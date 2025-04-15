@@ -14,7 +14,8 @@ public partial class Player : Charactor
     protected Animator playerAnim;
     protected Gun GUN;
     //bool runValue = false;
-    protected BoxCollider cameraViewObj;
+    //protected BoxCollider cameraViewObj;
+    protected GameObject cameraViewObj;
     [SerializeField] GameObject HandObj;
     [SerializeField] GameObject weapon;
     [SerializeField] GameObject scabbard;
@@ -58,14 +59,19 @@ public partial class Player : Charactor
 
     protected SkillStrategy skillStrategy = new SkillStrategy();
     AudioListener audioListener => GetComponentInChildren<AudioListener>();
+
+    protected Transform charactorModelTrs;//Modeling
     protected virtual void Start()
     {
         //playerType = PlayerType.Gunner;
         STATUS.init(charactor);//State
         stateInIt();
-        cameraViewObj = GetComponentInChildren<BoxCollider>();
+        //cameraViewObj = GetComponentInChildren<BoxCollider>();//이 부분 수정이 필요함
+        //FindObject();
+        SkinnedMeshRenderer skin = GetComponentInChildren<SkinnedMeshRenderer>();
+        charactorModelTrs = skin.transform.parent;
         viewcam = GetComponentInChildren<PlayerCamera>();
-        viewcam.viewObjInit(cameraViewObj.gameObject);//viewPoint
+        //viewcam.viewObjInit(cameraViewObj.gameObject);//viewPoint
         if (charctorState == CharctorStateEnum.Npc)
         {
             viewcam.gameObject.SetActive(false);
@@ -76,6 +82,11 @@ public partial class Player : Charactor
         playerAnim = GetComponent<Animator>();
         slotinit();
     }
+    protected void FindObject() 
+    {
+
+    }
+
     protected override void stateInIt() 
     {
         base.stateInIt();

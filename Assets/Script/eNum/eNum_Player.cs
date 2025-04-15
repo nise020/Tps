@@ -135,9 +135,14 @@ public enum LayerName
     Sward,
     ViewPoint,
     BackPosition1,
-    BackPosition2
+    BackPosition2,
+    Ground,
 }
-
+public enum GroundTouchState //예전에는 앞에 sScene을 붙여야 했다
+{
+    GroundNoneTouch,
+    GroundTouch
+}
 public enum FindMoveObject
 {
     None,

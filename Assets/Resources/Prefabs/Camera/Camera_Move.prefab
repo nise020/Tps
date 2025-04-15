@@ -24,7 +24,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 351973108276528302}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 1.9200001, y: -3.25, z: 16.16}
+  m_LocalPosition: {x: 1.9200001, y: 3, z: 16.16}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -166,6 +166,8 @@ MonoBehaviour:
   camRotOn: 1
   GunModeOn: 0
   playerCameraMode: 0
+  minFOV: 40
+  maxFOV: 80
 --- !u!1 &4032185290279831631
 GameObject:
   m_ObjectHideFlags: 0

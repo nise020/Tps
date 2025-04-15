@@ -21,7 +21,7 @@ public class InputManager : MonoBehaviour
     }
     public Queue<KeyCode> KeyinPutQueBase = new Queue<KeyCode>();
     public Queue<MouseInputType> MouseInputQueBase = new Queue<MouseInputType>();
-    public Queue<Vector3> MouseMoveQueBase = new Queue<Vector3>();
+    public Queue<Vector2> MouseMoveQueBase = new Queue<Vector2>();
 
     public Queue<Vector3> MoveQueBase = new Queue<Vector3>();
     public Queue<float> MouseScrollQueBase = new Queue<float>();
@@ -66,7 +66,7 @@ public class InputManager : MonoBehaviour
 
         if (Mathf.Abs(mouseX) > 0.01f || Mathf.Abs(mouseY) > 0.01f)
         {
-            MouseMoveQueBase.Enqueue(new Vector3(mouseX, mouseY));
+            MouseMoveQueBase.Enqueue(new Vector2(mouseX, mouseY));
         }
     }
 }

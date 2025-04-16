@@ -127,11 +127,11 @@ public abstract partial class Charactor : Actor
     {
 
     }
-    protected virtual void skillAttack1(CharactorJobEnum _type) 
+    protected virtual void commonskillAttack1(CharactorJobEnum _type) 
     {
 
     }
-    protected virtual void skillAttack2(CharactorJobEnum _type)
+    protected virtual void commonskillAttack2(CharactorJobEnum _type)
     {
 
     }

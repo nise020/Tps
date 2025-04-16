@@ -58,8 +58,26 @@ public class GameManager : MonoBehaviour
             //int count = playerData.Value;
         }
     }
+    public Player PlayerDataLoad(CharactorJobEnum _job)
+    {
+        if (_job ==CharactorJobEnum.Gunner) 
+        {
+            return GUNNER;
+        }
+        else if (_job == CharactorJobEnum.Warrior)
+        {
+            return WARRIOR;
+        }
+        return null;
+    }
     public void PlayerData(out Player _player) 
     {
+        if (PLAYER == null) 
+        {
+            _player = WARRIOR;//юс╫ц
+            Shared.BattelUI.CharactorControllButten1();
+            return;
+        }
         _player = PLAYER;
     }
     public Vector3 PlayerPos(Vector3 _pos)

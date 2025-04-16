@@ -7,6 +7,8 @@ public partial class Weapon : Actor
     protected WeaponEnum WeaponType = WeaponEnum.None;
     protected CharactorJobEnum PlayerType;
     Status Weaponstate = new Status();
+    //[SerializeField] GameObject SkillEffectObj1;
+    //[SerializeField] GameObject SkillEffectObj2;
     public void init(WeaponEnum _type) 
     {
         WeaponType = _type;

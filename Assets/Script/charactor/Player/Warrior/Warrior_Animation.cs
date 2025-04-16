@@ -4,6 +4,37 @@ using UnityEngine;
 
 public partial class Warrior : Player
 {
+    [SerializeField] GameObject HandObj;
+    [SerializeField] GameObject weapon;
+    [SerializeField] GameObject scabbard;
+    protected void FindWeaponObject(LayerName _name)
+    {
+        GameObject go = null;
+        SkinnedMeshRenderer[] skin = GetComponentsInChildren<SkinnedMeshRenderer>();
+        int value = LayerMask.NameToLayer(_name.ToString());
+        foreach (var skinObj in skin)
+        {
+            if (skinObj.gameObject.layer == value)
+            {
+                weapon = skinObj.rootBone.gameObject;
+                break;
+            }
+        }
+    }
+    public void GetSword()//AnimationEvent
+    {
+        GameObject go = weapon.gameObject;
+        go.transform.SetParent(HandObj.gameObject.transform);
+        go.transform.localPosition = Vector3.zero;
+        weaponState = WeaponState.Sword_On;
+    }
+    public void ClearlSword()//AnimationEvent
+    {
+        GameObject go = weapon.gameObject;
+        go.transform.SetParent(scabbard.gameObject.transform);
+        go.transform.localPosition = Vector3.zero;
+        weaponState = WeaponState.Sword_Off;
+    }
     protected override void walkAnim(RunState _runState, Vector3 _pos)
     {
         if (_runState == RunState.Walk)

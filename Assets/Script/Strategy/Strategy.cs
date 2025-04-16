@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public abstract partial class Strategy 
+public abstract partial class Strategy : MonoBehaviour
 {
     protected Status State;
     protected Player PLAYER;
@@ -11,7 +11,7 @@ public abstract partial class Strategy
     protected WeaponEnum WeaponType = WeaponEnum.None;
     protected CharactorJobEnum playerType = CharactorJobEnum.None;
     protected int DamegeUp;
-    abstract public void Skill(CharactorJobEnum _type , int _number, int _damageValue);
+    abstract public void Skill(CharactorJobEnum _type, int _skillNumber, out int _damageValue);
     public void init(Status _state) 
     {
         State = _state;

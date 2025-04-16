@@ -17,6 +17,7 @@ public enum PlayerAnimParameters
     Right,
     Left,
     WeaponWalk,
+    GetWeapon,
     Close,
 
 }
@@ -132,7 +133,7 @@ public enum LayerName
     SpawnSpider,
     SpawnDron,
     SpawnSphere,
-    Sward,
+    Weapon,
     ViewPoint,
     BackPosition1,
     BackPosition2,
@@ -147,6 +148,12 @@ public enum FindMoveObject
 {
     None,
     Find
+}
+public enum SkillType
+{
+    None,
+    Skill1,
+    Skill2,
 }
 public enum Layer //예전에는 앞에 sScene을 붙여야 했다
 {

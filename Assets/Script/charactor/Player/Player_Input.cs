@@ -21,16 +21,16 @@ public partial class Player : Charactor
             switch (type)
             {
                 case KeyCode.Mouse1:
-                    WalkStateChange(runState);
+                    walkStateChange(runState);
                     break;
                 case KeyCode.R:
-                    RSkill(playerType);
+                    commonRSkill(playerType);
                     break;
                 case KeyCode.Q:
-                    skillAttack1(playerType);//SkillQ
+                    commonskillAttack1(playerType);//SkillQ
                     break;
                 case KeyCode.E:
-                    skillAttack2(playerType);//SkillE
+                    commonskillAttack2(playerType);//SkillE
                     break;
                 case KeyCode.Z:
                     shitdownCheak();//shitdown

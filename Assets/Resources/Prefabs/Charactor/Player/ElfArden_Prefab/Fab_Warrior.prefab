@@ -74,9 +74,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   CharactorId: 0
   hpBar: {fileID: 0}
-  HandObj: {fileID: 8271421497996220226}
-  weapon: {fileID: 3711903135691845748}
-  scabbard: {fileID: 5156620270057898951}
   WeaponPrefab: {fileID: 0}
   shortSword: {fileID: 0}
   AimtransPos: {fileID: 0}
@@ -84,7 +81,14 @@ MonoBehaviour:
   playerStopDistansePos: {x: 0, y: 0, z: 0}
   shitCheack: 0
   closeCheck: 0
+  SkillEffectObj1: {fileID: 0}
+  SkillEffectObj2: {fileID: 0}
+  groundCheckLenght: 0
   charctorState: 0
+  skillEffect: {fileID: 0}
+  HandObj: {fileID: 8271421497996220226}
+  weapon: {fileID: 3711903135691845748}
+  scabbard: {fileID: 5156620270057898951}
 --- !u!54 &5998566012273802008
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -126,15 +130,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2078510062282978317, guid: 9755631934ab23b4db9f8824204491bd, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 18.96
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 2078510062282978317, guid: 9755631934ab23b4db9f8824204491bd, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 3.7139997
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 2078510062282978317, guid: 9755631934ab23b4db9f8824204491bd, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 32.57
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 2078510062282978317, guid: 9755631934ab23b4db9f8824204491bd, type: 3}
       propertyPath: m_LocalRotation.w
@@ -779,10 +783,6 @@ PrefabInstance:
       value: 7
       objectReference: {fileID: 0}
     - target: {fileID: 7400848210480876750, guid: be18a0c0638334a47b0b4d895249486c, type: 3}
-      propertyPath: m_Layer
-      value: 7
-      objectReference: {fileID: 0}
-    - target: {fileID: 7467456826557216309, guid: be18a0c0638334a47b0b4d895249486c, type: 3}
       propertyPath: m_Layer
       value: 7
       objectReference: {fileID: 0}

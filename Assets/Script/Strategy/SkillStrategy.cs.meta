@@ -3,7 +3,8 @@ guid: e966d8647036b7d45aa66a944fc24d5d
 MonoImporter:
   externalObjects: {}
   serializedVersion: 2
-  defaultReferences: []
+  defaultReferences:
+  - SkillEffect: {fileID: 4799312573300115351, guid: fd60ee17d72e67a4b8461b09c0ecbc87, type: 3}
   executionOrder: 0
   icon: {instanceID: 0}
   userData: 

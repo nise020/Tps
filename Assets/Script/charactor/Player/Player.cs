@@ -16,9 +16,9 @@ public partial class Player : Charactor
     //bool runValue = false;
     //protected BoxCollider cameraViewObj;
     protected GameObject cameraViewObj;
-    [SerializeField] GameObject HandObj;
-    [SerializeField] GameObject weapon;
-    [SerializeField] GameObject scabbard;
+    //[SerializeField] GameObject HandObj;
+    //[SerializeField] GameObject weapon;
+    //[SerializeField] GameObject scabbard;
     //스토레이지
 
 
@@ -61,30 +61,23 @@ public partial class Player : Charactor
     AudioListener audioListener => GetComponentInChildren<AudioListener>();
 
     protected Transform charactorModelTrs;//Modeling
+    protected GameObject WeaponObj;
     protected virtual void Start()
     {
         //playerType = PlayerType.Gunner;
         STATUS.init(charactor);//State
         stateInIt();
-        //cameraViewObj = GetComponentInChildren<BoxCollider>();//이 부분 수정이 필요함
-        //FindObject();
         SkinnedMeshRenderer skin = GetComponentInChildren<SkinnedMeshRenderer>();
         charactorModelTrs = skin.transform.parent;
         viewcam = GetComponentInChildren<PlayerCamera>();
-        //viewcam.viewObjInit(cameraViewObj.gameObject);//viewPoint
         if (charctorState == CharctorStateEnum.Npc)
         {
             viewcam.gameObject.SetActive(false);
-            //Shared.BattelUI.PlayerCameraCheck(this, charctorState);
         }
         PLAYERAI.init(this);//FSM
         rigid = GetComponent<Rigidbody>();//Kinematic Controll
         playerAnim = GetComponent<Animator>();
         slotinit();
-    }
-    protected void FindObject() 
-    {
-
     }
 
     protected override void stateInIt() 

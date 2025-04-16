@@ -135,7 +135,7 @@ public partial class Player : Charactor
         Vector3 disTance = (stopPoint - gameObject.transform.position);
 
         Quaternion rotation = Quaternion.LookRotation(disTance.normalized);
-        gameObject.transform.rotation = Quaternion.Slerp(gameObject.transform.rotation, rotation, Time.deltaTime * rotSpeed);
+        charactorModelTrs.rotation = Quaternion.Slerp(charactorModelTrs.rotation, rotation, Time.deltaTime * rotSpeed);
 
         gameObject.transform.position += disTance * speedValue * Time.deltaTime;
         float value = Vector3.Distance(gameObject.transform.position, _pos);
@@ -176,7 +176,10 @@ public partial class Player : Charactor
                     transform.position += transform.TransformDirection(moveDir) * speed * Time.deltaTime;
 
                     Quaternion targetRotation = Quaternion.LookRotation(transform.TransformDirection(moveDir.normalized));
-                    targetRotation *= Quaternion.Euler(0, 60f, 0);//Animation Calibration Value
+                    if (playerType == CharactorJobEnum.Gunner) 
+                    {
+                        targetRotation *= Quaternion.Euler(0, 60f, 0);//Animation Calibration Value
+                    }
                     charactorModelTrs.rotation = Quaternion.Slerp(charactorModelTrs.rotation, targetRotation, Time.deltaTime * rotSpeed);
                 }
                 else if (cameraMode == PlayerCameraMode.GunAttackMode)//Shoot

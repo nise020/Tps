@@ -19,6 +19,9 @@ public partial class Player : Charactor
     protected WeaponState weaponState = WeaponState.None;
     protected NpcRunState npcRunState = NpcRunState.Run_Off;
     protected ReloadState reloadState = ReloadState.None;
+
+    [SerializeField] GameObject SkillEffectObj1;
+    [SerializeField] GameObject SkillEffectObj2;
     public void skillAnimation()//AnimationEvent
     {
         Skillcheck = SkillRunning.SkillOff;
@@ -27,7 +30,7 @@ public partial class Player : Charactor
     {
 
     }
-    protected virtual void RSkill(CharactorJobEnum _type)
+    protected virtual void commonRSkill(CharactorJobEnum _type)
     {
 
     }
@@ -41,18 +44,18 @@ public partial class Player : Charactor
         //playerAnim.SetLayerWeight(BaseLayerIndex, 1.0f);
         playerAnim.SetInteger(PlayerAnimParameters.Reload.ToString(), 0);
     }
-    public void GetSword()//AnimationEvent
-    {
-        GameObject go = weapon.gameObject;
-        go.transform.SetParent(HandObj.gameObject.transform);
-        go.transform.localPosition = Vector3.zero;
-    }
-    public void ClearlSword()//AnimationEvent
-    {
-        GameObject go = weapon.gameObject;
-        go.transform.SetParent(scabbard.gameObject.transform);
-        go.transform.localPosition = Vector3.zero;
-    }
+    //public void GetSword()//AnimationEvent
+    //{
+    //    GameObject go = weapon.gameObject;
+    //    go.transform.SetParent(HandObj.gameObject.transform);
+    //    go.transform.localPosition = Vector3.zero;
+    //}
+    //public void ClearlSword()//AnimationEvent
+    //{
+    //    GameObject go = weapon.gameObject;
+    //    go.transform.SetParent(scabbard.gameObject.transform);
+    //    go.transform.localPosition = Vector3.zero;
+    //}
    
     protected virtual void walkAnim(RunState _runState, Vector3 _pos) 
     {
@@ -193,7 +196,7 @@ public partial class Player : Charactor
             }
         }
     }
-    protected void WalkStateChange(RunState _cheack)
+    protected void walkStateChange(RunState _cheack)
     {
         if (_cheack == RunState.Walk)//Walk_Off State
         {

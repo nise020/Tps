@@ -2,10 +2,10 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Xml;
 using UnityEngine;
-using static UnityEditor.SceneView;
 
 public partial class Gunner : Player
 {
+    //[SerializeField] GameObject skillEffect;
     protected override void attack(CharctorStateEnum _state, CharactorJobEnum _job)
     {
         if (_state == CharctorStateEnum.Player)
@@ -26,7 +26,7 @@ public partial class Gunner : Player
             }
         }
     }
-    protected override void RSkill(CharactorJobEnum _type)//Reload
+    protected override void commonRSkill(CharactorJobEnum _type)//Reload
     {
         if (_type == CharactorJobEnum.Gunner || GUN.nowbullet <= 0) 
         {
@@ -38,17 +38,18 @@ public partial class Gunner : Player
             }
         } 
     }
-    protected override void skillAttack1(CharactorJobEnum _type)
+    protected override void commonskillAttack1(CharactorJobEnum _type)
     {
         if (_type == CharactorJobEnum.Gunner)
         {
             if (skillCheck == SkillRunning.SkillOff)
             {
-                skillStrategy.Skill(playerType, 1, attackValue);
+                skillStrategy.Skill(playerType, 1, out attackValue);
                 skillCheck = SkillRunning.SkillOn;
                 playerAnim.SetInteger("Skill1", 1);
                 playerAnim.SetInteger(PlayerAnimName.BuffSkill.ToString(), 1);
                 Invoke("SkillValueReset", 3);//clear
+                Debug.Log($"attackValue = {attackValue}");
             }
             else
             {
@@ -57,13 +58,13 @@ public partial class Gunner : Player
         }
         else { return; }
     }
-    protected override void skillAttack2(CharactorJobEnum _type)
+    protected override void commonskillAttack2(CharactorJobEnum _type)
     {
         if (_type == CharactorJobEnum.Gunner)
         {
             if (skillCheck == SkillRunning.SkillOff)
             {
-                skillStrategy.Skill(playerType, 2, attackValue);
+                skillStrategy.Skill(playerType, 2, out attackValue);
                 skillCheck = SkillRunning.SkillOn;
                 playerAnim.SetInteger("Skill1", 1);
                 playerAnim.SetInteger(PlayerAnimName.BuffSkill.ToString(), 1);

@@ -4,18 +4,17 @@ using UnityEngine;
 
 public partial class Warrior : Player
 {
+    [SerializeField] GameObject skillEffect;
     protected override void attack(CharctorStateEnum _state, CharactorJobEnum _job)
     {
         if (_state == CharctorStateEnum.Player)
         {
-            if (_job == CharactorJobEnum.Warrior)
-            {
-                AttackAnim(1);
-            }
+            playerAnim.SetInteger(PlayerAnimParameters.GetWeapon.ToString(), 1);
+            //AttackAnim(1);
         }
     }
 
-    protected override void RSkill(CharactorJobEnum _type)
+    protected override void commonRSkill(CharactorJobEnum _type)
     {
         if (_type == CharactorJobEnum.Warrior) 
         {
@@ -23,15 +22,19 @@ public partial class Warrior : Player
         }
 
     }
-    protected override void skillAttack1(CharactorJobEnum _type)
+    protected override void commonskillAttack1(CharactorJobEnum _type)
     {
         if (_type == CharactorJobEnum.Warrior)
         {
             if (skillCheck == SkillRunning.SkillOff)
             {
-                skillStrategy.Skill(playerType, 1, attackValue);
+                skillStrategy.Skill(playerType, 1,out attackValue);
                 skillCheck = SkillRunning.SkillOn;
-                playerAnim.SetInteger("Skill1", 1);
+
+                playerAnim.SetInteger(SkillType.Skill1.ToString(), 1);
+                skillEffect.transform.SetParent(weapon.gameObject.transform);
+                skillEffect.transform.localPosition = Vector3.zero;
+
                 playerAnim.SetInteger(PlayerAnimName.AttackSkill.ToString(), 1);
                 Invoke("SkillValueReset", 3);//clear
             }
@@ -41,15 +44,16 @@ public partial class Warrior : Player
             }
         }
     }
-    protected override void skillAttack2(CharactorJobEnum _type)
+    protected override void commonskillAttack2(CharactorJobEnum _type)
     {
         if (_type == CharactorJobEnum.Gunner)
         {
             if (skillCheck == SkillRunning.SkillOff)
             {
-                skillStrategy.Skill(playerType, 2, attackValue);
+                skillStrategy.Skill(playerType, 2, out attackValue);
                 skillCheck = SkillRunning.SkillOn;
-                playerAnim.SetInteger("Skill1", 1);
+
+                playerAnim.SetInteger(SkillType.Skill2.ToString(), 1);
                 playerAnim.SetInteger(PlayerAnimName.BuffSkill.ToString(), 1);
                 Invoke("SkillValueReset", 3);//clear
             }

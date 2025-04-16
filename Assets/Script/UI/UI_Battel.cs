@@ -26,8 +26,9 @@ public partial class UI_Battel : MonoBehaviour
     }
     public void CharactorControllButten1()//warrior 
     {
-        Warrior warrior = Shared.BattelManager.WARRIOR;
-        Gunner gunner = Shared.BattelManager.GUNNER;
+
+        Player warrior = Shared.GameManager.PlayerDataLoad(CharactorJobEnum.Warrior);
+        Player gunner = Shared.GameManager.PlayerDataLoad(CharactorJobEnum.Gunner);
         if (warrior.CharactorEnumCheck(CharactorJobEnum.Warrior) == true)
         {
             Shared.GameManager.CharctorContoll(warrior, CharctorStateEnum.Player);
@@ -41,8 +42,8 @@ public partial class UI_Battel : MonoBehaviour
     }
     public void CharactorControllButten2()//gunner
     {
-        Warrior warrior = Shared.BattelManager.WARRIOR;
-        Gunner gunner = Shared.BattelManager.GUNNER;
+        Player warrior = Shared.GameManager.PlayerDataLoad(CharactorJobEnum.Warrior);
+        Player gunner = Shared.GameManager.PlayerDataLoad(CharactorJobEnum.Gunner);
         if (gunner.CharactorEnumCheck(CharactorJobEnum.Gunner) == true)
         {
             Shared.GameManager.CharctorContoll(gunner, CharctorStateEnum.Player);
@@ -61,7 +62,7 @@ public partial class UI_Battel : MonoBehaviour
     public void AnotherPlayerReset(Player _player, CharactorJobEnum _type, CharctorStateEnum _check) 
     {
         //_player.playerTypeInite(out _type);//Load
-        //_player.ClearAllAnimation(_type);//Animation reset
+        _player.ClearAllAnimation(_type);//Animation reset
         PlayerCameraCheck(_player, _check);//Camera On_Off
         Shared.GameManager.CharctorContoll(_player, CharctorStateEnum.Npc);//Controll Off
     }

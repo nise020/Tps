@@ -5720,7 +5720,7 @@ GameObject:
   - component: {fileID: 3462415484575650513}
   - component: {fileID: 2930912644924669087}
   - component: {fileID: 6430432924625966480}
-  m_Layer: 7
+  m_Layer: 16
   m_Name: SK_sword
   m_TagString: Untagged
   m_Icon: {fileID: 0}

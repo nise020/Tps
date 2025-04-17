@@ -35,15 +35,7 @@ public partial class Gunner : Player
 
     protected override void clearWalkAnim(CharactorJobEnum _type)
     {
-        if (playerWalkState == PlayerWalkState.Walk_On)
-        {
-            playerWalkState = PlayerWalkState.Walk_Off;
-        }
-        else if (playerRunState == PlayerRunState.Run_On)
-        {
-            playerRunState = PlayerRunState.Run_Off;
-        }
-        else { return; }
+        base.clearWalkAnim(_type);
 
         if (_type == CharactorJobEnum.Gunner)
         {

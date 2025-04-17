@@ -39,7 +39,7 @@ public class AI_Npc : AiBase
     {
         Shared.GameManager.PlayerData(out Player _player);
         _obj.Move_Npc(_player);
-        Debug.Log($"npcAi={npcAi}");
+        Debug.Log($"npcAi={npcAi}\n_player = {_player}");
         //Que
         //Time
         //Vector

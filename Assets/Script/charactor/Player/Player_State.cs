@@ -51,6 +51,7 @@ public partial class Player : Charactor
     public void PlayerControllChange(CharctorStateEnum _type)
     {
         charctorState = _type;
+        Debug.Log($"{gameObject}/{charctorState} = {_type}"); 
     }
 
     public void PlayerControllChack(out CharctorStateEnum _type)

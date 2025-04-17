@@ -60,8 +60,6 @@ MonoBehaviour:
   playerStopDistansePos: {x: 0, y: 0, z: 0}
   shitCheack: 0
   closeCheck: 0
-  SkillEffectObj1: {fileID: 4799312573300115351, guid: fd60ee17d72e67a4b8461b09c0ecbc87, type: 3}
-  SkillEffectObj2: {fileID: 0}
   groundCheckLenght: 0
   charctorState: 1
 --- !u!54 &4268791606964638330
@@ -476,7 +474,7 @@ PrefabInstance:
       objectReference: {fileID: 9100000, guid: 1630fea8fc2d6344eace925e49ea94a3, type: 2}
     - target: {fileID: 5866666021909216657, guid: f23be60aa6b7bbf4eb0255d85e6d7546, type: 3}
       propertyPath: m_ApplyRootMotion
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 6240733294840144465, guid: f23be60aa6b7bbf4eb0255d85e6d7546, type: 3}
       propertyPath: m_Layer

@@ -17,11 +17,11 @@ public partial class Player : Charactor
 
     protected SkillRunning Skillcheck = SkillRunning.SkillOff;
     protected WeaponState weaponState = WeaponState.None;
-    protected NpcRunState npcRunState = NpcRunState.Run_Off;
-    protected ReloadState reloadState = ReloadState.None;
+    //protected NpcRunState npcRunState = NpcRunState.Run_Off;
+    protected ReloadState reloadState = ReloadState.ReloadOff;
 
-    [SerializeField] GameObject SkillEffectObj1;
-    [SerializeField] GameObject SkillEffectObj2;
+    //[SerializeField] GameObject SkillEffectObj1;
+    //[SerializeField] GameObject SkillEffectObj2;
     public void skillAnimation()//AnimationEvent
     {
         Skillcheck = SkillRunning.SkillOff;
@@ -61,13 +61,19 @@ public partial class Player : Charactor
     {
         if (_runState == RunState.Walk)
         {
-            playerWalkState = PlayerWalkState.Walk_On;
-            playerAnim.SetInteger(PlayerAnimParameters.Walk.ToString(), 1);
+            if (playerWalkState == PlayerWalkState.Walk_Off) 
+            {
+                playerWalkState = PlayerWalkState.Walk_On;
+                playerAnim.SetInteger(PlayerAnimParameters.Walk.ToString(), 1);
+            }
         }
         else if (_runState == RunState.Run)
         {
-            playerRunState = PlayerRunState.Run_On;
-            playerAnim.SetInteger(PlayerAnimParameters.Run.ToString(), 1);
+            if (playerRunState == PlayerRunState.Run_On)
+            {
+                playerRunState = PlayerRunState.Run_On;
+                playerAnim.SetInteger(PlayerAnimParameters.Run.ToString(), 1);
+            }
         }
     }
     protected void Sidewalk(RunState _runState, Vector3 _pos) 
@@ -138,23 +144,29 @@ public partial class Player : Charactor
     }
     protected void npcRunStateAnim(float dist)
     {
-        if (dist > runDistanseValue && npcRunState != NpcRunState.Run_On)//run
+        if (dist > runDistanseValue && 
+            npcWalkState != NpcWalkState.Run)//run
         {
-            npcRunState = NpcRunState.Run_On;
+            //npcRunState = NpcRunState.Run_On;
+            npcWalkState = NpcWalkState.Run;
             playerAnim.SetInteger(PlayerAnimParameters.Run.ToString(), 1);
             playerAnim.SetInteger(PlayerAnimParameters.Walk.ToString(), 0);
             return;
         }
-        else if (dist <= runDistanseValue && dist >= playerStopDistanseValue && npcRunState != NpcRunState.Run_Off)//walk
+        else if (dist <= runDistanseValue && dist >= playerStopDistanseValue &&
+            npcWalkState != NpcWalkState.Walk)//walk
         {
-            npcRunState = NpcRunState.Run_Off;
+            //npcRunState = NpcRunState.Run_Off;
+            npcWalkState = NpcWalkState.Walk;
             playerAnim.SetInteger(PlayerAnimParameters.Walk.ToString(), 1);
             playerAnim.SetInteger(PlayerAnimParameters.Run.ToString(), 0);
             return;
         }
-        else if (dist <= playerStopDistanseValue && npcRunState != NpcRunState.None)//&& PLAYER.playerwalksateinit() == false
+        else if (dist <= playerStopDistanseValue &&
+            npcWalkState != NpcWalkState.Stop)//&& PLAYER.playerwalksateinit() == false
         {
-            npcRunState = NpcRunState.None;
+            //npcRunState = NpcRunState.None;
+            npcWalkState = NpcWalkState.Stop;
             playerAnim.SetInteger(PlayerAnimParameters.Walk.ToString(), 0);
         }
         else { return; }
@@ -218,9 +230,15 @@ public partial class Player : Charactor
             playerWalkState = PlayerWalkState.Walk_Off;
             playerAnim.SetInteger(PlayerAnimParameters.Walk.ToString(), 0);
         }
-        else if (playerRunState == PlayerRunState.Run_On)
+        if (playerRunState == PlayerRunState.Run_On)
         {
             playerRunState = PlayerRunState.Run_Off;
+            playerAnim.SetInteger(PlayerAnimParameters.Run.ToString(), 0);
+        }
+        if (npcWalkState != NpcWalkState.Stop) 
+        {
+            npcWalkState = NpcWalkState.Stop;
+            playerAnim.SetInteger(PlayerAnimParameters.Walk.ToString(), 0);
             playerAnim.SetInteger(PlayerAnimParameters.Run.ToString(), 0);
         }
         else { return; }
@@ -253,6 +271,33 @@ public partial class Player : Charactor
             playerAnim.SetInteger(PlayerAnimParameters.Close.ToString(), 1);
             //animCheck(PlayerAnimParameters.Close.ToString(), PlayerAnimName.closeAttack.ToString());
         }
+    }
+    public void ClearAllAnimation(CharactorJobEnum _type)//PlayerChange
+    {
+        //npcWalkState = NpcWalkState.Stop;
+        clearWalkAnim(_type);
+        //npcRunState = NpcRunState.None;
+        //if (_type == CharactorJobEnum.Gunner)
+        //{
+        //    playerAnim.SetInteger(PlayerAnimParameters.Walk.ToString(), 0);
+        //    playerAnim.SetInteger(PlayerAnimParameters.Back.ToString(), 0);
+        //    playerAnim.SetInteger(PlayerAnimParameters.Run.ToString(), 0);
+        //    playerAnim.SetInteger(PlayerAnimParameters.Right.ToString(), 0);
+        //    playerAnim.SetInteger(PlayerAnimParameters.Left.ToString(), 0);
+        //}
+        //else if (_type == CharactorJobEnum.Warrior)
+        //{
+        //    if (playerWalkState == PlayerWalkState.Walk_On)
+        //    {
+        //        playerWalkState = PlayerWalkState.Walk_Off;
+        //        playerAnim.SetInteger(PlayerAnimParameters.Walk.ToString(), 0);
+        //    }
+        //    if (playerWalkState == PlayerWalkState.Walk_On)
+        //    {
+        //        playerWalkState = PlayerWalkState.Walk_Off;
+        //        playerAnim.SetInteger(PlayerAnimParameters.Walk.ToString(), 0);
+        //    }
+        //}
     }
     public void animCheck(string _parameterText, string _animText) 
     {
@@ -298,19 +343,5 @@ public partial class Player : Charactor
         GUN.reLoed = false;
         yield return null;
     }
-    public void ClearAllAnimation(CharactorJobEnum type)//PlayerChange
-    {
-        if (type == CharactorJobEnum.Gunner) 
-        {
-            playerAnim.SetInteger(PlayerAnimParameters.Walk.ToString(),0);
-            playerAnim.SetInteger(PlayerAnimParameters.Back.ToString(),0);
-            playerAnim.SetInteger(PlayerAnimParameters.Run.ToString(),0);
-            playerAnim.SetInteger(PlayerAnimParameters.Right.ToString(),0);
-            playerAnim.SetInteger(PlayerAnimParameters.Left.ToString(),0);
-        }
-        else if (type == CharactorJobEnum.Warrior) 
-        {
-            
-        }
-    }
+   
 }

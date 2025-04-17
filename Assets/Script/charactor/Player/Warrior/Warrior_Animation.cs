@@ -7,9 +7,12 @@ public partial class Warrior : Player
     [SerializeField] GameObject HandObj;
     [SerializeField] GameObject weapon;
     [SerializeField] GameObject scabbard;
+    int scabbardCount = 0;
+    int scabbardMaxCount = 2;
+    Vector3 weaponOriginalPos = Vector3.zero;
     protected void FindWeaponObject(LayerName _name)
     {
-        GameObject go = null;
+        //GameObject go = null;
         SkinnedMeshRenderer[] skin = GetComponentsInChildren<SkinnedMeshRenderer>();
         int value = LayerMask.NameToLayer(_name.ToString());
         foreach (var skinObj in skin)
@@ -17,22 +20,59 @@ public partial class Warrior : Player
             if (skinObj.gameObject.layer == value)
             {
                 weapon = skinObj.rootBone.gameObject;
+                weaponOriginalPos = weapon.transform.localPosition;
                 break;
             }
         }
+    }
+    public void SkillEffectOff(int _value) 
+    {
+        if (_value == 1&& SkillObj1.activeSelf) 
+        {
+            SkillObj1.SetActive(false);
+            firstSkillCheck = SkillRunning.SkillOff;
+            playerAnim.SetInteger(SkillType.Skill1.ToString(), 0);
+        }
+        else if (_value == 2 && SkillObj2.activeSelf)
+        {
+            SkillObj2.SetActive(false);
+            secondSkillCheck = SkillRunning.SkillOff;
+            playerAnim.SetInteger(SkillType.Skill2.ToString(), 0);
+        }
+        scabbardCount = 0;
     }
     public void GetSword()//AnimationEvent
     {
         GameObject go = weapon.gameObject;
         go.transform.SetParent(HandObj.gameObject.transform);
         go.transform.localPosition = Vector3.zero;
+
+        GameObject effectObj = Instantiate(SkillEffectObj1,Vector3.zero,
+            Quaternion.identity, go.transform);
+
+        SkillObj1 = effectObj;
+        SkillObj1.SetActive(false);
+
         weaponState = WeaponState.Sword_On;
     }
-    public void ClearlSword()//AnimationEvent
+    public void ClearlSword(int _value)//AnimationEvent
+    {
+        if (scabbardMaxCount == scabbardCount)
+        {
+            playerAnim.SetInteger(PlayerAnimParameters.GetWeapon.ToString(), 0);
+            scabbardCount = 0;
+        }
+        else 
+        {
+            scabbardCount += _value;
+        }
+            
+    }
+    public void ScabbardInTheSword() 
     {
         GameObject go = weapon.gameObject;
         go.transform.SetParent(scabbard.gameObject.transform);
-        go.transform.localPosition = Vector3.zero;
+        go.transform.localPosition = weaponOriginalPos;
         weaponState = WeaponState.Sword_Off;
     }
     protected override void walkAnim(RunState _runState, Vector3 _pos)
@@ -55,19 +95,6 @@ public partial class Warrior : Player
 
     protected override void clearWalkAnim(CharactorJobEnum _type)
     {
-        if (playerWalkState == PlayerWalkState.Walk_On)
-        {
-            playerWalkState = PlayerWalkState.Walk_Off;
-        }
-        else if (playerRunState == PlayerRunState.Run_On)
-        {
-            playerRunState = PlayerRunState.Run_Off;
-        }
-        else { return; }
-
-        if (_type == CharactorJobEnum.Warrior)
-        {
-            playerAnim.SetInteger(PlayerAnimParameters.Walk.ToString(), 0);
-        }
+        base.clearWalkAnim(_type);
     }
 }

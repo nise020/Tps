@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UIElements;
+using static UnityEngine.Rendering.DebugUI;
 
 public partial class Player : Charactor
 {
@@ -13,11 +14,12 @@ public partial class Player : Charactor
     //분산시스템
     float runDistanseValue = 15.0f;
     float walkDistanseValue = 10.0f;
-    float playerStopDistanseValue = 0.2f;
-    protected PlayerWalkState playerWalkState = PlayerWalkState.None;
-    protected PlayerRunState playerRunState = PlayerRunState.None;
-    protected PlayerShitState playerShitState = PlayerShitState.None;
-    protected NpcWalkState npcWalkState = NpcWalkState.Walk;
+    float playerStopDistanseValue = 0.1f;
+    
+    protected PlayerWalkState playerWalkState = PlayerWalkState.Walk_Off;
+    protected PlayerRunState playerRunState = PlayerRunState.Run_Off;
+    protected PlayerShitState playerShitState = PlayerShitState.ShitUP;
+    protected NpcWalkState npcWalkState = NpcWalkState.Stop;
     protected FindMoveObject objectInfo = FindMoveObject.None;
     
     protected float notWalkTimer = 0;
@@ -47,12 +49,33 @@ public partial class Player : Charactor
         //movePosition = PLAYER.MovePointSearchInit(movePosition);//movePosition
 
         movePosition = _player.SlotPositionUpdate(layerName);
+        Vector3 vector = Vector3.zero;
+
+        float distanse = Vector3.Distance(movePosition, gameObject.transform.position);
+        if (distanse <= playerStopDistanseValue)
+        {
+            return;
+        }
+
+
         if (!fsmPosQue.Contains(movePosition))//value != Vector3 or null
         {
             fsmPosQue.Enqueue(movePosition);//value Plus
         }
-        //int value = fsmPosQue.Count;
-        Vector3 vector = fsmPosQue.Peek();//front value
+        else //value == Vector3
+        {
+            return;
+        }
+        if (_player.PlayerObjectWalkCheck() == false)//stop
+        {
+            vector = fsmPosQue.Peek();//front value
+            fsmPosQue.Clear();
+        }
+        else 
+        {
+            vector = fsmPosQue.Peek();//front value
+        }
+
 
         #endregion
 
@@ -64,24 +87,9 @@ public partial class Player : Charactor
         Vector3 disTance = (stopPoint - gameObject.transform.position);
         disTance.y = 0.0f;//일시적
 
-        //player Direction
-        Quaternion rotation = Quaternion.LookRotation(disTance.normalized);
-        gameObject.transform.rotation = Quaternion.Slerp(gameObject.transform.rotation, rotation, Time.deltaTime * rotSpeed);
-
         float dist = Vector3.Distance(gameObject.transform.position, stopPoint);
-        if (dist > runDistanseValue)//run
-        {
-            npcRunStateAnim(dist); 
-            gameObject.transform.position += disTance.normalized * speedValue * 2 * Time.deltaTime;
-            return;
-        }
-        else if (dist <= runDistanseValue && dist >= playerStopDistanseValue)//walk
-        {
-            npcRunStateAnim(dist);
-            gameObject.transform.position += disTance.normalized * speedValue * Time.deltaTime;
-            return;
-        }
-        else if (dist <= playerStopDistanseValue)//&& PLAYER.playerwalksateinit() == false
+
+        if (dist <= playerStopDistanseValue)//&& PLAYER.playerwalksateinit() == false
         {
             npcRunStateAnim(dist);
             #region Player Follow
@@ -95,26 +103,50 @@ public partial class Player : Charactor
                 return;
             }
             #endregion
-            //gameObject.transform.position += disTance.normalized * speedValue * Time.deltaTime;
         }
-       
+        else if (dist > runDistanseValue)//run
+        {
+            npcRunStateAnim(dist); 
+            gameObject.transform.position += disTance.normalized * speedValue * 2 * Time.deltaTime;
+        }
+        else if (dist < runDistanseValue && dist >= playerStopDistanseValue)//walk
+        {
+            npcRunStateAnim(dist);
+            gameObject.transform.position += disTance.normalized * speedValue * Time.deltaTime;
+        }
+        
+        //player Direction
+        Quaternion rotation = Quaternion.LookRotation(disTance.normalized);
+        charactorModelTrs.rotation = Quaternion.Slerp(charactorModelTrs.rotation, rotation, Time.deltaTime * rotSpeed);
+        
+    }
+    public bool PlayerObjectWalkCheck() 
+    {
+        if (playerWalkState == PlayerWalkState.Walk_On)
+        {
+            return true;
+        }
+        else 
+        {
+            return false;
+        }
     }
     public Vector3 MovePointUpdate()
     {
         return movePosition;
     }
    
-    public bool playerwalksateinit()//player state object
-    {
-        if (playerWalkState == PlayerWalkState.Walk_Off)
-        {
-            return false;
-        }
-        else
-        {
-            return true;
-        }
-    }
+    //public bool playerwalksateinit()//player state object
+    //{
+    //    //if (playerWalkState == PlayerWalkState.Walk_Off)
+    //    //{
+    //    //    return false;
+    //    //}
+    //    //else
+    //    //{
+    //    //    return true;
+    //    //}
+    //}
     
     public void PositionObjectInit(out List<GameObject> _objects)
     {
@@ -127,6 +159,7 @@ public partial class Player : Charactor
             value = 0;
             return true;
         }
+
         return false;
     }
     public float TargetMove(Vector3 _pos)
@@ -158,11 +191,14 @@ public partial class Player : Charactor
                 shitdownCheak();
                 playerShitState = PlayerShitState.ShitUP;
             }
+
             if (_pos.magnitude > 0.1f)
             {
-                playerWalkState = PlayerWalkState.Walk_On;
+                //playerWalkState = PlayerWalkState.Walk_On;
                 notWalkTimer = 0.0f;
+
                 float speed = speedValue;
+
                 if (runState == RunState.Run) 
                 {
                     speed = speedValue * 2;
@@ -173,13 +209,16 @@ public partial class Player : Charactor
                     Vector3 moveDir = _pos; // World
                     moveDir.y = 0;
                     moveDir.Normalize();
+
                     transform.position += transform.TransformDirection(moveDir) * speed * Time.deltaTime;
 
                     Quaternion targetRotation = Quaternion.LookRotation(transform.TransformDirection(moveDir.normalized));
+                    
                     if (playerType == CharactorJobEnum.Gunner) 
                     {
                         targetRotation *= Quaternion.Euler(0, 60f, 0);//Animation Calibration Value
                     }
+
                     charactorModelTrs.rotation = Quaternion.Slerp(charactorModelTrs.rotation, targetRotation, Time.deltaTime * rotSpeed);
                 }
                 else if (cameraMode == PlayerCameraMode.GunAttackMode)//Shoot
@@ -187,8 +226,9 @@ public partial class Player : Charactor
                     Transform cam = transform.GetComponentInChildren<Camera>().transform;
 
                     Vector3 camForward = cam.forward;
-                    Vector3 camRight = cam.right;
                     camForward.y = 0;
+
+                    Vector3 camRight = cam.right;
                     camRight.y = 0;
 
                     Vector3 moveDir = camForward.normalized * _pos.z + camRight.normalized * _pos.x;
@@ -217,6 +257,7 @@ public partial class Player : Charactor
     protected void groundCheak() 
     {
         int layer = LayerMask.NameToLayer(LayerName.Ground.ToString());
+        
         bool isGround = Physics.SphereCast(transform.position, groundCheckRadius, Vector3.down, 
             out RaycastHit hit, groundCheckLenght + 0.1f, layer);
 

@@ -7,7 +7,7 @@ using UnityEngine.Networking;
 
 public class BattelManager : MonoBehaviour
 {
-    public UI_Battel ui;
+    public UI_Battle ui;
     //public List<MoveCamera> MOVECAM;
     public GameObject CamAim;
 
@@ -46,7 +46,7 @@ public class BattelManager : MonoBehaviour
     public Dictionary<int, GameObject> monsterData = new Dictionary<int, GameObject>();
 
     [Header("Defolt 생성 지점")]
-    [SerializeField] UI_Battel BATTELUI;
+    [SerializeField] UI_Battle BATTELUI;
 
     [Header("CreatTab")]
     public Transform creatTab;

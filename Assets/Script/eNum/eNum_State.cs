@@ -71,7 +71,7 @@ public enum RunState
 }
 public enum NpcWalkState
 {
-    None,
+    Stop,
     Walk,
     Run,
 }

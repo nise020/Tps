@@ -25,7 +25,7 @@ public partial class Warrior : Player
         //inputrocessing();
         //move(charctorState);
         //runcheck(RunCheck);
-        if (charctorState == CharctorStateEnum.Player)
+        if (charctorState != CharctorStateEnum.Npc)
         {
             inputrocessing();
         }

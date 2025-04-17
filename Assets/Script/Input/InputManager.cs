@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -19,6 +20,7 @@ public class InputManager : MonoBehaviour
     {
         inputEvent();
     }
+    //Player
     public Queue<KeyCode> KeyinPutQueBase = new Queue<KeyCode>();
     public Queue<MouseInputType> MouseInputQueBase = new Queue<MouseInputType>();
     public Queue<Vector2> MouseMoveQueBase = new Queue<Vector2>();
@@ -26,33 +28,49 @@ public class InputManager : MonoBehaviour
     public Queue<Vector3> MoveQueBase = new Queue<Vector3>();
     public Queue<float> MouseScrollQueBase = new Queue<float>();
     float Speed = 10.0f;
+    //Ui
+    public Queue<KeyCode> UiKeyinPutQue = new Queue<KeyCode>();
     public void inputEvent() 
     {
-        if (Input.GetMouseButton(0)) 
+        PlayerInput();
+        UiButtenInput();
+    }
+
+    private void UiButtenInput()
+    {
+        if (Input.GetKeyDown(KeyCode.Alpha1))
+            UiKeyinPutQue.Enqueue(KeyCode.Alpha1);//CharactorChangeButten1
+        if (Input.GetKeyDown(KeyCode.Alpha2))
+            UiKeyinPutQue.Enqueue(KeyCode.Alpha2);//CharactorChangeButten2
+    }
+
+    public void PlayerInput() 
+    {
+        if (Input.GetMouseButton(0))
             MouseInputQueBase.Enqueue(MouseInputType.Click);//mouseClick
 
-        if (Input.GetMouseButtonUp(0)) 
+        if (Input.GetMouseButtonUp(0))
             MouseInputQueBase.Enqueue(MouseInputType.Release);//mouseClickUp
 
-        if (Input.GetMouseButtonDown(0)) 
+        if (Input.GetMouseButtonDown(0))
             MouseInputQueBase.Enqueue(MouseInputType.Hold);//mouseClickDown
 
-        if (Input.GetKeyDown(KeyCode.Mouse1)) 
+        if (Input.GetKeyDown(KeyCode.Mouse1))
             KeyinPutQueBase.Enqueue(KeyCode.Mouse1);//RunCheck
 
-        if (Input.GetKeyDown(KeyCode.R)) 
+        if (Input.GetKeyDown(KeyCode.R))
             KeyinPutQueBase.Enqueue(KeyCode.R);//reloadOn
 
-        if (Input.GetKeyDown(KeyCode.Q)) 
+        if (Input.GetKeyDown(KeyCode.Q))
             KeyinPutQueBase.Enqueue(KeyCode.Q);//Skill1
 
-        if (Input.GetKeyDown(KeyCode.E)) 
+        if (Input.GetKeyDown(KeyCode.E))
             KeyinPutQueBase.Enqueue(KeyCode.E);//Skill2
 
-        if (Input.GetKeyDown(KeyCode.Z)) 
+        if (Input.GetKeyDown(KeyCode.Z))
             KeyinPutQueBase.Enqueue(KeyCode.Z);//shitdown
 
-        if (Input.GetKeyDown(KeyCode.Space)) 
+        if (Input.GetKeyDown(KeyCode.Space))
             KeyinPutQueBase.Enqueue(KeyCode.Space);//Space
 
         Vector3 move = new Vector3(Input.GetAxisRaw("Horizontal"), 0, Input.GetAxisRaw("Vertical"));

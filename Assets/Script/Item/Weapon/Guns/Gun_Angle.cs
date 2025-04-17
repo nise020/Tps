@@ -6,7 +6,7 @@ using UnityEngine.UI;
 
 public partial class Gun : Weapon
 {
-    UI_Battel ui;
+    UI_Battle ui;
     public bool reLoed = false;
 
     [SerializeField] float gunRazer;

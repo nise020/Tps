@@ -15,6 +15,8 @@ public partial class Player : Charactor
 
         //if (keyinPut == 0 && mouseinPut == 0 && moveinPut == 0) { return; }
         
+        //중복처리를 방지 하기 위한 예외 처리 추가 필요
+
         while (Shared.InputManager.KeyinPutQueBase.Count > 0)//key 
         {
             KeyCode type = Shared.InputManager.KeyinPutQueBase.Dequeue();

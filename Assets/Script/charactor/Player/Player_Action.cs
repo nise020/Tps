@@ -9,7 +9,8 @@ public partial class Player : Charactor
     
     float rotSpeed = 20.0f;//나중에 조정
     float distancingValue = 3.0f;
-    protected SkillRunning skillCheck = SkillRunning.SkillOff;
+    protected SkillRunning firstSkillCheck = SkillRunning.SkillOff;
+    protected SkillRunning secondSkillCheck = SkillRunning.SkillOff;
     protected PlayerCameraMode cameraMode = PlayerCameraMode.CameraRotationMode;
     [SerializeField] Vector3 playerStopDistansePos;
     int movetimeCount;
@@ -20,7 +21,7 @@ public partial class Player : Charactor
     protected virtual void SkillValueReset()//Damage Reset
     {
         attackValue = attackReset;
-        skillCheck = SkillRunning.SkillOff;
+        firstSkillCheck = SkillRunning.SkillOff;
         playerAnim.SetInteger(PlayerAnimName.AttackSkill.ToString(), 0);
         playerAnim.SetInteger(PlayerAnimName.BuffSkill.ToString(), 0);
     }

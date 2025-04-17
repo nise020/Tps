@@ -4,12 +4,18 @@ using UnityEngine;
 
 public partial class Warrior : Player
 {
-    [SerializeField] GameObject skillEffect;
+    [SerializeField] GameObject SkillEffectObj1;
+    [SerializeField] GameObject SkillEffectObj2;
+    GameObject SkillObj1 = null;
+    GameObject SkillObj2 = null;
     protected override void attack(CharctorStateEnum _state, CharactorJobEnum _job)
     {
         if (_state == CharctorStateEnum.Player)
         {
-            playerAnim.SetInteger(PlayerAnimParameters.GetWeapon.ToString(), 1);
+            if (weaponState == WeaponState.Sword_Off) 
+            {
+                playerAnim.SetInteger(PlayerAnimParameters.GetWeapon.ToString(), 1);
+            }
             //AttackAnim(1);
         }
     }
@@ -26,17 +32,22 @@ public partial class Warrior : Player
     {
         if (_type == CharactorJobEnum.Warrior)
         {
-            if (skillCheck == SkillRunning.SkillOff)
+            if (firstSkillCheck == SkillRunning.SkillOff)
             {
+                if (weaponState == WeaponState.Sword_On) 
+                {
+                    GetSword();
+                }
                 skillStrategy.Skill(playerType, 1,out attackValue);
-                skillCheck = SkillRunning.SkillOn;
+                firstSkillCheck = SkillRunning.SkillOn;
 
                 playerAnim.SetInteger(SkillType.Skill1.ToString(), 1);
-                skillEffect.transform.SetParent(weapon.gameObject.transform);
-                skillEffect.transform.localPosition = Vector3.zero;
+                SkillObj1.SetActive(true);
+                //SkillObj.transform.SetParent(weapon.gameObject.transform);
+                //SkillObj.transform.localPosition = Vector3.zero;
 
-                playerAnim.SetInteger(PlayerAnimName.AttackSkill.ToString(), 1);
-                Invoke("SkillValueReset", 3);//clear
+                //playerAnim.SetInteger(PlayerAnimName.AttackSkill.ToString(), 1);
+                //Invoke("SkillValueReset", 3);//clear
             }
             else
             {
@@ -48,14 +59,18 @@ public partial class Warrior : Player
     {
         if (_type == CharactorJobEnum.Gunner)
         {
-            if (skillCheck == SkillRunning.SkillOff)
+            if (secondSkillCheck == SkillRunning.SkillOff)
             {
                 skillStrategy.Skill(playerType, 2, out attackValue);
-                skillCheck = SkillRunning.SkillOn;
+                secondSkillCheck = SkillRunning.SkillOn;
 
                 playerAnim.SetInteger(SkillType.Skill2.ToString(), 1);
-                playerAnim.SetInteger(PlayerAnimName.BuffSkill.ToString(), 1);
-                Invoke("SkillValueReset", 3);//clear
+
+                SkillEffectObj2.transform.SetParent(weapon.gameObject.transform);
+                SkillEffectObj2.transform.localPosition = Vector3.zero;
+
+                //playerAnim.SetInteger(PlayerAnimName.BuffSkill.ToString(), 1);
+                //Invoke("SkillValueReset", 3);//clear
             }
             else
             {
@@ -64,7 +79,7 @@ public partial class Warrior : Player
         }
         else { return; }
     }
-    protected override void cameraModeChange()
+    protected override void cameraModeChange()//수정 필요
     {
         //if (cameraMode == PlayerCameraMode.CameraRotationMode)
         //{
@@ -79,10 +94,17 @@ public partial class Warrior : Player
     }
     protected override void SkillValueReset()//Damage Reset
     {
+        if (firstSkillCheck == SkillRunning.SkillOn) 
+        {
+            playerAnim.SetInteger(SkillType.Skill1.ToString(), 0);
+            firstSkillCheck = SkillRunning.SkillOff;
+        }
+        if (secondSkillCheck == SkillRunning.SkillOn)
+        {
+            playerAnim.SetInteger(SkillType.Skill2.ToString(), 0);
+            secondSkillCheck = SkillRunning.SkillOff;
+        }
         attackValue = attackReset;
-        skillCheck = SkillRunning.SkillOff;
-        playerAnim.SetInteger(PlayerAnimName.AttackSkill.ToString(), 0);
-        playerAnim.SetInteger(PlayerAnimName.BuffSkill.ToString(), 0);
     }
     protected override void ReloadOut()//AnimationEvent
     {

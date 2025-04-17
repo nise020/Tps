@@ -6,7 +6,7 @@ using System.Threading;
 using UnityEngine;
 using UnityEngine.UI;
 
-public partial class UI_Battel : MonoBehaviour
+public partial class UI_Battle : MonoBehaviour
 {
     PlayerCamera MOVECAMERA;
     CharactorJobEnum playerType;
@@ -29,9 +29,11 @@ public partial class UI_Battel : MonoBehaviour
 
         Player warrior = Shared.GameManager.PlayerDataLoad(CharactorJobEnum.Warrior);
         Player gunner = Shared.GameManager.PlayerDataLoad(CharactorJobEnum.Gunner);
+
         if (warrior.CharactorEnumCheck(CharactorJobEnum.Warrior) == true)
         {
             Shared.GameManager.CharctorContoll(warrior, CharctorStateEnum.Player);
+            warrior.ClearAllAnimation(CharactorJobEnum.Warrior);
             PlayerCameraCheck(warrior, CharctorStateEnum.Player);
 
             if (gunner.CharactorEnumCheck(CharactorJobEnum.Gunner) == true)
@@ -47,6 +49,7 @@ public partial class UI_Battel : MonoBehaviour
         if (gunner.CharactorEnumCheck(CharactorJobEnum.Gunner) == true)
         {
             Shared.GameManager.CharctorContoll(gunner, CharctorStateEnum.Player);
+            gunner.ClearAllAnimation(CharactorJobEnum.Gunner);
             PlayerCameraCheck(gunner, CharctorStateEnum.Player);
 
             if (warrior.CharactorEnumCheck(CharactorJobEnum.Warrior) == true) 
@@ -116,10 +119,25 @@ public partial class UI_Battel : MonoBehaviour
     private void Start()
     {
         //gameTimerBar.fillAmount = 0.0f;
-        cam = UnityEngine.Camera.main;
+        //cam = UnityEngine.Camera.main;
         CursurRect = GetComponent<RectTransform>();
     }
-
+    private void Update()
+    {
+        while (Shared.InputManager.UiKeyinPutQue.Count > 0)//key
+        {
+            KeyCode type = Shared.InputManager.UiKeyinPutQue.Dequeue();
+            switch (type)
+            {
+                case KeyCode.Alpha1:
+                    CharactorControllButten1();
+                    break;
+                case KeyCode.Alpha2:
+                    CharactorControllButten1();
+                    break;
+            }
+        }
+    }
     public void Timer()
     {
         secondsTime -= Time.deltaTime;

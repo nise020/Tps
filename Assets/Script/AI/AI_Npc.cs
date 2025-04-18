@@ -9,11 +9,6 @@ public class AI_Npc : AiBase
     Vector3 tagetPos = new Vector3(0f,0f,0f);
     public override void State(CharctorStateEnum _state, Player _player,out NpcAiState _Ai)
     {
-        if (_state == CharctorStateEnum.Player) 
-        {
-            _Ai = npcAi;
-            return;
-        } 
         switch (npcAi)
         {
             case NpcAiState.Search:

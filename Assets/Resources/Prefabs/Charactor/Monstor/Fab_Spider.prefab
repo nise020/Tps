@@ -52,8 +52,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   CharactorId: 0
   hpBar: {fileID: 9135575270855701387, guid: e3d5465fd69dd4e4bad042dc6f58d2d8, type: 3}
-  type: 0
-  monster: 2
+  sphereRadius: 1
+  playerLayer:
+    serializedVersion: 2
+    m_Bits: 0
   mobAnimator: {fileID: 0}
   animCheack: 0
   target: {fileID: 0}
@@ -64,18 +66,18 @@ MonoBehaviour:
   - {x: 0, y: 0, z: -8}
   MobGrenade: {fileID: 3467101612078837595, guid: ae96bb1e39c38e745ac453d6aa6ae3a0, type: 3}
   MobBullet: {fileID: 0}
-  eType: 2
   mobKey: 0
-  deadEffect: {fileID: 0}
   AttackArm: {fileID: 0}
   number: 0
-  eyeObj: {fileID: 3565306436663224119}
+  eyeObj: {fileID: 0}
   attackDistanse: 0
-  moveSpeed: 10
   footObj: {fileID: 0}
   groundCheck: 0
   leagh: 0
-  mobRigid: {fileID: 0}
+  monsterRigid: {fileID: 0}
+  viewDistance: 10
+  viewAngle: 40
+  debugColor: {r: 1, g: 0, b: 0, a: 1}
 --- !u!95 &3985822225663787479
 Animator:
   serializedVersion: 5
@@ -166,37 +168,6 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 0.3, y: 0.24, z: 0.94}
   m_Center: {x: 0, y: 0.27, z: -0.21}
---- !u!1 &3565306436663224119
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 6248604610296906726}
-  m_Layer: 8
-  m_Name: Eye
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &6248604610296906726
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3565306436663224119}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0.012, y: 0.296, z: 0.121}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 5780793563263782546}
-  m_RootOrder: -1
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &4830859895312056790
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -513,10 +484,7 @@ PrefabInstance:
       objectReference: {fileID: 9100000, guid: 88c7fe55ad43f714c8ed1713287f1ffa, type: 2}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
-    m_AddedGameObjects:
-    - targetCorrespondingSourceObject: {fileID: 400000, guid: cc633396b5f95da4b916357a5508ee4f, type: 3}
-      insertIndex: 0
-      addedObject: {fileID: 6248604610296906726}
+    m_AddedGameObjects: []
     m_AddedComponents:
     - targetCorrespondingSourceObject: {fileID: 100000, guid: cc633396b5f95da4b916357a5508ee4f, type: 3}
       insertIndex: -1
@@ -546,8 +514,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   CharactorId: 0
   hpBar: {fileID: 0}
-  type: 0
-  monster: 0
+  sphereRadius: 1
+  playerLayer:
+    serializedVersion: 2
+    m_Bits: 0
   mobAnimator: {fileID: 0}
   animCheack: 0
   target: {fileID: 0}
@@ -556,15 +526,15 @@ MonoBehaviour:
   movePos: []
   MobGrenade: {fileID: 3467101612078837595, guid: ae96bb1e39c38e745ac453d6aa6ae3a0, type: 3}
   MobBullet: {fileID: 0}
-  eType: 2
   mobKey: 0
-  deadEffect: {fileID: 0}
   AttackArm: {fileID: 0}
   number: 0
-  eyeObj: {fileID: 3565306436663224119}
+  eyeObj: {fileID: 0}
   attackDistanse: 0
-  moveSpeed: 10
   footObj: {fileID: 0}
   groundCheck: 0
   leagh: 0
-  mobRigid: {fileID: 0}
+  monsterRigid: {fileID: 0}
+  viewDistance: 10
+  viewAngle: 40
+  debugColor: {r: 1, g: 0, b: 0, a: 1}

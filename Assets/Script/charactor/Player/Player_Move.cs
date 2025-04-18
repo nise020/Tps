@@ -13,15 +13,16 @@ public partial class Player : Charactor
     //일정 시간이 지나도 가만히(움직이지 않으면) 있으면 안 움직인가는 판단
     //분산시스템
     float runDistanseValue = 15.0f;
-    float walkDistanseValue = 10.0f;
-    float playerStopDistanseValue = 0.1f;
+    float playerStopDistanseValue = 0.3f;
     
     protected PlayerWalkState playerWalkState = PlayerWalkState.Walk_Off;
     protected PlayerRunState playerRunState = PlayerRunState.Run_Off;
     protected PlayerShitState playerShitState = PlayerShitState.ShitUP;
     protected NpcWalkState npcWalkState = NpcWalkState.Stop;
     protected FindMoveObject objectInfo = FindMoveObject.None;
-    
+    protected RunState runState = RunState.Walk;
+    protected AttackState attackState = AttackState.None;
+
     protected float notWalkTimer = 0;
     protected float notWalkTime = 3.0f;
     protected Vector3 movePosition = new Vector3();
@@ -38,6 +39,7 @@ public partial class Player : Charactor
         //불가 하지 않을 경우 해당 위치로 계속 이동
         //PlayerWalkState state = PlayerWalkState.None;
         //Shared.GameManager.PlayerData(out Player PLAYER);
+
         if (objectInfo == FindMoveObject.None)//Object Search
         {
             _player.movePointSearch(out LayerName layer);
@@ -45,53 +47,16 @@ public partial class Player : Charactor
             objectInfo = FindMoveObject.Find;
         }
 
-        #region Player Follow
         //movePosition = PLAYER.MovePointSearchInit(movePosition);//movePosition
 
         movePosition = _player.SlotPositionUpdate(layerName);
         Vector3 vector = Vector3.zero;
 
         float distanse = Vector3.Distance(movePosition, gameObject.transform.position);
-        if (distanse <= playerStopDistanseValue)
+
+        if (distanse < playerStopDistanseValue)//distanse < 0.3
         {
-            return;
-        }
-
-
-        if (!fsmPosQue.Contains(movePosition))//value != Vector3 or null
-        {
-            fsmPosQue.Enqueue(movePosition);//value Plus
-        }
-        else //value == Vector3
-        {
-            return;
-        }
-        if (_player.PlayerObjectWalkCheck() == false)//stop
-        {
-            vector = fsmPosQue.Peek();//front value
-            fsmPosQue.Clear();
-        }
-        else 
-        {
-            vector = fsmPosQue.Peek();//front value
-        }
-
-
-        #endregion
-
-        //Vector3 vector = movePosition;
-
-        //player Back Position
-        //Vector3 stopPoint = targetPos;
-        Vector3 stopPoint = vector;
-        Vector3 disTance = (stopPoint - gameObject.transform.position);
-        disTance.y = 0.0f;//일시적
-
-        float dist = Vector3.Distance(gameObject.transform.position, stopPoint);
-
-        if (dist <= playerStopDistanseValue)//&& PLAYER.playerwalksateinit() == false
-        {
-            npcRunStateAnim(dist);
+            npcRunStateAnim(distanse);
             #region Player Follow
             if (fsmPosQue.Count == 0)
             {
@@ -104,21 +69,50 @@ public partial class Player : Charactor
             }
             #endregion
         }
-        else if (dist > runDistanseValue)//run
+        else
         {
-            npcRunStateAnim(dist); 
-            gameObject.transform.position += disTance.normalized * speedValue * 2 * Time.deltaTime;
-        }
-        else if (dist < runDistanseValue && dist >= playerStopDistanseValue)//walk
-        {
+            #region Player Follow
+            if (_player.PlayerObjectWalkCheck() == false)//player stop
+            {
+                fsmPosQue.Clear();
+                fsmPosQue.Enqueue(movePosition);//value Plus
+            }
+            else//player walk
+            {
+                if (!fsmPosQue.Contains(movePosition))//value != Vector3 or null
+                {
+                    fsmPosQue.Enqueue(movePosition);//value Plus
+                }
+            }
+            vector = fsmPosQue.Peek();//front value
+            #endregion
+
+            //Vector3 vector = movePosition;
+
+            //player Back Position
+            //Vector3 stopPoint = targetPos;
+            Vector3 stopPoint = vector;
+            Vector3 disTance = (stopPoint - gameObject.transform.position);
+            disTance.y = 0.0f;//일시적
+
+            float dist = Vector3.Distance(gameObject.transform.position, stopPoint);
             npcRunStateAnim(dist);
-            gameObject.transform.position += disTance.normalized * speedValue * Time.deltaTime;
+            if (dist > runDistanseValue)//run
+            {
+                gameObject.transform.position += disTance.normalized * speedValue * 2 * Time.deltaTime;
+            }
+            else if (dist < runDistanseValue && dist >= playerStopDistanseValue)//walk
+            {
+                gameObject.transform.position += disTance.normalized * speedValue * Time.deltaTime;
+            }
+
+            //player Direction
+            Quaternion rotation = Quaternion.LookRotation(disTance.normalized);
+            charactorModelTrs.rotation = Quaternion.Slerp(charactorModelTrs.rotation, rotation, Time.deltaTime * rotationSpeed);
+
         }
-        
-        //player Direction
-        Quaternion rotation = Quaternion.LookRotation(disTance.normalized);
-        charactorModelTrs.rotation = Quaternion.Slerp(charactorModelTrs.rotation, rotation, Time.deltaTime * rotSpeed);
-        
+
+
     }
     public bool PlayerObjectWalkCheck() 
     {
@@ -168,7 +162,7 @@ public partial class Player : Charactor
         Vector3 disTance = (stopPoint - gameObject.transform.position);
 
         Quaternion rotation = Quaternion.LookRotation(disTance.normalized);
-        charactorModelTrs.rotation = Quaternion.Slerp(charactorModelTrs.rotation, rotation, Time.deltaTime * rotSpeed);
+        charactorModelTrs.rotation = Quaternion.Slerp(charactorModelTrs.rotation, rotation, Time.deltaTime * rotationSpeed);
 
         gameObject.transform.position += disTance * speedValue * Time.deltaTime;
         float value = Vector3.Distance(gameObject.transform.position, _pos);
@@ -219,7 +213,7 @@ public partial class Player : Charactor
                         targetRotation *= Quaternion.Euler(0, 60f, 0);//Animation Calibration Value
                     }
 
-                    charactorModelTrs.rotation = Quaternion.Slerp(charactorModelTrs.rotation, targetRotation, Time.deltaTime * rotSpeed);
+                    charactorModelTrs.rotation = Quaternion.Slerp(charactorModelTrs.rotation, targetRotation, Time.deltaTime * rotationSpeed);
                 }
                 else if (cameraMode == PlayerCameraMode.GunAttackMode)//Shoot
                 {

@@ -4,61 +4,41 @@ using UnityEngine;
 
 public partial class Monster : Charactor
 {
-    public Animator mobAnimator;
-    public bool animCheack = false;
-    public void PointMoveAnim(int _value)
+    protected Animator mobAnimator;
+    protected override void moveAnimation(MonsterWalkState _state) 
     {
-        if (_value != 0) 
+        if (_state != MonsterWalkState.Walk_On)
         {
-            mobAnimator.SetInteger("Walk", 1);
-            Debug.Log("PointMoveAnim");
-            AI.searchingOnOff = true;
-            //AI.searching = SearchState.Move;
-            //mobAnimator.SetInteger("Search", 0);
+            _state = MonsterWalkState.Walk_On;
+            mobAnimator.SetInteger(MonsterAnimParameters.Walk.ToString(), 1);
+        }
+        else 
+        {
+            _state = MonsterWalkState.Walk_Off;
+            mobAnimator.SetInteger(MonsterAnimParameters.Walk.ToString(), 0);
         }
     }
-    public void SearchAnim(int _value) 
+    protected override void attackAnimation(MonsterAttackState _state) 
     {
-
-    }
-    public void AttackEndAnim(int _value)
-    {
-        if (_value != 0)
+        if (_state != MonsterAttackState.Attack_On)
         {
-            //AI.moveing = true;
-            mobAnimator.SetInteger("Attack", 0);
-            Debug.Log("AttackReadyAnim");
-            //mobAnimator.SetInteger("Search", 0);
+            _state = MonsterAttackState.Attack_On;
+            mobAnimator.SetInteger(MonsterAttackState.Attack_On.ToString(), 1);
+        }
+        else 
+        {
+            _state = MonsterAttackState.Attack_Off;
+            mobAnimator.SetInteger(MonsterAttackState.Attack_On.ToString(), 0);
         }
     }
-    public void AttackReadyAnim(int _value)//cicle
+    protected bool AnimationCheck(MonsterWalkState _state)
     {
-        if (_value != 0)
-        {
-            mobAnimator.SetInteger("Attack", 1);
-            Debug.Log("AttackReadyAnim");
-            AI.moveing = true;
-            //mobAnimator.SetInteger("Search", 0);
-        }
+        return false;
     }
-    public IEnumerator EndAinmation(Animator _anim,string _animText) 
+    protected bool AnimationCheck(MonsterAttackState _state)
     {
-        //AnimatorStateInfo animStateInfo = _anim.GetCurrentAnimatorStateInfo(0);//layer
-        //float time = animStateInfo.normalizedTime;
-
-        //if (time >= 1.0f && animStateInfo.IsName(_animText))
-        //{
-
-        //}
-        if (_anim.GetCurrentAnimatorStateInfo(0).IsName(_animText)) 
-        {
-            float time = _anim.GetCurrentAnimatorStateInfo(0).normalizedTime;
-        }
-
-        yield return new WaitForSeconds(0.5f);
-        _anim.Play(_animText, 0, 0f);
+        return false;
     }
-
     //이더 스크롤
 
 }

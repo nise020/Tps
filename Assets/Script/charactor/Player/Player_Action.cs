@@ -6,8 +6,7 @@ using static UnityEditor.SceneView;
 public partial class Player : Charactor
 {
     Player followPlayerObj;
-    
-    float rotSpeed = 20.0f;//나중에 조정
+
     float distancingValue = 3.0f;
     protected SkillRunning firstSkillCheck = SkillRunning.SkillOff;
     protected SkillRunning secondSkillCheck = SkillRunning.SkillOff;
@@ -43,7 +42,7 @@ public partial class Player : Charactor
     {
         return false;
     }
-    public void AutoAttack()
+    public void AutoAttack()//거리이내에 있는 적에게 데미지 로직 필요
     {
         AttackAnim(1);
     }

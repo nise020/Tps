@@ -6,11 +6,14 @@ using UnityEngine;
 public partial class Monster : Charactor
 {
     Condition condition = Condition.health;//상태패턴
-
+    protected virtual void Start()
+    {
+        FindBodyObject();
+    }
     protected virtual void FixedUpdate()
     {
         if (AI == null) { return; }
-        //AI.State(ref aIState);
+        AI.State(ref aIState);
         CameraInMonsterCheck();
     }
     protected HpBar HPBAR = new HpBar();
@@ -18,7 +21,7 @@ public partial class Monster : Charactor
     {
         HPBAR = _hpBar;
     }
-    public void CameraInMonsterCheck()
+    protected void CameraInMonsterCheck()
     {
         Vector3 viewportPos = cam.WorldToViewportPoint(gameObject.transform.position);
 

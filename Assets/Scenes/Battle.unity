@@ -225,6 +225,7 @@ MonoBehaviour:
   PlayerButtons: []
   GUNNER: {fileID: 1709189044}
   WARRIOR: {fileID: 237829054}
+  PlayerObj: []
   startPointObj: {fileID: 1635663219}
   MobObj:
   - {fileID: 0}
@@ -1932,7 +1933,7 @@ MonoBehaviour:
   Maxcount: 3
   SpiderMob: {fileID: 8083318495069326932, guid: 7201b0d848c2011419f306609ce55541, type: 3}
   dronMob: {fileID: 6191365220507688643, guid: 7acc0d0041d8a9243a4285a59532ddaf, type: 3}
-  sphereMob: {fileID: 2914542211161757420, guid: e3607604ba17d994bb5091c9244eea72, type: 3}
+  sphereMob: {fileID: 7179951866075711542, guid: 664077161c3a87242a75de0065049c42, type: 3}
   hpBarCanvers: {fileID: 2580310500171199193, guid: fb6be946678065f4ea6b0c93617ac73a, type: 3}
   hpBarObj: {fileID: 0}
   exflotionEffect: {fileID: 0}
@@ -1959,7 +1960,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6062838634044727671, guid: fcd14aa00e0e2174cb58e2666d144ad6, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 2.88
+      value: 4.3
       objectReference: {fileID: 0}
     - target: {fileID: 6062838634044727671, guid: fcd14aa00e0e2174cb58e2666d144ad6, type: 3}
       propertyPath: m_LocalPosition.z
@@ -3152,6 +3153,67 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: fb6be946678065f4ea6b0c93617ac73a, type: 3}
+--- !u!1001 &652341964817579827
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 3832141995143024152, guid: 664077161c3a87242a75de0065049c42, type: 3}
+      propertyPath: m_RootOrder
+      value: 25
+      objectReference: {fileID: 0}
+    - target: {fileID: 3832141995143024152, guid: 664077161c3a87242a75de0065049c42, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3832141995143024152, guid: 664077161c3a87242a75de0065049c42, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 3.31
+      objectReference: {fileID: 0}
+    - target: {fileID: 3832141995143024152, guid: 664077161c3a87242a75de0065049c42, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: -19.22
+      objectReference: {fileID: 0}
+    - target: {fileID: 3832141995143024152, guid: 664077161c3a87242a75de0065049c42, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3832141995143024152, guid: 664077161c3a87242a75de0065049c42, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3832141995143024152, guid: 664077161c3a87242a75de0065049c42, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3832141995143024152, guid: 664077161c3a87242a75de0065049c42, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3832141995143024152, guid: 664077161c3a87242a75de0065049c42, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3832141995143024152, guid: 664077161c3a87242a75de0065049c42, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3832141995143024152, guid: 664077161c3a87242a75de0065049c42, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3832141995143123960, guid: 664077161c3a87242a75de0065049c42, type: 3}
+      propertyPath: m_Name
+      value: Fab_robotSphere
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 664077161c3a87242a75de0065049c42, type: 3}
 --- !u!4 &1612343797156460954
 Transform:
   m_ObjectHideFlags: 0

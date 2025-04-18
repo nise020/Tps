@@ -10,21 +10,7 @@ public partial class Warrior : Player
     int scabbardCount = 0;
     int scabbardMaxCount = 2;
     Vector3 weaponOriginalPos = Vector3.zero;
-    protected void FindWeaponObject(LayerName _name)
-    {
-        //GameObject go = null;
-        SkinnedMeshRenderer[] skin = GetComponentsInChildren<SkinnedMeshRenderer>();
-        int value = LayerMask.NameToLayer(_name.ToString());
-        foreach (var skinObj in skin)
-        {
-            if (skinObj.gameObject.layer == value)
-            {
-                weapon = skinObj.rootBone.gameObject;
-                weaponOriginalPos = weapon.transform.localPosition;
-                break;
-            }
-        }
-    }
+    
     public void SkillEffectOff(int _value) 
     {
         if (_value == 1&& SkillObj1.activeSelf) 

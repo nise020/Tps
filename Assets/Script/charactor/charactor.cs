@@ -37,7 +37,8 @@ public abstract partial class Charactor : Actor
     [SerializeField] protected float CharactorId = 0;
     [SerializeField] GameObject hpBar;//uiHp
 
-
+    protected Transform charactorModelTrs;//Modeling
+    protected float rotationSpeed = 20.0f;//나중에 조정
     protected float skillCool_1;//1번 스킬쿨타임
     protected float skillCool_2;//2번 스킬쿨타임
     protected float buff;//버프
@@ -80,7 +81,12 @@ public abstract partial class Charactor : Actor
         //update
         //Renderring
     }
-
+    protected void FindBodyObject()
+    {
+        SkinnedMeshRenderer skin = GetComponentInChildren<SkinnedMeshRenderer>();
+        charactorModelTrs = skin.transform.parent;
+        Debug.Log($"{gameObject}\ncharactorModelTrs = {charactorModelTrs}");
+    }
     protected virtual void checkHp(Collider other) //수정 필요
     {
         //if (cheHP == hP) return;
@@ -111,10 +117,9 @@ public abstract partial class Charactor : Actor
             gameObject.SetActive(false);
         }
     }
-    protected virtual void search() 
-    {
-
-    }
+    protected virtual void search() {}
+    protected virtual void moveAnimation(MonsterWalkState _state) {}
+    protected virtual void attackAnimation(MonsterAttackState _state) {}
     protected virtual void move(CharctorStateEnum _value,Vector3 _pos) 
     {
 

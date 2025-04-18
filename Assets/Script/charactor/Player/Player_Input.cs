@@ -5,8 +5,6 @@ using UnityEngine;
 
 public partial class Player : Charactor
 {
-    protected RunState runState = RunState.Walk;
-    protected AttackState attackState = AttackState.None;
     protected void inputrocessing() 
     {
         //int keyinPut = Shared.InputManager.keyinPutQueBase.Count;

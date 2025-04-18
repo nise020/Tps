@@ -19,14 +19,19 @@ public class GameManager : MonoBehaviour
     Player PLAYER;
     [SerializeField] Gunner GUNNER;
     [SerializeField] Warrior WARRIOR;
-    Player[] PlayerObj;//플블 번호
+    public List<Player> PlayerObj;//플블 번호
     [SerializeField] GameObject startPointObj;
 
 
     [Header("Monster")]
     [SerializeField] GameObject[] MobObj;
     int Playerbullet;
+    public void ResorsLoad() 
+    {
+        //GUNNER = Resources.Load($"");
 
+
+    }
  
     public void onbtnTitle() 
     {
@@ -98,6 +103,7 @@ public class GameManager : MonoBehaviour
         _player.TypeInit(_type, playerKey);
         PlayerCount.Add(_player, playerKey);
         playerKey += 1;
+        PlayerObj.Add(_player);
     }
     public void PlayerbleDataLoad(out Dictionary<Player, int> _value) 
     {

@@ -15,7 +15,7 @@ public partial class Player : Charactor
     [SerializeField] bool closeCheck = false;
      bool shitOn = false;
 
-    protected SkillRunning Skillcheck = SkillRunning.SkillOff;
+    protected SkillRunning skillcheck = SkillRunning.SkillOff;
     protected WeaponState weaponState = WeaponState.None;
     //protected NpcRunState npcRunState = NpcRunState.Run_Off;
     protected ReloadState reloadState = ReloadState.ReloadOff;
@@ -24,7 +24,7 @@ public partial class Player : Charactor
     //[SerializeField] GameObject SkillEffectObj2;
     public void skillAnimation()//AnimationEvent
     {
-        Skillcheck = SkillRunning.SkillOff;
+        skillcheck = SkillRunning.SkillOff;
     }
     public void ContinuousAttack() 
     {
@@ -162,7 +162,7 @@ public partial class Player : Charactor
             playerAnim.SetInteger(PlayerAnimParameters.Run.ToString(), 0);
             return;
         }
-        else if (dist <= playerStopDistanseValue &&
+        else if (dist < playerStopDistanseValue &&
             npcWalkState != NpcWalkState.Stop)//&& PLAYER.playerwalksateinit() == false
         {
             //npcRunState = NpcRunState.None;

@@ -12,7 +12,7 @@ public enum MonsterAnimParameters
     Stop,
 
 }
-public enum MobAnim
+public enum MonsterAnim
 {
     Idle,
     Attack,
@@ -40,4 +40,14 @@ public enum MonsterType //몬스터 태그
     Dron,
     Spider,
     Sphere
+}
+public enum MonsterWalkState
+{
+    Walk_On,
+    Walk_Off,
+}
+public enum MonsterAttackState
+{
+    Attack_On,
+    Attack_Off,
 }

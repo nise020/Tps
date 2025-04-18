@@ -23,25 +23,6 @@ public partial class Player : Charactor
     //¿Ãµø
     public void slotinit()
     {
-        //Transform[] children = GetComponentsInChildren<Transform>();
-        //foreach (Transform child in children)
-        //{
-        //    int layer = child.gameObject.layer;
-        //    if (layer == LayerMask.NameToLayer(LayerName.BackPosition1.ToString()))
-        //    {
-        //        rightObj = child.gameObject;
-        //        Slot slot = rightObj.GetComponent<Slot>();
-        //        slot.ObjectState = PositionObjectState.Empty;
-        //        slotList.Add(rightObj);
-        //    }
-        //    else if (layer == LayerMask.NameToLayer(LayerName.BackPosition2.ToString()))
-        //    {
-        //        reftObj = child.gameObject;
-        //        Slot slot = reftObj.GetComponent<Slot>();
-        //        slot.ObjectState = PositionObjectState.Empty;
-        //        slotList.Add(reftObj);
-        //    }
-        //}
         Slot[] children = GetComponentsInChildren<Slot>();
         foreach (Slot child in children)
         {

@@ -58,17 +58,15 @@ public partial class Player : Charactor
     protected ObjectType charactor = ObjectType.Player;
 
     protected SkillStrategy skillStrategy = new SkillStrategy();
-    AudioListener audioListener => GetComponentInChildren<AudioListener>();
+    //AudioListener audioListener => GetComponentInChildren<AudioListener>();
 
-    protected Transform charactorModelTrs;//Modeling
     protected GameObject WeaponObj;
     protected virtual void Start()
     {
         //playerType = PlayerType.Gunner;
         STATUS.init(charactor);//State
         stateInIt();
-        SkinnedMeshRenderer skin = GetComponentInChildren<SkinnedMeshRenderer>();
-        charactorModelTrs = skin.transform.parent;
+        FindBodyObject();
         viewcam = GetComponentInChildren<PlayerCamera>();
         if (charctorState == CharctorStateEnum.Npc)
         {
@@ -93,7 +91,10 @@ public partial class Player : Charactor
 
     private void FixedUpdate()
     {
-        PLAYERAI.State(charctorState,this, out aIState);
+        if (charctorState != CharctorStateEnum.Player)
+        {
+            PLAYERAI.State(charctorState, this, out aIState);
+        }
     }
 
     public void init(out PlayerCamera _camera) 

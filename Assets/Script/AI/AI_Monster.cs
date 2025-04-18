@@ -63,13 +63,14 @@ public partial class AiMonster : AiBase
     }
     protected override void Create()//생성
     {
-        animator = MONSTER.mobAnimator;
+        MONSTER.init();
+        //animator = MONSTER.mobAnimator;
 
-        searchPosObj = MONSTER.movePos;//List
+        //searchPosObj = MONSTER.movePos;//List
 
-        creatTab = Shared.BattelManager.creatTab;
-        eyePos = MONSTER.eyeObj.transform;
-        startPos = MONSTER.gameObject.transform.position;
+        //creatTab = Shared.MonsterManager.creatTab;
+        //eyePos = MONSTER.eyeObj.transform;
+        //startPos = MONSTER.gameObject.transform.position;
         aIState = MonsterAiState.Search;
     }
 
@@ -79,90 +80,28 @@ public partial class AiMonster : AiBase
     public LayerMask playerLayer;
     protected override void Search()//공격할 대상 찾기
     {
-        //Debug.Log($"Search");
-        if (searchAnim == false)
+        MONSTER.MovePoint();
+        if (MONSTER.TargetSearch() == true)
         {
-            searchAnim = true;
-            if (MobType != MonsterType.Dron)
-            {
-                animator.SetInteger(MonsterAnimParameters.Search.ToString(), 1);
-            }
-            searching = SearchState.Stop;
+            aIState = MonsterAiState.Attack;
         }
-        //현제 에러가 나는 이유는 PointMoveAnim에서 OnOff를 제어 하고 있지만
-        //Walk 애니메이션이 상시 실행 되고 있는 부분이다
-
-        //애니메이션 끝나는 부분에 SearchState.Stop을 걸어보기
-
-        //if (searching == SearchState.Move) 
-        //{
-        //    animator.SetInteger("Search", 0);
-        //    animator.SetInteger("Walk", 1);
-        //    MONSTER.NextPoint(ref searchingOnOff);//서치
-        //}
-        //else if (searching == SearchState.Stop) 
-        //{
-        //    animator.SetInteger("Search", 1);
-        //    animator.SetInteger("Walk", 0);
-        //}
-
-
-
-        RaycastHit hit;
-
-        Vector3 position = MONSTER.gameObject.transform.position;
-        Vector3 direction = MONSTER.gameObject.transform.forward;
-
-        if (Physics.SphereCast(position, sphereRadius, direction, out hit, viewDistance)) 
-        {
-            int layer = hit.collider.gameObject.layer;
-            if (layer != Delivery.LayerNameEnum(LayerName.Player)) { return; }
-
-            if (layer == Delivery.LayerNameEnum(LayerName.Player))
-            {
-                moveAnim = false;
-                animator.SetInteger(MonsterAnimParameters.Search.ToString(), 0);
-                aIState = MonsterAiState.Attack;
-                targetPos = hit.collider.gameObject.transform.position;//Vector3
-                searchAnim = false;//clear
-            }
-        }
-        MONSTER.NextPoint(ref searchingOnOff);//서치
     }
-    //Vector3
-
-    //DIstance: 거리 구하기
-    //Dot 내적: 방향, 밀치기
-    //Cross 외적: 빛 반사
-    //Normalize 정규화: 방향만 구하고 값은 1로 낮춘다
-
+ 
     //행렬
     protected override void Move()//이동
     {
-        //MONSTER.readySearch(ref searching);
+        MONSTER.TargetAttackMove();
     }
 
     protected override void Attack()//공격
     {
-        //animator.SetInteger("Attack", 1);
-        Debug.Log($"Attack");
-        //Pattern();
+        MONSTER.Attack();
 
-        if (moveAnim == false)//Animation Event
-        {
-            moveAnim = true;
-            animator.SetInteger(MonsterAnimParameters.Search.ToString(), 0);// Serching X
-            animator.SetInteger(MonsterAnimParameters.Walk.ToString(), 0);
-            if (MobType == MonsterType.Sphere) 
-            {
-                animator.SetInteger(MonsterAnimParameters.Close.ToString(), 1);
-            }
-            animator.SetInteger(MonsterAnimParameters.Attack.ToString(), 1);
-        }
-
-        //ONSTER.Pattern(MobType);
-        Pattern(MobType);
-
+        aIState = MonsterAiState.Reset;
+    }
+    protected override void Reset()//사이클 끝(보통 다시 공격 대상 탐색)
+    {
+        aIState = MonsterAiState.Search;
     }
     public void Pattern(MonsterType _enum)
     {
@@ -210,14 +149,6 @@ public partial class AiMonster : AiBase
 
 
 
-    protected override void Reset()//사이클 끝(보통 다시 공격 대상 탐색)
-    {
-        Debug.Log($"Reset");
-        moveing = false;
-        attackOn = true;
-        targetNumber = 0;
-        aIState = MonsterAiState.Search;
-    }
 
     
 }

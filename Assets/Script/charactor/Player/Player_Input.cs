@@ -49,19 +49,10 @@ public partial class Player : Charactor
                     attack(charctorState, playerType);
                     break;
                 case MouseInputType.Release://mouseClickUp
-                    if (attackState == AttackState.AttackOn)
-                    {
-                        AttackAnim(0);
-                        attackState = AttackState.AttackOff;
-                    }
                     ;
                     break;
                 case MouseInputType.Hold://mouseClickDown
-                    if (attackState == AttackState.AttackOn) 
-                    {
-                        AttackAnim(0);
-                        attackState = AttackState.AttackOff;
-                    }
+                    attack(charctorState, playerType);
                     ;
                     break;
             }

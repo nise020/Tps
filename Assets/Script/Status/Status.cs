@@ -29,7 +29,10 @@ public partial class Status : StatusBase
     public int ViewDefense => Defense;//방어력
     public float ViewSpeed => Speed;//이동속도
 
+    public void StatusInit(int value)
+    {
 
+    }
 
 
     [Header("Weapon")]
@@ -111,7 +114,7 @@ public partial class Status : StatusBase
                 MaxHP = 50;
                 Attack = 30;
                 Defense = 30;
-                Speed = 10;
+                Speed = 20;
                 break;
         }
         Debug.Log($"\n" +

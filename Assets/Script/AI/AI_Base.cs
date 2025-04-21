@@ -15,7 +15,7 @@ public partial class AiBase
     protected NpcAiState npcAi = NpcAiState.Search;
     protected MonsterType MobType;
     protected GameObject startObj;
-
+    protected Vector3 targetPos = new Vector3(0f, 0f, 0f);
     public bool nextOn_Off = true;
     public bool nowPatternOn = true;
     public bool moveChange = true;
@@ -33,7 +33,7 @@ public partial class AiBase
     {
         PLAYER = _player;
     }
-    public virtual void State(ref MonsterAiState _aIState) 
+    public virtual void State() 
     {
         switch (aIState)
         {
@@ -44,7 +44,7 @@ public partial class AiBase
                 Search();
                 break;
             case MonsterAiState.Move:
-                Move();
+                Move(targetPos);
                 break;
             case MonsterAiState.Attack:
                 Attack();
@@ -68,7 +68,7 @@ public partial class AiBase
                 Search();
                 break;
             case NpcAiState.Move:
-                Move();
+                Move(targetPos);
                 break;
             case NpcAiState.Attack:
                 Attack();
@@ -87,7 +87,7 @@ public partial class AiBase
     {
         aIState = MonsterAiState.Attack;
     }
-    protected virtual void Move() 
+    protected virtual void Move(Vector3 _pos) 
     {
         aIState = MonsterAiState.Move;
     }

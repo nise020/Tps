@@ -10,7 +10,26 @@ public partial class Warrior : Player
     int scabbardCount = 0;
     int scabbardMaxCount = 2;
     Vector3 weaponOriginalPos = Vector3.zero;
-    
+    public void RangeCheak() 
+    {
+        Vector3 weaponPos = weapon.transform.position;
+        List<Monster> monsetrPos = Shared.MonsterManager.MonsterList;
+
+        for (int i = 0; i < monsetrPos.Count; i++)
+        {
+            float dist = Vector3.Distance(weaponPos, monsetrPos[i].transform.position);
+
+            if (dist < 2f)
+            {
+                Shared.BattelManager.DamageCheck(this, monsetrPos[i]);
+                break;
+            }
+            else
+            {
+                return;
+            }
+        }
+    }
     public void SkillEffectOff(int _value) 
     {
         if (_value == 1&& SkillObj1.activeSelf) 

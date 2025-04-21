@@ -12,11 +12,14 @@ public partial class Warrior : Player
     {
         if (_state == CharctorStateEnum.Player)
         {
-            if (weaponState == WeaponState.Sword_Off) 
+            if (weaponState == WeaponState.Sword_Off)
             {
                 playerAnim.SetInteger(PlayerAnimParameters.GetWeapon.ToString(), 1);
             }
-            //AttackAnim(1);
+            else if (weaponState == WeaponState.Sword_On) 
+            {
+                AttackAnim(1);
+            }  
         }
     }
 

@@ -93,7 +93,7 @@ public class MonsterManager : MonoBehaviour
     [SerializeField] GameObject hpBarCanvers;
     [SerializeField] HpBar hpBarObj;
     [SerializeField] GameObject exflotionEffect;
-    List<Monster> MonsterList = new List<Monster>();
+    public List<Monster> MonsterList = new List<Monster>();
     public Dictionary<int, GameObject> hpData = new Dictionary<int, GameObject>();
     int monsterCount = 0;
 

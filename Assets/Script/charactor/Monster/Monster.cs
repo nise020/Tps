@@ -6,15 +6,14 @@ using UnityEngine;
 public partial class Monster : Charactor
 {
     Condition condition = Condition.health;//상태패턴
-    protected virtual void Start()
-    {
-        FindBodyObject();
-    }
     protected virtual void FixedUpdate()
     {
         if (AI == null) { return; }
-        AI.State(ref aIState);
-        CameraInMonsterCheck();
+        AI.State();
+    }
+    private void LateUpdate()
+    {
+        //CameraInMonsterCheck();
     }
     protected HpBar HPBAR = new HpBar();
     public void HpInIt(HpBar _hpBar)

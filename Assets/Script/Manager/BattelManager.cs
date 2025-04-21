@@ -2,6 +2,7 @@ using Photon.Realtime;
 using SimpleJSON;
 using System.Collections;
 using System.Collections.Generic;
+using UnityEditorInternal;
 using UnityEngine;
 using UnityEngine.Networking;
 
@@ -209,5 +210,22 @@ public class BattelManager : MonoBehaviour
     {
         monsterData[_number].gameObject.SetActive(true);
         //Invoke("monsterData[_number].gameObject.SetActive(true)",10f);
+    }
+
+    public void DamageCheck(Player _attack, Monster _hit) 
+    {
+        Status player = _attack.StateLoad();
+        Status Monster = _hit.StateLoad();
+
+        int value = player.ViewAttack - (int)Monster.ViewHp;
+        Monster.StatusInit(value);
+    }
+    public void DamageCheck(Monster _attack, Player _hit)
+    {
+        Status Monster = _attack.StateLoad();
+        Status player = _hit.StateLoad();
+
+        int value = Monster.ViewAttack - (int)player.ViewHp;
+        player.StatusInit(value);
     }
 }

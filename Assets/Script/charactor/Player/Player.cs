@@ -66,7 +66,7 @@ public partial class Player : Charactor
         //playerType = PlayerType.Gunner;
         STATUS.init(charactor);//State
         stateInIt();
-        FindBodyObject();
+        FindSkinBodyObject();
         viewcam = GetComponentInChildren<PlayerCamera>();
         if (charctorState == CharctorStateEnum.Npc)
         {

@@ -19,7 +19,7 @@ public partial class SphereMob : Monster
         }
         AI.init(this, SKILL);
         AI.Type(monsterType);
-
+        FindMeshBodyObject();
         STATUS.MonsterState(monsterType);
         stateInIt();
 
@@ -28,8 +28,8 @@ public partial class SphereMob : Monster
     {
         base.FixedUpdate();
     }
-    protected override void OnTriggerEnter(Collider other)
-    {
-        base.OnTriggerEnter(other);
-    }
+    //protected override void OnTriggerEnter(Collider other)
+    //{
+    //    base.OnTriggerEnter(other);
+    //}
 }

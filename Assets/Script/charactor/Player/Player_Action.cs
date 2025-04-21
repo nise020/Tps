@@ -46,5 +46,8 @@ public partial class Player : Charactor
     {
         AttackAnim(1);
     }
-
+    public void Attack()//거리이내에 있는 적에게 데미지 로직 필요
+    {
+        AttackAnim(1);
+    }
 }

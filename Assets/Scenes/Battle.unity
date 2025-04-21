@@ -3209,6 +3209,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Fab_robotSphere
       objectReference: {fileID: 0}
+    - target: {fileID: 3832141995143123960, guid: 664077161c3a87242a75de0065049c42, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []

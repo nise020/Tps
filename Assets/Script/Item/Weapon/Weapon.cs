@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public partial class Weapon : Actor
+public partial class Weapon : Item
 {
     protected WeaponEnum WeaponType = WeaponEnum.None;
     protected CharactorJobEnum PlayerType;

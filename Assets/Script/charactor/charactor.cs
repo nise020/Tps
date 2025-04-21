@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public abstract partial class Charactor : Actor
@@ -81,16 +82,22 @@ public abstract partial class Charactor : Actor
         //update
         //Renderring
     }
-    protected void FindBodyObject()
+    protected void FindSkinBodyObject()
     {
         SkinnedMeshRenderer skin = GetComponentInChildren<SkinnedMeshRenderer>();
+        charactorModelTrs = skin.transform.parent;
+        Debug.Log($"{gameObject}\ncharactorModelTrs = {charactorModelTrs}");
+    }
+    protected void FindMeshBodyObject()
+    {
+        MeshRenderer skin = GetComponentInChildren<MeshRenderer>();
         charactorModelTrs = skin.transform.parent;
         Debug.Log($"{gameObject}\ncharactorModelTrs = {charactorModelTrs}");
     }
     protected virtual void checkHp(Collider other) //수정 필요
     {
         //if (cheHP == hP) return;
-        Damage(other);
+        //Damage(other);
         Debug.Log("Hit");
         if (cheHP >= hP && hP >= 0)
         {
@@ -140,10 +147,10 @@ public abstract partial class Charactor : Actor
     {
 
     }
-    protected virtual void Damage(Collider other)
+    public Status StateLoad()
     {
-        //other
-        hP = hP - 1;//1은 바꿔야함
+        Status state = STATUS;
+        return state;
     }
 
 }

@@ -56,8 +56,6 @@ public partial class Monster : Charactor
         yield return new WaitForSeconds(4);
         _obj.SetActive(false);
     }
-
-    Vector3 targetPos;
     Vector3 myPos = Vector3.zero;
     int moveNumber = 0;
    // public bool SearchCheack = false;

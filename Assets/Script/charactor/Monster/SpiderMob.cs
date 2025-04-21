@@ -19,7 +19,7 @@ public partial class SpiderMob : Monster
         }
         AI.init(this, SKILL);
         AI.Type(monsterType);
-
+        FindSkinBodyObject();
         STATUS.MonsterState(monsterType);
         stateInIt();
     }

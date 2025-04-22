@@ -44,6 +44,10 @@ public abstract partial class Charactor : Actor
     protected float skillCool_2;//2번 스킬쿨타임
     protected float buff;//버프
     protected float burstCool;//버스트 쿨타임
+    public Transform BodyObjectLoad() 
+    {
+        return charactorModelTrs;
+    }
 
     protected virtual void OnTriggerEnter(Collider other)//세분화 필요
     {
@@ -66,6 +70,21 @@ public abstract partial class Charactor : Actor
                 checkHp(other);
             }
         }
+    }
+    protected HpBar HPBAR = new HpBar();
+    public void HpInIt(HpBar _hpBar)
+    {
+        HPBAR = _hpBar;
+    }
+    public void StatusUpLoad(float _hp) 
+    {
+        hP = _hp;
+        if (hP <= 0) 
+        {
+            dead();
+        }
+        cheHP = hP;
+        HPBAR.SetHp(maxHP, cheHP);
     }
     protected virtual void stateInIt() 
     {

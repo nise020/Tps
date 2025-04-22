@@ -79,7 +79,7 @@ Animator:
   m_Enabled: 1
   m_Avatar: {fileID: 9000000, guid: f14b6f7503476eb4e9b2afc1cc05e719, type: 3}
   m_Controller: {fileID: 9100000, guid: 53b0fdbd542669a40badecde3794d908, type: 2}
-  m_CullingMode: 0
+  m_CullingMode: 1
   m_UpdateMode: 0
   m_ApplyRootMotion: 0
   m_LinearVelocityBlending: 0
@@ -103,10 +103,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   CharactorId: 0
   hpBar: {fileID: 9135575270855701387, guid: e3d5465fd69dd4e4bad042dc6f58d2d8, type: 3}
-  type: 0
-  monster: 1
-  mobAnimator: {fileID: 0}
-  animCheack: 0
+  sphereRadius: 1
+  playerLayer:
+    serializedVersion: 2
+    m_Bits: 0
   target: {fileID: 0}
   height: 5
   throuTime: 2
@@ -115,18 +115,18 @@ MonoBehaviour:
   - {x: 0, y: 0, z: -8}
   MobGrenade: {fileID: 0}
   MobBullet: {fileID: 6620972946245811102, guid: 76a6c0a5166a6ca408b9d547d4ea3215, type: 3}
-  eType: 0
   mobKey: 0
-  deadEffect: {fileID: 1000011797152326, guid: acf39d9f4addf294d93fa56fa373961b, type: 3}
   AttackArm: {fileID: 0}
   number: 0
   eyeObj: {fileID: 1542163998025942687}
   attackDistanse: 0
-  moveSpeed: 10
   footObj: {fileID: 0}
   groundCheck: 0
   leagh: 0
-  mobRigid: {fileID: 0}
+  monsterRigid: {fileID: 0}
+  viewDistance: 10
+  viewAngle: 40
+  debugColor: {r: 1, g: 0, b: 0, a: 1}
   directAtkON: 0
 --- !u!65 &2989853712130978414
 BoxCollider:
@@ -312,28 +312,28 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   CharactorId: 0
   hpBar: {fileID: 0}
-  type: 0
-  monster: 0
-  mobAnimator: {fileID: 0}
-  animCheack: 0
+  sphereRadius: 1
+  playerLayer:
+    serializedVersion: 2
+    m_Bits: 0
   target: {fileID: 0}
   height: 5
   throuTime: 2
   movePos: []
   MobGrenade: {fileID: 0}
   MobBullet: {fileID: 6620972946245811102, guid: 76a6c0a5166a6ca408b9d547d4ea3215, type: 3}
-  eType: 0
   mobKey: 0
-  deadEffect: {fileID: 1000011797152326, guid: acf39d9f4addf294d93fa56fa373961b, type: 3}
   AttackArm: {fileID: 0}
   number: 0
   eyeObj: {fileID: 1542163998025942687}
   attackDistanse: 0
-  moveSpeed: 10
   footObj: {fileID: 0}
   groundCheck: 0
   leagh: 0
-  mobRigid: {fileID: 0}
+  monsterRigid: {fileID: 0}
+  viewDistance: 10
+  viewAngle: 40
+  debugColor: {r: 1, g: 0, b: 0, a: 1}
   directAtkON: 0
 --- !u!4 &6237419382192364792 stripped
 Transform:

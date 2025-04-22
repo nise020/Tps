@@ -163,4 +163,10 @@ public class MonsterManager : MonoBehaviour
             return true;
         }
     }
+    public void Resurrection(int _number)
+    {
+        monsterData[_number].gameObject.SetActive(true);
+        //Invoke("monsterData[_number].gameObject.SetActive(true)",10f);
+    }
+
 }

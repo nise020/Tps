@@ -206,26 +206,24 @@ public class BattelManager : MonoBehaviour
         }
     }
 
-    public void Resurrection(int _number) 
+    
+
+    public void DamageCheck(Player _attackker, Monster _defender) 
     {
-        monsterData[_number].gameObject.SetActive(true);
-        //Invoke("monsterData[_number].gameObject.SetActive(true)",10f);
+        Status playerStatus = _attackker.StateLoad();
+        Status MonsterStatus = _defender.StateLoad();
+
+        float value = MonsterStatus.ViewHp - playerStatus.ViewAttack;
+        //MonsterStatus.StatusInit(value);
+        _defender.StatusUpLoad(value);
     }
-
-    public void DamageCheck(Player _attack, Monster _hit) 
+    public void DamageCheck(Monster _attackker, Player _defender)
     {
-        Status player = _attack.StateLoad();
-        Status Monster = _hit.StateLoad();
+        Status MonsterStatus = _attackker.StateLoad();
+        Status playerStatus = _defender.StateLoad();
 
-        int value = player.ViewAttack - (int)Monster.ViewHp;
-        Monster.StatusInit(value);
-    }
-    public void DamageCheck(Monster _attack, Player _hit)
-    {
-        Status Monster = _attack.StateLoad();
-        Status player = _hit.StateLoad();
-
-        int value = Monster.ViewAttack - (int)player.ViewHp;
-        player.StatusInit(value);
+        float value = playerStatus.ViewHp - MonsterStatus.ViewAttack ;
+        //playerStatus.StatusInit(value);
+        _defender.StatusUpLoad(value);
     }
 }

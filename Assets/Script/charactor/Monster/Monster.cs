@@ -13,20 +13,19 @@ public partial class Monster : Charactor
     }
     private void LateUpdate()
     {
-        //CameraInMonsterCheck();
-    }
-    protected HpBar HPBAR = new HpBar();
-    public void HpInIt(HpBar _hpBar)
-    {
-        HPBAR = _hpBar;
+        CameraInMonsterCheck();
     }
     protected void CameraInMonsterCheck()
     {
-        Vector3 viewportPos = cam.WorldToViewportPoint(gameObject.transform.position);
+        Player player = Shared.GameManager.PlayerLoad();
+        Camera camera = player.GetComponentInChildren<Camera>();
+
+        Vector3 viewportPos = camera.WorldToViewportPoint(gameObject.transform.position);
 
         bool isVisible = (viewportPos.z > 0 && viewportPos.x > 0 && viewportPos.x < 1 && viewportPos.y > 0 && viewportPos.y < 1);
         if (isVisible)
         {
+            HPBAR.transform.position = charactorModelTrs.up;
             HPBAR.gameObject.SetActive(true);
         }
         else

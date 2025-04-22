@@ -48,7 +48,7 @@ public partial class Monster : Charactor
         //StartCoroutine(EffectTime(go));
         mobAnimator.SetInteger("Death", 1);
         stateInIt();
-        Shared.BattelManager.Resurrection(mobKey);
+        Shared.MonsterManager.Resurrection(mobKey);
         gameObject.SetActive(false);
     }
     IEnumerator EffectTime(GameObject _obj) 

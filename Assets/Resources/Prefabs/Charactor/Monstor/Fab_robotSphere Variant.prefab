@@ -319,9 +319,17 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 9500000, guid: bff429107601444d59c67940e6ad78c4, type: 3}
+      propertyPath: m_Enabled
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 9500000, guid: bff429107601444d59c67940e6ad78c4, type: 3}
       propertyPath: m_Controller
       value: 
       objectReference: {fileID: 9100000, guid: 280957d48219cec4eb658cebd99d91f6, type: 2}
+    - target: {fileID: 9500000, guid: bff429107601444d59c67940e6ad78c4, type: 3}
+      propertyPath: m_CullingMode
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 9500000, guid: bff429107601444d59c67940e6ad78c4, type: 3}
       propertyPath: m_ApplyRootMotion
       value: 1
@@ -370,10 +378,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   CharactorId: 0
   hpBar: {fileID: 9135575270855701387, guid: e3d5465fd69dd4e4bad042dc6f58d2d8, type: 3}
-  sphereRadius: 1
-  playerLayer:
-    serializedVersion: 2
-    m_Bits: 0
+  SphereRadius: 1
   target: {fileID: 0}
   height: 5
   throuTime: 2

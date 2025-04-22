@@ -15,14 +15,14 @@ public partial class Warrior : Player
         Vector3 weaponPos = weapon.transform.position;
         List<Monster> monsetrPos = Shared.MonsterManager.MonsterList;
 
-        for (int i = 0; i < monsetrPos.Count; i++)
+        for (int iNum = 0; iNum < monsetrPos.Count; iNum++)
         {
-            float dist = Vector3.Distance(weaponPos, monsetrPos[i].transform.position);
+            Transform body = monsetrPos[iNum].BodyObjectLoad();
+            float dist = Vector3.Distance(weaponPos, body.position);
 
             if (dist < 2f)
             {
-                Shared.BattelManager.DamageCheck(this, monsetrPos[i]);
-                break;
+                Shared.BattelManager.DamageCheck(this, monsetrPos[iNum]);
             }
             else
             {
@@ -43,6 +43,10 @@ public partial class Warrior : Player
             SkillObj2.SetActive(false);
             secondSkillCheck = SkillRunning.SkillOff;
             playerAnim.SetInteger(SkillType.Skill2.ToString(), 0);
+        }
+        else 
+        {
+            AttackAnim(0);
         }
         scabbardCount = 0;
     }

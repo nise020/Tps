@@ -11,12 +11,12 @@ public partial class SphereMob : Monster
 
         mobAnimator = GetComponent<Animator>();
         creatTabObj = Shared.BattelManager.creatTab;//¿ÀºêÁ§Æ® »ý¼º ÅÇ(ex.ÃÑ¾Ë)
-        monsterRigid = GetComponent<Rigidbody>();
-        monsterColl = GetComponent<Collider>();
-        if (monsterColl == null)
-        {
-            monsterColl = GetComponentInChildren<Collider>();
-        }
+        //monsterRigid = GetComponent<Rigidbody>();
+        //monsterColl = GetComponent<Collider>();
+        //if (monsterColl == null)
+        //{
+        //    monsterColl = GetComponentInChildren<Collider>();
+        //}
         AI.init(this, SKILL);
         AI.Type(monsterType);
         FindMeshBodyObject();

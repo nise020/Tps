@@ -2,17 +2,19 @@ using System.Collections;
 using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
+using static UnityEditor.ShaderGraph.Internal.KeywordDependentCollection;
 
 public partial class Monster : Charactor
 {
-    
+    Player HItPalyer;
     List<Slot>slots = new List<Slot>();
     int slotCount = 0;
     protected MonsterWalkState walkState = MonsterWalkState.Walk_Off;
     protected MonsterAttackState attackState = MonsterAttackState.Attack_Off;
-    public float sphereRadius = 1.0f; // 구 반지름
-    public LayerMask playerLayer;
-    protected float StopDistanseValue = 0.2f;
+    public float SphereRadius = 1.0f; // 구 반지름
+    protected float stopDistanseValue = 0.2f;
+    protected float searchRange = 10.0f;
+    protected float attackRange = 5.0f;
     Vector3 targetPos;
     Vector3 movePosition = Vector3.zero;
     public void init()
@@ -31,19 +33,7 @@ public partial class Monster : Charactor
             }
         }
     }
-    public void Attack()
-    {
-        attackAnimation(attackState);
-        attackRangeCheck();//Hit
-    }
-    protected void attackRangeCheck() 
-    {
-        
-    }
-    protected void SortingObject() 
-    {
-
-    }
+    
     public void MovePoint(Vector3 _pos)
     {
         //Vector3 vector = Vector3.zero;
@@ -57,34 +47,45 @@ public partial class Monster : Charactor
             walkState = MonsterWalkState.Walk_On;
         }
 
-        Vector3 pos = slots[slotCount].gameObject.transform.localPosition;
+        Vector3 pos = slots[slotCount].gameObject.transform.position;
 
-        Vector3 movePos = pos - charactorModelTrs.localPosition;
-        movePos.y = 0.0f;
+        Vector3 disTance = (pos - charactorModelTrs.position);
+        disTance.y = 0.0f;
 
-        float disTance = Vector3.Distance(charactorModelTrs.localPosition, pos);
-        Debug.Log($"슬롯 {slotCount} 위치: {slots[slotCount].transform.localPosition}");
-        //moveAnimation(walkState);
+        float dist = Vector3.Distance(pos,charactorModelTrs.position);
         
-        if (disTance > StopDistanseValue)
+        Debug.Log($"charactorModelTrs: {charactorModelTrs.name}, \n " +
+            $"position: {charactorModelTrs.position}");
+        if (dist < stopDistanseValue)
         {
-            Vector3 Pos = charactorModelTrs.localPosition;
-            charactorModelTrs.position += movePos.normalized * speedValue * Time.deltaTime;
-            //transform.position += movePos.normalized * speedValue * Time.deltaTime;
-            Debug.Log($"[이동 전] {Pos} -> [이동 후] {charactorModelTrs.localPosition}");
-
-            Quaternion rotation = Quaternion.LookRotation(movePos.normalized);
-            charactorModelTrs.rotation = Quaternion.Slerp(charactorModelTrs.rotation,
-                rotation, Time.deltaTime * rotationSpeed);
-
-            //charactorModelTrs.position += Vector3.forward * Time.deltaTime * 10f;
+            //Debug.Log($"[모델 위치] {charactorModelTrs.position} / [타겟 위치] {targetPos} / [거리] {disTance}");
+            walkState = MonsterWalkState.Walk_Off;
+            //slotCount++;
         }
         else 
         {
-            Debug.Log($"[모델 위치] {charactorModelTrs.localPosition} / [타겟 위치] {targetPos} / [거리] {disTance}");
-            walkState = MonsterWalkState.Walk_Off;
-            slotCount++;
+            Vector3 movePos = disTance.normalized * speedValue * Time.deltaTime;
+
+            Quaternion rotation = Quaternion.LookRotation(disTance.normalized);
+           
+            charactorModelTrs.rotation = Quaternion.Slerp(charactorModelTrs.rotation,
+                rotation, Time.deltaTime * rotationSpeed);
+
+            //charactorModelTrs.position += Vector3.forward * speedValue * Time.deltaTime;
+            //Vector3 movePos = charactorModelTrs.forward * speedValue * Time.deltaTime;
+
+            //charactorModelTrs.Translate(movePos);
+
+            charactorModelTrs.position += movePos;
+            //transform.position += movePos;
+
+            //transform.position += movePos.normalized * speedValue * Time.deltaTime;
+            //Debug.Log($"[이동 전] {Pos} -> [이동 후] {charactorModelTrs.localPosition}");
+
+
+            //charactorModelTrs.position += Vector3.forward * Time.deltaTime * 10f;
         }
+        moveAnimation(walkState);
 
     }
     public bool TargetSearch() 
@@ -96,9 +97,10 @@ public partial class Monster : Charactor
             Player player = playerData[i];
             float value = Vector3.Distance(player.gameObject.transform.position,
                 charactorModelTrs.position);
-            if (value <= StopDistanseValue)
+            if (value <= searchRange)
             {
                 targetPos = player.gameObject.transform.position;
+                HItPalyer = player;
                 return true;
             }
         }
@@ -108,15 +110,38 @@ public partial class Monster : Charactor
     {
         float distanse = Vector3.Distance(targetPos, charactorModelTrs.transform.position);
 
-        if (distanse > StopDistanseValue) 
+        if (distanse < attackRange)
+        {
+            return true;
+        }
+        else 
         {
             Vector3 dist = targetPos - charactorModelTrs.transform.position;
-            dist.Normalize();
-            charactorModelTrs.transform.localPosition += dist * speedValue * Time.deltaTime;
-            return false;
+            charactorModelTrs.transform.position += dist.normalized * speedValue * Time.deltaTime;
+            
+            Quaternion rotation = Quaternion.LookRotation(dist.normalized);
+
+            charactorModelTrs.rotation = Quaternion.Slerp(charactorModelTrs.rotation,
+                rotation, Time.deltaTime * rotationSpeed);
         }
-            return true;
+        return false;
     }
 
-    
+    public void Attack()
+    {
+        attackAnimation(MonsterAttackState.Attack_On);
+        //attackRangeCheck();//Hit
+    }
+    protected void attackRangeCheck()
+    {
+        float dist = Vector3.Distance(charactorModelTrs.position, HItPalyer.transform.position);
+        if (dist < stopDistanseValue) 
+        {
+            Shared.BattelManager.DamageCheck(this, HItPalyer);
+        }
+    }
+    protected void SortingObject()
+    {
+
+    }
 }

@@ -1,7 +1,7 @@
     public void jumpAttack()
     {
         if (jumpOn == false) { return; }
-        if (groundCheck == true)//땅에 닿아 있을때
+        if (groundCheck == true)//?�에 ?�아 ?�을??
         {
             //mobRigid.useGravity = false;
         }
@@ -33,8 +33,8 @@
         Debug.Log($"{yForce}");
         Vector3 jumpPos = dir * xzSpeed + Vector3.up * yForce;
         Debug.Log($"{jumpPos}");
-        mobRigid.AddForce(jumpPos, ForceMode.VelocityChange);//점프
-        //mobRigid.AddForce(jumpPos, ForceMode.Acceleration);//점프
+        mobRigid.AddForce(jumpPos, ForceMode.VelocityChange);//?�프
+        //mobRigid.AddForce(jumpPos, ForceMode.Acceleration);//?�프
         jumpOn = false;
 
 

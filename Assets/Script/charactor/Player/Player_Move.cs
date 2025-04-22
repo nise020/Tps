@@ -200,7 +200,16 @@ public partial class Player : Charactor
 
                 if (cameraMode == PlayerCameraMode.CameraRotationMode)//nomal
                 {
-                    Vector3 moveDir = _pos; // World
+                    Transform camera = viewcam.transform;
+
+                    Vector3 camForward = camera.forward;
+                    Vector3 camRight = camera.right;
+                    camForward.y = 0;
+                    camRight.y = 0;
+
+
+                    //Vector3 moveDir = _pos; // World
+                    Vector3 moveDir = camForward * _pos.z + camRight * _pos.x;
                     moveDir.y = 0;
                     moveDir.Normalize();
 

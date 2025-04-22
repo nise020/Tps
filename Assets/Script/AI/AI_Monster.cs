@@ -91,7 +91,7 @@ public partial class AiMonster : AiBase
     {
         MONSTER.Attack();
 
-        aIState = MonsterAiState.Reset;
+        //aIState = MonsterAiState.Reset;
     }
     protected override void Reset()//사이클 끝(보통 다시 공격 대상 탐색)
     {

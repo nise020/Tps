@@ -63,6 +63,10 @@ public class GameManager : MonoBehaviour
             //int count = playerData.Value;
         }
     }
+    public Player PlayerLoad() 
+    {
+        return PLAYER;
+    }
     public Player PlayerDataLoad(CharactorJobEnum _job)
     {
         if (_job ==CharactorJobEnum.Gunner) 

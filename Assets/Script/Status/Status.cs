@@ -31,7 +31,7 @@ public partial class Status : StatusBase
 
     public void StatusInit(int value)
     {
-
+        //ViewHp = value;
     }
 
 

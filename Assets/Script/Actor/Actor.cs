@@ -4,7 +4,7 @@ using UnityEngine;
 
 public abstract partial class Actor : MonoBehaviour
 {
-    protected UnityEngine.Camera cam;
+    protected Camera cam;
     protected Status STATUS = new Status();
     protected int atkValue;//공격력
     protected int defVAlue;//방어력

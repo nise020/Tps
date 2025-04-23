@@ -34,5 +34,30 @@ public partial class Gun : Weapon
         }
         bulletcount = 0;
     }
-
+    public override int ReturnTypeValue(BulletValueType _type)
+    {
+        if (_type == BulletValueType.NowBullet) 
+        {
+            return nowbullet;
+        }
+        else if (_type == BulletValueType.Bullet)
+        {
+            return bullet;
+        }
+        else if (_type == BulletValueType.Pluse_bullet)
+        {
+            return pluse_bullet;
+        }
+        Debug.LogError($"Not Found BulletValueType");
+        return 0;
+    }
+    public override void ReloadClearValue() 
+    {
+        nowbullet = bullet;
+        bulletcount = 0;
+    }
+    public override void ClearTypeValue(BulletValueType _type)
+    {
+        
+    }
 }

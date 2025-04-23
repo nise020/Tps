@@ -34,16 +34,16 @@ public partial class Player : Charactor
     {
 
     }
-    protected virtual void ReloadOut()//AnimationEvent
-    {
-        //AnimationEvent
-        reloadState = ReloadState.ReloadOff;
-        GUN.nowbullet = GUN.bullet;
-        GUN.bulletcount = 0;
-        playerAnim.SetLayerWeight(attackLayerIndex, 0.0f);
-        //playerAnim.SetLayerWeight(BaseLayerIndex, 1.0f);
-        playerAnim.SetInteger(PlayerAnimParameters.Reload.ToString(), 0);
-    }
+    //protected virtual void reloadOut()//AnimationEvent
+    //{
+    //    //AnimationEvent
+    //    reloadState = ReloadState.ReloadOff;
+    //    GUN.nowbullet = GUN.bullet;
+    //    GUN.bulletcount = 0;
+    //    playerAnim.SetLayerWeight(attackLayerIndex, 0.0f);
+    //    //playerAnim.SetLayerWeight(BaseLayerIndex, 1.0f);
+    //    playerAnim.SetInteger(PlayerAnimParameters.Reload.ToString(), 0);
+    //}
     //public void GetSword()//AnimationEvent
     //{
     //    GameObject go = weapon.gameObject;
@@ -56,7 +56,10 @@ public partial class Player : Charactor
     //    go.transform.SetParent(scabbard.gameObject.transform);
     //    go.transform.localPosition = Vector3.zero;
     //}
-   
+    protected virtual void inPutCameraAnimation(bool _check, MouseInputType _type) 
+    {
+
+    }
     protected virtual void walkAnim(RunState _runState, Vector3 _pos) 
     {
         if (_runState == RunState.Walk)
@@ -76,7 +79,7 @@ public partial class Player : Charactor
             }
         }
     }
-    protected void Sidewalk(RunState _runState, Vector3 _pos) 
+    protected void sidewalk(RunState _runState, Vector3 _pos) 
     {
         if (_pos.x == 1)//rigrt
         {
@@ -108,29 +111,29 @@ public partial class Player : Charactor
     {
         if (_move != 0.0)//Off
         {
-            WeaponWalkAnim(_move, weaponState);
+            weaponWalkAnim(_move, weaponState);
         }
         else if (_move != 0.0)
         {
-            runAnim(_move);
+            runAnimation(_move);
         }
         else if (_move == 0)
         {
-            clearWalkAnim(playerType);
+            clearWalkAnimation(playerType);
         }
     }
-    protected void AttackAnim(float _move)
+    protected void attackAnimation(AttackState _state)
     {
-        if (_move > 0)//Off
+        if (_state == AttackState.AttackOn)//Off
         {
-            playerAnim.SetInteger(PlayerAnimParameters.Attack.ToString(), (int)_move);
+            playerAnim.SetInteger(PlayerAnimParameters.Attack.ToString(), 1);
         }
-        else if (_move < 0)
+        else if (_state == AttackState.AttackOff)
         {
-            playerAnim.SetInteger(PlayerAnimParameters.Attack.ToString(), (int)_move);
+            playerAnim.SetInteger(PlayerAnimParameters.Attack.ToString(), 0);
         }
     }
-    protected void runAnim(float _move)
+    protected void runAnimation(float _move)
     {
         //if(playerType ==CharactorJobEnum.None)
         if (_move > 0)//Off
@@ -142,7 +145,7 @@ public partial class Player : Charactor
             playerAnim.SetInteger(PlayerAnimParameters.Back.ToString(), (int)_move);
         }
     }
-    protected void npcRunStateAnim(float dist)
+    protected void npcRunStateAnimation(float dist)
     {
         if (dist > runDistanseValue && 
             npcWalkState != NpcWalkState.Run)//run
@@ -172,7 +175,7 @@ public partial class Player : Charactor
         else { return; }
     }
 
-    protected void WeaponWalkAnim(float _move, WeaponState _state)
+    protected void weaponWalkAnim(float _move, WeaponState _state)
     {
         if (_state == WeaponState.Sword_On)//Warrior 
         {
@@ -214,30 +217,33 @@ public partial class Player : Charactor
         {
             _cheack = RunState.Run;
             runState = _cheack;
-            clearWalkAnim(playerType);
+            clearWalkAnimation(playerType);
         }
         else if (_cheack == RunState.Run)//Walk_On State
         {
             _cheack = RunState.Walk;
             runState = _cheack;
-            clearWalkAnim(playerType);
+            clearWalkAnimation(playerType);
         }
     }
-    protected virtual void clearWalkAnim(CharactorJobEnum _type) 
+    protected virtual void clearWalkAnimation(CharactorJobEnum _type) 
     {
         if (playerWalkState == PlayerWalkState.Walk_On)
         {
             playerWalkState = PlayerWalkState.Walk_Off;
+
             playerAnim.SetInteger(PlayerAnimParameters.Walk.ToString(), 0);
         }
         if (playerRunState == PlayerRunState.Run_On)
         {
             playerRunState = PlayerRunState.Run_Off;
+
             playerAnim.SetInteger(PlayerAnimParameters.Run.ToString(), 0);
         }
         if (npcWalkState != NpcWalkState.Stop) 
         {
             npcWalkState = NpcWalkState.Stop;
+
             playerAnim.SetInteger(PlayerAnimParameters.Walk.ToString(), 0);
             playerAnim.SetInteger(PlayerAnimParameters.Run.ToString(), 0);
         }
@@ -274,30 +280,7 @@ public partial class Player : Charactor
     }
     public void ClearAllAnimation(CharactorJobEnum _type)//PlayerChange
     {
-        //npcWalkState = NpcWalkState.Stop;
-        clearWalkAnim(_type);
-        //npcRunState = NpcRunState.None;
-        //if (_type == CharactorJobEnum.Gunner)
-        //{
-        //    playerAnim.SetInteger(PlayerAnimParameters.Walk.ToString(), 0);
-        //    playerAnim.SetInteger(PlayerAnimParameters.Back.ToString(), 0);
-        //    playerAnim.SetInteger(PlayerAnimParameters.Run.ToString(), 0);
-        //    playerAnim.SetInteger(PlayerAnimParameters.Right.ToString(), 0);
-        //    playerAnim.SetInteger(PlayerAnimParameters.Left.ToString(), 0);
-        //}
-        //else if (_type == CharactorJobEnum.Warrior)
-        //{
-        //    if (playerWalkState == PlayerWalkState.Walk_On)
-        //    {
-        //        playerWalkState = PlayerWalkState.Walk_Off;
-        //        playerAnim.SetInteger(PlayerAnimParameters.Walk.ToString(), 0);
-        //    }
-        //    if (playerWalkState == PlayerWalkState.Walk_On)
-        //    {
-        //        playerWalkState = PlayerWalkState.Walk_Off;
-        //        playerAnim.SetInteger(PlayerAnimParameters.Walk.ToString(), 0);
-        //    }
-        //}
+        clearWalkAnimation(_type);
     }
     public void animCheck(string _parameterText, string _animText) 
     {
@@ -335,13 +318,13 @@ public partial class Player : Charactor
             closeSwordAttack(closeCheck);
         }
     }
-    IEnumerator reLoadout(int _index)
-    {
-        GUN.nowbullet = GUN.bullet;
-        GUN.bulletcount = 0;
-        playerAnim.SetLayerWeight(_index, 0.0f);
-        GUN.reLoed = false;
-        yield return null;
-    }
+    //IEnumerator reLoadout(int _index)
+    //{
+    //    GUN.nowbullet = GUN.bullet;
+    //    GUN.bulletcount = 0;
+    //    playerAnim.SetLayerWeight(_index, 0.0f);
+    //    GUN.reLoed = false;
+    //    yield return null;
+    //}
    
 }

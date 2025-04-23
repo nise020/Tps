@@ -64,7 +64,9 @@ public partial class Monster : Charactor
         }
         else 
         {
-            Vector3 movePos = disTance.normalized * speedValue * Time.deltaTime;
+            charactorModelTrs.position = disTance.normalized * speedValue * Time.deltaTime;
+
+            //charactorModelTrs.position += movePos;
 
             Quaternion rotation = Quaternion.LookRotation(disTance.normalized);
            
@@ -76,7 +78,6 @@ public partial class Monster : Charactor
 
             //charactorModelTrs.Translate(movePos);
 
-            charactorModelTrs.position += movePos;
             //transform.position += movePos;
 
             //transform.position += movePos.normalized * speedValue * Time.deltaTime;
@@ -127,13 +128,14 @@ public partial class Monster : Charactor
         return false;
     }
 
-    public void Attack()
+    public void MonsterAttack()
     {
-        attackAnimation(MonsterAttackState.Attack_On);
-        //attackRangeCheck();//Hit
+        attackRangeCheck();//Hit
     }
     protected void attackRangeCheck()
     {
+        attackAnimation(MonsterAttackState.Attack_On);
+
         float dist = Vector3.Distance(charactorModelTrs.position, HItPalyer.transform.position);
         if (dist < stopDistanseValue) 
         {

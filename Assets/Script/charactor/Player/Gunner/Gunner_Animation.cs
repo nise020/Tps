@@ -33,9 +33,9 @@ public partial class Gunner : Player
         }
     }
 
-    protected override void clearWalkAnim(CharactorJobEnum _type)
+    protected override void clearWalkAnimation(CharactorJobEnum _type)
     {
-        base.clearWalkAnim(_type);
+        base.clearWalkAnimation(_type);
 
         if (_type == CharactorJobEnum.Gunner)
         {

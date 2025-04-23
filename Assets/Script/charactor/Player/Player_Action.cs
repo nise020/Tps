@@ -17,7 +17,7 @@ public partial class Player : Charactor
     Queue <Time> fsmMoveTime = new Queue<Time>();
     List<GameObject> backPositionObject;//my position Object
 
-    protected virtual void SkillValueReset()//Damage Reset
+    protected virtual void skillValueReset()//Damage Reset
     {
         attackValue = attackReset;
         firstSkillCheck = SkillRunning.SkillOff;
@@ -44,10 +44,11 @@ public partial class Player : Charactor
     }
     public void AutoAttack()//거리이내에 있는 적에게 데미지 로직 필요
     {
-        AttackAnim(1);
+        attackAnimation(AttackState.AttackOn);
     }
     public void Attack()//거리이내에 있는 적에게 데미지 로직 필요
     {
-        AttackAnim(1);
+        attackAnimation(AttackState.AttackOn);
     }
+    
 }

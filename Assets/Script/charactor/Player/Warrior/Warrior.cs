@@ -36,23 +36,23 @@ public partial class Warrior : Player
         //playerSkillAttack(playerType);
         ////Time.timeScale = 0;//Faraim Speed up,Down
     }
-    protected void FindWeaponObject(LayerName _name)
+    
+    protected override void shitdownCheak()
     {
-        //GameObject go = null;
+        base.shitdownCheak();
+    }
+    protected override void FindWeaponObject(LayerName _name)
+    {
         SkinnedMeshRenderer[] skin = GetComponentsInChildren<SkinnedMeshRenderer>();
         int value = LayerMask.NameToLayer(_name.ToString());
         foreach (var skinObj in skin)
         {
             if (skinObj.gameObject.layer == value)
             {
-                weapon = skinObj.rootBone.gameObject;
-                weaponOriginalPos = weapon.transform.localPosition;
+                weaponObj = skinObj.rootBone.gameObject;
+                weaponOriginalPos = weaponObj.transform.localPosition;
                 break;
             }
         }
-    }
-    protected override void shitdownCheak()
-    {
-        base.shitdownCheak();
     }
 }

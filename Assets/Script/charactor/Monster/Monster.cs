@@ -25,7 +25,6 @@ public partial class Monster : Charactor
         bool isVisible = (viewportPos.z > 0 && viewportPos.x > 0 && viewportPos.x < 1 && viewportPos.y > 0 && viewportPos.y < 1);
         if (isVisible)
         {
-            HPBAR.transform.position = charactorModelTrs.up;
             HPBAR.gameObject.SetActive(true);
         }
         else

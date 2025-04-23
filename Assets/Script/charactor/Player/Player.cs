@@ -8,11 +8,11 @@ public partial class Player : Charactor
 {
     protected PlayerCamera viewcam;
     protected AI_Npc PLAYERAI= new AI_Npc();
-    //protected Slot SlotData= new Slot();
+    protected Weapon WEAPON;
     protected NpcAiState aIState = NpcAiState.Search;
     protected Rigidbody rigid;
     protected Animator playerAnim;
-    protected Gun GUN;
+    
     //bool runValue = false;
     //protected BoxCollider cameraViewObj;
     protected GameObject cameraViewObj;
@@ -106,5 +106,11 @@ public partial class Player : Charactor
         playerType = _type;
         PlayerKey = _key;
     }
+    protected GameObject HandObj;
+    protected GameObject weaponObj;
+    protected Vector3 weaponOriginalPos = Vector3.zero;
+    protected virtual void FindWeaponObject(LayerName _name)
+    {
 
+    }
 }

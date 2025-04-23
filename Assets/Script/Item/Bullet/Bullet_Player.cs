@@ -7,13 +7,13 @@ public partial class Bullet_Player : MonoBehaviour
 {
     Bullet BULLET = new Bullet();
     BulletType BulletType = BulletType.Playerbullet;
-    public Vector3 targetPos;//공격할 목표
-    //public float Speed = 0.0f;
+    public Vector3 targetPos;//총의 방향
+    public Vector3 WeaponTrs;
 
     [Header("총알 관련 항목")]
     int targetnumber;
     int bulletDamage = 1;
-    float speed = 100.0f;
+    float speedValue = 100.0f;
 
     bool hideCheck = false;
     bool coroutinRun = false;
@@ -49,6 +49,7 @@ public partial class Bullet_Player : MonoBehaviour
         {
             StartCoroutine(invisible());
         }
-        gameObject.transform.position = BULLET.moveing(transform.position, targetPos, BulletType, speed);
+        //gameObject.transform.position = BULLET.moveing(transform.position, targetPos, BulletType, speedValue);
+        gameObject.transform.position += WeaponTrs.normalized * speedValue * Time.deltaTime;
     }
 }

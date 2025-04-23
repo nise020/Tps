@@ -15,6 +15,20 @@ public class MonsterManager : MonoBehaviour
     int mincount = 0;
     ObjectType objType = ObjectType.None;
 
+    [Header("Monster")]
+    [SerializeField] SpiderMob SpiderMob;
+    [SerializeField] DronMob dronMob;
+    [SerializeField] SphereMob sphereMob;
+    [SerializeField] GameObject hpBarCanvers;
+    [SerializeField] HpBar hpBarObj;
+    [SerializeField] GameObject exflotionEffect;
+    public List<Monster> MonsterList = new List<Monster>();
+    public Dictionary<int, GameObject> hpData = new Dictionary<int, GameObject>();
+    int monsterCount = 0;
+
+    [Header("CreatTab")]
+    public Transform creatTab;
+
     //몬스터를 딕션어리로 관리
     //몬스터의 거리를 측정할 리스트 구현해서 관리
     private void Awake()
@@ -86,19 +100,6 @@ public class MonsterManager : MonoBehaviour
             spawnByType(layerName, spawnPoint.position, mincount, Maxcount, objType);
         }
     }
-    [Header("Monster")]
-    [SerializeField] SpiderMob SpiderMob;
-    [SerializeField] DronMob dronMob;
-    [SerializeField] SphereMob sphereMob;
-    [SerializeField] GameObject hpBarCanvers;
-    [SerializeField] HpBar hpBarObj;
-    [SerializeField] GameObject exflotionEffect;
-    public List<Monster> MonsterList = new List<Monster>();
-    public Dictionary<int, GameObject> hpData = new Dictionary<int, GameObject>();
-    int monsterCount = 0;
-
-    [Header("CreatTab")]
-    public Transform creatTab;
     private void spawnByType(string _layername, Vector3 _spawnTrs, int _min, int _max, ObjectType _type)
     {
         if (_min >= _max) { return; }

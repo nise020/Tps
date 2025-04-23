@@ -12,13 +12,13 @@ public partial class Warrior : Player
     {
         if (_state == CharctorStateEnum.Player)
         {
-            if (weaponState == WeaponState.Sword_Off)
+            if (weaponState == WeaponState.Sword_Off)//Open Weapon
             {
                 playerAnim.SetInteger(PlayerAnimParameters.GetWeapon.ToString(), 1);
             }
-            else if (weaponState == WeaponState.Sword_On) 
+            else if (weaponState == WeaponState.Sword_On)//attack 
             {
-                AttackAnim(1);
+                attackAnimation(AttackState.AttackOn);
             }  
         }
     }
@@ -69,7 +69,7 @@ public partial class Warrior : Player
 
                 playerAnim.SetInteger(SkillType.Skill2.ToString(), 1);
 
-                SkillEffectObj2.transform.SetParent(weapon.gameObject.transform);
+                SkillEffectObj2.transform.SetParent(weaponObj.gameObject.transform);
                 SkillEffectObj2.transform.localPosition = Vector3.zero;
 
                 //playerAnim.SetInteger(PlayerAnimName.BuffSkill.ToString(), 1);
@@ -95,7 +95,7 @@ public partial class Warrior : Player
         //    viewcam.CameraModeInit(cameraMode);
         //}
     }
-    protected override void SkillValueReset()//Damage Reset
+    protected override void skillValueReset()//Damage Reset
     {
         if (firstSkillCheck == SkillRunning.SkillOn) 
         {
@@ -109,14 +109,5 @@ public partial class Warrior : Player
         }
         attackValue = attackReset;
     }
-    protected override void ReloadOut()//AnimationEvent
-    {
-        //AnimationEvent
-        reloadState = ReloadState.ReloadOff;
-        GUN.nowbullet = GUN.bullet;
-        GUN.bulletcount = 0;
-        playerAnim.SetLayerWeight(attackLayerIndex, 0.0f);
-        //playerAnim.SetLayerWeight(BaseLayerIndex, 1.0f);
-        playerAnim.SetInteger(PlayerAnimParameters.Reload.ToString(), 0);
-    }
+
 }

@@ -127,7 +127,7 @@ ui 아이템 정보
 드래그 앤 드랍 - 아이템 스왑 아이템
 
 이터레이터 패턴(트리 알고리즘이 들어간다)
-제네릭<T>을 사용할것
+제네릭<T> + 추상 클래스를 사용하는 패턴
 
 저장순서가 정해지지 않고 데이터 순회
 객체접근 순회방식 통일
@@ -142,3 +142,16 @@ OCP
 
 아이템 정렬할때 혹은 순회를 사용할때 사용
 
+어뎁터 패턴(유니티 필수)
+
+기존 시스템(내 코드)과 업체(구글,스팀 등)가 
+제공한 클래스랑 호환되게끔 하는 코드
+
+      인게임(adapter) ->       Adapter(interface join)    <- UI(Adaptee)
+    adapter : Adapter          / adaptee : Adaptee           / Adaptee
+        doWark()                     methodA()                methodB()
+                                       OR
+       interface1                  interface1,2              interface2
+:어뎁터 패턴(interface를 활용)
+ex.skill,Buff
+데코레이터 패턴(언리얼 필수)

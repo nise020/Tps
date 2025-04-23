@@ -89,7 +89,7 @@ public partial class AiMonster : AiBase
 
     protected override void Attack()//АјАн
     {
-        MONSTER.Attack();
+        MONSTER.MonsterAttack();
 
         //aIState = MonsterAiState.Reset;
     }

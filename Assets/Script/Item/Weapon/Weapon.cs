@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Photon.Pun.Demo.Asteroids;
 using UnityEngine;
 
 public partial class Weapon : Item
@@ -25,9 +26,19 @@ public partial class Weapon : Item
     {
 
     }
+    public virtual int ReturnTypeValue(BulletValueType _type)
+    {
+        return 0;
+    }
+    public virtual void ClearTypeValue(BulletValueType _type)
+    {
+    }
     protected virtual void ControllWeapon(CharactorJobEnum _type) 
     {
 
-    }   
- 
+    }
+    public virtual void ReloadClearValue()
+    {
+
+    }
 }

@@ -45,10 +45,10 @@ public partial class Gun : Weapon
             }
             go.transform.position = gunHoleObj.transform.position;
             Bullet_Player plBullet = go.GetComponent<Bullet_Player>();
-            plBullet.targetPos = _pos.normalized;
+            //plBullet.targetPos = gameObject.transform.position;
             //수정 필요
-            go.transform.rotation = Quaternion.Euler(gameObject.transform.forward);
-           
+            plBullet.WeaponTrs = _pos;
+            
             go.SetActive(true);
 
 

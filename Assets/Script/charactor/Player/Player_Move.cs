@@ -56,7 +56,7 @@ public partial class Player : Charactor
 
         if (distanse < playerStopDistanseValue)//distanse < 0.3
         {
-            npcRunStateAnim(distanse);
+            npcRunStateAnimation(distanse);
             #region Player Follow
             if (fsmPosQue.Count == 0)
             {
@@ -96,7 +96,7 @@ public partial class Player : Charactor
             disTance.y = 0.0f;//ÀÏ½ÃÀû
 
             float dist = Vector3.Distance(gameObject.transform.position, stopPoint);
-            npcRunStateAnim(dist);
+            npcRunStateAnimation(dist);
             if (dist > runDistanseValue)//run
             {
                 gameObject.transform.position += disTance.normalized * speedValue * 2 * Time.deltaTime;

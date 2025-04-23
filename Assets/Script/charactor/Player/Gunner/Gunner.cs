@@ -9,7 +9,8 @@ public partial class Gunner : Player
     
     protected override void Start()
     {
-        GUN = GetComponentInChildren<Gun>();
+        WEAPON = GetComponentInChildren<Gun>();
+        FindWeaponObject(LayerName.Weapon);
         base.Start();
         //playerType = CharactorJobEnum.Gunner;
         //charctorState = CharctorStateEnum.Player;
@@ -61,5 +62,20 @@ public partial class Gunner : Player
     protected override void shitdownCheak()
     {
        base.shitdownCheak();
+    }
+    protected override void FindWeaponObject(LayerName _name)
+    {
+        MeshRenderer[] skin = GetComponentsInChildren<MeshRenderer>();
+
+        int value = LayerMask.NameToLayer(_name.ToString());
+        foreach (var skinObj in skin)
+        {
+            if (skinObj.gameObject.layer == value)
+            {
+                weaponObj = skinObj.gameObject;
+                weaponOriginalPos = weaponObj.transform.localPosition;
+                break;
+            }
+        }
     }
 }

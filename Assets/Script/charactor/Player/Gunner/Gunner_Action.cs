@@ -8,27 +8,38 @@ public partial class Gunner : Player
     //[SerializeField] GameObject skillEffect;
     protected override void attack(CharctorStateEnum _state, CharactorJobEnum _job)
     {
-        if (_state == CharctorStateEnum.Player)
+        if (_job == CharactorJobEnum.Gunner)
         {
-            if (_job == CharactorJobEnum.Gunner)
+            if (reloadState == ReloadState.ReloadOn || 
+                WEAPON.ReturnTypeValue(BulletValueType.NowBullet) <= 0)
             {
-                if (reloadState == ReloadState.ReloadOn || GUN.nowbullet <= 0)
-                {
-                    Debug.Log($"bullet = {GUN.nowbullet}");
-                    return;
-                }
-                attackState = AttackState.AttackOn;
-                Vector3 AimDirection = GUN.gameObject.transform.forward;
-                playerAnim.SetLayerWeight(attackLayerIndex, 1.0f);
-                AttackAnim(1);
-                GUN.Attack(viewcam, AimDirection);
-                playerAnim.SetLayerWeight(attackLayerIndex, 0.0f);
+                Debug.Log($"bullet = {WEAPON.ReturnTypeValue(BulletValueType.NowBullet)}");
+                return;
             }
+            attackState = AttackState.AttackOn;
+            Vector3 AimDirection = weaponObj.transform.forward;
+            playerAnim.SetLayerWeight(attackLayerIndex, 1.0f);
+            WEAPON.Attack(viewcam, AimDirection);
+            playerAnim.SetLayerWeight(attackLayerIndex, 0.0f);
+            //AttackAnim
+            viewcam.cameraShakeAnim(true);
+        }
+    }
+    protected override void inPutCameraAnimation(bool _check, MouseInputType _type)
+    {
+        if (_type == MouseInputType.Release)
+        {
+            viewcam.cameraShakeAnim(_check);
+        }
+        else if (_type == MouseInputType.Hold) 
+        {
+            viewcam.cameraShakeAnim(_check);
         }
     }
     protected override void commonRSkill(CharactorJobEnum _type)//Reload
     {
-        if (_type == CharactorJobEnum.Gunner || GUN.nowbullet <= 0) 
+        if (_type == CharactorJobEnum.Gunner ||
+            WEAPON.ReturnTypeValue(BulletValueType.NowBullet) <= 0) 
         {
             if (reloadState == ReloadState.ReloadOff)
             {
@@ -91,19 +102,18 @@ public partial class Gunner : Player
             viewcam.CameraModeInit(cameraMode);
         }
     }
-    protected override void SkillValueReset()//Damage Reset
+    protected override void skillValueReset()//Damage Reset
     {
         attackValue = attackReset;
         firstSkillCheck = SkillRunning.SkillOff;
         playerAnim.SetInteger(PlayerAnimName.AttackSkill.ToString(), 0);
         playerAnim.SetInteger(PlayerAnimName.BuffSkill.ToString(), 0);
     }
-    protected override void ReloadOut()//AnimationEvent
+    public void ReloadOut()//AnimationEvent
     {
         //AnimationEvent
         reloadState = ReloadState.ReloadOff;
-        GUN.nowbullet = GUN.bullet;
-        GUN.bulletcount = 0;
+        WEAPON.ReloadClearValue();
         playerAnim.SetLayerWeight(attackLayerIndex, 0.0f);
         //playerAnim.SetLayerWeight(BaseLayerIndex, 1.0f);
         playerAnim.SetInteger(PlayerAnimParameters.Reload.ToString(), 0);

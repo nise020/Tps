@@ -5,15 +5,15 @@ using UnityEngine;
 public partial class Warrior : Player
 {
     [SerializeField] GameObject HandObj;
-    [SerializeField] GameObject weapon;
+
     [SerializeField] GameObject scabbard;
+
     int scabbardCount = 0;
     int scabbardMaxCount = 2;
-    Vector3 weaponOriginalPos = Vector3.zero;
     public void RangeCheak() 
     {
-        Vector3 weaponPos = weapon.transform.position;
-        List<Monster> monsetrPos = Shared.MonsterManager.MonsterList;
+        Vector3 weaponPos = weaponObj.transform.position;
+        List <Monster> monsetrPos = Shared.MonsterManager.MonsterList;
 
         for (int iNum = 0; iNum < monsetrPos.Count; iNum++)
         {
@@ -46,13 +46,13 @@ public partial class Warrior : Player
         }
         else 
         {
-            AttackAnim(0);
+            attackAnimation(AttackState.AttackOff);
         }
         scabbardCount = 0;
     }
     public void GetSword()//AnimationEvent
     {
-        GameObject go = weapon.gameObject;
+        GameObject go = weaponObj.gameObject;
         go.transform.SetParent(HandObj.gameObject.transform);
         go.transform.localPosition = Vector3.zero;
 
@@ -79,7 +79,7 @@ public partial class Warrior : Player
     }
     public void ScabbardInTheSword() 
     {
-        GameObject go = weapon.gameObject;
+        GameObject go = weaponObj.gameObject;
         go.transform.SetParent(scabbard.gameObject.transform);
         go.transform.localPosition = weaponOriginalPos;
         weaponState = WeaponState.Sword_Off;
@@ -102,8 +102,8 @@ public partial class Warrior : Player
         }
     }
 
-    protected override void clearWalkAnim(CharactorJobEnum _type)
+    protected override void clearWalkAnimation(CharactorJobEnum _type)
     {
-        base.clearWalkAnim(_type);
+        base.clearWalkAnimation(_type);
     }
 }

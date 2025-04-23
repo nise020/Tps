@@ -2,6 +2,7 @@ using Photon.Realtime;
 using SimpleJSON;
 using System.Collections;
 using System.Collections.Generic;
+using UnityEditor.Experimental.GraphView;
 using UnityEditorInternal;
 using UnityEngine;
 using UnityEngine.Networking;
@@ -208,22 +209,26 @@ public class BattelManager : MonoBehaviour
 
     
 
-    public void DamageCheck(Player _attackker, Monster _defender) 
+    public void DamageCheck(Charactor _attackker, Charactor _defender) 
     {
-        Status playerStatus = _attackker.StateLoad();
-        Status MonsterStatus = _defender.StateLoad();
+        Status attackkerStatus = _attackker.StateLoad();
+        Status defenderStatus = _defender.StateLoad();
 
-        float value = MonsterStatus.ViewHp - playerStatus.ViewAttack;
+        float value = defenderStatus.ViewHp - attackkerStatus.ViewAttack;
+        Debug.Log($"attackker = {_attackker}\n" +
+                  $"defender = {_defender}\n" +
+                  $"{_defender}HP ={defenderStatus.ViewHp}");
         //MonsterStatus.StatusInit(value);
         _defender.StatusUpLoad(value);
+        //vector Addforce
     }
-    public void DamageCheck(Monster _attackker, Player _defender)
-    {
-        Status MonsterStatus = _attackker.StateLoad();
-        Status playerStatus = _defender.StateLoad();
+    //public void DamageCheck(Monster _attackker, Player _defender)
+    //{
+    //    Status MonsterStatus = _attackker.StateLoad();
+    //    Status playerStatus = _defender.StateLoad();
 
-        float value = playerStatus.ViewHp - MonsterStatus.ViewAttack ;
-        //playerStatus.StatusInit(value);
-        _defender.StatusUpLoad(value);
-    }
+    //    float value = playerStatus.ViewHp - MonsterStatus.ViewAttack ;
+    //    //playerStatus.StatusInit(value);
+    //    _defender.StatusUpLoad(value);
+    //}
 }

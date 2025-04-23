@@ -49,10 +49,12 @@ public partial class Player : Charactor
                     attack(charctorState, playerType);
                     break;
                 case MouseInputType.Release://mouseClickUp
+                    inPutCameraAnimation(false, type)
                     ;
                     break;
                 case MouseInputType.Hold://mouseClickDown
                     attack(charctorState, playerType);
+                    inPutCameraAnimation(true, type)
                     ;
                     break;
             }
@@ -60,7 +62,7 @@ public partial class Player : Charactor
         }
         if (Shared.InputManager.MoveQueBase.Count == 0) 
         {
-            clearWalkAnim(playerType);
+            clearWalkAnimation(playerType);
         }
         while (Shared.InputManager.MoveQueBase.Count > 0)//move
         {

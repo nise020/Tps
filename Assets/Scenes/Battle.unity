@@ -2623,6 +2623,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 559518375601996999, guid: 5d32d8321e176b944b08f104cbbf3dac, type: 3}
+      propertyPath: limitRot
+      value: 10
+      objectReference: {fileID: 0}
     - target: {fileID: 795172783068780014, guid: 5d32d8321e176b944b08f104cbbf3dac, type: 3}
       propertyPath: m_RootOrder
       value: 20
@@ -2679,6 +2683,18 @@ PrefabInstance:
       propertyPath: m_LocalPosition.z
       value: -5.17
       objectReference: {fileID: 0}
+    - target: {fileID: 2739008053356981986, guid: 5d32d8321e176b944b08f104cbbf3dac, type: 3}
+      propertyPath: m_Layer
+      value: 16
+      objectReference: {fileID: 0}
+    - target: {fileID: 2739008053356981986, guid: 5d32d8321e176b944b08f104cbbf3dac, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2739008053358915618, guid: 5d32d8321e176b944b08f104cbbf3dac, type: 3}
+      propertyPath: m_Enabled
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 2991793726274446062, guid: 5d32d8321e176b944b08f104cbbf3dac, type: 3}
       propertyPath: m_ApplyRootMotion
       value: 0
@@ -2730,6 +2746,18 @@ PrefabInstance:
     - target: {fileID: 6590099433310919523, guid: 5d32d8321e176b944b08f104cbbf3dac, type: 3}
       propertyPath: m_IsActive
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6969085068361534176, guid: 5d32d8321e176b944b08f104cbbf3dac, type: 3}
+      propertyPath: m_Layer
+      value: 16
+      objectReference: {fileID: 0}
+    - target: {fileID: 7119097427240176788, guid: 5d32d8321e176b944b08f104cbbf3dac, type: 3}
+      propertyPath: m_Layer
+      value: 16
+      objectReference: {fileID: 0}
+    - target: {fileID: 7208749909875244897, guid: 5d32d8321e176b944b08f104cbbf3dac, type: 3}
+      propertyPath: m_Layer
+      value: 16
       objectReference: {fileID: 0}
     - target: {fileID: 8111696344732971002, guid: 5d32d8321e176b944b08f104cbbf3dac, type: 3}
       propertyPath: m_Enabled
@@ -3542,17 +3570,9 @@ PrefabInstance:
       propertyPath: GunModeOn
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 8965789118130949790, guid: e4882e1f7f91ad14db38f42cec51330d, type: 3}
-      propertyPath: m_LocalPosition.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 8965789118130949790, guid: e4882e1f7f91ad14db38f42cec51330d, type: 3}
-      propertyPath: m_LocalPosition.y
-      value: 3
-      objectReference: {fileID: 0}
-    - target: {fileID: 8965789118130949790, guid: e4882e1f7f91ad14db38f42cec51330d, type: 3}
-      propertyPath: m_LocalPosition.z
-      value: 0
+    - target: {fileID: 8786264883520491133, guid: e4882e1f7f91ad14db38f42cec51330d, type: 3}
+      propertyPath: limitRot
+      value: 10
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

@@ -59,8 +59,10 @@ public partial class Player : Charactor
 
     protected SkillStrategy skillStrategy = new SkillStrategy();
     //AudioListener audioListener => GetComponentInChildren<AudioListener>();
-
-    protected GameObject WeaponObj;
+    [SerializeField] protected GameObject HandObj;
+    [SerializeField] protected GameObject weaponObj;
+    protected Vector3 weaponOriginalPos = Vector3.zero;
+    //protected GameObject WeaponObj;
     protected virtual void Start()
     {
         //playerType = PlayerType.Gunner;
@@ -106,9 +108,7 @@ public partial class Player : Charactor
         playerType = _type;
         PlayerKey = _key;
     }
-    protected GameObject HandObj;
-    protected GameObject weaponObj;
-    protected Vector3 weaponOriginalPos = Vector3.zero;
+    
     protected virtual void FindWeaponObject(LayerName _name)
     {
 

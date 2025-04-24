@@ -107,6 +107,21 @@ public abstract partial class Charactor : Actor
         charactorModelTrs = skin.transform.parent;
         Debug.Log($"{gameObject}\ncharactorModelTrs = {charactorModelTrs}");
     }
+    protected GameObject FindSkinBodyTypeObject(BodyType _type)
+    {
+        GameObject [] bodyObj = GetComponentsInChildren<GameObject>();
+        foreach (GameObject obj in bodyObj) 
+        {
+            int Layer = LayerMask.NameToLayer(_type.ToString());
+            if (Layer == obj.layer) 
+            {
+                return obj;
+            }
+        }
+        Debug.Log($"gameObject = null");
+        return null;
+    }
+
     protected void FindMeshBodyObject()
     {
         MeshRenderer skin = GetComponentInChildren<MeshRenderer>();

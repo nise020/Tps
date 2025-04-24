@@ -28,11 +28,11 @@ TagManager:
   - BackPosition1
   - BackPosition2
   - MonsterMovePosition
-  - 
-  - 
-  - 
-  - 
-  - 
+  - RightHand
+  - LeftHand
+  - RightFoot
+  - LeftFoot
+  - Skill
   - 
   - 
   - 

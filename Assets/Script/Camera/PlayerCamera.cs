@@ -131,8 +131,8 @@ public partial class PlayerCamera : CameraBase
         while (MouseScrollQueBase.Count > 0)//key 
         {
             float type = MouseScrollQueBase.Dequeue();
-            thisCamera.fieldOfView -= type * zoomSpeed;
             thisCamera.fieldOfView = Mathf.Clamp(thisCamera.fieldOfView, minFOV, maxFOV);
+            thisCamera.fieldOfView -= type * zoomSpeed;
         }
         while (MouseMoveQueBase.Count > 0)//key 
         {

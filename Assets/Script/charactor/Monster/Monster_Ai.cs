@@ -64,7 +64,7 @@ public partial class Monster : Charactor
         }
         else 
         {
-            charactorModelTrs.position = disTance.normalized * speedValue * Time.deltaTime;
+            charactorModelTrs.position += disTance.normalized * speedValue * Time.deltaTime;
 
             //charactorModelTrs.position += movePos;
 
@@ -118,6 +118,7 @@ public partial class Monster : Charactor
         else 
         {
             Vector3 dist = targetPos - charactorModelTrs.transform.position;
+            dist.y = 0f;
             charactorModelTrs.transform.position += dist.normalized * speedValue * Time.deltaTime;
             
             Quaternion rotation = Quaternion.LookRotation(dist.normalized);

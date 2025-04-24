@@ -46,7 +46,7 @@ public partial class Player : Charactor
             switch (type) 
             {
                 case MouseInputType.Click://mouseClick
-                    attack(charctorState, playerType);
+                    //attack(charctorState, playerType);
                     break;
                 case MouseInputType.Release://mouseClickUp
                     inPutCameraAnimation(false, type)

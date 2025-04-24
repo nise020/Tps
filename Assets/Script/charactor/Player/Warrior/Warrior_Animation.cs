@@ -4,8 +4,6 @@ using UnityEngine;
 
 public partial class Warrior : Player
 {
-    [SerializeField] GameObject HandObj;
-
     [SerializeField] GameObject scabbard;
 
     int scabbardCount = 0;
@@ -32,38 +30,56 @@ public partial class Warrior : Player
     }
     public void SkillEffectOff(int _value) 
     {
-        if (_value == 1&& SkillObj1.activeSelf) 
+        //if (_value == 1&& SkillParentObj1.activeSelf) 
+        //{
+        //    SkillParentObj1.SetActive(false);
+        //    firstSkillCheck = SkillRunning.SkillOff;
+        //    playerAnim.SetInteger(SkillType.Skill1.ToString(), 0);
+        //}
+        //else if (_value == 2 && SkillParentObj2.activeSelf)
+        //{
+        //    SkillParentObj2.SetActive(false);
+        //    secondSkillCheck = SkillRunning.SkillOff;
+        //    playerAnim.SetInteger(SkillType.Skill2.ToString(), 0);
+        //}
+        //else 
+        //{
+        //    attackAnimation(AttackState.AttackOff);
+        //}
+
+
+        if (firstSkillCheck == SkillRunning.SkillOn)
         {
-            SkillObj1.SetActive(false);
-            firstSkillCheck = SkillRunning.SkillOff;
-            playerAnim.SetInteger(SkillType.Skill1.ToString(), 0);
+            SkillAnimation(SkillType.Skill1, false);
+            SkillParentObj1.SetActive(false);
         }
-        else if (_value == 2 && SkillObj2.activeSelf)
+        else if (secondSkillCheck == SkillRunning.SkillOn) 
         {
-            SkillObj2.SetActive(false);
-            secondSkillCheck = SkillRunning.SkillOff;
-            playerAnim.SetInteger(SkillType.Skill2.ToString(), 0);
+            SkillAnimation(SkillType.Skill2, false);
+            SkillParentObj1.SetActive(false);
+            //secondSkillCheck = SkillRunning.SkillOff;
+            //playerAnim.SetInteger(SkillType.Skill2.ToString(), 0);
         }
-        else 
+        else
         {
             attackAnimation(AttackState.AttackOff);
         }
+        weaponState = WeaponState.Sword_Off;
         scabbardCount = 0;
+
     }
     public void GetSword()//AnimationEvent
     {
         GameObject go = weaponObj.gameObject;
         go.transform.SetParent(HandObj.gameObject.transform);
         go.transform.localPosition = Vector3.zero;
-
-        GameObject effectObj = Instantiate(SkillEffectObj1,Vector3.zero,
-            Quaternion.identity, go.transform);
-
-        SkillObj1 = effectObj;
-        SkillObj1.SetActive(false);
-
         weaponState = WeaponState.Sword_On;
+
+        //CreatSkill(SkillEffectObj1, SkillParentObj1);
+        //CreatSkill(SkillEffectObj2, SkillParentObj2);
+
     }
+   
     public void ClearlSword(int _value)//AnimationEvent
     {
         if (scabbardMaxCount == scabbardCount)
@@ -101,7 +117,35 @@ public partial class Warrior : Player
             playerAnim.SetInteger(PlayerAnimParameters.Run.ToString(), 1);
         }
     }
-
+    protected void SkillAnimation(SkillType _type,bool _check) 
+    {
+        if (_type == SkillType.Skill1)
+        {
+            if (_check)
+            {
+                firstSkillCheck = SkillRunning.SkillOn;
+                playerAnim.SetInteger(SkillType.Skill1.ToString(), 1);
+            }
+            else 
+            {
+                firstSkillCheck = SkillRunning.SkillOff;
+                playerAnim.SetInteger(SkillType.Skill1.ToString(), 0);
+            }
+        }
+        else if (_type == SkillType.Skill2) 
+        {
+            if (_check)
+            {
+                secondSkillCheck = SkillRunning.SkillOn;
+                playerAnim.SetInteger(SkillType.Skill2.ToString(), 1);
+            }
+            else
+            {
+                secondSkillCheck = SkillRunning.SkillOff;
+                playerAnim.SetInteger(SkillType.Skill2.ToString(), 0);
+            }
+        }
+    }
     protected override void clearWalkAnimation(CharactorJobEnum _type)
     {
         base.clearWalkAnimation(_type);

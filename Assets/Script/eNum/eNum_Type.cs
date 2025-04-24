@@ -9,4 +9,9 @@ public enum WeaponType
     Sowrd,
     Gun,
 }
+public enum SkillObjType
+{
+    Sowrd,
+    Gun,
+}
 

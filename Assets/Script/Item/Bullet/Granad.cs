@@ -14,8 +14,12 @@ public class Granad : Weapon
     private void Start()
     {
         //Torque<--È¸Àü·Â
-        GranadPos = startPos;
-        transform.position = GranadPos;
-        GetComponent<Rigidbody>().AddTorque(Vector3.one * 200.0f);
+        //GranadPos = startPos;
+        //transform.position = GranadPos;
+        //GetComponent<Rigidbody>().AddTorque(Vector3.one * 200.0f);
+    }
+    private void Awake()
+    {
+        WeaponType = WeaponEnum.Granad;
     }
 }

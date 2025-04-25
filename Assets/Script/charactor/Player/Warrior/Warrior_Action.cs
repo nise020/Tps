@@ -5,10 +5,7 @@ using UnityEngine.SocialPlatforms.Impl;
 
 public partial class Warrior : Player
 {
-    [SerializeField] GameObject SkillEffectObj1;
-    [SerializeField] GameObject SkillEffectObj2;
-    [SerializeField] GameObject SkillParentObj1 = null;
-    [SerializeField] GameObject SkillParentObj2 = null;
+    
     protected override void attack(CharctorStateEnum _state, CharactorJobEnum _job)
     {
         if (_state == CharctorStateEnum.Player)
@@ -60,6 +57,8 @@ public partial class Warrior : Player
 
                 SkillEffectObj1.transform.localRotation = Quaternion.identity;
 
+                SkillEffectSystem1.Play();
+
                 //Transform effect = SkillEffectObj1.transform;
                 //Transform effectParent = effect.parent; // Skill_1
                 //Transform sword = effectParent.parent;  // sword
@@ -104,6 +103,7 @@ public partial class Warrior : Player
 
                 SkillEffectObj2.transform.rotation = Quaternion.LookRotation(weaponObj.transform.up);
 
+                SkillEffectSystem2.Play();
                 //playerAnim.SetInteger(PlayerAnimName.BuffSkill.ToString(), 1);
                 //Invoke("SkillValueReset", 3);//clear
             }
@@ -127,18 +127,7 @@ public partial class Warrior : Player
         //    viewcam.CameraModeInit(cameraMode);
         //}
     }
-    private void CreatSkill(GameObject _skill, GameObject _parent)
-    {
-        GameObject effectObj = Instantiate(_skill, Vector3.zero,
-            Quaternion.identity, _parent.transform);
-        effectObj.transform.localPosition = Vector3.zero;
-        effectObj.transform.localRotation = Quaternion.identity;
-        _parent.SetActive(false);
-        //SkillParentObj1 = effectObj;
-        //SkillParentObj1.transform.position = Vector3.zero;
-        //SkillParentObj1.transform.rotation = Quaternion.identity;
-        //SkillParentObj1.SetActive(false);
-    }
+
     protected override void skillValueReset()//Damage Reset
     {
         if (firstSkillCheck == SkillRunning.SkillOn) 

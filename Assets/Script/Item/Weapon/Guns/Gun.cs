@@ -9,12 +9,15 @@ public partial class Gun : Weapon
     
     public Dictionary<int, GameObject> bulletData = new Dictionary<int, GameObject>();
     public int bulletcount;
-
     Player PLAYER;
     //GameObject playerUpperBody;
-    private void Start()
+    private void Awake()
     {
         WeaponType = WeaponEnum.Gun;
+    }
+    private void Start()
+    {
+        
         GunBulletType();
         ui = Shared.BattelManager.ui;
         PLAYER = GetComponentInParent<Player>();
@@ -60,4 +63,5 @@ public partial class Gun : Weapon
     {
         
     }
+
 }

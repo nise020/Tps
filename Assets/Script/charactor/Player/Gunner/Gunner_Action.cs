@@ -5,7 +5,7 @@ using UnityEngine;
 
 public partial class Gunner : Player
 {
-    //[SerializeField] GameObject skillEffect;
+    [SerializeField] Granad granadObj;
     protected override void attack(CharctorStateEnum _state, CharactorJobEnum _job)
     {
         if (_job == CharactorJobEnum.Gunner)
@@ -16,14 +16,18 @@ public partial class Gunner : Player
                 Debug.Log($"bullet = {WEAPON.ReturnTypeValue(BulletValueType.NowBullet)}");
                 return;
             }
-            attackState = AttackState.AttackOn;
-            Vector3 AimDirection = weaponObj.transform.forward;
-            playerAnim.SetLayerWeight(attackLayerIndex, 1.0f);
-            WEAPON.Attack(viewcam, AimDirection);
-            playerAnim.SetLayerWeight(attackLayerIndex, 0.0f);
-            //AttackAnim
-            viewcam.cameraShakeAnim(true);
+            gunShoot();
         }
+    }
+    private void gunShoot() 
+    {
+        playerAnim.SetLayerWeight(attackLayerIndex, 1.0f);
+        attackAnimation(AttackState.AttackOn);
+
+        Vector3 AimDirection = weaponObj.transform.forward;
+        WEAPON.Attack(AimDirection);
+
+        playerAnim.SetLayerWeight(attackLayerIndex, 0.0f);
     }
     protected override void inPutCameraAnimation(bool _check, MouseInputType _type)
     {
@@ -47,7 +51,53 @@ public partial class Gunner : Player
                 playerAnim.SetLayerWeight(attackLayerIndex, 1.0f);
                 playerAnim.SetInteger(PlayerAnimParameters.Reload.ToString(), 1);
             }
-        } 
+        }
+
+
+        if (firstSkillCheck == SkillRunning.SkillOff)
+        {
+            gunShoot();
+
+            SkillAnimation(SkillType.Skill1, true);
+
+            //firstSkillCheck = SkillRunning.SkillOn;
+
+            //playerAnim.SetInteger(SkillType.Skill1.ToString(), 1);
+
+            skillStrategy.Skill(playerType, 1, out attackValue);
+
+            SkillParentObj1.SetActive(true);
+
+            //Vector3 forward = weaponObj.transform.TransformDirection(Vector3.down);
+            //Vector3 up = weaponObj.transform.TransformDirection(Vector3.up);
+            //Quaternion rot = Quaternion.LookRotation(forward, up);
+            //Quaternion localRot = Quaternion.Inverse(weaponObj.transform.rotation) * rot;
+
+            SkillEffectObj1.transform.localRotation = Quaternion.identity;
+
+            SkillEffectSystem1.Play();
+
+            //Transform effect = SkillEffectObj1.transform;
+            //Transform effectParent = effect.parent; // Skill_1
+            //Transform sword = effectParent.parent;  // sword
+
+            //Vector3 desiredForward = sword.TransformDirection(- Vector3.up);     // 검날 방향
+            //Vector3 desiredUp = sword.TransformDirection(Vector3.up);      // 위쪽
+
+            //Quaternion worldRotation = Quaternion.LookRotation(desiredForward, desiredUp);
+            //Quaternion localRotation = Quaternion.Inverse(effectParent.rotation) * worldRotation;
+
+            //effect.localRotation = localRotation;
+            //SkillObj.transform.SetParent(weapon.gameObject.transform);
+            //SkillObj.transform.localPosition = Vector3.zero;
+
+            //playerAnim.SetInteger(PlayerAnimName.AttackSkill.ToString(), 1);
+            //Invoke("SkillValueReset", 3);//clear
+        }
+        else
+        {
+            return;
+        }
     }
     protected override void commonskillAttack1(CharactorJobEnum _type)
     {
@@ -55,12 +105,29 @@ public partial class Gunner : Player
         {
             if (firstSkillCheck == SkillRunning.SkillOff)
             {
-                skillStrategy.Skill(playerType, 1, out attackValue);
-                firstSkillCheck = SkillRunning.SkillOn;
-                playerAnim.SetInteger("Skill1", 1);
-                playerAnim.SetInteger(PlayerAnimName.BuffSkill.ToString(), 1);
-                Invoke("SkillValueReset", 3);//clear
+                //Invoke("SkillValueReset", 3);//clear
                 Debug.Log($"attackValue = {attackValue}");
+
+                SkillAnimation(SkillType.Skill1, true);
+
+                //firstSkillCheck = SkillRunning.SkillOn;
+
+                //playerAnim.SetInteger(SkillType.Skill1.ToString(), 1);
+
+                skillStrategy.Skill(playerType, 1, out attackValue);
+
+                SkillParentObj1.SetActive(true);
+
+                //Vector3 forward = weaponObj.transform.TransformDirection(Vector3.down);
+                //Vector3 up = weaponObj.transform.TransformDirection(Vector3.up);
+                //Quaternion rot = Quaternion.LookRotation(forward, up);
+                //Quaternion localRot = Quaternion.Inverse(weaponObj.transform.rotation) * rot;
+
+                SkillEffectObj1.transform.localRotation = Quaternion.identity;
+
+                SkillEffectSystem1.Play();
+
+
             }
             else
             {

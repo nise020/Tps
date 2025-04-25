@@ -21,7 +21,7 @@ public partial class Player : Charactor
     protected NpcWalkState npcWalkState = NpcWalkState.Stop;
     protected FindMoveObject objectInfo = FindMoveObject.None;
     protected RunState runState = RunState.Walk;
-    protected AttackState attackState = AttackState.None;
+    //protected AttackState attackState = AttackState.None;
 
     protected float notWalkTimer = 0;
     protected float notWalkTime = 3.0f;
@@ -223,6 +223,7 @@ public partial class Player : Charactor
                     }
 
                     charactorModelTrs.rotation = Quaternion.Slerp(charactorModelTrs.rotation, targetRotation, Time.deltaTime * rotationSpeed);
+                   //전사 보정치 필요
                 }
                 else if (cameraMode == PlayerCameraMode.GunAttackMode)//Shoot
                 {

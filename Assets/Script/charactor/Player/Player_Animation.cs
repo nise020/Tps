@@ -20,8 +20,15 @@ public partial class Player : Charactor
     //protected NpcRunState npcRunState = NpcRunState.Run_Off;
     protected ReloadState reloadState = ReloadState.ReloadOff;
 
-    //[SerializeField] GameObject SkillEffectObj1;
-    //[SerializeField] GameObject SkillEffectObj2;
+    [SerializeField] protected GameObject SkillEffectObj1;
+    [SerializeField] protected GameObject SkillEffectObj2;
+
+    protected ParticleSystem SkillEffectSystem1 = null;
+    protected ParticleSystem SkillEffectSystem2 = null;
+
+    [SerializeField] protected GameObject SkillParentObj1 = null;
+    [SerializeField] protected GameObject SkillParentObj2 = null;
+
     public void skillAnimation()//AnimationEvent
     {
         skillcheck = SkillRunning.SkillOff;
@@ -34,28 +41,22 @@ public partial class Player : Charactor
     {
 
     }
-    //protected virtual void reloadOut()//AnimationEvent
-    //{
-    //    //AnimationEvent
-    //    reloadState = ReloadState.ReloadOff;
-    //    GUN.nowbullet = GUN.bullet;
-    //    GUN.bulletcount = 0;
-    //    playerAnim.SetLayerWeight(attackLayerIndex, 0.0f);
-    //    //playerAnim.SetLayerWeight(BaseLayerIndex, 1.0f);
-    //    playerAnim.SetInteger(PlayerAnimParameters.Reload.ToString(), 0);
-    //}
-    //public void GetSword()//AnimationEvent
-    //{
-    //    GameObject go = weapon.gameObject;
-    //    go.transform.SetParent(HandObj.gameObject.transform);
-    //    go.transform.localPosition = Vector3.zero;
-    //}
-    //public void ClearlSword()//AnimationEvent
-    //{
-    //    GameObject go = weapon.gameObject;
-    //    go.transform.SetParent(scabbard.gameObject.transform);
-    //    go.transform.localPosition = Vector3.zero;
-    //}
+    protected ParticleSystem CreatSkill(GameObject _skill, GameObject _parent)
+    {
+        GameObject effectObj = Instantiate(_skill, Vector3.zero,
+            Quaternion.identity, _parent.transform);
+        effectObj.transform.localPosition = Vector3.zero;
+        effectObj.transform.localRotation = Quaternion.identity;
+        ParticleSystem particleSystem = effectObj.GetComponent<ParticleSystem>();
+        _parent.SetActive(false);
+
+        return particleSystem;
+
+        //SkillParentObj1 = effectObj;
+        //SkillParentObj1.transform.position = Vector3.zero;
+        //SkillParentObj1.transform.rotation = Quaternion.identity;
+        //SkillParentObj1.SetActive(false);
+    }
     protected virtual void inPutCameraAnimation(bool _check, MouseInputType _type) 
     {
 
@@ -303,6 +304,35 @@ public partial class Player : Charactor
             }
             playerAnim.SetLayerWeight(index, 0.0f);
             playerAnim.SetInteger(_parameterText, 0);
+        }
+    }
+    protected void SkillAnimation(SkillType _type, bool _check)
+    {
+        if (_type == SkillType.Skill1)
+        {
+            if (_check)
+            {
+                firstSkillCheck = SkillRunning.SkillOn;
+                playerAnim.SetInteger(SkillType.Skill1.ToString(), 1);
+            }
+            else
+            {
+                firstSkillCheck = SkillRunning.SkillOff;
+                playerAnim.SetInteger(SkillType.Skill1.ToString(), 0);
+            }
+        }
+        else if (_type == SkillType.Skill2)
+        {
+            if (_check)
+            {
+                secondSkillCheck = SkillRunning.SkillOn;
+                playerAnim.SetInteger(SkillType.Skill2.ToString(), 1);
+            }
+            else
+            {
+                secondSkillCheck = SkillRunning.SkillOff;
+                playerAnim.SetInteger(SkillType.Skill2.ToString(), 0);
+            }
         }
     }
     private void closeAttackCheack()

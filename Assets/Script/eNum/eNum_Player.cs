@@ -33,7 +33,8 @@ public enum WeaponEnum
 {
     None,
     Gun,
-    Sword
+    Sword,
+    Granad,
 }
 
 public enum PlayerAnimName

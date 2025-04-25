@@ -9,4 +9,8 @@ public class Sword : Weapon
     {
 
     }
+    private void Awake()
+    {
+        WeaponType = WeaponEnum.Sword;
+    }
 }

@@ -79,12 +79,14 @@ public abstract partial class Charactor : Actor
     public void StatusUpLoad(float _hp) 
     {
         hP = _hp;
+        cheHP = hP;
+
+        HPBAR.SetHp(maxHP, cheHP);
+
         if (hP <= 0) 
         {
             dead();
         }
-        cheHP = hP;
-        HPBAR.SetHp(maxHP, cheHP);
     }
     protected virtual void stateInIt() 
     {

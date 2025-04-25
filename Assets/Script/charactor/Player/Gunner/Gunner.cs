@@ -63,19 +63,36 @@ public partial class Gunner : Player
     {
        base.shitdownCheak();
     }
+    Vector3 granadOriginalPos = Vector3.zero;
     protected override void FindWeaponObject(LayerName _name)
     {
-        MeshRenderer[] skin = GetComponentsInChildren<MeshRenderer>();
-
+        //MeshRenderer[] Mesh = GetComponentsInChildren<MeshRenderer>();
+        Weapon[] Mesh = GetComponentsInChildren<Weapon>();
+        //granadObj
         int value = LayerMask.NameToLayer(_name.ToString());
-        foreach (var skinObj in skin)
+        foreach (var MeshObj in Mesh)
         {
-            if (skinObj.gameObject.layer == value)
+            if (MeshObj.gameObject.layer == value)//weapon
             {
-                weaponObj = skinObj.gameObject;
-                weaponOriginalPos = weaponObj.transform.localPosition;
-                break;
+                Weapon weapon = MeshObj.gameObject.GetComponent<Weapon>();
+
+                WeaponEnum type = weapon.Weapontype();
+
+                if (type == WeaponEnum.Sword)
+                {
+                    weaponObj = MeshObj.gameObject;
+                }
+                else if (type == WeaponEnum.Gun) 
+                {
+                    weaponObj = MeshObj.gameObject;
+                }
+                else if (type == WeaponEnum.Granad) 
+                {
+                    Granad granad = GetComponentInChildren<Granad>();
+                    granadObj = granad;
+                }
             }
+
         }
     }
 }

@@ -13,8 +13,6 @@ public partial class Warrior : Player
         FindWeaponObject(LayerName.Weapon);
         weaponState = WeaponState.Sword_Off;
         //HandObj = FindSkinBodyTypeObject(BodyType.RightHand);
-        CreatSkill(SkillEffectObj1, SkillParentObj1);
-        CreatSkill(SkillEffectObj2, SkillParentObj2);
         //playerType = CharactorJobEnum.Warrior;
         //charctorState = CharctorStateEnum.Npc;
         Shared.InutTableMgr();
@@ -30,6 +28,7 @@ public partial class Warrior : Player
         //runcheck(RunCheck);
         if (charctorState != CharctorStateEnum.Npc)
         {
+            transform.rotation = new Quaternion();
             inputrocessing();
         }
         else 

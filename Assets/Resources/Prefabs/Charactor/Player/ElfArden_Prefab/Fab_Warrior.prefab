@@ -85,7 +85,7 @@ MonoBehaviour:
   closeCheck: 0
   groundCheckLenght: 0
   charctorState: 0
-  SkillEffectObj1: {fileID: 4799312573300115351, guid: 6e24705beeb7af84e81e682129d7099e, type: 3}
+  SkillEffectObj1: {fileID: 4799312573300115351, guid: 0c79debf96fd1c84d8974b869958fef5, type: 3}
   SkillEffectObj2: {fileID: 4799312573300115351, guid: fd60ee17d72e67a4b8461b09c0ecbc87, type: 3}
   SkillParentObj1: {fileID: 871859395443901358}
   SkillParentObj2: {fileID: 2510196653466369340}

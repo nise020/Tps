@@ -10,7 +10,20 @@ public partial class Warrior : Player
     int scabbardMaxCount = 2;
     public void RangeCheak() 
     {
-        Vector3 weaponPos = weaponObj.transform.position;
+        Vector3 weaponPos = new Vector3();
+        if (firstSkillCheck == SkillRunning.SkillOn)
+        {
+            weaponPos = SkillParentObj1.transform.position;
+        }
+        else if (secondSkillCheck == SkillRunning.SkillOn) 
+        {
+            weaponPos = SkillParentObj2.transform.position;
+        }
+        else 
+        {
+            weaponPos = weaponObj.transform.position;
+        }
+
         List <Monster> monsetrPos = Shared.MonsterManager.MonsterList;
 
         for (int iNum = 0; iNum < monsetrPos.Count; iNum++)
@@ -18,14 +31,18 @@ public partial class Warrior : Player
             Transform body = monsetrPos[iNum].BodyObjectLoad();
             float dist = Vector3.Distance(weaponPos, body.position);
 
-            if (dist < 2f)
+            if (dist < 3.5f)
             {
                 Shared.BattelManager.DamageCheck(this, monsetrPos[iNum]);
             }
-            else
-            {
-                return;
-            }
+        }
+    }
+    void OnDrawGizmosSelected()
+    {
+        if (weaponObj != null)
+        {
+            Gizmos.color = Color.red;
+            Gizmos.DrawWireSphere(SkillParentObj1.transform.position, 3.5f);
         }
     }
     public void SkillEffectOff(int _value) 
@@ -52,11 +69,13 @@ public partial class Warrior : Player
         {
             SkillAnimation(SkillType.Skill1, false);
             SkillParentObj1.SetActive(false);
+            SkillEffectSystem1.Pause();
         }
         else if (secondSkillCheck == SkillRunning.SkillOn) 
         {
             SkillAnimation(SkillType.Skill2, false);
             SkillParentObj1.SetActive(false);
+            SkillEffectSystem2.Pause();
             //secondSkillCheck = SkillRunning.SkillOff;
             //playerAnim.SetInteger(SkillType.Skill2.ToString(), 0);
         }
@@ -117,35 +136,7 @@ public partial class Warrior : Player
             playerAnim.SetInteger(PlayerAnimParameters.Run.ToString(), 1);
         }
     }
-    protected void SkillAnimation(SkillType _type,bool _check) 
-    {
-        if (_type == SkillType.Skill1)
-        {
-            if (_check)
-            {
-                firstSkillCheck = SkillRunning.SkillOn;
-                playerAnim.SetInteger(SkillType.Skill1.ToString(), 1);
-            }
-            else 
-            {
-                firstSkillCheck = SkillRunning.SkillOff;
-                playerAnim.SetInteger(SkillType.Skill1.ToString(), 0);
-            }
-        }
-        else if (_type == SkillType.Skill2) 
-        {
-            if (_check)
-            {
-                secondSkillCheck = SkillRunning.SkillOn;
-                playerAnim.SetInteger(SkillType.Skill2.ToString(), 1);
-            }
-            else
-            {
-                secondSkillCheck = SkillRunning.SkillOff;
-                playerAnim.SetInteger(SkillType.Skill2.ToString(), 0);
-            }
-        }
-    }
+    
     protected override void clearWalkAnimation(CharactorJobEnum _type)
     {
         base.clearWalkAnimation(_type);

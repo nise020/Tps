@@ -33,7 +33,7 @@ public partial class Gun : Weapon
         }
     }
 
-    public override void Attack(PlayerCamera _camera,Vector3 _pos)
+    public override void Attack(Vector3 _pos)
     {
         RapidTimer += Time.deltaTime;
         if (RapidTimer > RapidTime)
@@ -58,7 +58,6 @@ public partial class Gun : Weapon
             RapidTimer = 0.0f;
             //Invoke("go.SetActive(false)", 3f);
             StartCoroutine(HideObject(go, 3f));
-            _camera.cameraShakeAnim(true);//Animation
         }
     }
 

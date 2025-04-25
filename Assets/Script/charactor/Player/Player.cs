@@ -78,6 +78,10 @@ public partial class Player : Charactor
         rigid = GetComponent<Rigidbody>();//Kinematic Controll
         playerAnim = GetComponent<Animator>();
         slotinit();
+
+        SkillEffectSystem1 = CreatSkill(SkillEffectObj1, SkillParentObj1);
+        SkillEffectSystem2 = CreatSkill(SkillEffectObj2, SkillParentObj2);
+
     }
 
     protected override void stateInIt() 

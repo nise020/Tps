@@ -46,5 +46,16 @@ public partial class Gunner : Player
             playerAnim.SetInteger(PlayerAnimParameters.Left.ToString(), 0);
         }
     }
-
+    public void GunSkillShoot() 
+    {
+        Vector3 AimDirection = weaponObj.transform.forward;
+        WEAPON.Attack(AimDirection);
+        SkillAnimation(SkillType.Skill1, false);
+        Invoke("skillOut", 1);
+    }
+    public void skillOut() 
+    {
+        SkillParentObj1.SetActive(false);
+        SkillEffectSystem1.Stop();
+    }
 }

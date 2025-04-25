@@ -24,7 +24,7 @@ public partial class Status : StatusBase
     MonsterType monster = MonsterType.Defolt;
     GunType gun = global::GunType.None;
     WeaponEnum WeaponType = WeaponEnum.None;
-    public float ViewHp => hP;
+    public float ViewHp => MaxHP;
     public int ViewAttack => Attack;
     public int ViewDefense => Defense;//방어력
     public float ViewSpeed => Speed;//이동속도
@@ -99,19 +99,19 @@ public partial class Status : StatusBase
         switch (_monster)
         {
             case MonsterType.Spider:
-                MaxHP = 30;
+                MaxHP = 200;
                 Attack = 30;
                 Defense = 30;
                 Speed = 3;
                 break;
             case MonsterType.Dron:
-                MaxHP = 20;
+                MaxHP = 100;
                 Attack = 30;
                 Defense = 30;
                 Speed = 5;
                 break;
             case MonsterType.Sphere:
-                MaxHP = 50;
+                MaxHP = 500;
                 Attack = 30;
                 Defense = 30;
                 Speed = 20;

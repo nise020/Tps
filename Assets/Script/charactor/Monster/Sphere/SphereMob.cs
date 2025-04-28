@@ -10,7 +10,7 @@ public partial class SphereMob : Monster
         monsterType = MonsterType.Sphere;
 
         mobAnimator = GetComponent<Animator>();
-        creatTabObj = Shared.BattelManager.creatTab;//¿ÀºêÁ§Æ® »ý¼º ÅÇ(ex.ÃÑ¾Ë)
+        creatTabObj = Shared.GameManager.creatTab;//¿ÀºêÁ§Æ® »ý¼º ÅÇ(ex.ÃÑ¾Ë)
         //monsterRigid = GetComponent<Rigidbody>();
         //monsterColl = GetComponent<Collider>();
         //if (monsterColl == null)

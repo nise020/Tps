@@ -6,8 +6,8 @@ public abstract partial class Actor : MonoBehaviour
 {
     protected Camera cam;
     protected Status STATUS = new Status();
-    protected int atkValue;//공격력
-    protected int defVAlue;//방어력
+    protected float atkValue;//공격력
+    protected float defVAlue;//방어력
     protected float speedValue;//이동속도
     protected ObjectType objType = ObjectType.None;//현재 몬스터만 적용
 

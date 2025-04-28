@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
+using UnityEngine.PlayerLoop;
 
 public class MonsterManager : MonoBehaviour
 {
@@ -26,8 +27,10 @@ public class MonsterManager : MonoBehaviour
     public Dictionary<int, GameObject> hpData = new Dictionary<int, GameObject>();
     int monsterCount = 0;
 
-    [Header("CreatTab")]
+    //[Header("CreatTab")]
+    [SerializeField] GameObject creatTabObj;
     public Transform creatTab;
+    Item Item = new Item();
 
     //몬스터를 딕션어리로 관리
     //몬스터의 거리를 측정할 리스트 구현해서 관리
@@ -47,6 +50,7 @@ public class MonsterManager : MonoBehaviour
 
     private void Start()
     {
+        creatTab = Shared.GameManager.CreatTransform();
         creatObject();
     }
     private void creatObject()
@@ -123,13 +127,20 @@ public class MonsterManager : MonoBehaviour
 
         Monster monster = go.GetComponent<Monster>();
         monsterData.Add(monsterCount, go);
+
         monster.mobIndex(monsterCount);
+
         monster.creatTab(creatTab);
+
         monster.TypeInit(_type);
-        monster.BomEffect(exflotionEffect);
+
         HpBarValue(hpBarCanvers, Maxcount, monsterCount, monster);
-        monsterCount += 1;
+
         MonsterList.Add(monster);
+        monsterCount += 1;
+
+
+        Shared.ItemManager.ItemDataAdd(monster);
     }
     public void HpBarValue(GameObject _hpBarCanvers, int _max, int _min, Monster _monster)
     {

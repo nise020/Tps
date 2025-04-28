@@ -6,21 +6,7 @@ public enum BulletType
     Playerbullet,
     MobGranad,
 }
-public enum PlayerAnimParameters 
-{
-    Walk,
-    Run,
-    Reload,
-    Attack,
-    Back,
-    Shit,
-    Right,
-    Left,
-    WeaponWalk,
-    GetWeapon,
-    Close,
 
-}
 
 public enum SkillRunning 
 {
@@ -37,16 +23,7 @@ public enum WeaponEnum
     Granad,
 }
 
-public enum PlayerAnimName
-{
-    Attack,
-    closeAttack,
-    reloading,
-    AttackSkill,
-    BuffSkill,
-    Shit,
 
-}
 public enum CameraAnim 
 {
     Shake
@@ -67,13 +44,7 @@ public enum Scene //예전에는 앞에 sScene을 붙여야 했다
    End,
 
 }
-public enum BodyType //몬스터의 상태패턴
-{
-    RightHand,
-    LeftHand,
-    RightFoot,
-    LeftFoot,
-}
+
 public enum Condition //몬스터의 상태패턴
 {
     health,
@@ -86,15 +57,7 @@ public enum CharactorJobEnum
     Warrior,
     Gunner
 }
-public enum ObjectType 
-{
-    None,
-    Player,
-    Monster,
-    Gun,
-    Bullet_Player,
-    Bullet_Monster,
-}
+
 public enum SceneName
 {
     Title,
@@ -103,21 +66,8 @@ public enum SceneName
     Battle,
     Loading,
 }
-public enum CharctorStateEnum 
-{
-    Npc,
-    Player,
-    AutoMode
-}
-public enum GunType
-{
-    None,
-    AR,//소총
-    MG,//머신건
-    SMG,//기간단총
-    SG,//샷건
-    SR,//저격총
-}
+
+
 public enum SoljerTags
 {
     Soljer1,//머신건
@@ -127,26 +77,7 @@ public enum SoljerTags
     Soljer5,//샷건
 }
 
-public enum LayerName 
-{
-    None,
-    Monster,
-    Player,
-    Cover,
-    Bullet,
-    MobBullet,
-    MobGranid,
-    BackGround,
-    SpawnSpider,
-    SpawnDron,
-    SpawnSphere,
-    Weapon,
-    ViewPoint,
-    BackPosition1,
-    BackPosition2,
-    Ground,
-    MonsterMovePosition,
-}
+
 public enum GroundTouchState //예전에는 앞에 sScene을 붙여야 했다
 {
     GroundNoneTouch,
@@ -157,30 +88,13 @@ public enum FindMoveObject
     None,
     Find
 }
-public enum SkillType
-{
-    None,
-    Skill1,
-    Skill2,
-}
+
 public enum Layer //예전에는 앞에 sScene을 붙여야 했다
 {
     Cover,
     Player,
     Bullet,
 }
-public enum MouseInputType //예전에는 앞에 sScene을 붙여야 했다
-{
-    None,
-    Click,      // GetMouseButtonDown
-    Hold,       // GetMouseButton
-    Release     // GetMouseButtonUp
-}
-public enum KeybordInputType //예전에는 앞에 sScene을 붙여야 했다
-{
-    Click,      // GetMouseButtonDown
-    Hold,       // GetMouseButton
-    Release     // GetMouseButtonUp
-}
+
 
 

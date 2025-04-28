@@ -4,17 +4,18 @@ using UnityEngine;
 
 public partial class Warrior : Player
 {
-    //SkillStrategy SkillStrategy = new SkillStrategy();
     GameObject Weapon;
+    private void Awake()
+    {
+
+    }
     protected override void Start()
     {
         base.Start();
         skillStrategy.PlayerInit(this);
         FindWeaponObject(LayerName.Weapon);
         weaponState = WeaponState.Sword_Off;
-        //HandObj = FindSkinBodyTypeObject(BodyType.RightHand);
-        //playerType = CharactorJobEnum.Warrior;
-        //charctorState = CharctorStateEnum.Npc;
+
         Shared.InutTableMgr();
         Table_Charactor.Info info = Shared.TableManager.Character.Get(0);
         //Name = info.Img;

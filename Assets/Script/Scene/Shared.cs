@@ -20,7 +20,8 @@ public static class Shared //¸Ş¸ğ
     public static InputManager InputManager;
     public static MonsterManager MonsterManager;
     public static CameraManager CameraManager;
-
+    public static EffectManager EffectManager;
+    public static ItemManager ItemManager;
     public static TableManager InutTableMgr() 
     {
         if (TableManager == null)

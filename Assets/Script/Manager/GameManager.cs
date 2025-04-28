@@ -26,6 +26,10 @@ public class GameManager : MonoBehaviour
     [Header("Monster")]
     [SerializeField] GameObject[] MobObj;
     int Playerbullet;
+    [Header("Player Charactor")]
+    [SerializeField] GameObject creatTabObj;
+    public Transform creatTab;
+
     public void ResorsLoad() 
     {
         //GUNNER = Resources.Load($"");
@@ -48,6 +52,24 @@ public class GameManager : MonoBehaviour
         {
             Destroy(gameObject);
         }
+    }
+    void Start()
+    {
+        //GameObject go = Instantiate(creatTabObj);
+        //creatTab = go.transform;
+
+        CharctorTypeAdd(GUNNER, CharactorJobEnum.Gunner);
+        CharctorTypeAdd(WARRIOR, CharactorJobEnum.Warrior);
+        FindPlayer();
+        PLAYER.gameObject.transform.position = startPointObj.gameObject.transform.position;
+    }
+    public Transform CreatTransform()
+    {
+        if (creatTab) 
+        {
+            return creatTab;
+        }
+        return null;
     }
     public void FindPlayer() 
     {
@@ -114,13 +136,7 @@ public class GameManager : MonoBehaviour
         _value = PlayerCount;   
     }
     // Start is called before the first frame update
-    void Start()
-    {
-        CharctorTypeAdd(GUNNER, CharactorJobEnum.Gunner);
-        CharctorTypeAdd(WARRIOR, CharactorJobEnum.Warrior);
-        FindPlayer();
-        PLAYER.gameObject.transform.position = startPointObj.gameObject.transform.position;
-    }
+    
 
     
     

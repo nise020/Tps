@@ -5,6 +5,11 @@ using UnityEngine;
 
 public partial class Monster : Charactor
 {
+    protected Item ITEM;
+    protected AiMonster AI = new AiMonster();
+    protected Skill_Monster SKILL = new Skill_Monster();
+
+    public int mobKey = 0;
     Condition condition = Condition.health;//상태패턴
     protected virtual void FixedUpdate()
     {
@@ -32,9 +37,12 @@ public partial class Monster : Charactor
             HPBAR.gameObject.SetActive(false);
         }
     }
-
-    public float GetMonsterHeight()
+    public void mobIndex(int _key)
     {
-        return GetComponent<Collider>().bounds.size.y;
+        mobKey = _key;
+    }
+    public void ItemUpdate(Item _item) 
+    {
+        ITEM = _item;
     }
 }

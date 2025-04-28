@@ -15,7 +15,7 @@ public partial class Gun : Weapon
     public GameObject gunHoleObj;//gunHole
     [SerializeField] GameObject gunObj;//gun
     [SerializeField] Bullet_Player bulletObj;//bullet
-    [SerializeField] GameObject magazine;
+    [SerializeField] Transform magazine;
     [SerializeField] float gunRotSpeed = 0.0f;
     [SerializeField] GameObject razerEndObj;
     [SerializeField] bool angleOn = true;

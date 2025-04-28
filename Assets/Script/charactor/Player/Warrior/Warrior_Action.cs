@@ -46,7 +46,9 @@ public partial class Warrior : Player
 
                 //playerAnim.SetInteger(SkillType.Skill1.ToString(), 1);
 
-                skillStrategy.Skill(playerType, 1,out attackValue);
+                int value = (int)atkValue;
+
+                skillStrategy.Skill(playerType, 1,out value);
 
                 SkillParentObj1.SetActive(true);
 
@@ -97,7 +99,9 @@ public partial class Warrior : Player
                 //secondSkillCheck = SkillRunning.SkillOn;
                 //playerAnim.SetInteger(SkillType.Skill1.ToString(), 1);
 
-                skillStrategy.Skill(playerType, 2, out attackValue);
+                int value = (int)atkValue;
+
+                skillStrategy.Skill(playerType, 2, out value);
 
                 SkillParentObj2.SetActive(true);
 
@@ -140,7 +144,7 @@ public partial class Warrior : Player
             playerAnim.SetInteger(SkillType.Skill2.ToString(), 0);
             secondSkillCheck = SkillRunning.SkillOff;
         }
-        attackValue = attackReset;
+        atkValue = attackReset;
     }
 
 }

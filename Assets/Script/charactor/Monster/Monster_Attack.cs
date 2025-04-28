@@ -43,6 +43,7 @@ public partial class Monster : Charactor
     //}
     protected override void dead() 
     {
+        base.dead();
         //Shared.BattelMgr.monsterData.Remove(mobKey);
         //GameObject go = Instantiate(deadEffect, transform.position, Quaternion.identity, creatTabObj);
         //StartCoroutine(EffectTime(go));
@@ -51,61 +52,9 @@ public partial class Monster : Charactor
         Shared.MonsterManager.Resurrection(mobKey);
         gameObject.SetActive(false);
     }
-    IEnumerator EffectTime(GameObject _obj) 
-    {
-        yield return new WaitForSeconds(4);
-        _obj.SetActive(false);
-    }
-    Vector3 myPos = Vector3.zero;
-    int moveNumber = 0;
-   // public bool SearchCheack = false;
-    float RotSpeed = 30;
-    bool checkPos = false;
-    public void NextPoint(ref bool _value)//공격할 대상 찾기
-    {
-        if (!_value) { return; }
-        //재정의
-        mobAnimator.SetInteger("Search", 0);
-        float speed = speedValue;
-        if (movePos.Count == 0) 
-        {
-            Debug.Log("이동할 위치를 찾을수 없음");
-        }
-        if (moveNumber >= movePos.Count) 
-        {
-            moveNumber = 0;
-            return;
-        }
 
-        if (checkPos == false) 
-        {
-            targetPos = gameObject.transform.position + movePos[moveNumber];
-            //위치를 지정해줄 필요가 있음
-            checkPos = true;
-        }
-        Vector3 nowPos = gameObject.transform.position;
-
-        float value = Vector3.Distance(nowPos, targetPos);
-
-        if (value > 0.1f)//Move
-        {
-            Vector3 dir = (targetPos - nowPos).normalized;
-
-            Quaternion startRot = Quaternion.LookRotation(gameObject.transform.forward);
-            Quaternion endRot = Quaternion.LookRotation(dir);
-            gameObject.transform.localRotation = Quaternion.Lerp(startRot, endRot, RotSpeed);//* Time.deltaTime
-
-            gameObject.transform.position += new Vector3(dir.x,0, dir.z) * speed * Time.deltaTime;
-        }
-        else
-        {
-            mobAnimator.SetInteger("Walk", 0);
-            mobAnimator.SetInteger("Search", 1);
-            moveNumber += 1;
-            checkPos = false;
-            _value = false;
-        }
-    }
+    //int moveNumber = 0;
+    // public bool SearchCheack = false;
 
     //public void Pattern(MonsterType _enum)
     //{

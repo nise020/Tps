@@ -21,7 +21,7 @@ public partial class Gun : Weapon
         GunBulletType();
         ui = Shared.BattelManager.ui;
         PLAYER = GetComponentInParent<Player>();
-        magazine = Shared.BattelManager.creatTab.gameObject;
+        magazine = Shared.GameManager.CreatTransform();
 
         creatbullet();
     }

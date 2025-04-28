@@ -63,8 +63,8 @@ public partial class Gunner : Player
             //firstSkillCheck = SkillRunning.SkillOn;
 
             //playerAnim.SetInteger(SkillType.Skill1.ToString(), 1);
-
-            skillStrategy.Skill(playerType, 1, out attackValue);
+            int value = (int)atkValue;
+            skillStrategy.Skill(playerType, 1, out value);
 
             SkillParentObj1.SetActive(true);
 
@@ -106,7 +106,9 @@ public partial class Gunner : Player
             if (firstSkillCheck == SkillRunning.SkillOff)
             {
                 //Invoke("SkillValueReset", 3);//clear
-                Debug.Log($"attackValue = {attackValue}");
+                int value = (int)atkValue;
+
+                Debug.Log($"attackValue = {value}");
 
                 SkillAnimation(SkillType.Skill1, true);
 
@@ -114,7 +116,7 @@ public partial class Gunner : Player
 
                 //playerAnim.SetInteger(SkillType.Skill1.ToString(), 1);
 
-                skillStrategy.Skill(playerType, 1, out attackValue);
+                skillStrategy.Skill(playerType, 1, out value);
 
                 SkillParentObj1.SetActive(true);
 
@@ -142,7 +144,9 @@ public partial class Gunner : Player
         {
             if (firstSkillCheck == SkillRunning.SkillOff)
             {
-                skillStrategy.Skill(playerType, 2, out attackValue);
+                int value = (int)atkValue;
+
+                skillStrategy.Skill(playerType, 2, out value);
                 firstSkillCheck = SkillRunning.SkillOn;
                 playerAnim.SetInteger("Skill1", 1);
                 playerAnim.SetInteger(PlayerAnimName.BuffSkill.ToString(), 1);
@@ -171,7 +175,7 @@ public partial class Gunner : Player
     }
     protected override void skillValueReset()//Damage Reset
     {
-        attackValue = attackReset;
+        atkValue = attackReset;
         firstSkillCheck = SkillRunning.SkillOff;
         playerAnim.SetInteger(PlayerAnimName.AttackSkill.ToString(), 0);
         playerAnim.SetInteger(PlayerAnimName.BuffSkill.ToString(), 0);

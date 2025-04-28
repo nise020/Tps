@@ -33,28 +33,6 @@ public class BattelManager : MonoBehaviour
     [SerializeField, Tooltip("공격 감지")] public List<bool> AttackSearch;
     [SerializeField] List< Monster> MONSTEROBJ;
 
-    [Header("Monster")]
-    [SerializeField] SpiderMob SpiderMob;
-    [SerializeField] DronMob dronMob;
-    [SerializeField] SphereMob sphereMob;
-    [SerializeField] GameObject hpBarCanvers;
-    [SerializeField] HpBar hpBarObj;
-    [SerializeField] GameObject exflotionEffect;
-    public Dictionary<int, GameObject> hpData = new Dictionary<int, GameObject>();
-
-    [Header("Spown")]
-    [SerializeField] List<GameObject> STAGE;
-    [SerializeField, Tooltip("스폰할 못스터 숫자")] int Maxcount = 1;
-    public Dictionary<int, GameObject> monsterData = new Dictionary<int, GameObject>();
-
-    [Header("Defolt 생성 지점")]
-    [SerializeField] UI_Battle BATTELUI;
-
-    [Header("CreatTab")]
-    public Transform creatTab;
-    public Transform uiHpTab;
-    public int targetNum;
-
     //Vector3 targetPos;
     int mincount = 0;
     int monsterCount = 0;
@@ -89,101 +67,12 @@ public class BattelManager : MonoBehaviour
         
 
         //monster
-        spownListArrange(STAGE[stageLevel]);
+        //spownListArrange(STAGE[stageLevel]);
 
         //GameObject monster = Instantiate(GUN.gameObject, transform.position, Quaternion.identity, creatTab);
         
     }
-    private void spownListArrange(GameObject _stage) 
-    {
-        foreach (Transform spawnPoint in _stage.transform)
-        {
-            LayerMask Layer = spawnPoint.gameObject.layer;
-            string layerName = LayerMask.LayerToName(Layer);
-
-            spawnByType(layerName, spawnPoint.position, mincount,Maxcount, objType);
-        }
-    }
-    private void spawnByType(string _layername, Vector3 _spawnTrs,int _min,int _max,ObjectType _type)
-    {
-        if (_min >= _max) { return; }
-
-        _min += 1;
-        GameObject monsterType = null;
-        switch (_layername) //수정 필요
-        {
-            case "SpawnSpider":
-                monsterType = SpiderMob.gameObject;
-                break;
-            case "SpawnDron":
-                monsterType = dronMob.gameObject;
-                break;
-            case "SpawnSphere":
-                monsterType = sphereMob.gameObject;
-                break;
-        }
-        GameObject go = Instantiate(monsterType, _spawnTrs, Quaternion.identity, creatTab);
-        _type = ObjectType.Monster;
-
-        Monster monster = go.GetComponent<Monster>();
-        monsterData.Add(monsterCount, go);
-        monster.mobIndex(monsterCount);
-        monster.creatTab(creatTab);
-        monster.TypeInit(_type);
-        monster.BomEffect(exflotionEffect);
-        HpBarValue(hpBarCanvers, Maxcount, monsterCount, monster);
-        monsterCount += 1;
-
-    }
-
-    public bool GetMonsterPosition(int _value, out Vector3 _pos) 
-    {
-        _pos = Vector3.zero;
-        if (monsterData[_value] == null) 
-        {
-            return false;
-        }
-        else
-        {
-            _pos = monsterData[_value].transform.position;
-            return true;
-        }
-    }
-    public bool GetPlayerPosition(out Vector3 _pos) 
-    {
-        _pos = default;
-        if (PLAYER == null)
-        {
-            return false;
-        }
-        else
-        {
-            _pos = PLAYER.transform.position;
-            return true;
-        }
-    }
-
-    public void HpBarValue(GameObject _hpBarCanvers, int _max,int _min, Monster _monster)
-    {
-        HpBar hpBar = _monster.GetComponentInChildren<HpBar>();
-
-        //RectTransform rect = hpBar.gameObject.GetComponent<RectTransform>();
-        //rect.localPosition = new Vector3(0, 0.5f, 0);
-
-        //float monsterHeight = _monster.GetComponent<Collider>().bounds.size.y;
-        //float BaseHeight = 1.0f;
-        //float scaleMultiplier = monsterHeight / BaseHeight;
-        //rect.localScale = new Vector3(scaleMultiplier, scaleMultiplier, 1);
-
-
-        //HpBar hp = _monster.GetComponent<HpBar>();
-        _monster.HpInIt(hpBar);
-        hpData.Add(_min, _monster.gameObject);
-
-        hpBar.key = _min;
-        hpBar.inIt(_monster);
-    }
-
+   
     public void Timer() //이걸 인게임 시간으로 사용 예정
     {
         spownTimer += Time.deltaTime;
@@ -209,17 +98,24 @@ public class BattelManager : MonoBehaviour
 
     
 
-    public void DamageCheck(Charactor _attackker, Charactor _defender) 
+    public void DamageCheck(Charactor _attacker, Charactor _defender) 
     {
-        Status attackkerStatus = _attackker.StateLoad();
-        Status defenderStatus = _defender.StateLoad();
+        float attaker = _attacker.StatusTypeLoad(StatusType.Power);
+        float defenser = _defender.StatusTypeLoad(StatusType.HP);
 
-        float value = defenderStatus.ViewHp - attackkerStatus.ViewAttack;
-        Debug.Log($"attackker = {_attackker}\n" +
-                  $"defender = {_defender}\n" +
-                  $"{_defender}HP ={defenderStatus.ViewHp}");
+        defenser = defenser - attaker;
+
+        _defender.StatusUpLoad(defenser);
+
+        //Status attackkerStatus = _attacker.StateLoad();
+        //Status defenderStatus = _defender.StateLoad();
+
+        //float value = defenderStatus.ViewHp - attackkerStatus.ViewAttack;
+        //Debug.Log($"attackker = {_attacker}\n" +
+              //    $"defender = {_defender}\n" +
+                //  $"{_defender}HP ={defenderStatus.ViewHp}");
         //MonsterStatus.StatusInit(value);
-        _defender.StatusUpLoad(value);
+        //_defender.StatusUpLoad(value);
         //vector Addforce
     }
     //public void DamageCheck(Monster _attackker, Player _defender)

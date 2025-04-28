@@ -2,15 +2,15 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public partial class DronMob : Monster
+public partial class SpiderMob : Monster
 {
     // Start is called before the first frame update
     private void Start()
     {
         cam = UnityEngine.Camera.main;
-        monsterType = MonsterType.Dron;
+        monsterType = MonsterType.Spider;
         mobAnimator = GetComponent<Animator>();
-        creatTabObj = Shared.BattelManager.creatTab;//¿ÀºêÁ§Æ® »ý¼º ÅÇ(ex.ÃÑ¾Ë)
+        creatTabObj = Shared.GameManager.creatTab;//¿ÀºêÁ§Æ® »ý¼º ÅÇ(ex.ÃÑ¾Ë)
         monsterRigid = GetComponent<Rigidbody>();
         monsterColl = GetComponent<Collider>();
         if (monsterColl == null)

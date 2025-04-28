@@ -37,7 +37,6 @@ public partial class Player : Charactor
 
     [Header("½ºÅÝ")]
     float burst_RunTime;
-    protected int attackValue;
     protected int attackReset;
     //UnityEngine.Camera Maincam;
 
@@ -87,7 +86,7 @@ public partial class Player : Charactor
     protected override void stateInIt() 
     {
         base.stateInIt();
-        attackReset = attackValue;
+        attackReset = (int)atkValue;
     }
 
     protected override void OnTriggerEnter(Collider other)

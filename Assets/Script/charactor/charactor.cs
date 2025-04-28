@@ -32,18 +32,7 @@ public abstract partial class Charactor : Actor
     //스텟 사용
     //clone 오브젝트 적극 사용 
     //protected int ID;//자신의 ID
-    protected float hP;//실제 체력
-    protected float cheHP;//보여지는 체력
-    protected float maxHP;//최대체력
-    [SerializeField] protected float CharactorId = 0;
-    [SerializeField] GameObject hpBar;//uiHp
 
-    protected Transform charactorModelTrs;//Modeling
-    protected float rotationSpeed = 20.0f;//나중에 조정
-    protected float skillCool_1;//1번 스킬쿨타임
-    protected float skillCool_2;//2번 스킬쿨타임
-    protected float buff;//버프
-    protected float burstCool;//버스트 쿨타임
     public Transform BodyObjectLoad() 
     {
         return charactorModelTrs;
@@ -71,32 +60,8 @@ public abstract partial class Charactor : Actor
             }
         }
     }
-    protected HpBar HPBAR = new HpBar();
-    public void HpInIt(HpBar _hpBar)
-    {
-        HPBAR = _hpBar;
-    }
-    public void StatusUpLoad(float _hp) 
-    {
-        hP = _hp;
-        cheHP = hP;
 
-        HPBAR.SetHp(maxHP, cheHP);
 
-        if (hP <= 0) 
-        {
-            dead();
-        }
-    }
-    protected virtual void stateInIt() 
-    {
-        hP = STATUS.ViewHp;
-        cheHP = hP;
-        maxHP = hP;
-        speedValue = STATUS.ViewSpeed;
-        atkValue = STATUS.ViewAttack;
-        defVAlue = STATUS.ViewDefense;
-    }
     protected void footRayCheck() //중력구현
     {
         //init
@@ -129,36 +94,6 @@ public abstract partial class Charactor : Actor
         MeshRenderer skin = GetComponentInChildren<MeshRenderer>();
         charactorModelTrs = skin.transform.parent;
         Debug.Log($"{gameObject}\ncharactorModelTrs = {charactorModelTrs}");
-    }
-    protected virtual void checkHp(Collider other) //수정 필요
-    {
-        //if (cheHP == hP) return;
-        //Damage(other);
-        Debug.Log("Hit");
-        if (cheHP >= hP && hP >= 0)
-        {
-            cheHP = hP;
-            if (hP==0) 
-            {
-                Invoke("dead",1f);
-            }
-        }
-    }
-    protected virtual void dead() //사망 상태
-    {
-        if (objType == ObjectType.Player) 
-        {
-            Shared.BattelManager.PlayerAlive = false;
-            hP = maxHP;
-            cheHP = maxHP;
-            gameObject.SetActive(false);
-        }
-        else 
-        {
-            hP = maxHP;
-            cheHP = maxHP;
-            gameObject.SetActive(false);
-        }
     }
     protected virtual void search() {}
     protected virtual void moveAnimation(MonsterWalkState _state) {}

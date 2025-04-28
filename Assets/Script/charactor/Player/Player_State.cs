@@ -64,7 +64,7 @@ public partial class Player : Charactor
     }
     protected override void dead()
     {
-        Shared.BattelManager.PlayerAlive = false;
+        base.dead();
         gameObject.SetActive(false);
     }
 

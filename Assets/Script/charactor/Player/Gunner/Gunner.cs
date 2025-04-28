@@ -5,8 +5,11 @@ using UnityEngine.TextCore.Text;
 
 public partial class Gunner : Player
 {
-    //SkillStrategy SkillStrategy = new SkillStrategy();
-    
+    private void Awake()
+    {
+        
+    }
+
     protected override void Start()
     {
         WEAPON = GetComponentInChildren<Gun>();

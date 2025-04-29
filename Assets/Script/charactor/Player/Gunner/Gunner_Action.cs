@@ -10,7 +10,7 @@ public partial class Gunner : Player
     {
         if (_job == CharactorJobEnum.Gunner)
         {
-            if (reloadState == ReloadState.ReloadOn || 
+            if (reloadState == ReloadState.ReloadOff && 
                 WEAPON.ReturnTypeValue(BulletValueType.NowBullet) <= 0)
             {
                 Debug.Log($"bullet = {WEAPON.ReturnTypeValue(BulletValueType.NowBullet)}");
@@ -22,24 +22,31 @@ public partial class Gunner : Player
     private void gunShoot() 
     {
         playerAnim.SetLayerWeight(attackLayerIndex, 1.0f);
+
         attackAnimation(AttackState.AttackOn);
 
         Vector3 AimDirection = weaponObj.transform.forward;
+
         WEAPON.Attack(AimDirection);
 
-        playerAnim.SetLayerWeight(attackLayerIndex, 0.0f);
+        //playerAnim.SetLayerWeight(attackLayerIndex, 0.0f);
     }
-    protected override void inPutCameraAnimation(bool _check, MouseInputType _type)
-    {
-        if (_type == MouseInputType.Release)
-        {
-            viewcam.cameraShakeAnim(_check);
-        }
-        else if (_type == MouseInputType.Hold) 
-        {
-            viewcam.cameraShakeAnim(_check);
-        }
-    }
+    //protected override void inPutCameraAnimation(bool _check)
+    //{
+    //    viewcam.cameraShakeAnim(_check);
+    //    //if (_check)
+    //    //{
+    //    //    viewcam.cameraShakeAnim(_check);
+    //    //}
+    //    //else 
+    //    //{
+    //    //    viewcam.cameraShakeAnim(_check)
+    //    //}
+    //    //if (_type == MouseInputType.Hold) 
+    //    //{
+    //    //    viewcam.cameraShakeAnim(_check);
+    //    //}
+    //}
     protected override void commonRSkill(CharactorJobEnum _type)//Reload
     {
         if (_type == CharactorJobEnum.Gunner ||

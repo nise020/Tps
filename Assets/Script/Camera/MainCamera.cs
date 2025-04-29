@@ -2,23 +2,28 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEditor;
 using UnityEngine;
+using static ShakeCamera;
 
 public partial class MainCamera : MonoBehaviour
 {
-    // Update is called once per frame
-    void Update()
+    ShakeCamera shakeCamera;
+    private void Start()
     {
-        //ShakeOn();
+        shakeCamera = GetComponent<ShakeCamera>();
     }
-
-
-    private void ShakeOn() 
+    void Update()
     {
         if (Input.GetKeyDown(KeyCode.Space)) 
         {
-            //Shared.ShakeCamera.Shake(0);
-            camZoom();
+            shakeCamera.Shake(0);
         }
+    }
+
+
+    public void ShakeOn() 
+    {
+        //camZoom();
+        //StartCoroutine(shakeCamera.ShakeCoroutin());
     }
     public void camZoom() 
     {

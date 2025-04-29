@@ -6,11 +6,14 @@ using UnityEngine;
 public partial class Monster : Charactor
 {
     protected Item ITEM;
+    [SerializeField] Item viewItem;
     protected AiMonster AI = new AiMonster();
     protected Skill_Monster SKILL = new Skill_Monster();
-
+    
     public int mobKey = 0;
-    Condition condition = Condition.health;//상태패턴
+
+    protected bool viewHpBar = false;
+    
     protected virtual void FixedUpdate()
     {
         if (AI == null) { return; }
@@ -18,31 +21,35 @@ public partial class Monster : Charactor
     }
     private void LateUpdate()
     {
-        CameraInMonsterCheck();
+        cameraInMonsterCheck();
     }
-    protected void CameraInMonsterCheck()
+    protected void cameraInMonsterCheck()
     {
         Player player = Shared.GameManager.PlayerLoad();
         Camera camera = player.GetComponentInChildren<Camera>();
 
         Vector3 viewportPos = camera.WorldToViewportPoint(gameObject.transform.position);
 
-        bool isVisible = (viewportPos.z > 0 && viewportPos.x > 0 && viewportPos.x < 1 && viewportPos.y > 0 && viewportPos.y < 1);
+        bool isVisible = (viewportPos.z > 0 && viewportPos.x > 0 && 
+                          viewportPos.x < 1 && viewportPos.y > 0 && 
+                          viewportPos.y < 1);
         if (isVisible)
         {
-            HPBAR.gameObject.SetActive(true);
+            hbBarCheck(true);
         }
         else
         {
-            HPBAR.gameObject.SetActive(false);
+            hbBarCheck(false);
         }
     }
-    public void mobIndex(int _key)
+    
+    public void KeyUpdate(int _key)
     {
         mobKey = _key;
     }
     public void ItemUpdate(Item _item) 
     {
         ITEM = _item;
+        viewItem = ITEM;
     }
 }

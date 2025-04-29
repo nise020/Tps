@@ -28,6 +28,7 @@ public class ItemManager : MonoBehaviour
     public void ItemDataAdd(Monster _monster) 
     {
         int count = Random.Range(0, Items.Count);
+        creat();
         _monster.ItemUpdate(Items[count]);
     }
     private void creat()

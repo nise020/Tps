@@ -128,7 +128,7 @@ public class MonsterManager : MonoBehaviour
         Monster monster = go.GetComponent<Monster>();
         monsterData.Add(monsterCount, go);
 
-        monster.mobIndex(monsterCount);
+        monster.KeyUpdate(monsterCount);
 
         monster.creatTab(creatTab);
 
@@ -177,8 +177,16 @@ public class MonsterManager : MonoBehaviour
     }
     public void Resurrection(int _number)
     {
-        monsterData[_number].gameObject.SetActive(true);
+        GameObject monster = monsterData[_number];
+        StartCoroutine(Timer(monster, 3.0f));
         //Invoke("monsterData[_number].gameObject.SetActive(true)",10f);
     }
-
+    private IEnumerator Timer(GameObject _obj, float _time)
+    {
+        yield return new WaitForSeconds(_time);
+        Monster monster = _obj.GetComponent<Monster>();
+        Shared.ItemManager.ItemDataAdd(monster);
+        monster.conditionUpdate(Condition.health);
+        _obj.gameObject.SetActive(true);
+    }
 }

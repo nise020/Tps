@@ -1,4 +1,9 @@
-
+public enum Condition //몬스터의 상태패턴
+{
+    health,
+    hard,
+    Death,
+}
 public enum MonsterAiState //Monster AI 상태
 {
     Create,

@@ -18,11 +18,11 @@ public partial class Gun : Weapon
     private void Start()
     {
         
-        GunBulletType();
         ui = Shared.BattelManager.ui;
         PLAYER = GetComponentInParent<Player>();
         magazine = Shared.GameManager.CreatTransform();
 
+        GunBulletType();
         creatbullet();
     }
     public void creatbullet() 

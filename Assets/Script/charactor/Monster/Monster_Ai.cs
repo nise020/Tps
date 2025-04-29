@@ -54,8 +54,7 @@ public partial class Monster : Charactor
 
         float dist = Vector3.Distance(pos,charactorModelTrs.position);
         
-        Debug.Log($"charactorModelTrs: {charactorModelTrs.name}, \n " +
-            $"position: {charactorModelTrs.position}");
+       
         if (dist < stopDistanseValue)
         {
             //Debug.Log($"[¸ðµ¨ À§Ä¡] {charactorModelTrs.position} / [Å¸°Ù À§Ä¡] {targetPos} / [°Å¸®] {disTance}");

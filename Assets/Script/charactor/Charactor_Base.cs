@@ -20,21 +20,46 @@ public abstract partial class Charactor : Actor
     protected float buff;//버프
     protected float burstCool;//버스트 쿨타임
     StatusType statusType = StatusType.None;
+    protected Condition condition = Condition.health;//상태패턴
     public void HpInIt(HpBar _hpBar)
     {
         HPBAR = _hpBar;
     }
+
+    protected void hbBarCheck(bool _check)
+    {
+        if (_check)
+        {
+            HPBAR.gameObject.SetActive(true);
+        }
+        else
+        {
+            HPBAR.gameObject.SetActive(false);
+        }
+    }
+
     public void StatusUpLoad(float _hp)
     {
+        if (condition == Condition.Death) {return;}
         hP = _hp;
         cheHP = hP;
 
+        hbBarCheck(true);
+
         HPBAR.SetHp(maxHP, cheHP);
 
-        if (hP <= 0)
+        if (_hp <= 0)
         {
             Debug.Log("Dead");
-            Invoke("dead", 1f);
+            Invoke("death", 1f);
+        }
+
+    }
+    public void conditionUpdate(Condition _condition) 
+    {
+        if (condition == Condition.Death) 
+        {
+            condition = _condition;
         }
     }
     public int StatusTypeLoad(StatusType _type) 
@@ -45,26 +70,24 @@ public abstract partial class Charactor : Actor
             case StatusType.HP:
                 value = (int)hP;
                 break;
-            case StatusType.Power:
-                
+            case StatusType.Power:            
                 value = (int)atkValue;
                 break;
             case StatusType.Speed:
                 value = (int)speedValue;
-                
                 break;
             case StatusType.Defens:
                 value = (int)defVAlue;
-                
                 break;
         }
-        return 0;
+        return value;
     }
     protected virtual void stateInIt()
     {
         hP = STATUS.ViewHp;
         cheHP = hP;
         maxHP = hP;
+
         speedValue = STATUS.ViewSpeed;
         atkValue = STATUS.ViewAttack;
         defVAlue = STATUS.ViewDefense;
@@ -77,11 +100,11 @@ public abstract partial class Charactor : Actor
             cheHP = hP;
             if (hP == 0)
             {
-                Invoke("dead", 1f);
+                Invoke("death", 1f);
             }
         }
     }
-    protected virtual void dead() //사망 상태
+    protected virtual void death() //사망 상태
     {
         if (objType == ObjectType.Player)
         {

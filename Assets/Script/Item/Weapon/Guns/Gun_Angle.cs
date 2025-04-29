@@ -20,7 +20,7 @@ public partial class Gun : Weapon
     [SerializeField] GameObject razerEndObj;
     [SerializeField] bool angleOn = true;
     LineRenderer gunLazer;
-
+    GunState State = GunState.Off;
     public void reloed()
     {
         for (int iNum = 0; iNum < bulletData.Count; iNum++) 
@@ -35,8 +35,7 @@ public partial class Gun : Weapon
 
     public override void Attack(Vector3 _pos)
     {
-        RapidTimer += Time.deltaTime;
-        if (RapidTimer > RapidTime)
+        if (State == GunState.Off)
         {
             GameObject go = bulletData[bulletcount];
             if (bulletData[bulletcount] == null) 
@@ -49,18 +48,22 @@ public partial class Gun : Weapon
             //수정 필요
             plBullet.WeaponTrs = _pos;
             
-            go.SetActive(true);
-
-
             bulletcount++;
             nowbullet--;
-      
-            RapidTimer = 0.0f;
-            //Invoke("go.SetActive(false)", 3f);
+
+            State = GunState.On;
+
+            Invoke("AttackDelay", 0.3f);
+
+            go.SetActive(true);
+
             StartCoroutine(HideObject(go, 3f));
         }
     }
-
+    private void AttackDelay() 
+    {
+        State = GunState.Off;
+    }
     private IEnumerator HideObject(GameObject go, float seconds)
     {
         yield return new WaitForSeconds(seconds);

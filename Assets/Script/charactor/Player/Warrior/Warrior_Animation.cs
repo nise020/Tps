@@ -8,6 +8,20 @@ public partial class Warrior : Player
 
     int scabbardCount = 0;
     int scabbardMaxCount = 2;
+
+    //protected override void inPutCameraAnimation(bool _check)
+    //{
+    //    viewcam.cameraShakeAnim(_check);
+    //    //if (_type == MouseInputType.Release)
+    //    //{
+    //    //    viewcam.cameraShakeAnim(_check);
+    //    //}
+    //    //else if (_type == MouseInputType.Hold)
+    //    //{
+    //    //    viewcam.cameraShakeAnim(_check);
+    //    //}
+    //}
+
     public void RangeCheak() 
     {
         Vector3 weaponPos = new Vector3();
@@ -47,24 +61,6 @@ public partial class Warrior : Player
     }
     public void SkillEffectOff(int _value) 
     {
-        //if (_value == 1&& SkillParentObj1.activeSelf) 
-        //{
-        //    SkillParentObj1.SetActive(false);
-        //    firstSkillCheck = SkillRunning.SkillOff;
-        //    playerAnim.SetInteger(SkillType.Skill1.ToString(), 0);
-        //}
-        //else if (_value == 2 && SkillParentObj2.activeSelf)
-        //{
-        //    SkillParentObj2.SetActive(false);
-        //    secondSkillCheck = SkillRunning.SkillOff;
-        //    playerAnim.SetInteger(SkillType.Skill2.ToString(), 0);
-        //}
-        //else 
-        //{
-        //    attackAnimation(AttackState.AttackOff);
-        //}
-
-
         if (firstSkillCheck == SkillRunning.SkillOn)
         {
             SkillAnimation(SkillType.Skill1, false);
@@ -76,8 +72,6 @@ public partial class Warrior : Player
             SkillAnimation(SkillType.Skill2, false);
             SkillParentObj1.SetActive(false);
             SkillEffectSystem2.Pause();
-            //secondSkillCheck = SkillRunning.SkillOff;
-            //playerAnim.SetInteger(SkillType.Skill2.ToString(), 0);
         }
         else
         {

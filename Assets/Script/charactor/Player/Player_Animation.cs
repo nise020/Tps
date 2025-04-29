@@ -29,9 +29,21 @@ public partial class Player : Charactor
     [SerializeField] protected GameObject SkillParentObj1 = null;
     [SerializeField] protected GameObject SkillParentObj2 = null;
 
-    public void skillAnimation()//AnimationEvent
+    public void skillAnimationOut()//AnimationEvent
     {
         skillcheck = SkillRunning.SkillOff;
+    }
+
+    public void AttackCameraEvent(int _value) //AnimationEvent
+    {
+        if (_value == 1) 
+        {
+            viewcam.CameraShakeAnimation(1);
+        }
+        else if (_value == 2) 
+        {
+            viewcam.CameraShakeAnimation(0);
+        }
     }
     public void ContinuousAttack() 
     {
@@ -57,7 +69,7 @@ public partial class Player : Charactor
         //SkillParentObj1.transform.rotation = Quaternion.identity;
         //SkillParentObj1.SetActive(false);
     }
-    protected virtual void inPutCameraAnimation(bool _check, MouseInputType _type) 
+    protected virtual void inPutCameraAnimation(bool _check) 
     {
 
     }
@@ -127,10 +139,12 @@ public partial class Player : Charactor
     {
         if (_state == AttackState.AttackOn)//Off
         {
+            //viewcam.cameraShakeAnim(true);
             playerAnim.SetInteger(PlayerAnimParameters.Attack.ToString(), 1);
         }
         else if (_state == AttackState.AttackOff)
         {
+            //viewcam.cameraShakeAnim(false);
             playerAnim.SetInteger(PlayerAnimParameters.Attack.ToString(), 0);
         }
     }

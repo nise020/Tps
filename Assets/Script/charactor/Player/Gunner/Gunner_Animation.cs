@@ -4,6 +4,11 @@ using UnityEngine;
 
 public partial class Gunner : Player
 {
+    public void AttackAnimationOut() 
+    {
+        attackAnimation(AttackState.AttackOff);
+        playerAnim.SetLayerWeight(attackLayerIndex, 0.0f);
+    }
     protected override void walkAnim(RunState _runState, Vector3 _pos)
     {
         if (_pos.x == 1)//rigrt

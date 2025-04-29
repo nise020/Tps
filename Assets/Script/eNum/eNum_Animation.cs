@@ -12,6 +12,7 @@ public enum PlayerAnimParameters
     WeaponWalk,
     GetWeapon,
     Close,
+    Death,
 
 }
 
@@ -37,6 +38,7 @@ public enum MonsterAnimParameters
     Serch,
     Open,
     Stop,
+    Death,
 
 }
 public enum MonsterAnim

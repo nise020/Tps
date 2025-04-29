@@ -91,7 +91,7 @@ public partial class Gunner : Player
                 }
                 else if (type == WeaponEnum.Granad) 
                 {
-                    Granad granad = GetComponentInChildren<Granad>();
+                    Granad granad = MeshObj.gameObject.GetComponent<Granad>();
                     granadObj = granad;
                 }
             }

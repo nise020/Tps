@@ -62,9 +62,9 @@ public partial class Player : Charactor
             return false;
         }
     }
-    protected override void dead()
+    protected override void death()
     {
-        base.dead();
+        base.death();
         gameObject.SetActive(false);
     }
 

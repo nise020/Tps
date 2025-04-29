@@ -31,7 +31,7 @@ public class ShakeCamera : MonoBehaviour
         public float DampingTime; // 댐핑 시간
     }
 
-    cShakeInfo ShakeInfo = new cShakeInfo(); // 카메라 흔들림 정보 인스턴스
+    public cShakeInfo ShakeInfo = new cShakeInfo(); // 카메라 흔들림 정보 인스턴스
 
     Vector3 Orgpos; // 카메라의 원래 위치
 
@@ -56,9 +56,9 @@ public class ShakeCamera : MonoBehaviour
 
     private void ResetShakeTr()
     {
-        ShakeTr.localPosition = Vector3.zero; // 카메라 위치를 초기화
+        ShakeTr.localPosition = Vector3.zero; // 카메라 위치를 초기화<- 여기 주의
         CameraShake = false; // 흔들림 상태 해제
-        CameraLimit(); // 카메라 위치 제한 적용
+        CameraLimit(); // 카메라 위치 제한 적용<- 여기 주의
     }
 
     void CameraLimit(bool _OrgPosY = false)
@@ -104,7 +104,7 @@ public class ShakeCamera : MonoBehaviour
         StartCoroutine("ShakeCoroutin"); // 흔들림 코루틴 시작
     }
 
-    IEnumerator ShakeCoroutin()
+    public IEnumerator ShakeCoroutin()
     {
         CameraShake = true; // 흔들림 상태 활성화
 

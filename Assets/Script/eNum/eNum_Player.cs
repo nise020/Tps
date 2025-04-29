@@ -45,12 +45,6 @@ public enum Scene //예전에는 앞에 sScene을 붙여야 했다
 
 }
 
-public enum Condition //몬스터의 상태패턴
-{
-    health,
-    hard,
-}
-
 public enum CharactorJobEnum
 {
     None,

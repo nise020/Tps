@@ -100,8 +100,9 @@ public class BattelManager : MonoBehaviour
 
     public void DamageCheck(Charactor _attacker, Charactor _defender) 
     {
-        float attaker = _attacker.StatusTypeLoad(StatusType.Power);
         float defenser = _defender.StatusTypeLoad(StatusType.HP);
+
+        float attaker = _attacker.StatusTypeLoad(StatusType.Power);
 
         defenser = defenser - attaker;
 

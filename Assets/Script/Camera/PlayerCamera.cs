@@ -153,9 +153,9 @@ public partial class PlayerCamera : CameraBase
         MainCamerainitEvent();
         //camRot(Vector3.zero);
     }
-    public void cameraShakeAnim(bool _anim) 
+    public void CameraShakeAnimation(int _value) 
     {
-        if (_anim) 
+        if (_value == 1) 
         {
             camAnim.SetInteger("Shake", 1);
         }

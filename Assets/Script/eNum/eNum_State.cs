@@ -6,7 +6,11 @@ public enum NpcAiState //Npc AI 상태
     Attack,
     Reset,
 }
-
+public enum GunState 
+{
+    On,
+    Off,
+}
 public enum PlayerShitState
 {
     None,

@@ -6,6 +6,11 @@ public enum NpcAiState //Npc AI 상태
     Attack,
     Reset,
 }
+public enum ShakeState
+{
+    Shake_On,
+    Shake_Off,
+}
 public enum GunState 
 {
     On,

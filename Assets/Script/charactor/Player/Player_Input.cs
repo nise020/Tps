@@ -36,7 +36,7 @@ public partial class Player : Charactor
                     shitdownCheak();//shitdown
                     break;
                 case KeyCode.Space:
-                    cameraModeChange();
+                    //cameraModeChange();
                     break;
             }
         }

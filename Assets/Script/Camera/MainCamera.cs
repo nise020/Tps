@@ -11,13 +11,13 @@ public partial class MainCamera : MonoBehaviour
     {
         shakeCamera = GetComponent<ShakeCamera>();
     }
-    void Update()
-    {
-        if (Input.GetKeyDown(KeyCode.Space)) 
-        {
-            shakeCamera.Shake(0);
-        }
-    }
+    //void Update()
+    //{
+    //    if (Input.GetKeyDown(KeyCode.Space)) 
+    //    {
+    //        shakeCamera.Shake(0);
+    //    }
+    //}
 
 
     public void ShakeOn() 

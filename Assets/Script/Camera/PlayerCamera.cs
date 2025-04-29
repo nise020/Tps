@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using Unity.Mathematics;
 using UnityEngine;
 using static UIWidget;
+using static UnityEngine.Rendering.PostProcessing.PostProcessResources;
 
 public partial class PlayerCamera : CameraBase
 {
@@ -38,6 +39,11 @@ public partial class PlayerCamera : CameraBase
     public float minFOV = 40f;
     public float maxFOV = 80f;
     float zoomSpeed = 2.5f;
+
+    ShakeCamera shakeCamera;
+    Transform shakeTrs;
+    Transform cameraPivot;
+    ShakeState shakeState = ShakeState.Shake_Off;
     public bool GunModeCheck() 
     {
         if (GunModeOn) 
@@ -59,12 +65,6 @@ public partial class PlayerCamera : CameraBase
     }
     public void camRot(Vector2 _pos)//수정 필요
     {
-        if (viewObj == null) return;
-
-        //playerType == PlayerType.Gunner
-
-        //float xRot = Input.GetAxis("Mouse X") * rotSensitive;
-        //float yRot = Input.GetAxis("Mouse Y") * rotSensitive;
         float xRot = _pos.x * rotSensitive;
         float yRot = _pos.y * rotSensitive;
 
@@ -72,24 +72,16 @@ public partial class PlayerCamera : CameraBase
         yValue -= yRot;
 
         yValue = Mathf.Clamp(yValue, -limitRot, limitRot);
-        Vector3 distans = new Vector3(0, 0, -Distans);
-
-        //Vector3 distans = Quaternion.Euler(yValue, xValue, 0) * new Vector3(0, 0, -Distans);
-        //transform.position = viewObj.transform.position +  distans;
-
-        //gameObject.transform.rotation = Quaternion.LookRotation(viewObj.transform.position - transform.position);
 
         Quaternion rotation = Quaternion.Euler(yValue, xValue, 0);
-        //transform.rotation = rotation;
         viewObj.rotation = rotation;
+
+        Vector3 distans = new Vector3(0, 0, -Distans);
+        shakeTrs.localPosition = Vector3.zero;
 
         transform.position = viewObj.position + rotation * distans;
         transform.LookAt(viewObj);
-        //Vector3 offset = rotation * new Vector3(0, 0, -Distans);
-        //transform.position = viewObj.transform.position + offset;
 
-        // 카메라가 viewObj를 바라보게
-        //transform.LookAt(viewObj.transform);
     }
     private void shootCamera(Vector3 _pos)
     {
@@ -117,14 +109,11 @@ public partial class PlayerCamera : CameraBase
     }
     void Start()
     {
-        //PlayerObj = GetComponentInParent<Player>();
-        //Cursor.lockState = CursorLockMode.Locked;
-        //Cursor.visible = false;
-        //transform.LookAt(PlayerObj.transform);
-        viewObj = transform.parent;
+        viewObj = transform.parent.parent;
+        shakeTrs = transform.parent;
         camAnim = GetComponentInParent<Animator>();
         thisCamera = GetComponent<Camera>();
-        //Shared.CameraManager.CameraAdd(this);
+        shakeCamera = GetComponent<ShakeCamera>();
     }
     public void MainCamerainitEvent()
     {
@@ -157,12 +146,23 @@ public partial class PlayerCamera : CameraBase
     {
         if (_value == 1) 
         {
-            camAnim.SetInteger("Shake", 1);
+            if (shakeState != ShakeState.Shake_On)
+            {
+                //shakeState = ShakeState.Shake_On;
+                shakeCamera.Shake(0, 2);
+                //Invoke("shakeState", 3);
+            }
+            else { return; }
+            //camAnim.SetInteger("Shake", 1);
         }
         else 
         {
-            camAnim.SetInteger("Shake", 0);
+            //camAnim.SetInteger("Shake", 0);
         }
+    }
+    private void ShakeOff() 
+    {
+        shakeState = ShakeState.Shake_Off;
     }
     void showCursue()
     {

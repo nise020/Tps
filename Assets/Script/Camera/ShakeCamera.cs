@@ -38,8 +38,8 @@ public class ShakeCamera : MonoBehaviour
     float FovX = 0.2f; // 좌우 이동 범위 제한 값
     float FovY = 0.2f; // 상하 이동 범위 제한 값
 
-    float Left = 1.0f; // 왼쪽 경계값
-    float Right = -1.0f; // 오른쪽 경계값
+    float Left = -1.0f; // 왼쪽 경계값
+    float Right = 1.0f; // 오른쪽 경계값
 
     private void Awake()
     {
@@ -56,6 +56,8 @@ public class ShakeCamera : MonoBehaviour
 
     private void ResetShakeTr()
     {
+        transform.rotation = Quaternion.identity;
+        ShakeTr.localRotation = Quaternion.identity;
         ShakeTr.localPosition = Vector3.zero; // 카메라 위치를 초기화<- 여기 주의
         CameraShake = false; // 흔들림 상태 해제
         CameraLimit(); // 카메라 위치 제한 적용<- 여기 주의
@@ -75,7 +77,7 @@ public class ShakeCamera : MonoBehaviour
             camera.y = Orgpos.y;
     }
 
-    public void Shake(int _CameraID)
+    public void Shake(int _CameraID,int _count)
     {
 
         ShakeInfo.StartDelay = 0f; // 흔들림 지연 시간 초기화
@@ -90,13 +92,13 @@ public class ShakeCamera : MonoBehaviour
         ShakeInfo.RemainDist = ShakeInfo.Shake.magnitude; // 남은 이동 거리 계산
         ShakeInfo.RemainCountDis = float.MaxValue; // 남은 거리 초기화
 
-        ShakeInfo.Veclocity = 8; // 흔들림 속도 설정
+        ShakeInfo.Veclocity = 10; // 흔들림 속도 설정
 
         ShakeInfo.Damping = 0.5f; // 댐핑 계수 설정
         ShakeInfo.UseDamping = true; // 댐핑 사용 설정
         ShakeInfo.DampingTime = ShakeInfo.RemainDist / ShakeInfo.Veclocity; // 댐핑 시간 계산
 
-        ShakeInfo.Count = 4; // 흔들림 횟수 설정
+        ShakeInfo.Count = _count; // 흔들림 횟수 설정
         ShakeInfo.UseCount = true; // 횟수 사용 설정
 
         StopCoroutine("ShakeCoroutin"); // 기존 코루틴 중지

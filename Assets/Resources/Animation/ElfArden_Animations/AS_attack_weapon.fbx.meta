@@ -79,15 +79,22 @@ ModelImporter:
       bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
       curves: []
       events:
-      - time: 0.926469
-        functionName: SkillEffectOff
+      - time: 0.11059585
+        functionName: AttackCameraEvent
         data: 
         objectReferenceParameter: {instanceID: 0}
         floatParameter: 0
-        intParameter: 3
+        intParameter: 1
         messageOptions: 0
       - time: 0.12727262
         functionName: RangeCheak
+        data: 
+        objectReferenceParameter: {instanceID: 0}
+        floatParameter: 0
+        intParameter: 1
+        messageOptions: 0
+      - time: 0.23333332
+        functionName: AttackCameraEvent
         data: 
         objectReferenceParameter: {instanceID: 0}
         floatParameter: 0
@@ -100,8 +107,8 @@ ModelImporter:
         floatParameter: 0
         intParameter: 1
         messageOptions: 0
-      - time: 0.49393934
-        functionName: RangeCheak
+      - time: 0.50412273
+        functionName: AttackCameraEvent
         data: 
         objectReferenceParameter: {instanceID: 0}
         floatParameter: 0
@@ -114,26 +121,12 @@ ModelImporter:
         floatParameter: 0
         intParameter: 1
         messageOptions: 0
-      - time: 0.106060706
-        functionName: AttackCameraEvent
+      - time: 0.926469
+        functionName: SkillEffectOff
         data: 
         objectReferenceParameter: {instanceID: 0}
         floatParameter: 0
-        intParameter: 1
-        messageOptions: 0
-      - time: 0.42929283
-        functionName: AttackCameraEvent
-        data: 
-        objectReferenceParameter: {instanceID: 0}
-        floatParameter: 0
-        intParameter: 1
-        messageOptions: 0
-      - time: 0.23333332
-        functionName: AttackCameraEvent
-        data: 
-        objectReferenceParameter: {instanceID: 0}
-        floatParameter: 0
-        intParameter: 1
+        intParameter: 3
         messageOptions: 0
       transformMask: []
       maskType: 3

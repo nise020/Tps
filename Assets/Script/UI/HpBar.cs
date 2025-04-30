@@ -75,10 +75,14 @@ public partial class HpBar : MonoBehaviour
         imgHp.fillAmount = _curHp / _maxHp;
     }
 
-    private void chasePlayer()
+    private void chasePlayer()//Main Camera ¼öÁ¤
     {
         if (Shared.MonsterManager.GetMonsterPosition(key, out Vector3 pos) == true)
         {
+            if (mainCam != Camera.main) 
+            {
+                mainCam = Shared.CameraManager.MainCameraLoad();
+            }
             transform.LookAt(transform.position + mainCam.transform.forward);
         }
         else { return; }

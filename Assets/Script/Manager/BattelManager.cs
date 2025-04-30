@@ -119,13 +119,5 @@ public class BattelManager : MonoBehaviour
         //_defender.StatusUpLoad(value);
         //vector Addforce
     }
-    //public void DamageCheck(Monster _attackker, Player _defender)
-    //{
-    //    Status MonsterStatus = _attackker.StateLoad();
-    //    Status playerStatus = _defender.StateLoad();
 
-    //    float value = playerStatus.ViewHp - MonsterStatus.ViewAttack ;
-    //    //playerStatus.StatusInit(value);
-    //    _defender.StatusUpLoad(value);
-    //}
 }

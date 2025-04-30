@@ -15,9 +15,9 @@ public partial class Player : Charactor
         
         //중복처리를 방지 하기 위한 예외 처리 추가 필요
 
-        while (Shared.InputManager.KeyinPutQueBase.Count > 0)//key 
+        while (Shared.InputManager.KeyinPutQueData.Count > 0)//key 
         {
-            KeyCode type = Shared.InputManager.KeyinPutQueBase.Dequeue();
+            KeyCode type = Shared.InputManager.KeyinPutQueData.Dequeue();
             switch (type)
             {
                 case KeyCode.Mouse1:
@@ -40,9 +40,9 @@ public partial class Player : Charactor
                     break;
             }
         }
-        while (Shared.InputManager.MouseInputQueBase.Count > 0)//mouseClick == Attack
+        while (Shared.InputManager.MouseInputQueData.Count > 0)//mouseClick == Attack
         {
-            MouseInputType type = Shared.InputManager.MouseInputQueBase.Dequeue();
+            MouseInputType type = Shared.InputManager.MouseInputQueData.Dequeue();
             switch (type) 
             {
                 case MouseInputType.Click://mouseClick
@@ -60,13 +60,13 @@ public partial class Player : Charactor
             }
                 
         }
-        if (Shared.InputManager.MoveQueBase.Count == 0) 
+        if (Shared.InputManager.MoveQueData.Count == 0) 
         {
             clearWalkAnimation(playerType);
         }
-        while (Shared.InputManager.MoveQueBase.Count > 0)//move
+        while (Shared.InputManager.MoveQueData.Count > 0)//move
         {
-            Vector3 type = Shared.InputManager.MoveQueBase.Dequeue();
+            Vector3 type = Shared.InputManager.MoveQueData.Dequeue();
             move(charctorState,type);
         }
         

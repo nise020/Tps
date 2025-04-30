@@ -111,7 +111,10 @@ public partial class Player : Charactor
         playerType = _type;
         PlayerKey = _key;
     }
-    
+    public int keyLode() 
+    {
+        return PlayerKey;
+    }
     protected virtual void FindWeaponObject(LayerName _name)
     {
 

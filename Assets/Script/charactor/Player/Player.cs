@@ -58,26 +58,27 @@ public partial class Player : Charactor
 
     protected SkillStrategy skillStrategy = new SkillStrategy();
     //AudioListener audioListener => GetComponentInChildren<AudioListener>();
-    [SerializeField] protected GameObject HandObj;
-    [SerializeField] protected GameObject weaponObj;
-    protected Vector3 weaponOriginalPos = Vector3.zero;
+    
+    
     //protected GameObject WeaponObj;
-    protected virtual void Start()
+    protected override void Start()
     {
-        //playerType = PlayerType.Gunner;
+        base.Start();
         STATUS.init(charactor);//State
         stateInIt();
-        FindSkinBodyObject();
+        //FindSkinBodyObject();
         viewcam = GetComponentInChildren<PlayerCamera>();
         if (charctorState == CharctorStateEnum.Npc)
         {
             viewcam.gameObject.SetActive(false);
         }
         PLAYERAI.init(this);//FSM
-        rigid = GetComponent<Rigidbody>();//Kinematic Controll
-        playerAnim = GetComponent<Animator>();
         slotinit();
 
+        rigid = GetComponent<Rigidbody>();//Kinematic Controll
+        playerAnim = GetComponent<Animator>();
+
+        skillStrategy.PlayerInit(this);
         SkillEffectSystem1 = CreatSkill(SkillEffectObj1, SkillParentObj1);
         SkillEffectSystem2 = CreatSkill(SkillEffectObj2, SkillParentObj2);
 
@@ -115,8 +116,5 @@ public partial class Player : Charactor
     {
         return PlayerKey;
     }
-    protected virtual void FindWeaponObject(LayerName _name)
-    {
-
-    }
+    
 }

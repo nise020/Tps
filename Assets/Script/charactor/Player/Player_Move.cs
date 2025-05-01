@@ -156,7 +156,7 @@ public partial class Player : Charactor
 
         return false;
     }
-    public float TargetMove(Vector3 _pos)
+    public float TargetMove(Vector3 _pos)//수정 필요
     {
         Vector3 stopPoint = _pos;
         Vector3 disTance = (stopPoint - gameObject.transform.position);
@@ -252,38 +252,7 @@ public partial class Player : Charactor
         //Gunner
         //walkAnim(runState, playerType);
     }
-    protected float gravityValue = - 9.81f;
-    Vector3 velocity;
-    CapsuleCollider CpasuleColl;
-    [SerializeField] float groundCheckLenght;
-    float groundCheckRadius = 0.3f;
-    GroundTouchState GroundTouchState = GroundTouchState.GroundNoneTouch;
-    protected void groundCheak() 
-    {
-        int layer = LayerMask.NameToLayer(LayerName.Ground.ToString());
-        
-        bool isGround = Physics.SphereCast(transform.position, groundCheckRadius, Vector3.down, 
-            out RaycastHit hit, groundCheckLenght + 0.1f, layer);
-
-        if (isGround)
-        {
-            if (GroundTouchState == GroundTouchState.GroundNoneTouch) 
-            {
-                GroundTouchState = GroundTouchState.GroundTouch;
-            }
-            if (velocity.y < 0)
-                velocity.y = 0f;
-        }
-        else
-        {
-            if (GroundTouchState == GroundTouchState.GroundTouch)
-            {
-                GroundTouchState = GroundTouchState.GroundNoneTouch;
-            }
-            velocity.y += gravityValue * Time.deltaTime;
-        }
-        transform.position += velocity * Time.deltaTime;
-    }
+    
     float jumpValue = 5f;
     protected void jump(GroundTouchState _state) 
     {

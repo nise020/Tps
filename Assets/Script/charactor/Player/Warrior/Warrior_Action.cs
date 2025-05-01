@@ -34,7 +34,7 @@ public partial class Warrior : Player
     {
         if (_type == CharactorJobEnum.Warrior)
         {
-            if (firstSkillCheck == SkillRunning.SkillOff)
+            if (firstSkillCheck == SkillState.SkillOff)
             {
                 if (weaponState == WeaponState.Sword_Off) 
                 {
@@ -88,7 +88,7 @@ public partial class Warrior : Player
     {
         if (_type == CharactorJobEnum.Warrior)
         {
-            if (secondSkillCheck == SkillRunning.SkillOff)
+            if (secondSkillCheck == SkillState.SkillOff)
             {
                 if (weaponState == WeaponState.Sword_Off)
                 {
@@ -134,15 +134,15 @@ public partial class Warrior : Player
 
     protected override void skillValueReset()//Damage Reset
     {
-        if (firstSkillCheck == SkillRunning.SkillOn) 
+        if (firstSkillCheck == SkillState.SkillOn) 
         {
             playerAnim.SetInteger(SkillType.Skill1.ToString(), 0);
-            firstSkillCheck = SkillRunning.SkillOff;
+            firstSkillCheck = SkillState.SkillOff;
         }
-        if (secondSkillCheck == SkillRunning.SkillOn)
+        if (secondSkillCheck == SkillState.SkillOn)
         {
             playerAnim.SetInteger(SkillType.Skill2.ToString(), 0);
-            secondSkillCheck = SkillRunning.SkillOff;
+            secondSkillCheck = SkillState.SkillOff;
         }
         atkValue = attackReset;
     }

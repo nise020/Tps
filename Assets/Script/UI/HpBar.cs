@@ -41,7 +41,7 @@ public partial class HpBar : MonoBehaviour
     {
         checkFillAmount();
         chasePlayer();
-        chekedPlayerDestroy();
+        chekedCharactorDeath();
     }
 
     private void initHp()
@@ -79,16 +79,17 @@ public partial class HpBar : MonoBehaviour
     {
         if (Shared.MonsterManager.GetMonsterPosition(key, out Vector3 pos) == true)
         {
-            if (mainCam != Camera.main) 
-            {
-                mainCam = Shared.CameraManager.MainCameraLoad();
-            }
+            //if (mainCam != Camera.main) 
+            //{
+            //    mainCam = Shared.CameraManager.MainCameraLoad();
+            //}
+            mainCam = Shared.CameraManager.MainCameraLoad();
             transform.LookAt(transform.position + mainCam.transform.forward);
         }
         else { return; }
     }
 
-    private void chekedPlayerDestroy()
+    private void chekedCharactorDeath()
     {
         if (imgEffect.fillAmount == 0.1f)
         {

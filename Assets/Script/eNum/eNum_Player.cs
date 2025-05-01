@@ -8,7 +8,7 @@ public enum BulletType
 }
 
 
-public enum SkillRunning 
+public enum SkillState 
 {
     SkillOn,
     SkillOff

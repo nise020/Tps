@@ -130,7 +130,22 @@ public partial class Monster : Charactor
 
     public void MonsterAttack()
     {
-        attackRangeCheck();//Hit
+        Granad granad = weaponObj.GetComponent<Granad>();
+        if (granad.state == SkillState.SkillOff)
+        {
+            attackAnimation(MonsterAttackState.Attack_On);
+        }
+
+        if (monsterType == MonsterType.Sphere||
+            monsterType == MonsterType.Dron)
+        {
+            attackAnimation(MonsterAttackState.Attack_On);
+            attackRangeCheck();//Hit
+        }
+        else if (monsterType == MonsterType.Spider) 
+        {
+            //attackRangeCheck();//Hit
+        }
     }
     protected void attackRangeCheck()
     {

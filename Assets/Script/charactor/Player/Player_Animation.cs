@@ -15,7 +15,7 @@ public partial class Player : Charactor
     [SerializeField] bool closeCheck = false;
      bool shitOn = false;
 
-    protected SkillRunning skillcheck = SkillRunning.SkillOff;
+    protected SkillState skillcheck = SkillState.SkillOff;
     protected WeaponState weaponState = WeaponState.None;
     //protected NpcRunState npcRunState = NpcRunState.Run_Off;
     protected ReloadState reloadState = ReloadState.ReloadOff;
@@ -31,7 +31,7 @@ public partial class Player : Charactor
 
     public void skillAnimationOut()//AnimationEvent
     {
-        skillcheck = SkillRunning.SkillOff;
+        skillcheck = SkillState.SkillOff;
     }
 
     public void AttackCameraEvent(int _value) //AnimationEvent
@@ -326,12 +326,12 @@ public partial class Player : Charactor
         {
             if (_check)
             {
-                firstSkillCheck = SkillRunning.SkillOn;
+                firstSkillCheck = SkillState.SkillOn;
                 playerAnim.SetInteger(SkillType.Skill1.ToString(), 1);
             }
             else
             {
-                firstSkillCheck = SkillRunning.SkillOff;
+                firstSkillCheck = SkillState.SkillOff;
                 playerAnim.SetInteger(SkillType.Skill1.ToString(), 0);
             }
         }
@@ -339,12 +339,12 @@ public partial class Player : Charactor
         {
             if (_check)
             {
-                secondSkillCheck = SkillRunning.SkillOn;
+                secondSkillCheck = SkillState.SkillOn;
                 playerAnim.SetInteger(SkillType.Skill2.ToString(), 1);
             }
             else
             {
-                secondSkillCheck = SkillRunning.SkillOff;
+                secondSkillCheck = SkillState.SkillOff;
                 playerAnim.SetInteger(SkillType.Skill2.ToString(), 0);
             }
         }

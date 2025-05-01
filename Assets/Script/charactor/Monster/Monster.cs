@@ -13,7 +13,16 @@ public partial class Monster : Charactor
     public int mobKey = 0;
 
     protected bool viewHpBar = false;
-    
+    protected override void Start() 
+    {
+        base.Start();
+        mobAnimator = GetComponent<Animator>();
+        creatTabObj = Shared.GameManager.creatTab;//¿ÀºêÁ§Æ® »ý¼º ÅÇ(ex.ÃÑ¾Ë)
+        AI.init(this, SKILL);
+        AI.Type(monsterType);
+        STATUS.MonsterState(monsterType);
+        stateInIt();
+    }
     protected virtual void FixedUpdate()
     {
         if (AI == null) { return; }
@@ -23,6 +32,25 @@ public partial class Monster : Charactor
     {
         cameraInMonsterCheck();
     }
+    protected override void FindWeaponObject(LayerName _name)
+    {
+        MeshRenderer[] mesh = GetComponentsInChildren<MeshRenderer>();
+        int value = LayerMask.NameToLayer(_name.ToString());
+        foreach (var skinObj in mesh)
+        {
+            if (skinObj.gameObject.layer == value)
+            {
+                Transform weapontrs = skinObj.transform.parent;
+
+                weaponObj = weapontrs.gameObject;
+
+                weaponOriginalPos = weaponObj.transform.localPosition;
+                break;
+            }
+        }
+    }
+
+
     protected void cameraInMonsterCheck()
     {
         Player player = Shared.GameManager.PlayerLoad();

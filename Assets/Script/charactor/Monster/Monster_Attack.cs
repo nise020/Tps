@@ -6,6 +6,7 @@ using static UnityEditor.Progress;
 
 public partial class Monster : Charactor
 {
+    
     public void DirectAttack(GameObject _obj,Vector3 _pos) 
     {
         Vector3 myPos = _obj.transform.position;
@@ -15,7 +16,7 @@ public partial class Monster : Charactor
 
     public Transform target;
     public float height = 5f;
-    public float throuTime = 2f;
+    public float throuTime = 3f;
     public void granaidAttack(Vector3 _start, Vector3 _end, GameObject _obj) 
     {
         StartCoroutine(Throu(_start, _end, _obj));

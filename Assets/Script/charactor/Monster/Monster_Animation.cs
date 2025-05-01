@@ -5,8 +5,29 @@ using UnityEngine;
 public partial class Monster : Charactor
 {
     protected Animator mobAnimator;
-    public void AttackAnimationOut() 
+
+    public void AttackAnimationEvent()
     {
+        //sin °î¼±<- gmsemffla
+        if (monsterType == MonsterType.Sphere)
+        {
+            DirectAttack(charactorModelTrs.gameObject, HItPalyer.transform.position);
+        }
+        else if (monsterType == MonsterType.Spider)
+        {        
+            weaponObj.SetActive(true);
+            granaidAttack(charactorModelTrs.position, HItPalyer.transform.position, weaponObj);
+
+        }
+        else if (monsterType == MonsterType.Dron)
+        {
+            DirectAttack(charactorModelTrs.gameObject, HItPalyer.transform.position);
+        }
+    }
+
+    public void AttackAnimationOut()//AnimationEvent
+    {
+        attackState = MonsterAttackState.Attack_Off;
         attackAnimation(MonsterAttackState.Attack_Off);
     }
     public void DeathAnimationOut()//AnimationEvent

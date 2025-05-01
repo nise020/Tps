@@ -117,4 +117,10 @@ public enum MonsterType //몬스터 태그
     Spider,
     Sphere
 }
+public enum ObjectRenderType //몬스터 태그
+{
+    None,
+    Mesh,
+    Skin
+}
 

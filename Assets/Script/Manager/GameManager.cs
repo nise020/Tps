@@ -81,6 +81,8 @@ public class GameManager : MonoBehaviour
             if (_type == CharctorStateEnum.Player) 
             {
                 PLAYER = playerData.Value;
+                Camera camera = PLAYER.GetComponentInChildren<Camera>();
+                Shared.CameraManager.CameraChange(camera);
                 break;
             }
             //int count = playerData.Value;

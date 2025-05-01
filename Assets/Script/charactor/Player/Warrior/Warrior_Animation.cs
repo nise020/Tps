@@ -25,11 +25,11 @@ public partial class Warrior : Player
     public void RangeCheak() 
     {
         Vector3 weaponPos = new Vector3();
-        if (firstSkillCheck == SkillRunning.SkillOn)
+        if (firstSkillCheck == SkillState.SkillOn)
         {
             weaponPos = SkillParentObj1.transform.position;
         }
-        else if (secondSkillCheck == SkillRunning.SkillOn) 
+        else if (secondSkillCheck == SkillState.SkillOn) 
         {
             weaponPos = SkillParentObj2.transform.position;
         }
@@ -51,23 +51,16 @@ public partial class Warrior : Player
             }
         }
     }
-    void OnDrawGizmosSelected()
-    {
-        if (weaponObj != null)
-        {
-            Gizmos.color = Color.red;
-            Gizmos.DrawWireSphere(SkillParentObj1.transform.position, 3.5f);
-        }
-    }
+    
     public void SkillEffectOff(int _value) 
     {
-        if (firstSkillCheck == SkillRunning.SkillOn)
+        if (firstSkillCheck == SkillState.SkillOn)
         {
             SkillAnimation(SkillType.Skill1, false);
             SkillParentObj1.SetActive(false);
             SkillEffectSystem1.Pause();
         }
-        else if (secondSkillCheck == SkillRunning.SkillOn) 
+        else if (secondSkillCheck == SkillState.SkillOn) 
         {
             SkillAnimation(SkillType.Skill2, false);
             SkillParentObj1.SetActive(false);

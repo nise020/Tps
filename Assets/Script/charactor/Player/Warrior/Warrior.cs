@@ -25,7 +25,7 @@ public partial class Warrior : Player
     {
         base.Start();
         //skillStrategy.PlayerInit(this);
-        FindWeaponObject(LayerName.Weapon);
+        //FindWeaponObject(LayerName.Weapon);
         weaponState = WeaponState.Sword_Off;
 
         Shared.InutTableMgr();
@@ -33,9 +33,10 @@ public partial class Warrior : Player
         //Name = info.Img;
         //skillStrategy.WeaponInit(gun);
     }
-    protected void OnAnimatorMove() 
+
+    protected void OnAnimatorMove()
     {
-        //charactorModelTrs.position += playerAnim.deltaPosition;
+        charactorModelTrs.position += playerAnim.deltaPosition;
         charactorModelTrs.rotation *= playerAnim.deltaRotation;
     }
 

@@ -16,7 +16,7 @@ public partial class Monster : Charactor
     protected override void Start() 
     {
         base.Start();
-        mobAnimator = GetComponent<Animator>();
+        monsterAnimator = GetComponent<Animator>();
         creatTabObj = Shared.GameManager.creatTab;//¿ÀºêÁ§Æ® »ý¼º ÅÇ(ex.ÃÑ¾Ë)
         AI.init(this, SKILL);
         AI.Type(monsterType);

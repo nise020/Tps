@@ -7,7 +7,7 @@ public partial class DronMob : Monster
     private void Awake()
     {
         monsterType = MonsterType.Dron;
-        RenderType = ObjectRenderType.Skin;
+        RenderType = ObjectRenderType.Mesh;
     }
     protected override void Start()
     {

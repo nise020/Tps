@@ -137,6 +137,15 @@ public abstract partial class Charactor : Actor
     {
         if (_renderType == ObjectRenderType.Skin) 
         {
+            //GameObject[] body = GetComponentsInChildren<GameObject>();
+            //foreach (GameObject rootObj in body) 
+            //{
+            //    int layer = LayerMask.NameToLayer(LayerName.Play.ToString());
+            //    if (layer == rootObj.layer) 
+            //    {
+            //        charactorModelTrs = rootObj.transform;
+            //    }
+            //}
             SkinnedMeshRenderer skin = GetComponentInChildren<SkinnedMeshRenderer>();
             charactorModelTrs = skin.transform.parent;
             Debug.Log($"{gameObject}\ncharactorModelTrs = {charactorModelTrs}");

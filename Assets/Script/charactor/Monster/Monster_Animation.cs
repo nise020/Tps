@@ -4,7 +4,7 @@ using UnityEngine;
 
 public partial class Monster : Charactor
 {
-    protected Animator mobAnimator;
+    protected Animator monsterAnimator;
 
     public void AttackAnimationEvent()
     {
@@ -32,19 +32,19 @@ public partial class Monster : Charactor
     }
     public void DeathAnimationOut()//AnimationEvent
     {
-        mobAnimator.SetInteger(MonsterAnimParameters.Death.ToString(), 0);
+        monsterAnimator.SetInteger(MonsterAnimParameters.Death.ToString(), 0);
     }
     protected override void moveAnimation(MonsterWalkState _state) 
     {
         if (_state == MonsterWalkState.Walk_On)
         {
             //_state = MonsterWalkState.Walk_On;
-            mobAnimator.SetInteger(MonsterAnimParameters.Walk.ToString(), 1);
+            monsterAnimator.SetInteger(MonsterAnimParameters.Walk.ToString(), 1);
         }
         else 
         {
             //_state = MonsterWalkState.Walk_Off;
-            mobAnimator.SetInteger(MonsterAnimParameters.Walk.ToString(), 0);
+            monsterAnimator.SetInteger(MonsterAnimParameters.Walk.ToString(), 0);
         }
     }
     protected override void attackAnimation(MonsterAttackState _state) 
@@ -52,19 +52,19 @@ public partial class Monster : Charactor
         if (_state == MonsterAttackState.Attack_On)
         {
             //_state = MonsterAttackState.Attack_On;
-            mobAnimator.SetInteger(MonsterAnimParameters.Attack.ToString(), 1);
+            monsterAnimator.SetInteger(MonsterAnimParameters.Attack.ToString(), 1);
         }
         else 
         {
             //_state = MonsterAttackState.Attack_Off;
-            mobAnimator.SetInteger(MonsterAnimParameters.Attack.ToString(), 0);
+            monsterAnimator.SetInteger(MonsterAnimParameters.Attack.ToString(), 0);
         }
     }
     protected void deathAnimation(MonsterAnimParameters _state) 
     {
         if (_state == MonsterAnimParameters.Death)
         {
-            mobAnimator.SetInteger(MonsterAnimParameters.Death.ToString(), 1);
+            monsterAnimator.SetInteger(MonsterAnimParameters.Death.ToString(), 1);
             condition = Condition.Death;
         }
     }

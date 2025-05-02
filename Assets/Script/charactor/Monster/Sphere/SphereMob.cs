@@ -34,6 +34,11 @@ public partial class SphereMob : Monster
     {
         base.FixedUpdate();
     }
+    protected void OnAnimatorMove()
+    {
+        charactorModelTrs.parent.position += monsterAnimator.deltaPosition;
+        charactorModelTrs.parent.rotation *= monsterAnimator.deltaRotation;
+    }
     //protected override void OnTriggerEnter(Collider other)
     //{
     //    base.OnTriggerEnter(other);

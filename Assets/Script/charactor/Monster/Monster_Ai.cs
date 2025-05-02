@@ -20,7 +20,7 @@ public partial class Monster : Charactor
     public void init()
     {
         cam = Camera.main;
-        mobAnimator = GetComponent<Animator>();
+        monsterAnimator = GetComponent<Animator>();
         Slot[] children = GetComponentsInChildren<Slot>();
         foreach (Slot child in children)
         {
@@ -53,8 +53,8 @@ public partial class Monster : Charactor
         disTance.y = 0.0f;
 
         float dist = Vector3.Distance(pos,charactorModelTrs.position);
-        
-       
+
+        Quaternion rotation = Quaternion.LookRotation(disTance.normalized);
         if (dist < stopDistanseValue)
         {
             //Debug.Log($"[¸ðµ¨ À§Ä¡] {charactorModelTrs.position} / [Å¸°Ù À§Ä¡] {targetPos} / [°Å¸®] {disTance}");
@@ -63,14 +63,27 @@ public partial class Monster : Charactor
         }
         else 
         {
-            charactorModelTrs.position += disTance.normalized * speedValue * Time.deltaTime;
+            if (monsterType == MonsterType.Sphere)
+            {
+                charactorModelTrs.parent.position += disTance.normalized * speedValue * Time.deltaTime;
+
+                charactorModelTrs.parent.rotation = Quaternion.Slerp(charactorModelTrs.parent.rotation,
+                rotation, Time.deltaTime * rotationSpeed);
+            }
+            else 
+            {
+                charactorModelTrs.position += disTance.normalized * speedValue * Time.deltaTime;
+
+                charactorModelTrs.rotation = Quaternion.Slerp(charactorModelTrs.rotation,
+                    rotation, Time.deltaTime * rotationSpeed);
+            }
+
 
             //charactorModelTrs.position += movePos;
 
-            Quaternion rotation = Quaternion.LookRotation(disTance.normalized);
+            //Quaternion rotation = Quaternion.LookRotation(disTance.normalized);
            
-            charactorModelTrs.rotation = Quaternion.Slerp(charactorModelTrs.rotation,
-                rotation, Time.deltaTime * rotationSpeed);
+           // charactorModelTrs.rotation = Quaternion.Slerp(charactorModelTrs.rotation,rotation, Time.deltaTime * rotationSpeed);
 
             //charactorModelTrs.position += Vector3.forward * speedValue * Time.deltaTime;
             //Vector3 movePos = charactorModelTrs.forward * speedValue * Time.deltaTime;
@@ -121,9 +134,19 @@ public partial class Monster : Charactor
             charactorModelTrs.transform.position += dist.normalized * speedValue * Time.deltaTime;
             
             Quaternion rotation = Quaternion.LookRotation(dist.normalized);
-
-            charactorModelTrs.rotation = Quaternion.Slerp(charactorModelTrs.rotation,
+            if (monsterType == MonsterType.Sphere)
+            {
+                charactorModelTrs.parent.position += dist.normalized * speedValue * Time.deltaTime;
+                charactorModelTrs.parent.rotation = Quaternion.Slerp(charactorModelTrs.parent.rotation,
                 rotation, Time.deltaTime * rotationSpeed);
+            }
+            else 
+            {
+                charactorModelTrs.transform.position += dist.normalized * speedValue * Time.deltaTime;
+                charactorModelTrs.rotation = Quaternion.Slerp(charactorModelTrs.rotation,
+                rotation, Time.deltaTime * rotationSpeed);
+            }
+                
         }
         return false;
     }

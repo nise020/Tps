@@ -8,7 +8,7 @@ Shader"Custom/WhiteShader"
 
     SubShader
     {
-        Tags { "RenderType" = "Transparent" "RenderType" = "Qpaque"}
+        Tags { "RenderType" = "Transparent" "RenderType" = "opaque"}
         
         Pass
         {

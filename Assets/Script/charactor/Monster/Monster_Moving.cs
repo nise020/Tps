@@ -11,8 +11,8 @@ public partial class Monster : Charactor
         {
             if (monsterType == MonsterType.Sphere)
             {
-                mobAnimator.SetInteger("Close", 0);
-                mobAnimator.SetInteger("AttackDilray", 1);
+                monsterAnimator.SetInteger("Close", 0);
+                monsterAnimator.SetInteger("AttackDilray", 1);
                 aIState = MonsterAiState.Reset;
             }
         }

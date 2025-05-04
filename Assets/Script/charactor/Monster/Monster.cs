@@ -21,7 +21,7 @@ public partial class Monster : Charactor
     }
     private void LateUpdate()
     {
-        cameraInMonsterCheck();
+        //cameraInMonsterCheck();
     }
     protected void cameraInMonsterCheck()
     {

@@ -53,6 +53,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   CharactorId: 0
   hpBar: {fileID: 9135575270855701387, guid: e3d5465fd69dd4e4bad042dc6f58d2d8, type: 3}
+  viewItem: {fileID: 0}
+  mobKey: 0
   SphereRadius: 1
   target: {fileID: 0}
   height: 5
@@ -62,11 +64,8 @@ MonoBehaviour:
   - {x: 0, y: 0, z: -8}
   MobGrenade: {fileID: 3467101612078837595, guid: ae96bb1e39c38e745ac453d6aa6ae3a0, type: 3}
   MobBullet: {fileID: 0}
-  mobKey: 0
   AttackArm: {fileID: 0}
-  number: 0
-  eyeObj: {fileID: 0}
-  attackDistanse: 0
+  MyNumber: 0
   footObj: {fileID: 0}
   groundCheck: 0
   leagh: 0
@@ -346,6 +345,10 @@ PrefabInstance:
     - target: {fileID: 2580310500171199193, guid: fb6be946678065f4ea6b0c93617ac73a, type: 3}
       propertyPath: m_Name
       value: HpCanvas
+      objectReference: {fileID: 0}
+    - target: {fileID: 2725159706455618117, guid: fb6be946678065f4ea6b0c93617ac73a, type: 3}
+      propertyPath: m_PresetInfoIsWorld
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 9011021192955686206, guid: fb6be946678065f4ea6b0c93617ac73a, type: 3}
       propertyPath: m_Pivot.x
@@ -684,6 +687,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   CharactorId: 0
   hpBar: {fileID: 0}
+  viewItem: {fileID: 0}
+  mobKey: 0
   SphereRadius: 1
   target: {fileID: 0}
   height: 5
@@ -691,11 +696,8 @@ MonoBehaviour:
   movePos: []
   MobGrenade: {fileID: 3467101612078837595, guid: ae96bb1e39c38e745ac453d6aa6ae3a0, type: 3}
   MobBullet: {fileID: 0}
-  mobKey: 0
   AttackArm: {fileID: 0}
-  number: 0
-  eyeObj: {fileID: 0}
-  attackDistanse: 0
+  MyNumber: 0
   footObj: {fileID: 0}
   groundCheck: 0
   leagh: 0

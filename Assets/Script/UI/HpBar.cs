@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -8,18 +9,22 @@ public partial class HpBar : MonoBehaviour
 {
     public int key = 0;
     Charactor Charactor;
+    Charactor PLAYERCHARACTOR;
+    Camera playerCamera;
     int hpValue = 0;
 
+    [SerializeField] GameObject FabHpBarObj;
     [SerializeField] Image imgHp;
     [SerializeField] Image imgEffect;
 
-    [SerializeField, Range(0.1f, 10f)] float effectTime = 1;//0Àº ³ª´­¼ö ¾øÀ¸´Ï ÁÖÀÇ
+    [SerializeField, Range(0.1f, 10f)] float effectTime = 1;//0ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
     //Vector3 posiTion = new Vector3(0,0.5f,0);
 
     public Vector3 offset;
     private UnityEngine.Camera mainCam;
     private RectTransform rectTransform;
     Canvas canvas;
+
     public void inIt(Charactor charactor) 
     {
         Charactor = charactor;
@@ -33,10 +38,21 @@ public partial class HpBar : MonoBehaviour
     private void Start()
     {
         initHp();
-        mainCam = UnityEngine.Camera.main;
+        PlayerUpdate();
         rectTransform = GetComponent<RectTransform>();
         canvas = GetComponentInParent<Canvas>();
+        //FindHpUi();
     }
+
+    //private void FindHpUi()
+    //{
+    //    Image[] images = GetComponentsInChildren<Image>();
+    //    foreach (Image image in images) 
+    //    {
+    //        int Layer = LayerMask.NameToLayer(LayerName.);
+    //    }
+    //}
+
     private void LateUpdate()
     {
         checkFillAmount();
@@ -50,7 +66,29 @@ public partial class HpBar : MonoBehaviour
         imgEffect.fillAmount = 1;
         //posiTion = Shared.BattelMgr.monsterData[key].transform.position;
     }
+    public void PlayerUpdate() 
+    {
+        PLAYERCHARACTOR = Shared.GameManager.PlayerLoad();
+        playerCamera = PLAYERCHARACTOR.GetComponentInChildren<Camera>();
+        mainCam = playerCamera;
+    }
 
+    protected void cameraInMonsterCheck()
+    {
+        Vector3 viewportPos = GetComponent<Camera>().WorldToViewportPoint(gameObject.transform.position);
+
+        bool isVisible = (viewportPos.z > 0 && viewportPos.x > 0 &&
+                          viewportPos.x < 1 && viewportPos.y > 0 &&
+                          viewportPos.y < 1);
+        if (isVisible)
+        {
+            //hbBarCheck(true);
+        }
+        else
+        {
+            //hbBarCheck(false);
+        }
+    }
     private void checkFillAmount()
     {
         if (imgHp.fillAmount == imgEffect.fillAmount)
@@ -77,11 +115,12 @@ public partial class HpBar : MonoBehaviour
 
     private void chasePlayer()
     {
-        if (Shared.MonsterManager.GetMonsterPosition(key, out Vector3 pos) == true)
-        {
-            transform.LookAt(transform.position + mainCam.transform.forward);
-        }
-        else { return; }
+        transform.LookAt(transform.position + mainCam.transform.forward);
+        //if (Shared.MonsterManager.GetMonsterPosition(key, out Vector3 pos) == true)
+        //{
+        //    transform.LookAt(transform.position + mainCam.transform.forward);
+        //}
+        //else { return; }
     }
 
     private void chekedPlayerDestroy()

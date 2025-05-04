@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+//using UnityEngine.ProBuilder.Shapes;
 using UnityEngine.U2D;//아틀라스
 using UnityEngine.UI;
 
@@ -12,9 +13,9 @@ public partial class AtlasManager : MonoBehaviour
     public List<Image> UiImag;
     public string AtlasName;
     public List<string> SpritName;
-    public Sprite GetSpritAtlas(string _Atlas, string _name) 
+    public UnityEngine.Sprite GetSpritAtlas(string _Atlas, string _name) 
     {
-        if (DicSpritAtlas.ContainsKey(_name))
+        if (DicSpritAtlas.ContainsKey(_Atlas))
             return DicSpritAtlas[_Atlas].GetSprite(_name);
 
         UnityEngine.Object obj = null;
@@ -38,16 +39,27 @@ public partial class AtlasManager : MonoBehaviour
         return null;
     }
 
-
+    private void Awake()
+    {
+        if (Shared.AtlasManager == null)
+        {
+            Shared.AtlasManager = this;
+        }
+        else
+        {
+            Destroy(this);
+        }
+    }
     public void MySprite() 
     {
-        //SpriteRenderer sprite = gameObject.GetComponent<SpriteRenderer>();
-        for (int iNum = 0; iNum < SpritName.Count; iNum++) 
+        SpriteRenderer sprite = gameObject.GetComponent<SpriteRenderer>();
+        for (int iNum = 0; iNum < SpritName.Count; iNum++)
         {
-            //UIimag = GetSpritAtlas($"{AtlasName[iNum]}", $"{SpritName[iNum]}");
+            UiImag[iNum].overrideSprite = GetSpritAtlas($"{AtlasName[iNum]}", $"{SpritName[iNum]}");
+            Debug.Log($"Image Object Name = {AtlasName[iNum]},{SpritName[iNum]}");
         }
-        
-        //gameObject.AddComponent<SpriteRenderer>();
+
+        gameObject.AddComponent<SpriteRenderer>();
 
         //GetSpritAtlas(string _Atlas, string _name)
     }
@@ -55,6 +67,10 @@ public partial class AtlasManager : MonoBehaviour
     {
         MySprite();
         //GetSpritAtlas("Common", "ak-47");
-        //GetSpritAtlas("ak-47", "Common");
+        //GetSpritAtlas("Damage", "Number1 7x10");
+    }
+    public void AtlasLoad(GameObject _ImageObj) 
+    {
+
     }
 }

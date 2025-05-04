@@ -10,7 +10,7 @@ public class MonsterManager : MonoBehaviour
     [Header("Spown")]
     [SerializeField] List<GameObject> STAGE;
     [SerializeField, Tooltip("스폰할 못스터 숫자")] int Maxcount = 1;
-    public Dictionary<int, GameObject> monsterData = new Dictionary<int, GameObject>();
+    public Dictionary<int, Monster> monsterData = new Dictionary<int, Monster>();
     
     int stageLevel = 0;
     int mincount = 0;
@@ -24,7 +24,7 @@ public class MonsterManager : MonoBehaviour
     [SerializeField] HpBar hpBarObj;
     [SerializeField] GameObject exflotionEffect;
     public List<Monster> MonsterList = new List<Monster>();
-    public Dictionary<int, GameObject> hpData = new Dictionary<int, GameObject>();
+    public Dictionary<int, HpBar> hpData = new Dictionary<int, HpBar>();
     int monsterCount = 0;
 
     //[Header("CreatTab")]
@@ -126,7 +126,7 @@ public class MonsterManager : MonoBehaviour
         _type = ObjectType.Monster;
 
         Monster monster = go.GetComponent<Monster>();
-        monsterData.Add(monsterCount, go);
+        monsterData.Add(monsterCount, monster);
 
         monster.KeyUpdate(monsterCount);
 
@@ -157,7 +157,7 @@ public class MonsterManager : MonoBehaviour
 
         //HpBar hp = _monster.GetComponent<HpBar>();
         _monster.HpInIt(hpBar);
-        hpData.Add(_min, _monster.gameObject);
+        hpData.Add(_min, hpBar);
 
         hpBar.key = _min;
         hpBar.inIt(_monster);
@@ -177,8 +177,8 @@ public class MonsterManager : MonoBehaviour
     }
     public void Resurrection(int _number)
     {
-        GameObject monster = monsterData[_number];
-        StartCoroutine(Timer(monster, 3.0f));
+        Monster monster = monsterData[_number];
+        StartCoroutine(Timer(monster.gameObject, 3.0f));
         //Invoke("monsterData[_number].gameObject.SetActive(true)",10f);
     }
     private IEnumerator Timer(GameObject _obj, float _time)
@@ -188,5 +188,12 @@ public class MonsterManager : MonoBehaviour
         Shared.ItemManager.ItemDataAdd(monster);
         monster.conditionUpdate(Condition.health);
         _obj.gameObject.SetActive(true);
+    }
+    public void PlayerCameraUpdate() 
+    {
+        foreach(Monster numder in monsterData) 
+        {
+
+        }
     }
 }

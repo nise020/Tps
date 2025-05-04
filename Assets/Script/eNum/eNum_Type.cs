@@ -18,6 +18,7 @@ public enum LayerName
     BackPosition2,
     Ground,
     MonsterMovePosition,
+    HpBar,
 }
 public enum ObjectType
 {

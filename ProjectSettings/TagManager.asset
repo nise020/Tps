@@ -13,7 +13,7 @@ TagManager:
   - Ground
   - Water
   - UI
-  - Gun
+  - HpBar
   - Player
   - Monster
   - Bullet
@@ -33,7 +33,7 @@ TagManager:
   - RightFoot
   - LeftFoot
   - Skill
-  - 
+  - Number
   - 
   - 
   - 

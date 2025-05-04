@@ -5,7 +5,7 @@ using UnityEngine;
 public partial class Player : Charactor
 {
     //protected PlayerControllState playerControll = PlayerControllState.Off;
-    [SerializeField] protected CharctorStateEnum charctorState;
+    protected CharctorStateEnum charctorState;
     protected CharactorJobEnum playerType;
     float radius = 10.0f;
     float fieldOfView = 90f;

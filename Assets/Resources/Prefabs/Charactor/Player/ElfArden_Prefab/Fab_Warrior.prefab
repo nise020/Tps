@@ -31,8 +31,8 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
-  - {fileID: 4513808924079103305}
   - {fileID: 205832567692267379}
+  - {fileID: 4513808924079103305}
   - {fileID: 1820938326384595142}
   - {fileID: 5872751404390758705}
   - {fileID: 8965789118130949790}
@@ -83,12 +83,11 @@ MonoBehaviour:
   playerStopDistansePos: {x: 0, y: 0, z: 0}
   shitCheack: 0
   closeCheck: 0
-  groundCheckLenght: 0
-  charctorState: 0
   SkillEffectObj1: {fileID: 4799312573300115351, guid: 0c79debf96fd1c84d8974b869958fef5, type: 3}
   SkillEffectObj2: {fileID: 4799312573300115351, guid: fd60ee17d72e67a4b8461b09c0ecbc87, type: 3}
   SkillParentObj1: {fileID: 871859395443901358}
   SkillParentObj2: {fileID: 2510196653466369340}
+  groundCheckLenght: 0
   scabbard: {fileID: 5156620270057898951}
 --- !u!54 &5998566012273802008
 Rigidbody:

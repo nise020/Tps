@@ -12,7 +12,7 @@ public class GameManager : MonoBehaviour
     //SceneMgr 기능별로 나눌수 있다
 
     [SerializeField] Button[] PlayerButtons;//현재 조작 중인 플블
-    Dictionary<Player,int> PlayerCount = new Dictionary<Player,int>();
+    Dictionary<int,Player> PlayerCount = new Dictionary<int, Player>();
     int playerKey = 0;
 
     [Header("Player Charactor")]
@@ -62,6 +62,7 @@ public class GameManager : MonoBehaviour
         CharctorTypeAdd(WARRIOR, CharactorJobEnum.Warrior);
         FindPlayer();
         PLAYER.gameObject.transform.position = startPointObj.gameObject.transform.position;
+        playerKey = 0;
     }
     public Transform CreatTransform()
     {
@@ -73,13 +74,15 @@ public class GameManager : MonoBehaviour
     }
     public void FindPlayer() 
     {
-        foreach (KeyValuePair<Player, int> playerData in PlayerCount)
+        foreach (KeyValuePair<int, Player> playerData in PlayerCount)
         {
-            Player player = playerData.Key;
+            Player player = playerData.Value;
             player.PlayerControllChack(out CharctorStateEnum _type);
             if (_type == CharctorStateEnum.Player) 
             {
-                PLAYER = playerData.Key;
+                PLAYER = playerData.Value;
+                Camera camera = PLAYER.GetComponentInChildren<Camera>();
+                Shared.CameraManager.CameraChange(camera);
                 break;
             }
             //int count = playerData.Value;
@@ -127,11 +130,15 @@ public class GameManager : MonoBehaviour
     private void CharctorTypeAdd(Player _player, CharactorJobEnum _type) 
     {
         _player.TypeInit(_type, playerKey);
-        PlayerCount.Add(_player, playerKey);
+        PlayerCount.Add(playerKey, _player);
         playerKey += 1;
         PlayerObj.Add(_player);
+
+        Camera cam = _player.gameObject.GetComponentInChildren<Camera>();
+
+        Shared.CameraManager.CameraAdd(cam);
     }
-    public void PlayerbleDataLoad(out Dictionary<Player, int> _value) 
+    public void PlayerbleDataLoad(out Dictionary<int, Player> _value) 
     {
         _value = PlayerCount;   
     }

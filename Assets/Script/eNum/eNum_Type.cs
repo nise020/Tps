@@ -4,6 +4,7 @@ public enum LayerName
     None,
     Monster,
     Player,
+    Body,
     Cover,
     Bullet,
     MobBullet,
@@ -118,4 +119,15 @@ public enum MonsterType //몬스터 태그
     Spider,
     Sphere
 }
-
+public enum ObjectRenderType //몬스터 태그
+{
+    None,
+    Mesh,
+    Skin
+}
+public enum ShaderOptionType
+{
+    _MainTex,
+    _TintColor,
+    _SubTex,
+}

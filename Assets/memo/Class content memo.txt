@@ -163,3 +163,14 @@ ex.skill,Buff
 ex.키세팅,마우스 클릭(롤에 비뷰 하자면 맵을 클릭시 이동 적을 클릭시 평타)
 ,UI
 고객이 주문 -> 주문서 -> 주문서를 카운터에 전달 -> 주방장이 음식 준비
+
+
+Hp바를 흔드는걸로 타격감을 줄수 있다
+
+삼각함수
+//x= 거리*cos(각도)
+        //y= 거리*sin(각도)
+        Vector2 vector;
+
+        vector.x = Mathf.Cos(45 * Mathf.Deg2Rad);
+        vector.y = Mathf.Sin(45 * Mathf.Deg2Rad);

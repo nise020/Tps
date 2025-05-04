@@ -11,12 +11,47 @@ public partial class UI_Battle : MonoBehaviour
     PlayerCamera MOVECAMERA;
     CharactorJobEnum playerType;
     //PlayerControll playerControll;
+
+    private void Start()
+    {
+        CursurRect = GetComponent<RectTransform>();
+    }
+    private void Update()
+    {
+        while (Shared.InputManager.UiKeyinPutQueData.Count > 0)//key
+        {
+            KeyCode type = Shared.InputManager.UiKeyinPutQueData.Dequeue();
+            switch (type)
+            {
+                case KeyCode.Alpha1:
+                    CharactorControllButten1();
+                    break;
+                case KeyCode.Alpha2:
+                    CharactorControllButten2();
+                    break;
+            }
+        }
+    }
+    public void Timer()
+    {
+        secondsTime -= Time.deltaTime;
+
+        string minits = minutesTimer.ToString();
+        string seconds = ((int)secondsTime).ToString();
+
+        minutesImg.text = minits;
+        secondsImg.text = seconds;
+    }
+
     public void PlayerCameraCheck(Player _player, CharctorStateEnum _check) 
     {
         _player.init(out MOVECAMERA);
+        Camera camera = MOVECAMERA.gameObject.GetComponent<Camera>();
         if (_check == CharctorStateEnum.Player)
         {
             MOVECAMERA.gameObject.SetActive(true);
+            camera = Camera.main;
+            Shared.CameraManager.CameraChange(camera);
         }
         else //npc
         {
@@ -60,7 +95,7 @@ public partial class UI_Battle : MonoBehaviour
     }
     public void AutoBuutten()//ing~
     {
-        Shared.GameManager.PlayerbleDataLoad(out Dictionary<Player, int> _value);
+        Shared.GameManager.PlayerbleDataLoad(out Dictionary<int, Player> _value);
     }
     public void AnotherPlayerReset(Player _player, CharactorJobEnum _type, CharctorStateEnum _check) 
     {
@@ -102,50 +137,6 @@ public partial class UI_Battle : MonoBehaviour
             Destroy(gameObject);
         }
     }
-    //stack 구현 필요
-    //Que
-    //public void CreatHpBar(GameObject _hpBarCanvers, int _max,Monster _monster) 
-    //{
-    //    for(int i = 0; i < _max; i++) 
-    //    {
-    //        GameObject go = Instantiate(hpBar,transform.position,Quaternion.identity, _hpBarCanvers.transform);
-    //        HpBar hp = go.GetComponent<HpBar>();
-    //        hpData.Add(i, go);
-    //        hp.key = i;
-    //        hp.inIt(_monster);
-          
-    //    }
-    //}
-    private void Start()
-    {
-        //gameTimerBar.fillAmount = 0.0f;
-        //cam = UnityEngine.Camera.main;
-        CursurRect = GetComponent<RectTransform>();
-    }
-    private void Update()
-    {
-        while (Shared.InputManager.UiKeyinPutQue.Count > 0)//key
-        {
-            KeyCode type = Shared.InputManager.UiKeyinPutQue.Dequeue();
-            switch (type)
-            {
-                case KeyCode.Alpha1:
-                    CharactorControllButten1();
-                    break;
-                case KeyCode.Alpha2:
-                    CharactorControllButten1();
-                    break;
-            }
-        }
-    }
-    public void Timer()
-    {
-        secondsTime -= Time.deltaTime;
 
-        string minits = minutesTimer.ToString();
-        string seconds = ((int)secondsTime).ToString();
-
-        minutesImg.text = minits;
-        secondsImg.text = seconds;
-    }
+    
 }

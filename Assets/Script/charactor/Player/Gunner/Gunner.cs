@@ -7,21 +7,22 @@ public partial class Gunner : Player
 {
     private void Awake()
     {
-        
+        RenderType = ObjectRenderType.Skin;
+        charctorState = CharctorStateEnum.Npc;
     }
 
     protected override void Start()
     {
+        base.Start();
         WEAPON = GetComponentInChildren<Gun>();
         FindWeaponObject(LayerName.Weapon);
-        base.Start();
         //playerType = CharactorJobEnum.Gunner;
         //charctorState = CharctorStateEnum.Player;
         //playerControll = PlayerControllState.On; 
         Shared.InutTableMgr();
         Table_Charactor.Info info = Shared.TableManager.Character.Get(1);
         //Name = info.Img;
-        skillStrategy.PlayerInit(this);
+        //skillStrategy.PlayerInit(this);
         //skillStrategy.WeaponInit(gun);
     }
 

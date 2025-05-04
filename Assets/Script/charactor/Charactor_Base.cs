@@ -21,6 +21,13 @@ public abstract partial class Charactor : Actor
     protected float burstCool;//버스트 쿨타임
     StatusType statusType = StatusType.None;
     protected Condition condition = Condition.health;//상태패턴
+
+
+    [SerializeField] protected GameObject HandObj;
+    [SerializeField] protected GameObject weaponObj;
+    protected Vector3 weaponOriginalPos = Vector3.zero;
+    protected ObjectRenderType RenderType = ObjectRenderType.None;
+
     public void HpInIt(HpBar _hpBar)
     {
         HPBAR = _hpBar;
@@ -121,5 +128,46 @@ public abstract partial class Charactor : Actor
             Shared.EffectManager.Play(EffectType.BoomEffect, charactorModelTrs.position);
         }
     }
-    
+
+    protected virtual void FindWeaponObject(LayerName _name)
+    {
+
+    }
+    protected void FindBodyObjectType(ObjectRenderType _renderType)
+    {
+        if (_renderType == ObjectRenderType.Skin) 
+        {
+            //GameObject[] body = GetComponentsInChildren<GameObject>();
+            //foreach (GameObject rootObj in body) 
+            //{
+            //    int layer = LayerMask.NameToLayer(LayerName.Play.ToString());
+            //    if (layer == rootObj.layer) 
+            //    {
+            //        charactorModelTrs = rootObj.transform;
+            //    }
+            //}
+            SkinnedMeshRenderer skin = GetComponentInChildren<SkinnedMeshRenderer>();
+            charactorModelTrs = skin.transform.parent;
+            Debug.Log($"{gameObject}\ncharactorModelTrs = {charactorModelTrs}");
+        }
+        else if (_renderType == ObjectRenderType.Mesh) 
+        {
+            MeshRenderer mesh = GetComponentInChildren<MeshRenderer>();
+            charactorModelTrs = mesh.transform.parent;
+            Debug.Log($"{gameObject}\ncharactorModelTrs = {charactorModelTrs}");
+        }
+
+    }
+    public Transform FindTargetBody() 
+    {
+        return charactorModelTrs;
+    }
+
+
+    //protected void FindMeshBodyObject()
+    //{
+    //    MeshRenderer skin = GetComponentInChildren<MeshRenderer>();
+    //    charactorModelTrs = skin.transform.parent;
+    //    Debug.Log($"{gameObject}\ncharactorModelTrs = {charactorModelTrs}");
+    //}
 }

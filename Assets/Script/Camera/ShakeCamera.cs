@@ -5,7 +5,7 @@ using UnityEngine;
 
 public class ShakeCamera : MonoBehaviour
 {
-    bool CameraShake = false; // 카메라가 흔들리는 상태인지 여부를 나타내는 변수
+    public bool CameraShake = false; // 카메라가 흔들리는 상태인지 여부를 나타내는 변수
 
     Transform ShakeTr; // 카메라 흔들림을 적용할 Transform
 
@@ -17,6 +17,7 @@ public class ShakeCamera : MonoBehaviour
         public Vector3 Dest; // 흔들림의 목표 위치
         public Vector3 Shake; // 흔들림 크기 벡터
         public Vector3 Dir; // 흔들림 방향
+        public Vector3 ShakeOffset;
 
         public float RemainDist; // 남은 이동 거리
         public float RemainCountDis; // 남은 횟수 당 이동 거리
@@ -41,6 +42,11 @@ public class ShakeCamera : MonoBehaviour
     float Left = -1.0f; // 왼쪽 경계값
     float Right = 1.0f; // 오른쪽 경계값
 
+    ShakeMode shakeMode = ShakeMode.StaticCamera;
+    public void ShakeMOdeChange(ShakeMode _mode) 
+    {
+        shakeMode = _mode;
+    }
     private void Awake()
     {
         Shared.ShakeCamera = this; // ShakeCamera 인스턴스를 공유 변수에 저장
@@ -54,9 +60,11 @@ public class ShakeCamera : MonoBehaviour
         CameraShake = false; // 초기 상태를 흔들림 없음으로 설정
     }
 
+
     private void ResetShakeTr()
     {
-        transform.rotation = Quaternion.identity;
+        //transform.localPosition = Orgpos;
+
         ShakeTr.localRotation = Quaternion.identity;
         ShakeTr.localPosition = Vector3.zero; // 카메라 위치를 초기화<- 여기 주의
         CameraShake = false; // 흔들림 상태 해제
@@ -79,9 +87,8 @@ public class ShakeCamera : MonoBehaviour
 
     public void Shake(int _CameraID,int _count)
     {
-
         ShakeInfo.StartDelay = 0f; // 흔들림 지연 시간 초기화
-        ShakeInfo.TotalTime = 3f; // 흔들림 지속 시간 설정
+        ShakeInfo.TotalTime = 0.1f; // 흔들림 지속 시간 설정
         ShakeInfo.UseTotalTime = true; // 전체 시간 사용 설정
 
         ShakeInfo.Shake = new Vector3(0.3f, 0.3f, 0f); // 흔들림 크기 설정
@@ -92,7 +99,7 @@ public class ShakeCamera : MonoBehaviour
         ShakeInfo.RemainDist = ShakeInfo.Shake.magnitude; // 남은 이동 거리 계산
         ShakeInfo.RemainCountDis = float.MaxValue; // 남은 거리 초기화
 
-        ShakeInfo.Veclocity = 10; // 흔들림 속도 설정
+        ShakeInfo.Veclocity = 1; // 흔들림 속도 설정
 
         ShakeInfo.Damping = 0.5f; // 댐핑 계수 설정
         ShakeInfo.UseDamping = true; // 댐핑 사용 설정
@@ -101,11 +108,16 @@ public class ShakeCamera : MonoBehaviour
         ShakeInfo.Count = _count; // 흔들림 횟수 설정
         ShakeInfo.UseCount = true; // 횟수 사용 설정
 
+        ShakeInfo.ShakeOffset = new Vector3();
+
         StopCoroutine("ShakeCoroutin"); // 기존 코루틴 중지
         ResetShakeTr(); // 흔들림 초기화
         StartCoroutine("ShakeCoroutin"); // 흔들림 코루틴 시작
     }
-
+    public Vector3 ShakePos() 
+    {
+        return ShakeInfo.ShakeOffset;
+    }
     public IEnumerator ShakeCoroutin()
     {
         CameraShake = true; // 흔들림 상태 활성화
@@ -122,19 +134,28 @@ public class ShakeCamera : MonoBehaviour
 
             if ((ShakeInfo.RemainDist -= dist) > 0) // 남은 거리 감소
             {
-                ShakeTr.localPosition += ShakeInfo.Dir * dist; // 이동 적용
+                if (shakeMode == ShakeMode.StaticCamera)
+                {
+                    ShakeTr.localPosition += ShakeInfo.Dir * dist; // 이동 적용
 
-                float rc = transform.position.x - FovX - Left; // 경계 검사
+                    float rc = transform.position.x - FovX - Left; // 경계 검사
 
-                if (rc < 0f)
-                { ShakeTr.localPosition += new Vector3(-rc, 0, 0); } // 왼쪽 제한 적용
+                    if (rc < 0f)
+                    { ShakeTr.localPosition += new Vector3(-rc, 0, 0); } // 왼쪽 제한 적용
 
-                rc = Right - (transform.position.x + FovX);
+                    rc = Right - (transform.position.x + FovX);
 
-                if (rc < 0)
-                    ShakeTr.localPosition += new Vector3(rc, 0, 0); // 오른쪽 제한 적용
+                    if (rc < 0)
+                        ShakeTr.localPosition += new Vector3(rc, 0, 0); // 오른쪽 제한 적용
 
-                CameraLimit(true); // 카메라 위치 제한 적용
+                    CameraLimit(true); // 카메라 위치 제한 적용
+
+                }
+                else 
+                {
+                    ShakeInfo.ShakeOffset += ShakeInfo.Dir * dist; // 이동 적용
+                }
+    
 
                 if (ShakeInfo.UseCount)
                 {
@@ -166,20 +187,28 @@ public class ShakeCamera : MonoBehaviour
                     }
                 }
 
-                ShakeTr.localPosition = ShakeInfo.Dest - ShakeInfo.Dir *
-                    (-ShakeInfo.RemainDist); // 최종 위치 설정
+                if (shakeMode == ShakeMode.StaticCamera)
+                {
+                    ShakeTr.localPosition = ShakeInfo.Dest - ShakeInfo.Dir * (-ShakeInfo.RemainDist); ; // 최종 위치 설정
 
-                float rc = transform.position.x - FovX - Left;
+                    float rc = transform.position.x - FovX - Left;
 
-                if (rc < 0)
-                    ShakeTr.localPosition += new Vector3(-rc, 0, 0); // 왼쪽 제한 적용
+                    if (rc < 0)
+                        ShakeTr.localPosition += new Vector3(-rc, 0, 0); // 왼쪽 제한 적용
 
-                rc = Right - (transform.position.x + FovX);
+                    rc = Right - (transform.position.x + FovX);
 
-                if (rc < 0)
-                    ShakeTr.localPosition += new Vector3(rc, 0, 0); // 오른쪽 제한 적용
+                    if (rc < 0)
+                        ShakeTr.localPosition += new Vector3(rc, 0, 0); // 오른쪽 제한 적용
 
-                CameraLimit(true); // 카메라 위치 제한
+                    CameraLimit(true); // 카메라 위치 제한
+                }
+                else 
+                {
+                    ShakeInfo.ShakeOffset = ShakeInfo.Dest - ShakeInfo.Dir * (-ShakeInfo.RemainDist); ; // 최종 위치 설정; // 이동 적용
+                }
+
+                   
 
                 ShakeInfo.Shake = -ShakeInfo.Shake; // 방향 반전
                 ShakeInfo.Dest = ShakeInfo.Shake; // 새로운 목표 위치
@@ -199,7 +228,6 @@ public class ShakeCamera : MonoBehaviour
                 break; // 전체 시간 초과 시 종료
             yield return new WaitForFixedUpdate(); // 다음 프레임까지 대기
         }
-
         ResetShakeTr(); // 흔들림 종료 후 초기화
         yield break;
     }

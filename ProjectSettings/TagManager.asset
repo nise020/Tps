@@ -13,10 +13,10 @@ TagManager:
   - Ground
   - Water
   - UI
-  - HpBar
+  - Gun
   - Player
   - Monster
-  - Bullet
+  - Body
   - MobBullet
   - Cover
   - BackGround
@@ -33,7 +33,7 @@ TagManager:
   - RightFoot
   - LeftFoot
   - Skill
-  - Number
+  - Effect
   - 
   - 
   - 

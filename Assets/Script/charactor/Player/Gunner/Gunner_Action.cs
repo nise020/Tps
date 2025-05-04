@@ -61,7 +61,7 @@ public partial class Gunner : Player
         }
 
 
-        if (firstSkillCheck == SkillRunning.SkillOff)
+        if (firstSkillCheck == SkillState.SkillOff)
         {
             gunShoot();
 
@@ -110,7 +110,7 @@ public partial class Gunner : Player
     {
         if (_type == CharactorJobEnum.Gunner)
         {
-            if (firstSkillCheck == SkillRunning.SkillOff)
+            if (firstSkillCheck == SkillState.SkillOff)
             {
                 //Invoke("SkillValueReset", 3);//clear
                 int value = (int)atkValue;
@@ -149,12 +149,12 @@ public partial class Gunner : Player
     {
         if (_type == CharactorJobEnum.Gunner)
         {
-            if (firstSkillCheck == SkillRunning.SkillOff)
+            if (firstSkillCheck == SkillState.SkillOff)
             {
                 int value = (int)atkValue;
 
                 skillStrategy.Skill(playerType, 2, out value);
-                firstSkillCheck = SkillRunning.SkillOn;
+                firstSkillCheck = SkillState.SkillOn;
                 playerAnim.SetInteger("Skill1", 1);
                 playerAnim.SetInteger(PlayerAnimName.BuffSkill.ToString(), 1);
                 Invoke("SkillValueReset", 3);//clear
@@ -183,7 +183,7 @@ public partial class Gunner : Player
     protected override void skillValueReset()//Damage Reset
     {
         atkValue = attackReset;
-        firstSkillCheck = SkillRunning.SkillOff;
+        firstSkillCheck = SkillState.SkillOff;
         playerAnim.SetInteger(PlayerAnimName.AttackSkill.ToString(), 0);
         playerAnim.SetInteger(PlayerAnimName.BuffSkill.ToString(), 0);
     }

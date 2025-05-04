@@ -6,6 +6,16 @@ public enum NpcAiState //Npc AI 상태
     Attack,
     Reset,
 }
+public enum ShakeMode
+{
+    StaticCamera,
+    MoveCamera
+}
+public enum PlayerCameraState
+{
+    Rotation_Stop,
+    Rotation_On
+}
 public enum ShakeState
 {
     Shake_On,

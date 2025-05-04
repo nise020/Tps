@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.TextCore.Text;
 
 public abstract partial class Charactor : Actor
 {
@@ -32,6 +33,12 @@ public abstract partial class Charactor : Actor
     //스텟 사용
     //clone 오브젝트 적극 사용 
     //protected int ID;//자신의 ID
+
+    protected virtual void Start()
+    {
+        FindBodyObjectType(RenderType);
+        FindWeaponObject(LayerName.Weapon);
+    }
 
     public Transform BodyObjectLoad() 
     {
@@ -68,12 +75,6 @@ public abstract partial class Charactor : Actor
         //update
         //Renderring
     }
-    protected void FindSkinBodyObject()
-    {
-        SkinnedMeshRenderer skin = GetComponentInChildren<SkinnedMeshRenderer>();
-        charactorModelTrs = skin.transform.parent;
-        Debug.Log($"{gameObject}\ncharactorModelTrs = {charactorModelTrs}");
-    }
     protected GameObject FindSkinBodyTypeObject(BodyType _type)
     {
         GameObject [] bodyObj = GetComponentsInChildren<GameObject>();
@@ -88,13 +89,19 @@ public abstract partial class Charactor : Actor
         Debug.Log($"gameObject = null");
         return null;
     }
+    //protected void FindSkinBodyObject()
+    //{
+    //    SkinnedMeshRenderer skin = GetComponentInChildren<SkinnedMeshRenderer>();
+    //    charactorModelTrs = skin.transform.parent;
+    //    Debug.Log($"{gameObject}\ncharactorModelTrs = {charactorModelTrs}");
+    //}
 
-    protected void FindMeshBodyObject()
-    {
-        MeshRenderer skin = GetComponentInChildren<MeshRenderer>();
-        charactorModelTrs = skin.transform.parent;
-        Debug.Log($"{gameObject}\ncharactorModelTrs = {charactorModelTrs}");
-    }
+    //protected void FindMeshBodyObject()
+    //{
+    //    MeshRenderer skin = GetComponentInChildren<MeshRenderer>();
+    //    charactorModelTrs = skin.transform.parent;
+    //    Debug.Log($"{gameObject}\ncharactorModelTrs = {charactorModelTrs}");
+    //}
     protected virtual void search() {}
     protected virtual void moveAnimation(MonsterWalkState _state) {}
     protected virtual void attackAnimation(MonsterAttackState _state) {}

@@ -7,13 +7,25 @@ public partial class Warrior : Player
     GameObject Weapon;
     private void Awake()
     {
-
+        RenderType = ObjectRenderType.Skin;
+        charctorState = CharctorStateEnum.Player;
+    }
+    void OnDrawGizmosSelected()
+    {
+        if (weaponObj != null)
+        {
+            Gizmos.color = Color.red;
+            Gizmos.DrawWireSphere(SkillParentObj1.transform.position, 3.5f);
+            
+            Gizmos.DrawLine(gameObject.transform.position, 
+                gameObject.transform.position - Vector3.down);
+        }
     }
     protected override void Start()
     {
         base.Start();
-        skillStrategy.PlayerInit(this);
-        FindWeaponObject(LayerName.Weapon);
+        //skillStrategy.PlayerInit(this);
+        //FindWeaponObject(LayerName.Weapon);
         weaponState = WeaponState.Sword_Off;
 
         Shared.InutTableMgr();
@@ -22,11 +34,19 @@ public partial class Warrior : Player
         //skillStrategy.WeaponInit(gun);
     }
 
+    protected void OnAnimatorMove()
+    {
+        charactorModelTrs.position += playerAnim.deltaPosition;
+        charactorModelTrs.rotation *= playerAnim.deltaRotation;
+    }
+
     private void Update()
     {
         //inputrocessing();
         //move(charctorState);
         //runcheck(RunCheck);
+
+        //groundCheak();
         if (charctorState != CharctorStateEnum.Npc)
         {
             transform.rotation = new Quaternion();

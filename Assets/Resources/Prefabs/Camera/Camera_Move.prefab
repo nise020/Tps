@@ -24,7 +24,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 351973108276528302}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 1.9200001, y: 2.5, z: 16.16}
+  m_LocalPosition: {x: 1.9200001, y: 4, z: 16.16}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -140,6 +140,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0f46afe3053ea1f498d686ef1d1d06d3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  CameraShake: 0
 --- !u!114 &5544378619424465132
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -168,7 +169,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Shake: {fileID: 0}
   camAnim: {fileID: 6760666904122705158}
-  Distans: -5
+  Distans: -7
   Hight: 0.71
   aim: 1.5
   QxValu: 0
@@ -182,6 +183,8 @@ MonoBehaviour:
   playerCameraMode: 0
   minFOV: 40
   maxFOV: 80
+  minPos: -3
+  maxPos: -5
 --- !u!95 &2137204011215391331
 Animator:
   serializedVersion: 5

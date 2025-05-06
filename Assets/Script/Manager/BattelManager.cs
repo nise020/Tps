@@ -99,6 +99,9 @@ public class BattelManager : MonoBehaviour
         _defender.StatusUpLoad(defenserHp);
 
         DamageColor(_defender);
+
+        HpBar hpBar = _defender.GetComponentInChildren<HpBar>();//임시로 몬스터만 있음
+        hpBar.DamageImage(attakerPower);
         //Shader[] shader = _defender.gameObject.GetComponentsInChildren<Shader>();
 
 

@@ -74,12 +74,13 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   CharactorId: 0
   hpBar: {fileID: 0}
+  HandObj: {fileID: 5787159479830069813}
+  weaponObj: {fileID: 0}
+  groundCheckLenght: -4.48
   WeaponPrefab: {fileID: 0}
   shortSword: {fileID: 0}
   AimtransPos: {fileID: 0}
   ControlBtn: {fileID: 0}
-  HandObj: {fileID: 5787159479830069813}
-  weaponObj: {fileID: 0}
   playerStopDistansePos: {x: 0, y: 0, z: 0}
   shitCheack: 0
   closeCheck: 0
@@ -87,7 +88,6 @@ MonoBehaviour:
   SkillEffectObj2: {fileID: 4799312573300115351, guid: fd60ee17d72e67a4b8461b09c0ecbc87, type: 3}
   SkillParentObj1: {fileID: 871859395443901358}
   SkillParentObj2: {fileID: 2510196653466369340}
-  groundCheckLenght: 0
   scabbard: {fileID: 5156620270057898951}
 --- !u!54 &5998566012273802008
 Rigidbody:
@@ -111,7 +111,7 @@ Rigidbody:
     m_Bits: 0
   m_ImplicitCom: 1
   m_ImplicitTensor: 1
-  m_UseGravity: 1
+  m_UseGravity: 0
   m_IsKinematic: 1
   m_Interpolate: 0
   m_Constraints: 0
@@ -783,10 +783,6 @@ PrefabInstance:
       value: 7
       objectReference: {fileID: 0}
     - target: {fileID: 7196709660618334785, guid: be18a0c0638334a47b0b4d895249486c, type: 3}
-      propertyPath: m_Layer
-      value: 7
-      objectReference: {fileID: 0}
-    - target: {fileID: 7284254839765299430, guid: be18a0c0638334a47b0b4d895249486c, type: 3}
       propertyPath: m_Layer
       value: 7
       objectReference: {fileID: 0}

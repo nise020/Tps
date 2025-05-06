@@ -52,6 +52,7 @@ public partial class UI_Battle : MonoBehaviour
             MOVECAMERA.gameObject.SetActive(true);
             camera = Camera.main;
             Shared.CameraManager.CameraChange(camera);
+            Shared.MonsterManager.PlayerCameraUpdate();
         }
         else //npc
         {

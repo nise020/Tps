@@ -14,7 +14,6 @@ public static class Shared //메모
     public static SoundManager SoundManager;
     public static ShakeCamera ShakeCamera;
     public static MainCamera MainCamera;
-    public static TableManager TableManager;
     public static UI_Battle BattelUI;
     public static FaidInOut FaidInOut;
     public static InputManager InputManager;
@@ -22,6 +21,9 @@ public static class Shared //메모
     public static CameraManager CameraManager;
     public static EffectManager EffectManager;
     public static ItemManager ItemManager;
+
+
+    public static TableManager TableManager;
     public static TableManager InutTableMgr() 
     {
         if (TableManager == null)

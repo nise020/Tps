@@ -12,6 +12,8 @@ public partial class SphereMob : Monster
     protected override void Start()
     {
         base.Start();
+        RootTrransform = transform.Find(ModelName.Model.ToString());
+        FindRootBodyObject();
         //cam = UnityEngine.Camera.main;
         //mobAnimator = GetComponent<Animator>();
         //creatTabObj = Shared.GameManager.creatTab;//¿ÀºêÁ§Æ® »ý¼º ÅÇ(ex.ÃÑ¾Ë)
@@ -34,11 +36,11 @@ public partial class SphereMob : Monster
     {
         base.FixedUpdate();
     }
-    protected void OnAnimatorMove()
-    {
-        charactorModelTrs.parent.position += monsterAnimator.deltaPosition;
-        charactorModelTrs.parent.rotation *= monsterAnimator.deltaRotation;
-    }
+    //protected void OnAnimatorMove()
+    //{
+    //    charactorModelTrs.parent.position += monsterAnimator.deltaPosition;
+    //    charactorModelTrs.parent.rotation *= monsterAnimator.deltaRotation;
+    //}
     //protected override void OnTriggerEnter(Collider other)
     //{
     //    base.OnTriggerEnter(other);

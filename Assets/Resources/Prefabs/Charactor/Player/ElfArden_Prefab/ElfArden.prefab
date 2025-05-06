@@ -5683,7 +5683,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6919310881488600162}
-  m_Layer: 7
+  m_Layer: 9
   m_Name: root
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -6270,6 +6270,8 @@ MonoBehaviour:
   playerCameraMode: 0
   minFOV: 40
   maxFOV: 80
+  minPos: -3
+  maxPos: -7
 --- !u!1 &8117446111510760050
 GameObject:
   m_ObjectHideFlags: 0

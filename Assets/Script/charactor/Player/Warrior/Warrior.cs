@@ -24,21 +24,29 @@ public partial class Warrior : Player
     protected override void Start()
     {
         base.Start();
-        //skillStrategy.PlayerInit(this);
-        //FindWeaponObject(LayerName.Weapon);
         weaponState = WeaponState.Sword_Off;
 
-        Shared.InutTableMgr();
-        Table_Charactor.Info info = Shared.TableManager.Character.Get(0);
+        //FindRootBodyObject();
+
+        //Shared.InutTableMgr();
+        //Table_Charactor.Info info = Shared.TableManager.Character.Get(0);
         //Name = info.Img;
         //skillStrategy.WeaponInit(gun);
     }
 
-    protected void OnAnimatorMove()
-    {
-        charactorModelTrs.position += playerAnim.deltaPosition;
-        charactorModelTrs.rotation *= playerAnim.deltaRotation;
-    }
+    //protected void OnAnimatorMove()
+    //{
+    //    //Vector3 rotatedDeltaPos = transform.rotation * playerAnim.deltaPosition;
+    //    //charactorModelTrs.position += rotatedDeltaPos;
+
+    //    //charactorModelTrs.position += playerAnim.deltaPosition;
+    //    //if()
+
+    //    //charactorModelTrs.rotation *= playerAnim.deltaRotation;
+
+    //    //RootTrransform.position += playerAnim.deltaPosition;
+    //    //RootTrransform.rotation *= playerAnim.deltaRotation;
+    //}
 
     private void Update()
     {

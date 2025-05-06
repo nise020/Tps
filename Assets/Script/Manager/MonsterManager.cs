@@ -191,9 +191,9 @@ public class MonsterManager : MonoBehaviour
     }
     public void PlayerCameraUpdate() 
     {
-        foreach(Monster numder in monsterData) 
+        foreach (var(numder,hpbar) in hpData)
         {
-
+            hpbar.PlayerUpdate();
         }
     }
 }

@@ -34,10 +34,30 @@ public abstract partial class Charactor : Actor
     //clone 오브젝트 적극 사용 
     //protected int ID;//자신의 ID
 
+    protected int id;
+    protected byte type;
+    protected int skill;
+    protected int state;
+    protected string prefabs;
+    protected string img;
+    //protected int name;
+    protected int dec;//설명
+
     protected virtual void Start()
     {
         FindBodyObjectType(RenderType);
         FindWeaponObject(LayerName.Weapon);
+    }
+    public void Init(Table_Charactor.Info _info) 
+    {
+        id = _info.Id;
+        type = _info.Type;
+        skill = _info.Skill;
+        state = _info.State;
+        img = _info.Img;
+        prefabs = _info.Prefabs;
+        //name = _info.Name;
+        dec = _info.Dec;//설명
     }
 
     public Transform BodyObjectLoad() 
@@ -75,26 +95,32 @@ public abstract partial class Charactor : Actor
         //update
         //Renderring
     }
-    protected GameObject FindSkinBodyTypeObject(BodyType _type)
+    //protected GameObject FindSkinBodyTypeObject(BodyType _type)
+    //{
+    //    //GameObject [] bodyObj = GetComponentsInChildren<GameObject>();
+    //    //foreach (GameObject obj in bodyObj) 
+    //    //{
+    //    //    int Layer = LayerMask.NameToLayer(_type.ToString());
+    //    //    if (Layer == obj.layer) 
+    //    //    {
+    //    //        return obj;
+    //    //    }
+    //    //}
+    //    //Debug.Log($"gameObject = null");
+    //    //return null;
+    //}
+    protected void FindRootBodyObject()
     {
-        GameObject [] bodyObj = GetComponentsInChildren<GameObject>();
-        foreach (GameObject obj in bodyObj) 
+        Transform[] body = GetComponentsInChildren<Transform>();
+        foreach (Transform rootObj in body)
         {
-            int Layer = LayerMask.NameToLayer(_type.ToString());
-            if (Layer == obj.layer) 
+            int layer = LayerMask.NameToLayer(LayerName.RootBody.ToString());
+            if (layer == rootObj.gameObject.layer)
             {
-                return obj;
+                RootTrransform = rootObj.transform;
             }
         }
-        Debug.Log($"gameObject = null");
-        return null;
     }
-    //protected void FindSkinBodyObject()
-    //{
-    //    SkinnedMeshRenderer skin = GetComponentInChildren<SkinnedMeshRenderer>();
-    //    charactorModelTrs = skin.transform.parent;
-    //    Debug.Log($"{gameObject}\ncharactorModelTrs = {charactorModelTrs}");
-    //}
 
     //protected void FindMeshBodyObject()
     //{

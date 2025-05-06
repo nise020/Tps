@@ -42,10 +42,7 @@ public partial class Player : Charactor
     {
         return false;
     }
-    public void AutoAttack()//거리이내에 있는 적에게 데미지 로직 필요
-    {
-        attackAnimation(AttackState.AttackOn);
-    }
+
     public void Attack()//거리이내에 있는 적에게 데미지 로직 필요
     {
         attackAnimation(AttackState.AttackOn);

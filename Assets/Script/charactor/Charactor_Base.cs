@@ -14,6 +14,8 @@ public abstract partial class Charactor : Actor
     [SerializeField] GameObject hpBar;//uiHp
 
     protected Transform charactorModelTrs;//Modeling
+    protected Transform RootTrransform;//RootModel
+
     protected float rotationSpeed = 20.0f;//나중에 조정
     protected float skillCool_1;//1번 스킬쿨타임
     protected float skillCool_2;//2번 스킬쿨타임
@@ -137,15 +139,6 @@ public abstract partial class Charactor : Actor
     {
         if (_renderType == ObjectRenderType.Skin) 
         {
-            //GameObject[] body = GetComponentsInChildren<GameObject>();
-            //foreach (GameObject rootObj in body) 
-            //{
-            //    int layer = LayerMask.NameToLayer(LayerName.Play.ToString());
-            //    if (layer == rootObj.layer) 
-            //    {
-            //        charactorModelTrs = rootObj.transform;
-            //    }
-            //}
             SkinnedMeshRenderer skin = GetComponentInChildren<SkinnedMeshRenderer>();
             charactorModelTrs = skin.transform.parent;
             Debug.Log($"{gameObject}\ncharactorModelTrs = {charactorModelTrs}");

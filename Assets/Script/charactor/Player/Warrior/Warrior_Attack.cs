@@ -52,10 +52,10 @@ public partial class Warrior : Player
 
                 SkillParentObj1.SetActive(true);
 
-                Vector3 forward = weaponObj.transform.TransformDirection(Vector3.down);
-                Vector3 up = weaponObj.transform.TransformDirection(Vector3.up);
-                Quaternion rot = Quaternion.LookRotation (forward, up);
-                Quaternion localRot = Quaternion.Inverse(weaponObj.transform.rotation) * rot;
+                //Vector3 forward = weaponObj.transform.TransformDirection(Vector3.down);
+                //Vector3 up = weaponObj.transform.TransformDirection(Vector3.up);
+                //Quaternion rot = Quaternion.LookRotation (forward, up);
+                //Quaternion localRot = Quaternion.Inverse(weaponObj.transform.rotation) * rot;
 
                 SkillEffectObj1.transform.localRotation = Quaternion.identity;
 

@@ -3,7 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Table_Charactor : Table_Base
+public class Table_Item : Table_Base
 {
     [Serializable]
     public class Info
@@ -17,7 +17,6 @@ public class Table_Charactor : Table_Base
         public int Name;
         public int Dec;//Ό³Έν
     }
-
     public Dictionary<int, Info> Dictionary = new Dictionary<int, Info>();
 
     public Info Get(int _Id)

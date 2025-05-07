@@ -6,32 +6,39 @@ using System;
 
 public class Bundle : MonoBehaviour
 {
+    [SerializeField] List<string> bundleName;
     // Start is called before the first frame update
     void Start()
     {
-        StartCoroutine(ILoad());
+        StartCoroutine(ILoad());//Load
     }
 
     IEnumerator ILoad()
     {
-        AssetBundleCreateRequest asy =
+        foreach (var bundle in bundleName) 
+        {
+            AssetBundleCreateRequest async =
             AssetBundle.LoadFromFileAsync(Path.Combine
-            (Application.streamingAssetsPath, "fab_granaid"));//"" <- Path(name)
+            (Application.streamingAssetsPath, $"{bundle}"));//"" <- Path(name)
 
-        yield return asy;
+            yield return async;
 
-        AssetBundle local = asy.assetBundle;
+            AssetBundle local = async.assetBundle;
 
-        if(local == null)
-            yield break;
+            if (local == null)
+                yield break;
 
-        AssetBundleRequest asset = local.LoadAssetAsync<GameObject>("fab_granaid");
+            AssetBundleRequest asset = local.LoadAssetAsync<GameObject>($"{bundle}");
 
-        yield return asset;
+            yield return asset;
 
-        var prefab = asset.asset as GameObject;
+            var prefab = asset.asset as GameObject;
 
-        local.Unload(true);
-
+            if (prefab != null) 
+            {
+                local.Unload(true);
+            }
+        }
+       
     }
 }

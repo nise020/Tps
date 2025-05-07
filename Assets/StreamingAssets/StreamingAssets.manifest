@@ -1,7 +1,7 @@
 ManifestFileVersion: 0
-CRC: 3079616675
+CRC: 2846316080
 AssetBundleManifest:
   AssetBundleInfos:
     Info_0:
-      Name: fab_granaid.bullet
+      Name: weapon.granad
       Dependencies: {}

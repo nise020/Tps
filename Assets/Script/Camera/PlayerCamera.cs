@@ -2,8 +2,6 @@ using System.Collections;
 using System.Collections.Generic;
 using Unity.Mathematics;
 using UnityEngine;
-using static UIWidget;
-using static UnityEngine.Rendering.PostProcessing.PostProcessResources;
 
 public partial class PlayerCamera : CameraBase
 {

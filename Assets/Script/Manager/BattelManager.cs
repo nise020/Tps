@@ -3,12 +3,8 @@ using SimpleJSON;
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using Unity.VisualScripting;
-using UnityEditor.Experimental.GraphView;
-using UnityEditorInternal;
 using UnityEngine;
 using UnityEngine.Networking;
-using static UnityEngine.Rendering.PostProcessing.PostProcessResources;
 
 public class BattelManager : MonoBehaviour
 {
@@ -37,6 +33,8 @@ public class BattelManager : MonoBehaviour
     [SerializeField] List< Monster> MONSTEROBJ;
 
     [SerializeField] Shader damageShader;
+    [SerializeField] Material damageMaterial;
+
     Dictionary<Material, Shader> originalShaders = new();
 
     //Vector3 targetPos;
@@ -101,7 +99,7 @@ public class BattelManager : MonoBehaviour
         DamageColor(_defender);
 
         HpBar hpBar = _defender.GetComponentInChildren<HpBar>();//임시로 몬스터만 있음
-        hpBar.DamageImage(attakerPower);
+        hpBar.DamageImageActive((int)attakerPower);
         //Shader[] shader = _defender.gameObject.GetComponentsInChildren<Shader>();
 
 
@@ -121,17 +119,20 @@ public class BattelManager : MonoBehaviour
             for (int i = 0; i < renderer.materials.Length; i++)
             {
                 Material origin = renderer.materials[i];
-                Material damageMet = new Material(damageShader);
-                if (origin.HasProperty(ShaderOptionType._MainTex.ToString()))
-                {
-                    damageMet.SetTexture(ShaderOptionType._MainTex.ToString(),
-                        origin.GetTexture(ShaderOptionType._MainTex.ToString()));
-                }
-                if (origin.HasProperty(ShaderOptionType._TintColor.ToString()))
-                {
-                    damageMet.SetTexture(ShaderOptionType._TintColor.ToString(),
-                        origin.GetTexture(ShaderOptionType._TintColor.ToString()));
-                }
+                //Material damageMet = new Material(damageShader);
+
+                Material damageMet = damageMaterial;//마테리얼 적용
+
+                //if (origin.HasProperty(ShaderOptionType._MainTex.ToString()))
+                //{
+                //    damageMet.SetTexture(ShaderOptionType._MainTex.ToString(),
+                //        origin.GetTexture(ShaderOptionType._MainTex.ToString()));
+                //}
+                //if (origin.HasProperty(ShaderOptionType._TintColor.ToString()))
+                //{
+                //    damageMet.SetTexture(ShaderOptionType._TintColor.ToString(),
+                //        origin.GetTexture(ShaderOptionType._TintColor.ToString()));
+                //}
                 renderer.materials[i] = damageMet;
             }
             renderer.materials = met;

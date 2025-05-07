@@ -2,7 +2,6 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
-using static UnityEditor.Experimental.GraphView.GraphView;
 
 public partial class AiBase
     //MonoBehaviour//유니티에서 할당하는 메모리를 사용하겠다

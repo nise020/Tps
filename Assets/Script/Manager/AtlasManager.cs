@@ -112,9 +112,10 @@ public partial class AtlasManager : MonoBehaviour
             if (Image != null)
             {
                 Sprite sprite = GetSpritAtlas(value, DamageSpritName[iNum]);
-                Debug.Log($"Image Object Name = {Image},{sprite}");
+                //Debug.Log($"Image Object Name = {Image},{sprite}");
 
                 Image.overrideSprite = sprite;
+                Image.gameObject.SetActive(false);
 
             }
             else

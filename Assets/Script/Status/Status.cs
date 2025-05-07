@@ -114,7 +114,7 @@ public partial class Status : StatusBase
                 MaxHP = 500;
                 Attack = 30;
                 Defense = 30;
-                Speed = 2;
+                Speed = 5;
                 break;
         }
         Debug.Log($"\n" +

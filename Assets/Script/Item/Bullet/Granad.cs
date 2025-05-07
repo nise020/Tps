@@ -13,43 +13,59 @@ public class Granad : Weapon
     float groundCheckLenght = 0.1f;
     bool isGround = false;
     public SkillState state = SkillState.SkillOff;
-    private void OnTriggerEnter(Collider other)
-    {
-        explotionEffect.Play();
-        Invoke("ResetObject", 3.0f);
-    }
+
+    MeshRenderer mesh;
+
+    GameObject modelingObject;
+    //private void OnTriggerEnter(Collider other)
+    //{
+    //    explotionEffect.Play();
+    //    Invoke("ResetObject", 3.0f);
+    //}
     private void Update()
     {
         expltioncheck();
     }
-
+    private void OnDrawGizmos()
+    {
+        Gizmos.DrawLine(transform.localPosition, transform.
+            TransformDirection(Vector3.down));
+    }
     private void expltioncheck()
     {
         if (state == SkillState.SkillOn) { return; }
         
-        if (Physics.Raycast(transform.position, transform.
+        if (Physics.Raycast(modelingObject.transform.position, 
+            modelingObject.transform.
             TransformDirection(Vector3.down),
            out RaycastHit hit, groundCheckLenght)) 
         {
-            state = SkillState.SkillOn;
-            explotionEffect.gameObject.SetActive(true);
-            explotionEffect.Play();
-            Invoke("ResetObject", 3.0f);
+            int layer = LayerMask.NameToLayer(LayerName.Monster.ToString());
+            if (hit.collider.gameObject.layer != layer) 
+            {
+                Debug.Log($"hit = {hit.transform}");
+                Debug.Log($"transform.position = {transform.position}");
+                state = SkillState.SkillOn;
+                explotionEffect.gameObject.SetActive(true);
+                explotionEffect.Play();
+                Invoke("ResetObject", 3.0f);
+            }
         }
     }
 
     private void ResetObject() 
     {
         state = SkillState.SkillOff;
-        transform.position = startPos;
+        transform.localPosition = startPos;
         explotionEffect.Stop();
+        explotionEffect.gameObject.SetActive(false);
         gameObject.SetActive(false);
     }
     private void Start()
     {
         explotionEffect = GetComponentInChildren<ParticleSystem>();
         explotionEffect.gameObject.SetActive(false);
-        startPos = transform.position;
+        startPos = transform.localPosition;
         gameObject.SetActive(false);
 
         //Torque < --È¸Àü·Â
@@ -60,7 +76,10 @@ public class Granad : Weapon
     private void Awake()
     {
         WeaponType = WeaponEnum.Granad;
-        isGround = Physics.Raycast(transform.position, Vector3.down,
-           out RaycastHit hit, groundCheckLenght + 0.1f);
+
+        MeshRenderer mesh = GetComponentInChildren<MeshRenderer>();
+        modelingObject = mesh.gameObject;
+        //isGround = Physics.Raycast(transform.position, Vector3.down,
+        //   out RaycastHit hit, groundCheckLenght + 0.1f);
     }
 }

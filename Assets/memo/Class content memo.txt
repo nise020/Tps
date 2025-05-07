@@ -174,3 +174,7 @@ Hp바를 흔드는걸로 타격감을 줄수 있다
 
         vector.x = Mathf.Cos(45 * Mathf.Deg2Rad);
         vector.y = Mathf.Sin(45 * Mathf.Deg2Rad);
+
+
+번들(패치 시스템)
+리소스 로드가 가능한건 다 됨

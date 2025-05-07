@@ -67,25 +67,25 @@ public abstract partial class Charactor : Actor
 
     protected virtual void OnTriggerEnter(Collider other)//세분화 필요
     {
-        Collider myColl = gameObject.GetComponent<Collider>();
-        if (myColl.gameObject.layer == Delivery.LayerNameEnum(LayerName.Monster))//몬스터일 경우
-        {
-            if (other.gameObject.layer == Delivery.LayerNameEnum(LayerName.Player))
-            {
-                //Attack();
-            }
-            else if (other.gameObject.layer == Delivery.LayerNameEnum(LayerName.Bullet))//피격
-            {
-                checkHp(other);
-            }
-        }
-        else if (myColl.gameObject.layer == Delivery.LayerNameEnum(LayerName.Player))//플레이어 일 경우
-        {
-            if (other.gameObject.layer == Delivery.LayerNameEnum(LayerName.Monster))//피격
-            {
-                checkHp(other);
-            }
-        }
+        //Collider myColl = gameObject.GetComponent<Collider>();
+        //if (myColl.gameObject.layer == Delivery.LayerNameEnum(LayerName.Monster))//몬스터일 경우
+        //{
+        //    if (other.gameObject.layer == Delivery.LayerNameEnum(LayerName.Player))
+        //    {
+        //        //Attack();
+        //    }
+        //    else if (other.gameObject.layer == Delivery.LayerNameEnum(LayerName.Bullet))//피격
+        //    {
+        //        checkHp(other);
+        //    }
+        //}
+        //else if (myColl.gameObject.layer == Delivery.LayerNameEnum(LayerName.Player))//플레이어 일 경우
+        //{
+        //    if (other.gameObject.layer == Delivery.LayerNameEnum(LayerName.Monster))//피격
+        //    {
+        //        checkHp(other);
+        //    }
+        //}
     }
 
 

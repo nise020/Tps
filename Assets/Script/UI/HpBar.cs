@@ -5,7 +5,6 @@ using System.Linq;
 using UnityEngine;
 using UnityEngine.ProBuilder.Shapes;
 using UnityEngine.UI;
-using static Unity.VisualScripting.Metadata;
 
 public partial class HpBar : MonoBehaviour 
 {
@@ -52,18 +51,25 @@ public partial class HpBar : MonoBehaviour
         rectTransform = GetComponent<RectTransform>();
         canvas = GetComponentInParent<Canvas>();
 
-       numberImages_1 = DamageTransformLoad(Place_1);
-       numberImages_10 = DamageTransformLoad(Place_10);
-       numberImages_100 = DamageTransformLoad(Place_100);
-       numberImages_1000 = DamageTransformLoad(Place_100);
+        DamageSetting();
+    }
+    private void DamageSetting() 
+    {
+        numberImages_1 = DamageTransformLoad(Place_1);
+        numberImages_10 = DamageTransformLoad(Place_10);
+        numberImages_100 = DamageTransformLoad(Place_100);
+        numberImages_1000 = DamageTransformLoad(Place_100);
 
         numberImages_1 = Shared.AtlasManager.AtlasLoad(numberImages_1, AtlasType.Damage);
         numberImages_10 = Shared.AtlasManager.AtlasLoad(numberImages_10, AtlasType.Damage);
         numberImages_100 = Shared.AtlasManager.AtlasLoad(numberImages_100, AtlasType.Damage);
         numberImages_1000 = Shared.AtlasManager.AtlasLoad(numberImages_1000, AtlasType.Damage);
-        
-    }
 
+        Place_1.gameObject.SetActive(false);
+        Place_10.gameObject.SetActive(false);
+        Place_100.gameObject.SetActive(false);
+        Place_1000.gameObject.SetActive(false);
+    }
     private List<GameObject> DamageTransformLoad(Transform _transform)
     {
         List<Transform> children = new List<Transform>();
@@ -78,12 +84,68 @@ public partial class HpBar : MonoBehaviour
             .Select(child => child.gameObject)
             .ToList();
 
-        foreach (var img in result)
-        {
-            Debug.Log("추가된 이미지: " + img.name);
-        }
+        //foreach (var img in result)
+        //{
+        //    Debug.Log("추가된 이미지: " + img.name);
+        //}
 
         return result;
+    }
+    public void DamageImageActive(int _value) 
+    {
+        int value = _value;
+
+        Place_1.gameObject.SetActive(true);
+
+        int digit_1 = _value % 10;
+        numberImages_1[digit_1].SetActive(true);
+
+        List<GameObject> result = new List<GameObject>();
+
+        result.Add(numberImages_1[digit_1].gameObject);
+        result.Add(Place_1.gameObject);
+
+        if (value >= 10)
+        {
+            Place_10.gameObject.SetActive(true);
+
+            int digit = (_value / 10) % 10;
+            numberImages_10[digit].SetActive(true);
+
+            result.Add(numberImages_10[digit_1].gameObject);
+            result.Add(Place_10.gameObject);
+        }
+        if (value >= 100) 
+        {
+            Place_100.gameObject.SetActive(true);
+
+            int digit = (_value / 100) % 10;
+            numberImages_100[digit].SetActive(true);
+
+            result.Add(numberImages_100[digit_1].gameObject);
+            result.Add(Place_100.gameObject);
+        }
+        if (value >= 1000) 
+        {
+            Place_1000.gameObject.SetActive(true);
+
+            int digit = (_value / 1000) % 10;
+            numberImages_1000[digit].SetActive(true);
+
+            result.Add(numberImages_1000[digit_1].gameObject);
+            result.Add(Place_1000.gameObject);
+        }
+        //Invoke("imageHide", 3.0f);
+
+        StartCoroutine(imageHide(result, 1.0f));
+    }
+    IEnumerator imageHide(List<GameObject> _lists,float _timer) 
+    {
+        yield return new WaitForSeconds(_timer);
+        foreach (GameObject _list in _lists) 
+        {
+            _list.SetActive(false);
+        }
     }
     public void inIt(Charactor charactor) 
     {
@@ -166,10 +228,7 @@ public partial class HpBar : MonoBehaviour
     {
         imgHp.fillAmount = _curHp / _maxHp;
     }
-    public void DamageImage(float _value)//0~1
-    {
-        
-    }
+
     private void chasePlayer()
     {
         transform.LookAt(transform.position + mainCam.transform.forward);

@@ -26,7 +26,7 @@ public partial class AiMonster : AiBase
     Vector3 startPos = Vector3.zero;
     
     int moveNumber = 0;
-    public SearchState searching = SearchState.Move;
+    public SearchState searchingState = SearchState.None;
 
 
 
@@ -63,39 +63,57 @@ public partial class AiMonster : AiBase
         aIState = MonsterAiState.Search;
     }
 
-    //float viewDistance = 10f;
-    //float viewAngle = 60f;
-    //public float sphereRadius = 1.0f; // 구 반지름
-    //public LayerMask playerLayer;
     protected override void Search()//공격할 대상 찾기
     {
         MONSTER.MovePoint(targetPos);
-        Debug.Log($"Search");
+
+        Debug.Log($"{MONSTER},Search");
+
+        if(searchingState == SearchState.Wait) return;
+
         if (MONSTER.TargetSearch() == true)
         {
-            aIState = MonsterAiState.Move;
+            aIState = MonsterAiState.Move;//Target On
         }
     }
  
     //행렬
     protected override void Move(Vector3 _pos)//이동
     {
-        Debug.Log($"Move");
-        if (MONSTER.TargetAttackMove()) 
+        Debug.Log($"{MONSTER},Move");
+
+        if (searchingState == SearchState.Move) 
         {
-            aIState = MonsterAiState.Attack;
+            aIState = MonsterAiState.Search;//Re Search
+            return;
         }
+
+        if (MONSTER.TargetAttackMove(out searchingState))//목표를 놓쳤을때 로직 필요
+        {
+            if (searchingState == SearchState.Stop) 
+            {
+                aIState = MonsterAiState.Attack;
+            }
+        }
+        
     }
 
     protected override void Attack()//공격
     {
-        MONSTER.MonsterAttack();
+        Debug.Log($"{MONSTER},Attack");
 
-        //aIState = MonsterAiState.Reset;
+        MONSTER.MonsterAttack(out searchingState);//
+
+        aIState = MonsterAiState.Reset;
     }
     protected override void Reset()//사이클 끝(보통 다시 공격 대상 탐색)
     {
+        searchingState = SearchState.Wait;
         aIState = MonsterAiState.Search;
     }
-    
+
+    public void searchingStateUpdate(SearchState _state) 
+    {
+        searchingState = _state;
+    }
 }

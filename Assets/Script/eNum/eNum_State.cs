@@ -38,15 +38,18 @@ public enum ReloadState
     ReloadOn,
     ReloadOff
 }
-public enum Characterstate
+public enum InvincibleState
 {
-    Health,
-    Dead
+    invincible_On,
+    invincible_Off,
 }
 public enum SearchState
 {
+    None,
     Stop,
-    Move
+    Move,
+    TargetOn,
+    Wait,
 }
 public enum PositionObjectState
 {

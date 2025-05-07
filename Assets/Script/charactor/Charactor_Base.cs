@@ -30,6 +30,7 @@ public abstract partial class Charactor : Actor
     protected Vector3 weaponOriginalPos = Vector3.zero;
     protected ObjectRenderType RenderType = ObjectRenderType.None;
 
+    protected InvincibleState characterstate = InvincibleState.invincible_Off;
     public void HpInIt(HpBar _hpBar)
     {
         HPBAR = _hpBar;
@@ -50,20 +51,46 @@ public abstract partial class Charactor : Actor
     public void StatusUpLoad(float _hp)
     {
         if (condition == Condition.Death) {return;}
-        hP = _hp;
-        cheHP = hP;
-
-        hbBarCheck(true);
-
-        HPBAR.SetHp(maxHP, cheHP);
-
-        if (_hp <= 0)
+        if (condition != Condition.Death) 
         {
-            Debug.Log("Dead");
-            Invoke("death", 1f);
+            hP = _hp;
+            cheHP = hP;
+            hbBarCheck(true);
+
+            HPBAR.SetHp(maxHP, cheHP);
+
+
+            if (hP <= 0)
+            {
+                Debug.Log("Dead");
+                Invoke("death", 1f);
+                return;
+            }
+            invincibleState();
         }
 
     }
+
+    protected void invincibleState()
+    {
+        characterstate = InvincibleState.invincible_On;
+        Invoke("invincibleOut", 1.0f);
+    }
+    protected void invincibleOut()
+    {
+        //if (hP == 0) return;
+        characterstate = InvincibleState.invincible_Off;
+
+        if (hP < maxHP / 2)
+        {
+            condition = Condition.hard;
+        }
+        else
+        {
+            condition = Condition.health;
+        }
+    }
+
     public void conditionUpdate(Condition _condition) 
     {
         if (condition == Condition.Death) 
@@ -156,7 +183,7 @@ public abstract partial class Charactor : Actor
         return charactorModelTrs;
     }
 
-
+    
     //protected void FindMeshBodyObject()
     //{
     //    MeshRenderer skin = GetComponentInChildren<MeshRenderer>();

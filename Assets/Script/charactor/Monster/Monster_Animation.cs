@@ -6,12 +6,13 @@ public partial class Monster : Charactor
 {
     protected Animator monsterAnimator;
 
-    public void AttackAnimationEvent()
+    public void AttackAnimationEvent()//Event
     {
         //sin °î¼±<- gmsemffla
         if (monsterType == MonsterType.Sphere)
         {
             DirectAttack(charactorModelTrs.gameObject, HItPalyer.transform.position);
+            attackRangeCheck();
         }
         else if (monsterType == MonsterType.Spider)
         {        
@@ -22,6 +23,7 @@ public partial class Monster : Charactor
         else if (monsterType == MonsterType.Dron)
         {
             DirectAttack(charactorModelTrs.gameObject, HItPalyer.transform.position);
+            attackRangeCheck();
         }
     }
 

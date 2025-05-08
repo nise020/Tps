@@ -45,10 +45,10 @@ public abstract partial class Charactor : Actor
 
     protected virtual void Start()
     {
-        FindBodyObjectType(RenderType);
+        FindBodyObject();
         FindWeaponObject(LayerName.Weapon);
     }
-    public void Init(Table_Charactor.Info _info) 
+    public void Init(Table_Character.Info _info) 
     {
         id = _info.Id;
         type = _info.Type;
@@ -117,7 +117,7 @@ public abstract partial class Charactor : Actor
             int layer = LayerMask.NameToLayer(LayerName.RootBody.ToString());
             if (layer == rootObj.gameObject.layer)
             {
-                RootTrransform = rootObj.transform;
+                RootTransform = rootObj.transform;
             }
         }
     }

@@ -3,17 +3,28 @@ using System.Collections.Generic;
 using Photon.Pun.Demo.Asteroids;
 using UnityEngine;
 
-public abstract partial class Weapon : Item
+public partial class Weapon : Item
 {
-    protected WeaponEnum WeaponType;
-    protected CharactorJobEnum PlayerType;
-    Status Weaponstate = new Status();
     //[SerializeField] GameObject SkillEffectObj1;
     //[SerializeField] GameObject SkillEffectObj2;
 
+    protected WeaponEnum weaponType;
+    protected CharactorJobEnum PlayerType;
+
+    protected float Range;//범위
+    protected float Power;//힘
+    protected float Defense;//방어력
+    protected int RequiredLevel;//착용 조건
+    //protected int WeaponType;
+    protected float Speed;//범위
+    protected override void WeaponItemInit(Table_Item.Info _info)
+    {
+
+
+    }
     public WeaponEnum Weapontype() 
     {
-        return WeaponType;
+        return weaponType;
     }
     public virtual void Attack()//sword 
     {
@@ -41,5 +52,16 @@ public abstract partial class Weapon : Item
     public virtual void ReloadClearValue()
     {
 
+    }
+    public override float ItemStatusLoad(ItemStatusType _status) 
+    {
+        float value = 0.0f;
+        switch (_status) 
+        {
+            case ItemStatusType.None:
+                value = Range;
+                break;
+        }
+        return value;
     }
 }

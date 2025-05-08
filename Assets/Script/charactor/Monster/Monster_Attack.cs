@@ -6,7 +6,10 @@ using UnityEngine;
 
 public partial class Monster : Charactor
 {
-    
+    public Transform target;
+    public float height = 5f;
+    public float throuTime = 3f;
+
     public void DirectAttack(GameObject _obj,Vector3 _pos) 
     {
         Vector3 myPos = _obj.transform.position;
@@ -14,9 +17,6 @@ public partial class Monster : Charactor
         _obj.transform.position += (new Vector3(_pos.x,0, _pos.z) - myPos).normalized * speed * Time.deltaTime;
     }
 
-    public Transform target;
-    public float height = 5f;
-    public float throuTime = 3f;
     public void granaidAttack(Vector3 _start, Vector3 _end, GameObject _obj) 
     {
         StartCoroutine(Throu(_start, _end, _obj));
@@ -24,14 +24,25 @@ public partial class Monster : Charactor
     IEnumerator Throu(Vector3 _start,Vector3 _end,GameObject _obj) 
     {    
         float elapsed = 0;
+        Vector3 horizontal = 
+            new Vector3(_end.x - _start.x, 0, _end.z - _start.z);
+
+        float destanse = horizontal.magnitude;
+        Vector3 direction = horizontal.normalized;
 
         while (elapsed < throuTime)
         {
             elapsed += Time.deltaTime;
             float time = elapsed / throuTime;
 
-            Vector3 currentPos = Vector3.Lerp(_start, _end, time);
-            currentPos.y += Mathf.Sin(time * Mathf.PI) * height;
+            float parabola = 4 * height * time * (1 - time); // 최고점에서 t=0.5
+
+            Vector3 currentPos = _start + direction * destanse * time;
+            currentPos.y = Mathf.Lerp(_start.y, _end.y, time) + parabola;
+
+
+            //ector3 currentPos = Vector3.Lerp(_start, _end, time);
+            //currentPos.y += Mathf.Sin(time * Mathf.PI) * height;
 
             _obj.transform.position = currentPos;
             yield return null;

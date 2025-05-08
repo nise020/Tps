@@ -19,7 +19,9 @@ public enum LayerName
     Ground,
     MonsterMovePosition,
     HpBar,
-    RootBody
+    RootBody,
+    Body,
+    WeaponHand,
 }
 public enum ModelName 
 {
@@ -33,7 +35,18 @@ public enum ObjectType
     Gun,
     Bullet_Player,
     Bullet_Monster,
+    Item,
 }
+//public enum ItemType
+//{
+//    None,
+//    Player,
+//    Monster,
+//    Gun,
+//    Bullet_Player,
+//    Bullet_Monster,
+//    Item,
+//}
 public enum BodyType 
 {
     RightHand,
@@ -60,9 +73,10 @@ public enum SkillObjType
 public enum ItemType
 {
     None,
-    Hill,
-    SpeedUP,
+    Material,
+    QuestItem,
     Weapon,
+    Consumable,
 
 }
 public enum EffectType
@@ -84,8 +98,16 @@ public enum StatusType
     SkillCool_2,//2번 스킬쿨타임
     Buff,//버프
     BurstCool,//버스트 쿨타임
+    
 }
-
+public enum ItemStatusType
+{
+    None,
+    Range,
+    Power,
+    Defense,
+    Speed,
+}
 public enum GunType
 {
     None,

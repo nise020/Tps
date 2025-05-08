@@ -38,6 +38,7 @@ public partial class Player : Charactor
     {
         if (_value == 1) 
         {
+
             viewcam.CameraShakeAnimation(1);
         }
         else if (_value == 2) 

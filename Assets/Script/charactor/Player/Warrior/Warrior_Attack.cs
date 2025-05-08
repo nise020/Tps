@@ -5,7 +5,10 @@ using UnityEngine.SocialPlatforms.Impl;
 
 public partial class Warrior : Player
 {
-    
+    protected override void attackMovement()
+    {
+        attackAnimation(AttackState.AttackOn);
+    }
     protected override void attack(CharctorStateEnum _state, CharactorJobEnum _job)
     {
         if (_state == CharctorStateEnum.Player)

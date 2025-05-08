@@ -6,6 +6,11 @@ using UnityEngine;
 public partial class Gunner : Player
 {
     [SerializeField] Granad granadObj;
+    protected override void attackMovement()
+    {
+        attackAnimation(AttackState.AttackOn);
+        gunShoot();
+    }
     protected override void attack(CharctorStateEnum _state, CharactorJobEnum _job)
     {
         if (_job == CharactorJobEnum.Gunner)

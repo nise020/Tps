@@ -30,7 +30,7 @@ public class MonsterManager : MonoBehaviour
     //[Header("CreatTab")]
     [SerializeField] GameObject creatTabObj;
     public Transform creatTab;
-    Item Item = new Item();
+    //Item Item = new Item();
 
     //몬스터를 딕션어리로 관리
     //몬스터의 거리를 측정할 리스트 구현해서 관리

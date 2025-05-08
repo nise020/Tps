@@ -33,7 +33,8 @@ public class AI_Npc : AiBase
     protected override void Search(Player _obj)
     {
         Shared.GameManager.PlayerData(out Player _player);
-        _obj.Move_Npc(_player);
+        _obj.Ai_Move(_player);
+
         Debug.Log($"npcAi={npcAi}\n_player = {_player}");
         //Que
         //Time
@@ -50,7 +51,7 @@ public class AI_Npc : AiBase
     protected override void Move(Player _obj, Vector3 _pos)
     {
         Debug.Log($"npcAi={npcAi}");
-        float value = _obj.TargetMove(_pos);
+        float value = _obj.TargetPosition_Move(_pos);
         if (_obj.AttackDistanseCheck(value) == true)//Move
         {
             npcAi = NpcAiState.Attack;
@@ -59,11 +60,12 @@ public class AI_Npc : AiBase
     protected override void Attack(Player _obj)
     {
         Debug.Log($"npcAi={npcAi}");
-        _obj.AutoAttack();
+        _obj.AiAttack();
         npcAi = NpcAiState.Reset;
     }
     protected override void Reset()
     {
+        npcAi = NpcAiState.Search;
         tagetPos = new Vector3();
         //npcAi = NpcAiState.Search;
     }

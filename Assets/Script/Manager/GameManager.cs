@@ -41,8 +41,8 @@ public class GameManager : MonoBehaviour
         GameObject go = Instantiate(WARRIOR.gameObject, startPointObj.gameObject.transform.position,
             Quaternion.identity);
         Charactor charactor = go.GetComponent<Charactor>();
-        Charactor player = Factory.CreateCharactor(ObjectType.Player);
-        charactor = player;
+        //Charactor player = Factory.CreateCharactor(ObjectType.Player);
+        //charactor = player;
 
     }
  

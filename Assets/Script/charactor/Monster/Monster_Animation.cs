@@ -17,7 +17,8 @@ public partial class Monster : Charactor
         else if (monsterType == MonsterType.Spider)
         {        
             weaponObj.SetActive(true);
-            granaidAttack(charactorModelTrs.position, HItPalyer.transform.position, weaponObj);
+            //granaidAttack(charactorModelTrs.position, HItPalyer.transform.position, weaponObj);
+            granaidAttack(weaponHandObject.transform.position, HItPalyer.transform.position, weaponObj);
 
         }
         else if (monsterType == MonsterType.Dron)

@@ -379,7 +379,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   CharactorId: 0
   hpBar: {fileID: 0}
-  HandObj: {fileID: 0}
+  weaponHandObject: {fileID: 0}
   weaponObj: {fileID: 0}
   groundCheckLenght: 0
   viewItem: {fileID: 0}
@@ -2087,7 +2087,7 @@ MonoBehaviour:
   dronMob: {fileID: 6191365220507688643, guid: 7acc0d0041d8a9243a4285a59532ddaf, type: 3}
   sphereMob: {fileID: 6331214077208024435, guid: e3607604ba17d994bb5091c9244eea72, type: 3}
   hpBarCanvers: {fileID: 2580310500171199193, guid: fb6be946678065f4ea6b0c93617ac73a, type: 3}
-  hpBarObj: {fileID: 0}
+  hpBarObj: {fileID: 5176726122729873680, guid: fb6be946678065f4ea6b0c93617ac73a, type: 3}
   exflotionEffect: {fileID: 0}
   MonsterList: []
   creatTabObj: {fileID: 2194006098012767674, guid: 7463ef2a0d74b154ab9c8977894efa23, type: 3}
@@ -2835,6 +2835,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 1119029323060756206, guid: 5d32d8321e176b944b08f104cbbf3dac, type: 3}
+      propertyPath: m_Layer
+      value: 21
+      objectReference: {fileID: 0}
     - target: {fileID: 1150174055782837369, guid: 5d32d8321e176b944b08f104cbbf3dac, type: 3}
       propertyPath: dp
       value: 
@@ -2862,6 +2866,10 @@ PrefabInstance:
     - target: {fileID: 2739008053358915618, guid: 5d32d8321e176b944b08f104cbbf3dac, type: 3}
       propertyPath: m_Enabled
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2803877442437197502, guid: 5d32d8321e176b944b08f104cbbf3dac, type: 3}
+      propertyPath: m_Layer
+      value: 27
       objectReference: {fileID: 0}
     - target: {fileID: 2991793726274446062, guid: 5d32d8321e176b944b08f104cbbf3dac, type: 3}
       propertyPath: m_ApplyRootMotion

@@ -12,7 +12,7 @@ public class Granad : Weapon
     ParticleSystem explotionEffect;
     float groundCheckLenght = 0.1f;
     bool isGround = false;
-    public SkillState state = SkillState.SkillOff;
+    public SkillState skillstate = SkillState.SkillOff;
 
     MeshRenderer mesh;
 
@@ -33,7 +33,7 @@ public class Granad : Weapon
     }
     private void expltioncheck()
     {
-        if (state == SkillState.SkillOn) { return; }
+        if (skillstate == SkillState.SkillOn) { return; }
         
         if (Physics.Raycast(modelingObject.transform.position, 
             modelingObject.transform.
@@ -45,7 +45,7 @@ public class Granad : Weapon
             {
                 Debug.Log($"hit = {hit.transform}");
                 Debug.Log($"transform.position = {transform.position}");
-                state = SkillState.SkillOn;
+                skillstate = SkillState.SkillOn;
                 explotionEffect.gameObject.SetActive(true);
                 explotionEffect.Play();
                 Invoke("ResetObject", 3.0f);
@@ -55,7 +55,7 @@ public class Granad : Weapon
 
     private void ResetObject() 
     {
-        state = SkillState.SkillOff;
+        skillstate = SkillState.SkillOff;
         transform.localPosition = startPos;
         explotionEffect.Stop();
         explotionEffect.gameObject.SetActive(false);
@@ -75,7 +75,7 @@ public class Granad : Weapon
     }
     private void Awake()
     {
-        WeaponType = WeaponEnum.Granad;
+        weaponType = WeaponEnum.Granad;
 
         MeshRenderer mesh = GetComponentInChildren<MeshRenderer>();
         modelingObject = mesh.gameObject;

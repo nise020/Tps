@@ -3,21 +3,21 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Table_Item : Table_Base
+public class Table_Character : Table_Base
 {
     [Serializable]
     public class Info
     {
         public int Id;
-        public byte Type;//Consumable, Weapon, Armor
+        public byte Type;
         public int Skill;
         public int State;
         public string Prefabs;
         public string Img;
-        public int Name;//이름
-        public int Price;//상점 가격
+        public int Name;
         public int Dec;//설명
     }
+
     public Dictionary<int, Info> Dictionary = new Dictionary<int, Info>();
 
     public Info Get(int _Id)

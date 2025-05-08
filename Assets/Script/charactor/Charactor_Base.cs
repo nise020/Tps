@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UIElements;
 
@@ -14,7 +15,9 @@ public abstract partial class Charactor : Actor
     [SerializeField] GameObject hpBar;//uiHp
 
     protected Transform charactorModelTrs;//Modeling
-    protected Transform RootTrransform;//RootModel
+    protected Transform RootTransform;//RootModel
+    [SerializeField] protected GameObject weaponHandObject;//Hand
+    [SerializeField] protected GameObject weaponObj;//Weapon
 
     protected float rotationSpeed = 20.0f;//나중에 조정
     protected float skillCool_1;//1번 스킬쿨타임
@@ -25,8 +28,6 @@ public abstract partial class Charactor : Actor
     protected Condition condition = Condition.health;//상태패턴
 
 
-    [SerializeField] protected GameObject HandObj;
-    [SerializeField] protected GameObject weaponObj;
     protected Vector3 weaponOriginalPos = Vector3.zero;
     protected ObjectRenderType RenderType = ObjectRenderType.None;
 
@@ -162,21 +163,55 @@ public abstract partial class Charactor : Actor
     {
 
     }
-    protected void FindBodyObjectType(ObjectRenderType _renderType)
+    protected void FindBodyObject()
     {
-        if (_renderType == ObjectRenderType.Skin) 
-        {
-            SkinnedMeshRenderer skin = GetComponentInChildren<SkinnedMeshRenderer>();
-            charactorModelTrs = skin.transform.parent;
-            Debug.Log($"{gameObject}\ncharactorModelTrs = {charactorModelTrs}");
-        }
-        else if (_renderType == ObjectRenderType.Mesh) 
-        {
-            MeshRenderer mesh = GetComponentInChildren<MeshRenderer>();
-            charactorModelTrs = mesh.transform.parent;
-            Debug.Log($"{gameObject}\ncharactorModelTrs = {charactorModelTrs}");
-        }
+        Transform[] skin = GetComponentsInChildren<Transform>();
 
+        int HandLayer = LayerMask.NameToLayer(LayerName.WeaponHand.ToString());
+        int BodyLayer = LayerMask.NameToLayer(LayerName.Body.ToString());
+
+        foreach (Transform skin2 in skin)
+        {
+            if (skin2.gameObject.layer == HandLayer)
+            {
+                weaponHandObject = skin2.gameObject;
+            }
+            else if (skin2.gameObject.layer == BodyLayer)
+            {
+                charactorModelTrs = skin2.transform;
+            }
+        }
+        
+    }
+    protected void FindRenderObjectType(ObjectRenderType _renderType) 
+    {
+        //if (_renderType == ObjectRenderType.Skin) 
+        //{
+        //    SkinnedMeshRenderer[] skin = GetComponentsInChildren<SkinnedMeshRenderer>();
+
+        //    int HandLayer = LayerMask.NameToLayer(LayerName.WeaponHand.ToString());
+        //    int BodyLayer = LayerMask.NameToLayer(LayerName.Body.ToString());
+
+        //    foreach (SkinnedMeshRenderer skin2 in skin) 
+        //    {
+        //        if (skin2.gameObject.layer == HandLayer) 
+        //        {
+        //            weaponHandObject = skin2.gameObject;
+        //        }
+        //        else if (skin2.gameObject.layer == BodyLayer) 
+        //        {
+        //            charactorModelTrs = skin2.transform;
+        //        }
+        //    }
+        //    //charactorModelTrs = skin2.transform.parent;
+        //    //Debug.Log($"{gameObject}\ncharactorModelTrs = {charactorModelTrs}");
+        //}
+        //else if (_renderType == ObjectRenderType.Mesh) 
+        //{
+        //    MeshRenderer mesh = GetComponentInChildren<MeshRenderer>();
+        //    charactorModelTrs = mesh.transform.parent;
+        //    Debug.Log($"{gameObject}\ncharactorModelTrs = {charactorModelTrs}");
+        //}
     }
     public Transform FindTargetBody() 
     {

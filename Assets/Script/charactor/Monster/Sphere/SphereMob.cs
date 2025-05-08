@@ -12,7 +12,7 @@ public partial class SphereMob : Monster
     protected override void Start()
     {
         base.Start();
-        RootTrransform = transform.Find(ModelName.Model.ToString());
+        RootTransform = transform.Find(ModelName.Model.ToString());
         FindRootBodyObject();
         //cam = UnityEngine.Camera.main;
         //mobAnimator = GetComponent<Animator>();

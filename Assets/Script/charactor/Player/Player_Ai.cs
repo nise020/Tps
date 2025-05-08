@@ -4,7 +4,7 @@ using UnityEngine;
 
 public partial class Player : Charactor
 {
-    public void Move_Npc(Player _player)
+    public void Ai_Move(Player _player)
     {
         //플레이어의 거리에 따라 달리고 걷는게 가능 하지만 찔끔 움직이면 움직임이 더딘다
         //: 개선이 필요함
@@ -90,15 +90,22 @@ public partial class Player : Charactor
 
     }
 
-    public float TargetMove(Vector3 _pos)//수정 필요
+    public float TargetPosition_Move(Vector3 _pos)//수정 필요
     {
         Vector3 stopPoint = _pos;
         Vector3 disTance = (stopPoint - gameObject.transform.position);
 
         Quaternion rotation = Quaternion.LookRotation(disTance.normalized);
         charactorModelTrs.rotation = Quaternion.Slerp(charactorModelTrs.rotation, rotation, Time.deltaTime * rotationSpeed);
+        
+        float diatanse = Vector3.Distance(stopPoint , gameObject.transform.position);
 
-        gameObject.transform.position += disTance * speedValue * Time.deltaTime;
+        if (diatanse > 0) 
+        {
+            gameObject.transform.position += disTance.normalized * speedValue * Time.deltaTime;
+        }
+
+        //gameObject.transform.position += disTance.normalized * speedValue * Time.deltaTime;
         float value = Vector3.Distance(gameObject.transform.position, _pos);
 
         playerAnim.SetInteger(PlayerAnimParameters.Run.ToString(), 0);
@@ -109,6 +116,7 @@ public partial class Player : Charactor
 
     public bool AttackDistanseCheck(float value)
     {
+        //float value = WEAPON.WeaponStatusLoad(ItemStatusType.Range);
         if (value <= 0.1)//값을 상수가 아닌값으로 수정 필요
         {
             value = 0;
@@ -117,8 +125,12 @@ public partial class Player : Charactor
 
         return false;
     }
-    public void AutoAttack()//거리이내에 있는 적에게 데미지 로직 필요
+    public void AiAttack()//거리이내에 있는 적에게 데미지 로직 필요
     {
-        attackAnimation(AttackState.AttackOn);
+        attackMovement();
+    }
+    protected virtual void attackMovement() 
+    {
+
     }
 }

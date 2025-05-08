@@ -8,20 +8,7 @@ public partial class Warrior : Player
 
     int scabbardCount = 0;
     int scabbardMaxCount = 2;
-
-    //protected override void inPutCameraAnimation(bool _check)
-    //{
-    //    viewcam.cameraShakeAnim(_check);
-    //    //if (_type == MouseInputType.Release)
-    //    //{
-    //    //    viewcam.cameraShakeAnim(_check);
-    //    //}
-    //    //else if (_type == MouseInputType.Hold)
-    //    //{
-    //    //    viewcam.cameraShakeAnim(_check);
-    //    //}
-    //}
-
+    
     public void RangeCheak() 
     {
         Vector3 weaponPos = new Vector3();
@@ -77,7 +64,7 @@ public partial class Warrior : Player
     public void GetSword()//AnimationEvent
     {
         GameObject go = weaponObj.gameObject;
-        go.transform.SetParent(HandObj.gameObject.transform);
+        go.transform.SetParent(weaponHandObject.gameObject.transform);
         go.transform.localPosition = Vector3.zero;
         weaponState = WeaponState.Sword_On;
 

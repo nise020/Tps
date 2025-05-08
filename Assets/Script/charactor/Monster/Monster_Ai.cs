@@ -69,7 +69,7 @@ public partial class Monster : Charactor
 
             if (monsterType == MonsterType.Sphere)
             {
-                RootTrransform.position += disTance.normalized * speedValue * Time.deltaTime;
+                RootTransform.position += disTance.normalized * speedValue * Time.deltaTime;
 
                 charactorModelTrs.parent.rotation = Quaternion.Slerp(charactorModelTrs.parent.rotation,
                 rotation, Time.deltaTime * rotationSpeed);
@@ -158,7 +158,7 @@ public partial class Monster : Charactor
 
             if (monsterType == MonsterType.Sphere)
             {
-                RootTrransform.position += dist.normalized * speedValue * Time.deltaTime;
+                RootTransform.position += dist.normalized * speedValue * Time.deltaTime;
                 charactorModelTrs.parent.rotation = Quaternion.Slerp(charactorModelTrs.parent.rotation,
                 rotation, Time.deltaTime * rotationSpeed);
             }
@@ -186,7 +186,7 @@ public partial class Monster : Charactor
         {
             Granad granad = weaponObj.GetComponent<Granad>();
 
-            if (granad.state == SkillState.SkillOff)
+            if (granad.skillstate == SkillState.SkillOff)
             {
                 attackAnimation(MonsterAttackState.Attack_On);
             }

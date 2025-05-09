@@ -59,7 +59,7 @@ public partial class AiMonster : AiBase
     }
     protected override void Create()//»ý¼º
     {
-        MONSTER.init();
+        MONSTER.Compomentinit();
         aIState = MonsterAiState.Search;
     }
 

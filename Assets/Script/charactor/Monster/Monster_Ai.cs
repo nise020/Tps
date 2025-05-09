@@ -16,7 +16,7 @@ public partial class Monster : Charactor
     protected float attackRange = 5.0f;
     Vector3 targetPos;
     Vector3 movePosition = Vector3.zero;
-    public void init()
+    public void Compomentinit()
     {
         //cam = Camera.main;
         monsterAnimator = GetComponent<Animator>();

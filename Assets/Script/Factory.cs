@@ -2,8 +2,10 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public static class Factory 
+public static class Factory
 {
+    //Util
+    //동적
     public static Charactor CreateCharactor(int _value, ObjectType _type) 
     {
         Charactor charactor = null;//테이블로 대체시
@@ -12,7 +14,7 @@ public static class Factory
         var info = Shared.TableManager.Character.Get(_value);
         if (info != null)
         {
-            charactor.Init(info);
+            //charactor.Init(info);
         }
         else
         {
@@ -44,7 +46,7 @@ public static class Factory
     public static Item CreateItem(int _value,ItemType _type)
     {
         Item item = null;//테이블로 대체시
-
+        //동적
 
         Shared.InutTableMgr();
         var iteminfo = Shared.TableManager.Item.Get(_value);

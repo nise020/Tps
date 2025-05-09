@@ -20,7 +20,7 @@ public partial class Monster : Charactor
         creatTabObj = Shared.GameManager.creatTab;//¿ÀºêÁ§Æ® »ý¼º ÅÇ(ex.ÃÑ¾Ë)
         AI.init(this, SKILL);
         AI.Type(monsterType);
-        STATUS.MonsterState(monsterType);
+        STATE.MonsterState(monsterType);
         stateInIt();
     }
     protected virtual void FixedUpdate()

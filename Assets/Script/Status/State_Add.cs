@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public partial class Status : StatusBase
+public partial class State : State_Base
 {
     protected override void PluseAtk(int _value)
     {

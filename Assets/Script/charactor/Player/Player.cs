@@ -64,8 +64,8 @@ public partial class Player : Charactor
     protected override void Start()
     {
         base.Start();
-        STATUS.init(charactor);//State
-        stateInIt();
+        //STATE.init(charactor);//State
+        //stateInIt();
         //FindSkinBodyObject();
         viewcam = GetComponentInChildren<PlayerCamera>();
         if (charctorState == CharctorStateEnum.Npc)

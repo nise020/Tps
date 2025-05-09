@@ -7,6 +7,7 @@ public partial class Warrior : Player
     GameObject Weapon;
     private void Awake()
     {
+        id = 2;
         RenderType = ObjectRenderType.Skin;
         charctorState = CharctorStateEnum.Player;
     }

@@ -121,13 +121,13 @@ public abstract partial class Charactor : Actor
     }
     protected virtual void stateInIt()
     {
-        hP = STATUS.ViewHp;
+        hP = STATE.ViewHp;
         cheHP = hP;
         maxHP = hP;
 
-        speedValue = STATUS.ViewSpeed;
-        atkValue = STATUS.ViewAttack;
-        defVAlue = STATUS.ViewDefense;
+        speedValue = STATE.ViewSpeed;
+        atkValue = STATE.ViewAttack;
+        defVAlue = STATE.ViewDefense;
     }
     protected virtual void checkHp(Collider other) //수정 필요
     {

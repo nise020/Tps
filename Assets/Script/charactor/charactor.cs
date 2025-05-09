@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.TextCore.Text;
+using static UnityEngine.UI.CanvasScaler;
 
 public abstract partial class Charactor : Actor
 {
@@ -27,7 +28,7 @@ public abstract partial class Charactor : Actor
     //async -> await // 비동기
     //변수 호출시 연결된 함시 실행
 
-
+    protected State STATE = new State();
 
     //캐릭터
     //스텟 사용
@@ -47,10 +48,26 @@ public abstract partial class Charactor : Actor
     {
         FindBodyObject();
         FindWeaponObject(LayerName.Weapon);
+        InfoLoad();
     }
-    public void Init(Table_Character.Info _info) 
+    protected void InfoLoad() 
     {
-        id = _info.Id;
+        Shared.InutTableMgr();
+        var info = Shared.TableManager.Character.Get(id);
+        if (info == null)
+        {
+            Debug.LogError($"{gameObject}.info = null");
+        }
+        else 
+        {
+            Init(info);
+            STATE.init(this, state);
+        }
+    }
+
+    protected void Init(Table_Character.Info _info) 
+    {
+        //id = _info.Id;
         type = _info.Type;
         skill = _info.Skill;
         state = _info.State;
@@ -58,6 +75,7 @@ public abstract partial class Charactor : Actor
         prefabs = _info.Prefabs;
         //name = _info.Name;
         dec = _info.Dec;//설명
+        Debug.Log($"{gameObject}={_info.State}\\");
     }
 
     public Transform BodyObjectLoad() 
@@ -151,9 +169,9 @@ public abstract partial class Charactor : Actor
     {
 
     }
-    public Status StateLoad()
+    public State StateLoad()
     {
-        Status state = STATUS;
+        State state = STATE;
         return state;
     }
 

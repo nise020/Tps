@@ -5,7 +5,7 @@ using UnityEngine;
 public abstract partial class Actor : MonoBehaviour
 {
     protected Camera cam;
-    protected Status STATUS = new Status();
+    //protected State STATE = new State();
     protected float atkValue;//공격력
     protected float defVAlue;//방어력
     protected float speedValue;//이동속도

@@ -7,6 +7,7 @@ public partial class Gunner : Player
 {
     private void Awake()
     {
+        id = 1;
         RenderType = ObjectRenderType.Skin;
         charctorState = CharctorStateEnum.Npc;
     }

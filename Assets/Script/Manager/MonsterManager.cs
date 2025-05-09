@@ -134,15 +134,15 @@ public class MonsterManager : MonoBehaviour
 
         monster.TypeInit(_type);
 
-        HpBarValue(hpBarCanvers, Maxcount, monsterCount, monster);
+        HpBarValue(Maxcount, monsterCount, monster);
 
         MonsterList.Add(monster);
         monsterCount += 1;
 
 
-        Shared.ItemManager.ItemDataAdd(monster);
+        //Shared.ItemManager.ItemDataAdd(monster);
     }
-    public void HpBarValue(GameObject _hpBarCanvers, int _max, int _min, Monster _monster)
+    public void HpBarValue(int _max, int _min, Monster _monster)
     {
         HpBar hpBar = _monster.GetComponentInChildren<HpBar>();
 

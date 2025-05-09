@@ -34,7 +34,8 @@ public class Table_Base
     }
     protected void Save_Binary(string _Name, object _Obj)
     {
-        string path = GetTablePath() + "\\Table\\Resources" + "Table_" + _Name + ".txt";
+        //string path = GetTablePath() + "\\Table\\Resources" + "Table_" + _Name + ".txt";
+        string path = GetTablePath() + "\\Table\\Resources\\" + "Table_" + _Name + ".txt";
         var b = new BinaryFormatter();
 
         Stream stream = File.Open(path, FileMode.OpenOrCreate, FileAccess.Write);
@@ -48,10 +49,15 @@ public class Table_Base
     {
         string ext = ".csv";
 
-        string path = "D:\\UnityFile\\Tps\\Document\\";
-        //string path = "C:\\Documents\\newTps\\Document\\";
+        //string path = "D:\\UnityFile\\Tps\\Document\\";//집
+        //string path = "C:\\Documents\\newTps\\Document\\";//학원D:\tps\Document
         //string path = GetTablePath()+ "/Document/";
         //:path = 저장위치를 직접 갖다여야함
+        string path = "D:\\tps\\Document\\";//학원D:\tps\Document
+        if (new FileStream(path + _Name + ext, FileMode.Open, FileAccess.Read, FileShare.ReadWrite) == null) 
+        {
+            path = "D:\\UnityFile\\Tps\\Document\\";//집
+        }
         FileStream file = new FileStream(path + _Name + ext, FileMode.Open, FileAccess.Read, FileShare.ReadWrite);
 
         StreamReader stream = new StreamReader(file, System.Text.Encoding.UTF8);

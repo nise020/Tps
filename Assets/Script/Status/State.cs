@@ -4,15 +4,19 @@ using UnityEditor;
 using UnityEngine;
 using UnityEngine.TextCore.Text;
 
-public partial class Status : StatusBase
+public partial class State : State_Base
 {
-
+    Actor Actor;
     //player
     //gun
     //moneter
-    public void init(ObjectType _obj) 
+
+    public void init(Actor _actor, int _stateId) 
     {
-        playerState();
+        Actor = _actor;
+        var info = Shared.TableManager.State.Get(_stateId);
+        Debug.Log($"{_actor.name},{this}={info}");
+        //playerState();
         //Debug.Log($"charactor={_obj}\n" +
         //    $",monster={monster}\n" +
         //    $",MaxHP={ViewHp}\n" +

@@ -4,7 +4,7 @@ using UnityEngine;
 
 public abstract partial class Strategy : MonoBehaviour
 {
-    protected Status State;
+    protected State State;
     protected Player PLAYER;
     protected Weapon Weapon;
 
@@ -12,7 +12,7 @@ public abstract partial class Strategy : MonoBehaviour
     protected CharactorJobEnum playerType = CharactorJobEnum.None;
     protected int DamegeUp;
     abstract public void Skill(CharactorJobEnum _type, int _skillNumber, out int _damageValue);
-    public void init(Status _state) 
+    public void init(State _state) 
     {
         State = _state;
     }

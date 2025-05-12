@@ -28,21 +28,15 @@ public abstract partial class Charactor : Actor
     //async -> await // 비동기
     //변수 호출시 연결된 함시 실행
 
-    protected State STATE = new State();
+    
 
     //캐릭터
     //스텟 사용
     //clone 오브젝트 적극 사용 
     //protected int ID;//자신의 ID
 
-    protected int id;
-    protected byte type;
-    protected int skill;
-    protected int state;
-    protected string prefabs;
-    protected string img;
-    //protected int name;
-    protected int dec;//설명
+    
+
 
     protected virtual void Start()
     {
@@ -50,61 +44,34 @@ public abstract partial class Charactor : Actor
         FindWeaponObject(LayerName.Weapon);
         InfoLoad();
     }
-    protected void InfoLoad() 
-    {
-        Shared.InutTableMgr();
-        var info = Shared.TableManager.Character.Get(id);
-        if (info == null)
-        {
-            Debug.LogError($"{gameObject}.info = null");
-        }
-        else 
-        {
-            Init(info);
-            STATE.init(this, state);
-        }
-    }
-
-    protected void Init(Table_Character.Info _info) 
-    {
-        //id = _info.Id;
-        type = _info.Type;
-        skill = _info.Skill;
-        state = _info.State;
-        img = _info.Img;
-        prefabs = _info.Prefabs;
-        //name = _info.Name;
-        dec = _info.Dec;//설명
-        Debug.Log($"{gameObject}={_info.State}\\");
-    }
 
     public Transform BodyObjectLoad() 
     {
         return charactorModelTrs;
     }
 
-    protected virtual void OnTriggerEnter(Collider other)//세분화 필요
-    {
-        //Collider myColl = gameObject.GetComponent<Collider>();
-        //if (myColl.gameObject.layer == Delivery.LayerNameEnum(LayerName.Monster))//몬스터일 경우
-        //{
-        //    if (other.gameObject.layer == Delivery.LayerNameEnum(LayerName.Player))
-        //    {
-        //        //Attack();
-        //    }
-        //    else if (other.gameObject.layer == Delivery.LayerNameEnum(LayerName.Bullet))//피격
-        //    {
-        //        checkHp(other);
-        //    }
-        //}
-        //else if (myColl.gameObject.layer == Delivery.LayerNameEnum(LayerName.Player))//플레이어 일 경우
-        //{
-        //    if (other.gameObject.layer == Delivery.LayerNameEnum(LayerName.Monster))//피격
-        //    {
-        //        checkHp(other);
-        //    }
-        //}
-    }
+    //protected virtual void OnTriggerEnter(Collider other)//세분화 필요
+    //{
+    //    //Collider myColl = gameObject.GetComponent<Collider>();
+    //    //if (myColl.gameObject.layer == Delivery.LayerNameEnum(LayerName.Monster))//몬스터일 경우
+    //    //{
+    //    //    if (other.gameObject.layer == Delivery.LayerNameEnum(LayerName.Player))
+    //    //    {
+    //    //        //Attack();
+    //    //    }
+    //    //    else if (other.gameObject.layer == Delivery.LayerNameEnum(LayerName.Bullet))//피격
+    //    //    {
+    //    //        checkHp(other);
+    //    //    }
+    //    //}
+    //    //else if (myColl.gameObject.layer == Delivery.LayerNameEnum(LayerName.Player))//플레이어 일 경우
+    //    //{
+    //    //    if (other.gameObject.layer == Delivery.LayerNameEnum(LayerName.Monster))//피격
+    //    //    {
+    //    //        checkHp(other);
+    //    //    }
+    //    //}
+    //}
 
 
     protected void footRayCheck() //중력구현

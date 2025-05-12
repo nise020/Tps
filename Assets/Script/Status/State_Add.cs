@@ -6,18 +6,18 @@ public partial class State : State_Base
 {
     protected override void PluseAtk(int _value)
     {
-        Attack = Attack + _value;
+        power = power + _value;
     }
     protected override void PluseDef(int _value)
     {
-        Defense = Defense + _value;
+        defense = defense + _value;
     }
     protected override void PluseSpe(int _value)
     {
-        Speed = Speed + _value;
+        speed = speed + _value;
     }
     protected override void PluseMaxHp(int _value)
     {
-        MaxHP = MaxHP + _value;
+        maxHP = maxHP + _value;
     }
 }

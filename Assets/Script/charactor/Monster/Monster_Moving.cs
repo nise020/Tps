@@ -4,19 +4,19 @@ using UnityEngine;
 
 public partial class Monster : Charactor
 {
-    protected override void OnTriggerEnter(Collider other)
-    {
-        base.OnTriggerEnter(other);
-        if (aIState == MonsterAiState.Attack)
-        {
-            if (monsterType == MonsterType.Sphere)
-            {
-                monsterAnimator.SetInteger("Close", 0);
-                monsterAnimator.SetInteger("AttackDilray", 1);
-                aIState = MonsterAiState.Reset;
-            }
-        }
-    }
+    //protected override void OnTriggerEnter(Collider other)
+    //{
+    //    base.OnTriggerEnter(other);
+    //    if (aIState == MonsterAiState.Attack)
+    //    {
+    //        if (monsterType == MonsterType.Sphere)
+    //        {
+    //            monsterAnimator.SetInteger("Close", 0);
+    //            monsterAnimator.SetInteger("AttackDilray", 1);
+    //            aIState = MonsterAiState.Reset;
+    //        }
+    //    }
+    //}
     protected void moving()//몬스터 매커니즘을 미리 정하고 세부적으로 만들어야 해서 보류  
     {
         //bool check = groundOn_Off(groundCheck);

@@ -98,7 +98,8 @@ public enum StatusType
     SkillCool_2,//2번 스킬쿨타임
     Buff,//버프
     BurstCool,//버스트 쿨타임
-    
+    CritRate,//크리확률
+    CritDamage,//크리 데미지
 }
 public enum ItemStatusType
 {

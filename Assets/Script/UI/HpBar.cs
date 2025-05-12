@@ -4,12 +4,13 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 using UnityEngine.ProBuilder.Shapes;
+using UnityEngine.TextCore.Text;
 using UnityEngine.UI;
 
 public partial class HpBar : MonoBehaviour 
 {
     public int key = 0;
-    Charactor Charactor;
+    Charactor CHARACTER;
     Charactor PLAYERCHARACTOR;
     Camera playerCamera;
     int hpValue = 0;
@@ -45,7 +46,7 @@ public partial class HpBar : MonoBehaviour
     }
     private void Start()
     {
-        initHp();
+        init();
         PlayerUpdate();
 
         rectTransform = GetComponent<RectTransform>();
@@ -53,6 +54,7 @@ public partial class HpBar : MonoBehaviour
 
         DamageSetting();
     }
+
     private void DamageSetting() 
     {
         numberImages_1 = DamageTransformLoad(Place_1);
@@ -149,36 +151,33 @@ public partial class HpBar : MonoBehaviour
     }
     public void inIt(Charactor charactor) 
     {
-        Charactor = charactor;
-        HpImage(Charactor);
+        CHARACTER = charactor;
+        CHARACTER.onHpChanged += SetHp;
+        //CHARACTER.onHpChanged += OnHpChanged;
+        //HpImage(CHARACTER);
     }
     public void HpImage(Charactor charactor) 
     {
         //charactor.
     }
 
-    //private void FindHpUi()
-    //{
-    //    Image[] images = GetComponentsInChildren<Image>();
-    //    foreach (Image image in images) 
-    //    {
-    //        int Layer = LayerMask.NameToLayer(LayerName.);
-    //    }
-    //}
-
     private void LateUpdate()
     {
         cameraInMonsterCheck();
         chasePlayer();
-        checkFillAmount();
+        //checkFillAmount();
         chekedPlayerDestroy();
     }
 
-    private void initHp()
+    private void Imageinit()
     {
         imgHp.fillAmount = 1;
         imgEffect.fillAmount = 1;
-        //posiTion = Shared.BattelMgr.monsterData[key].transform.position;
+    }
+    private void init()
+    {
+        imgHp.fillAmount = 1;
+        imgEffect.fillAmount = 1;
     }
     public void PlayerUpdate() 
     {
@@ -224,9 +223,22 @@ public partial class HpBar : MonoBehaviour
             imgEffect.fillAmount = imgHp.fillAmount;
         }
     }
+    private IEnumerator animateEffectBar()
+    {
+        while (imgEffect.fillAmount > imgHp.fillAmount)
+        {
+            imgEffect.fillAmount -= Time.deltaTime / effectTime;
+            if (imgEffect.fillAmount < imgHp.fillAmount)
+            {
+                imgEffect.fillAmount = imgHp.fillAmount;
+            }
+            yield return null;
+        }
+    }
     public void SetHp(float _maxHp, float _curHp)//0~1
     {
         imgHp.fillAmount = _curHp / _maxHp;
+        StartCoroutine(animateEffectBar());
     }
 
     private void chasePlayer()

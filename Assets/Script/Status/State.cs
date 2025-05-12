@@ -1,8 +1,10 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEditor;
 using UnityEngine;
 using UnityEngine.TextCore.Text;
+using static UnityEngine.Rendering.DebugUI;
 
 public partial class State : State_Base
 {
@@ -11,27 +13,55 @@ public partial class State : State_Base
     //gun
     //moneter
 
+    ObjectType objType;
+    MonsterType monster = MonsterType.Defolt;
+    GunType gun = global::GunType.None;
+    WeaponEnum WeaponType = WeaponEnum.None;
+
     public void init(Actor _actor, int _stateId) 
     {
         Actor = _actor;
         var info = Shared.TableManager.State.Get(_stateId);
         Debug.Log($"{_actor.name},{this}={info}");
-        //playerState();
-        //Debug.Log($"charactor={_obj}\n" +
-        //    $",monster={monster}\n" +
-        //    $",MaxHP={ViewHp}\n" +
-        //    $",Attack={ViewAttack}\n" +
-        //    $",Defense={ViewDefense}\n" +
-        //    $",Movespeed{ViewSpeed}");
+        StateUpdate(info);
     }
-    ObjectType objType;
-    MonsterType monster = MonsterType.Defolt;
-    GunType gun = global::GunType.None;
-    WeaponEnum WeaponType = WeaponEnum.None;
-    public float ViewHp => MaxHP;
-    public int ViewAttack => Attack;
-    public int ViewDefense => Defense;//방어력
-    public float ViewSpeed => Speed;//이동속도
+
+    private void StateUpdate(Table_State.Info info)
+    {
+        id = info.Id;
+        maxHP = info.MaxHP;
+        power = info.Power;
+        defense = info.Defense;
+        speed = info.Speed;
+        critRate = info.CritRate;
+        critDamage = info.CritDamage;
+    }
+    public float StateValueLoad(StatusType _status) 
+    {
+        switch (_status)
+        {
+            case StatusType.HP:
+                return maxHP;
+
+            case StatusType.Power:
+                return power;
+
+            case StatusType.Defens:
+                return defense;
+
+            case StatusType.Speed:
+                return speed;
+
+            case StatusType.CritRate:
+                return critRate;
+
+            case StatusType.CritDamage:
+                return critDamage;
+
+            default:
+                return 0.0f;
+        }
+    }
 
     public void StatusInit(int value)
     {
@@ -71,79 +101,66 @@ public partial class State : State_Base
 
     private void playerState() 
     {
-        MaxHP = 100;
-        Attack = 30;
-        Defense = 30;
-        Speed = 5;
+        maxHP = 100;
+        power = 30;
+        defense = 30;
+        speed = 5;
     }
     public void MonsterState(GunType _eNum)
     {
         switch (_eNum)
         {
             case GunType.AR:
-                Attack = 30;
-                Defense = 30;
+                power = 30;
+                defense = 30;
                 break;
             case GunType.SG:
-                Attack = 30;
-                Defense = 30;
+                power = 30;
+                defense = 30;
                 break;
             case GunType.SR:
-                Attack = 30;
-                Speed = 10;
+                power = 30;
+                speed = 10;
                 break;
         }
         Debug.Log($"\n" +
             $",monster={_eNum}\n" +
-            $",Attack={Attack}\n" +
-            $",Movespeed{Speed}");
+            $",Attack={power}\n" +
+            $",Movespeed{speed}");
     }
     public void MonsterState(MonsterType _monster)
     {
         switch (_monster)
         {
             case MonsterType.Spider:
-                MaxHP = 200;
-                Attack = 30;
-                Defense = 30;
-                Speed = 3;
+                maxHP = 200;
+                power = 30;
+                defense = 30;
+                speed = 3;
                 break;
             case MonsterType.Dron:
-                MaxHP = 100;
-                Attack = 30;
-                Defense = 30;
-                Speed = 5;
+                maxHP = 100;
+                power = 30;
+                defense = 30;
+                speed = 5;
                 break;
             case MonsterType.Sphere:
-                MaxHP = 500;
-                Attack = 30;
-                Defense = 30;
-                Speed = 5;
+                maxHP = 500;
+                power = 30;
+                defense = 30;
+                speed = 5;
                 break;
         }
         Debug.Log($"\n" +
             $",monster={_monster}\n" +
-            $",MaxHP={MaxHP}\n" +
-            $",Attack={Attack}\n" +
-            $",Defense={Defense}\n" +
-            $",Movespeed{Speed}");
+            $",MaxHP={maxHP}\n" +
+            $",Attack={power}\n" +
+            $",Defense={defense}\n" +
+            $",Movespeed{speed}");
     }
     public void Hit()
     {
 
     }
-    public void NowHp()//스타트에서 한번만 실행 
-    {
-        hP = MaxHP;
-        cheHP = hP;
-    }
-    public void CheckHp()//cheHP가 우선적으로 소모
-    {
-        if (hP == cheHP) { return; }
-        //코루틴 으로 수정 예정
-        if (hP != cheHP && hP >= 0)
-        {
-            hP = cheHP;
-        }
-    }
+
 }

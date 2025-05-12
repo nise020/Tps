@@ -10,8 +10,10 @@ public class Table_Character : Table_Base
     {
         public int Id;     
         public byte Type;   // 캐릭터 타입 (enum: Player, Monster, etc.)
-        public int Skill;    // → SkillTable의 Id
+        public int Skill1;    // → SkillTable의 Id
+        public int Skill2;    // → SkillTable의 Id
         public int State;   // → StatTable의 Id (기본 능력치 정보 등)
+        public int Ai;   // → AITable의 Id
         public string Prefabs;  // → 리소스 로드용 프리팹 경로
         public string Img; // → UI에 사용할 이미지 경로fabs;
         public int Name;     // → StringTable의 Id;
@@ -55,7 +57,9 @@ public class Table_Character : Table_Base
         if (_Reader.reset_row(_Row, _Col) == false) return false;
         _Reader.get(_Row, ref _info.Id);
         _Reader.get(_Row, ref _info.Type);
-        _Reader.get(_Row, ref _info.Skill);
+        _Reader.get(_Row, ref _info.Skill1);
+        _Reader.get(_Row, ref _info.Skill2);
+        _Reader.get(_Row, ref _info.Ai);
         _Reader.get(_Row, ref _info.State);
         _Reader.get(_Row, ref _info.Prefabs);
         _Reader.get(_Row, ref _info.Img);

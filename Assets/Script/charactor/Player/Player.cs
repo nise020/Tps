@@ -84,16 +84,16 @@ public partial class Player : Charactor
 
     }
 
-    protected override void stateInIt() 
-    {
-        base.stateInIt();
-        attackReset = (int)atkValue;
-    }
+    //protected override void stateInIt() 
+    //{
+    //    //base.stateInIt();
+    //    attackReset = (int)atkValue;
+    //}
 
-    protected override void OnTriggerEnter(Collider other)
-    {
-        base.OnTriggerEnter(other);
-    }
+    //protected override void OnTriggerEnter(Collider other)
+    //{
+    //    base.OnTriggerEnter(other);
+    //}
 
     private void FixedUpdate()
     {

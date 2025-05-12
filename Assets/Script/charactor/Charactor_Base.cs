@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using Unity.VisualScripting;
@@ -7,11 +8,8 @@ using UnityEngine.UIElements;
 public abstract partial class Charactor : Actor
 {
     protected HpBar HPBAR = new HpBar();
-    protected float hP;//실제 체력
-    protected float cheHP;//보여지는 체력
-    protected float maxHP;//최대체력
+
     //protected int power;//힘
-    [SerializeField] protected float CharactorId = 0;
     [SerializeField] GameObject hpBar;//uiHp
 
     protected Transform charactorModelTrs;//Modeling
@@ -24,55 +22,18 @@ public abstract partial class Charactor : Actor
     protected float skillCool_2;//2번 스킬쿨타임
     protected float buff;//버프
     protected float burstCool;//버스트 쿨타임
-    StatusType statusType = StatusType.None;
+    //StatusType statusType = StatusType.None;
     protected Condition condition = Condition.health;//상태패턴
 
+
+    public Action<float, float> onHpChanged;
 
     protected Vector3 weaponOriginalPos = Vector3.zero;
     protected ObjectRenderType RenderType = ObjectRenderType.None;
 
     protected InvincibleState characterstate = InvincibleState.invincible_Off;
-    public void HpInIt(HpBar _hpBar)
-    {
-        HPBAR = _hpBar;
-    }
-
-    protected void hbBarCheck(bool _check)
-    {
-        if (_check)
-        {
-            HPBAR.gameObject.SetActive(true);
-        }
-        else
-        {
-            HPBAR.gameObject.SetActive(false);
-        }
-    }
-
-    public void StatusUpLoad(float _hp)
-    {
-        if (condition == Condition.Death) {return;}
-        if (condition != Condition.Death) 
-        {
-            hP = _hp;
-            cheHP = hP;
-            hbBarCheck(true);
-
-            HPBAR.SetHp(maxHP, cheHP);
-
-
-            if (hP <= 0)
-            {
-                Debug.Log("Dead");
-                Invoke("death", 1f);
-                return;
-            }
-            invincibleState();
-        }
-
-    }
-
-    protected void invincibleState()
+    protected virtual void FindWeaponObject(LayerName _name) { }
+    protected void invincibleState()//무적
     {
         characterstate = InvincibleState.invincible_On;
         Invoke("invincibleOut", 1.0f);
@@ -116,19 +77,16 @@ public abstract partial class Charactor : Actor
             case StatusType.Defens:
                 value = (int)defVAlue;
                 break;
+            case StatusType.CritDamage:
+                value = (int)CritRateValue;
+                break;
+            case StatusType.CritRate:
+                value = (int)CritDamageValue;
+                break;
         }
         return value;
     }
-    protected virtual void stateInIt()
-    {
-        hP = STATE.ViewHp;
-        cheHP = hP;
-        maxHP = hP;
-
-        speedValue = STATE.ViewSpeed;
-        atkValue = STATE.ViewAttack;
-        defVAlue = STATE.ViewDefense;
-    }
+    
     protected virtual void checkHp(Collider other) //수정 필요
     {
         Debug.Log("Hit");
@@ -158,11 +116,11 @@ public abstract partial class Charactor : Actor
             Shared.EffectManager.Play(EffectType.BoomEffect, charactorModelTrs.position);
         }
     }
-
-    protected virtual void FindWeaponObject(LayerName _name)
+    public Transform FindTargetBody()
     {
-
+        return charactorModelTrs;
     }
+    
     protected void FindBodyObject()
     {
         Transform[] skin = GetComponentsInChildren<Transform>();
@@ -183,6 +141,47 @@ public abstract partial class Charactor : Actor
         }
         
     }
+    public void HpInIt(HpBar _hpBar)
+    {
+        HPBAR = _hpBar;
+    }
+
+    protected void hbBarCheck(bool _check)
+    {
+        if (_check)
+        {
+            HPBAR.gameObject.SetActive(true);
+        }
+        else
+        {
+            HPBAR.gameObject.SetActive(false);
+        }
+    }
+
+    public void StatusUpLoad(float _hp)
+    {
+        if (condition == Condition.Death) { return; }
+        if (condition != Condition.Death)
+        {
+            hP = (int)_hp;
+            cheHP = hP;
+            hbBarCheck(true);
+
+            //GameEvents.onHpChanged?.Invoke(this);
+
+            onHpChanged?.Invoke(maxHP, cheHP);
+
+            if (hP <= 0)
+            {
+                Debug.Log("Dead");
+                Invoke("death", 1f);
+                return;
+            }
+            invincibleState();
+        }
+
+    }
+
     protected void FindRenderObjectType(ObjectRenderType _renderType) 
     {
         //if (_renderType == ObjectRenderType.Skin) 
@@ -213,10 +212,7 @@ public abstract partial class Charactor : Actor
         //    Debug.Log($"{gameObject}\ncharactorModelTrs = {charactorModelTrs}");
         //}
     }
-    public Transform FindTargetBody() 
-    {
-        return charactorModelTrs;
-    }
+    
 
     
     //protected void FindMeshBodyObject()

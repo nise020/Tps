@@ -10,7 +10,7 @@ public class Table_State : Table_Base
     {
         public int Id;
         public int MaxHP;   // 캐릭터 타입 (enum: Player, Monster, etc.)
-        public int Attack;    // → SkillTable의 Id
+        public int Power;    // → SkillTable의 Id
         public int Defense;   // → StatTable의 Id (기본 능력치 정보 등)
         public int Speed;  // → 리소스 로드용 프리팹 경로
         public int CritRate; // → UI에 사용할 이미지 경로fabs;
@@ -55,7 +55,7 @@ public class Table_State : Table_Base
         if (_Reader.reset_row(_Row, _Col) == false) return false;
         _Reader.get(_Row, ref _info.Id);
         _Reader.get(_Row, ref _info.MaxHP);
-        _Reader.get(_Row, ref _info.Attack);
+        _Reader.get(_Row, ref _info.Power);
         _Reader.get(_Row, ref _info.Defense);
         _Reader.get(_Row, ref _info.Speed);
         _Reader.get(_Row, ref _info.CritRate);

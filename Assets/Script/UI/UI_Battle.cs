@@ -6,7 +6,7 @@ using System.Threading;
 using UnityEngine;
 using UnityEngine.UI;
 
-public partial class UI_Battle : MonoBehaviour
+public partial class UI_Battle : UiBase
 {
     PlayerCamera MOVECAMERA;
     CharactorJobEnum playerType;
@@ -16,6 +16,8 @@ public partial class UI_Battle : MonoBehaviour
     {
         CursurRect = GetComponent<RectTransform>();
     }
+
+
     private void Update()
     {
         while (Shared.InputManager.UiKeyinPutQueData.Count > 0)//key
@@ -32,34 +34,8 @@ public partial class UI_Battle : MonoBehaviour
             }
         }
     }
-    public void Timer()
-    {
-        secondsTime -= Time.deltaTime;
 
-        string minits = minutesTimer.ToString();
-        string seconds = ((int)secondsTime).ToString();
 
-        minutesImg.text = minits;
-        secondsImg.text = seconds;
-    }
-
-    public void PlayerCameraCheck(Player _player, CharctorStateEnum _check) 
-    {
-        _player.init(out MOVECAMERA);
-        Camera camera = MOVECAMERA.gameObject.GetComponent<Camera>();
-        if (_check == CharctorStateEnum.Player)
-        {
-            MOVECAMERA.gameObject.SetActive(true);
-            camera = Camera.main;
-            Shared.CameraManager.CameraChange(camera);
-            Shared.MonsterManager.PlayerCameraUpdate();
-        }
-        else //npc
-        {
-            MOVECAMERA.gameObject.SetActive(false);
-        }
-        //MOVECAMERA.gameObject.transform.SetParent(_player.transform);
-    }
     public void CharactorControllButten1()//warrior 
     {
 
@@ -88,22 +64,52 @@ public partial class UI_Battle : MonoBehaviour
             gunner.ClearAllAnimation(CharactorJobEnum.Gunner);
             PlayerCameraCheck(gunner, CharctorStateEnum.Player);
 
-            if (warrior.CharactorEnumCheck(CharactorJobEnum.Warrior) == true) 
+            if (warrior.CharactorEnumCheck(CharactorJobEnum.Warrior) == true)
             {
                 AnotherPlayerReset(warrior, playerType, CharctorStateEnum.Npc);
             }
         }
     }
-    public void AutoBuutten()//ing~
+    public void PlayerCameraCheck(Player _player, CharctorStateEnum _check)
     {
-        Shared.GameManager.PlayerbleDataLoad(out Dictionary<int, Player> _value);
+        _player.init(out MOVECAMERA);
+        Camera camera = MOVECAMERA.gameObject.GetComponent<Camera>();
+        if (_check == CharctorStateEnum.Player)
+        {
+            MOVECAMERA.gameObject.SetActive(true);
+            camera = Camera.main;
+            Shared.CameraManager.CameraChange(camera);
+            Shared.MonsterManager.PlayerCameraUpdate();
+        }
+        else //npc
+        {
+            MOVECAMERA.gameObject.SetActive(false);
+        }
+        //MOVECAMERA.gameObject.transform.SetParent(_player.transform);
     }
-    public void AnotherPlayerReset(Player _player, CharactorJobEnum _type, CharctorStateEnum _check) 
+    public void AnotherPlayerReset(Player _player, CharactorJobEnum _type, CharctorStateEnum _check)
     {
         //_player.playerTypeInite(out _type);//Load
         _player.ClearAllAnimation(_type);//Animation reset
         PlayerCameraCheck(_player, _check);//Camera On_Off
         Shared.GameManager.CharctorContoll(_player, CharctorStateEnum.Npc);//Controll Off
+    }
+    public void Timer()
+    {
+        secondsTime -= Time.deltaTime;
+
+        string minits = minutesTimer.ToString();
+        string seconds = ((int)secondsTime).ToString();
+
+        minutesImg.text = minits;
+        secondsImg.text = seconds;
+    }
+
+   
+
+    public void AutoBuutten()//ing~
+    {
+        Shared.GameManager.PlayerbleDataLoad(out Dictionary<int, Player> _value);
     }
     UnityEngine.Camera cam;
     [SerializeField] Image mainCursur;

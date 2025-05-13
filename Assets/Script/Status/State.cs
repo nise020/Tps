@@ -3,9 +3,6 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEditor;
 using UnityEngine;
-using UnityEngine.TextCore.Text;
-using static UnityEngine.Rendering.DebugUI;
-
 public partial class State : State_Base
 {
     Actor Actor;

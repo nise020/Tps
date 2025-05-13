@@ -4,7 +4,7 @@ using UnityEngine;
 using UnityEngine.Video;
 using UnityEngine.UI;
 
-public partial class Ui_Title : MonoBehaviour
+public partial class Ui_Title : UiBase
 {
     public VideoPlayer VIDEOPLAYER;
     public RawImage RAWIMG;

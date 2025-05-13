@@ -4,6 +4,7 @@ using UnityEngine;
 
 public abstract partial class Item : Actor
 {
+    
     protected State STATE = new State();
     protected ItemType itemType = ItemType.None;
     int ItemValue = 0;
@@ -34,7 +35,6 @@ public abstract partial class Item : Actor
     protected virtual void WeaponItemInit(Table_Item.Info _info)
     {
         
-
     }
     protected void ConsumableItemInit(Table_Item.Info _info)
     {

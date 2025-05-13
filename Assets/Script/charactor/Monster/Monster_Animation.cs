@@ -37,6 +37,8 @@ public partial class Monster : Charactor
     {
         monsterAnimator.SetInteger(MonsterAnimParameters.Death.ToString(), 0);
     }
+
+
     protected override void moveAnimation(MonsterWalkState _state) 
     {
         if (_state == MonsterWalkState.Walk_On)
@@ -50,6 +52,8 @@ public partial class Monster : Charactor
             monsterAnimator.SetInteger(MonsterAnimParameters.Walk.ToString(), 0);
         }
     }
+
+
     protected override void attackAnimation(MonsterAttackState _state) 
     {
         if (_state == MonsterAttackState.Attack_On)

@@ -21,6 +21,7 @@ public static class Shared //¸Ş¸ğ
     public static CameraManager CameraManager;
     public static EffectManager EffectManager;
     public static ItemManager ItemManager;
+    public static InventoryManager InventoryManager;
 
 
     public static TableManager TableManager;

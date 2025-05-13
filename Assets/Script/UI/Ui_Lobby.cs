@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public partial class Lobby : MonoBehaviour
+public partial class Ui_Lobby : UiBase
 {
     [Header("LobbyScene")]
     [SerializeField] GameObject LobbyObj;

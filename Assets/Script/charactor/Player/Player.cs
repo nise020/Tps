@@ -116,5 +116,8 @@ public partial class Player : Charactor
     {
         return PlayerKey;
     }
-    
+    protected void GetItem(Item _item) 
+    {
+        //Shared.InventoryManager.
+    }
 }

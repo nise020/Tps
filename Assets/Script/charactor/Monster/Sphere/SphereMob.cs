@@ -8,6 +8,7 @@ public partial class SphereMob : Monster
     {
         monsterType = MonsterType.Sphere;
         RenderType = ObjectRenderType.Mesh;
+        id = 102;
     }
     protected override void Start()
     {

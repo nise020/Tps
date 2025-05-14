@@ -5,14 +5,7 @@ using UnityEngine.UI;
 
 public class ItemIcon : MonoBehaviour
 {
-    [System.Serializable]
-    public class ItemDatas
-    {
-        public string itemName;
-        public int itemID;
-        public int quantity;
-        // 필요한 속성들 추가
-    }
+    
 
     Image itemImage;
     Item Item;

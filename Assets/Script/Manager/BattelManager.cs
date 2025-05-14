@@ -3,6 +3,7 @@ using SimpleJSON;
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using UnityEditor;
 using UnityEngine;
 using UnityEngine.Networking;
 
@@ -79,7 +80,7 @@ public class BattelManager : MonoBehaviour
     }
     private void Start()
     {
-        DamageShadarLoad();
+        //DamageShadarLoad();
     }
 
     private void DamageShadarLoad()
@@ -107,7 +108,8 @@ public class BattelManager : MonoBehaviour
         DamageColor(_defender);
 
         HpBar hpBar = _defender.GetComponentInChildren<HpBar>();//임시로 몬스터만 있음
-        hpBar.DamageImageActive((int)attakerPower);
+        hpBar.AttackDamageEvent?.Invoke((int)attakerPower);
+
         //Shader[] shader = _defender.gameObject.GetComponentsInChildren<Shader>();
     }
     private float DamageCalculator(float _attakerPower ,float _cri) 

@@ -14,7 +14,7 @@ public partial class AtlasManager : MonoBehaviour
     public List<Image> UiImag = new List<Image>();
     public List<string> AtlasName;
     public List<string> DamageSpritName;
-    public List<string> SpritName;
+    public List<string> ItemSpritName;
     public UnityEngine.Sprite GetSpritAtlas(string _Atlas, string _name) 
     {
         if (DicSpritAtlas.ContainsKey(_Atlas))
@@ -56,10 +56,10 @@ public partial class AtlasManager : MonoBehaviour
     {
         //SpriteRenderer sprite = gameObject.GetComponent<SpriteRenderer>();
 
-        for (int iNum = 0; iNum < SpritName.Count; iNum++)
+        for (int iNum = 0; iNum < ItemSpritName.Count; iNum++)
         {
-            UiImag[iNum].overrideSprite = GetSpritAtlas($"{AtlasName[iNum]}", $"{SpritName[iNum]}");
-            Debug.Log($"Image Object Name = {AtlasName[iNum]},{SpritName[iNum]}");
+            UiImag[iNum].overrideSprite = GetSpritAtlas($"{AtlasName[iNum]}", $"{ItemSpritName[iNum]}");
+            Debug.Log($"Image Object Name = {AtlasName[iNum]},{ItemSpritName[iNum]}");
         }
 
         gameObject.AddComponent<SpriteRenderer>();

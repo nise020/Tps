@@ -521,7 +521,7 @@ MonoBehaviour:
   - Number7 7x10
   - Number8 7x10
   - Number9 7x10
-  SpritName: []
+  ItemSpritName: []
 --- !u!1001 &221877651
 PrefabInstance:
   m_ObjectHideFlags: 0

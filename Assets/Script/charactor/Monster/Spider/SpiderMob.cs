@@ -8,6 +8,7 @@ public partial class SpiderMob : Monster
     {
         monsterType = MonsterType.Spider;
         RenderType = ObjectRenderType.Skin;
+        id = 101;
     }
     protected override void Start()
     {

@@ -8,6 +8,7 @@ public partial class DronMob : Monster
     {
         monsterType = MonsterType.Dron;
         RenderType = ObjectRenderType.Mesh;
+        id = 103;
     }
     protected override void Start()
     {

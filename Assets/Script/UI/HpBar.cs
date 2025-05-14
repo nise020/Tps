@@ -37,6 +37,9 @@ public partial class HpBar : MonoBehaviour
     private List<GameObject> numberImages_10 = new List<GameObject>();
     private List<GameObject> numberImages_100 = new List<GameObject>();
     private List<GameObject> numberImages_1000 = new List<GameObject>();
+
+    public Action<int> AttackDamageEvent;
+
     private void Awake()
     {
         Place_1 = DamageBarObj.transform.Find("1");
@@ -153,6 +156,7 @@ public partial class HpBar : MonoBehaviour
     {
         CHARACTER = charactor;
         CHARACTER.onHpChanged += SetHp;
+        AttackDamageEvent += DamageImageActive;
         //CHARACTER.onHpChanged += OnHpChanged;
         //HpImage(CHARACTER);
     }

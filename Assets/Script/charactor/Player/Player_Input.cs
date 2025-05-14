@@ -17,7 +17,9 @@ public partial class Player : Charactor
 
         while (Shared.InputManager.KeyinPutQueData.Count > 0)//key 
         {
+
             KeyCode type = Shared.InputManager.KeyinPutQueData.Dequeue();
+
             switch (type)
             {
                 case KeyCode.Mouse1:

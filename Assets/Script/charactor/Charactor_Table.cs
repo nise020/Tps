@@ -19,7 +19,7 @@ public partial class Charactor : Actor
     protected int state;
     protected string prefabs;
     protected string img;
-    //protected int name;
+    protected new int name;
     protected int dec;//설명
 
     protected float atkValue;//공격력

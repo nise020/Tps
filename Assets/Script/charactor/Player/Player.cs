@@ -116,8 +116,8 @@ public partial class Player : Charactor
     {
         return PlayerKey;
     }
-    protected void GetItem(Item _item) 
+    public void GetItem(Item _item) 
     {
-        //Shared.InventoryManager.
+        Shared.InventoryManager.items.Add(_item);//이건 아이템 드랍시
     }
 }

@@ -35,8 +35,8 @@ TagManager:
   - Skill
   - Effect
   - Body
-  - 
-  - 
+  - TriggerZone
+  - Item
   - 
   - 
   m_SortingLayers:

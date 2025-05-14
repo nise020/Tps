@@ -22,6 +22,8 @@ public enum LayerName
     RootBody,
     Body,
     WeaponHand,
+    TriggerZone,
+    Item,
 }
 public enum ModelName 
 {

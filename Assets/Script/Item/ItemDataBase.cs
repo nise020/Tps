@@ -6,20 +6,17 @@ using UnityEngine;
 [System.Serializable]
 public class ItemData
 {
-    public string itemName;
     public int itemID;
+    public int itemName;
     public int quantity;
-    public Sprite icon;
+    public Sprite ItemSprite;
     // 필요한 속성들 추가
 }
-
-public class ItemDataBase 
+//public Dictionary<Item, ItemData> ItemDiction = new Dictionary<Item, ItemData>();
+public class ItemDataBase
 {
-    
-
     public List<Item> items;
 
     public Dictionary<Item, ItemData> itemDatasDict = new Dictionary<Item, ItemData>();
 
-    //public void 
 }

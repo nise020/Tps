@@ -12,7 +12,7 @@ public partial class AtlasManager : MonoBehaviour
     [NonReorderable]
     Dictionary<string,SpriteAtlas> DicSpritAtlas = new Dictionary<string,SpriteAtlas>();
     public List<Image> UiImag = new List<Image>();
-    public List<string> AtlasName;
+    public List<string> AtlasName;//테이블 로드
     public List<string> DamageSpritName;
     public List<string> ItemSpritName;
     public UnityEngine.Sprite GetSpritAtlas(string _Atlas, string _name) 
@@ -64,14 +64,8 @@ public partial class AtlasManager : MonoBehaviour
 
         gameObject.AddComponent<SpriteRenderer>();
 
-        //GetSpritAtlas(string _Atlas, string _name)
     }
-    //private void Start()
-    //{
-    //    //MySprite();
-    //    //GetSpritAtlas("Common", "ak-47");
-    //    //GetSpritAtlas("Damage", "Number1 7x10");
-    //}
+
     public List<GameObject> AtlasLoad(List<GameObject> _imageObjects, AtlasType _atlasType) 
     {
         for (int iNum = 0; iNum < AtlasName.Count; iNum++) 

@@ -4,22 +4,46 @@ using UnityEngine;
 
 public class HitCheck : MonoBehaviour
 {
-    Gun guns;
-    void Start()
+    Player PLAYER;
+    Item item;
+    TriggerZoneState triggerZoneState = TriggerZoneState.Trigger_Off;
+    List<Item> items;
+
+    public void init(Player _player) 
     {
-        guns = GetComponentInParent<Gun>();
+        PLAYER = _player;
+        //PLAYER.GetItem(item);
     }
-    private void OnTriggerEnter(Collider other)//레이저 사이트에 닿았는지 체크
+    public Queue<Item> itemsQueue = new Queue<Item>();
+    private void OnTriggerEnter(Collider other)//체크박스에 닿으면 정렬에 추가
     {
-        //guns
+        int Weapon = LayerMask.NameToLayer(LayerName.Weapon.ToString());
+        int Item = LayerMask.NameToLayer(LayerName.Item.ToString());
+
+        if (other.gameObject.layer == Item ||
+            other.gameObject.layer == Weapon) 
+        {
+            Item item = other.gameObject.GetComponent<Item>();
+            //itemsQueue.Enqueue(item);
+            items.Add(item);
+            GameEvents.OnEnterRange?.Invoke(item);
+        }
     }
     private void OnTriggerExit(Collider other)
     {
-        //guns
-    }
-    // Start is called before the first frame update
+        int Weapon = LayerMask.NameToLayer(LayerName.Weapon.ToString());
+        int Item = LayerMask.NameToLayer(LayerName.Item.ToString());
 
-    // Update is called once per frame
+        if (other.gameObject.layer == Item ||
+            other.gameObject.layer == Weapon)
+        {
+            Item item = other.gameObject.GetComponent<Item>();
+            //itemsQueue.Enqueue(item);
+            items.Add(item);
+            GameEvents.OnExitRange?.Invoke(item);
+        }
+    }
+    
     void Update()
     {
         

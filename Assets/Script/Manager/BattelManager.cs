@@ -10,7 +10,6 @@ using UnityEngine.Networking;
 public class BattelManager : MonoBehaviour
 {
     public UI_Battle ui;
-    GameEvents GAMEEVENTS;
     public GameObject CamAim;
 
     public bool GameOver = false;

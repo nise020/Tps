@@ -114,3 +114,8 @@ public enum CharctorStateEnum
     Player,
     AutoMode
 }
+public enum TriggerZoneState
+{
+    Trigger_On, 
+    Trigger_Off,
+}

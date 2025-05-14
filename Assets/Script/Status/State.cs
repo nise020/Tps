@@ -33,6 +33,7 @@ public partial class State : State_Base
         critRate = info.CritRate;
         critDamage = info.CritDamage;
     }
+
     public float StateValueLoad(StatusType _status) 
     {
         switch (_status)

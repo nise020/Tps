@@ -16,8 +16,9 @@ public abstract partial class Item : Actor
     //protected int state;
     protected string prefabs;
     protected string img;
-    //protected int name;
+    protected new int name;
     protected int dec;//설명
+
     public void Init(Table_Item.Info _info , ItemType _type)
     {
         switch (_type) //이대로 사용하면 모노비헤이비어를 상속 못 받음
@@ -40,11 +41,21 @@ public abstract partial class Item : Actor
         id = _info.Id;
         type = _info.Type;
         skill = _info.Skill;
-        //state = _info.State;
+        //state = _info.State;//테이블 연결 필요
         img = _info.Img;
         prefabs = _info.Prefabs;
-        //name = _info.Name;
-        dec = _info.Dec;//설명
+        //name = _info.Name;//테이블 연결 필요
+        //dec = _info.Dec;////테이블 연결 필요
+
+        //Data Setting
+        ItemData itemData = new ItemData();
+        itemData.itemID = id;
+        itemData.quantity = 1;
+        //itemData.itemName = name;//테이블 연결 필요
+        //itemData.icon =  img//Atlas load 필요
+
+        //Dictionary Add
+        Shared.InventoryManager.itemData.itemDatasDict.Add(this, itemData);
     }
     public void ItemTypeSetting(ItemType _type) 
     {

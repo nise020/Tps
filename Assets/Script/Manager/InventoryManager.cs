@@ -4,20 +4,26 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.IO;
 using UnityEngine;
-using static ItemIcon;
+using static Photon.Pun.UtilityScripts.TabViewManager;
 
 public partial class InventoryManager : MonoBehaviour 
 {
-    UnityEngine.Object itemIcon => Resources.Load("Prefabs/Ui/ItemTab");
+    //UnityEngine.Object itemIcon => Resources.Load("Prefabs/Ui/ItemIcon");
+    ItemIcon ITEMICON;
 
-    public List<Item> items;
-    public Dictionary<int,Item> itemDatasDict = new Dictionary<int, Item>();
+    Item ITEM;
+    public List <Item> items = new List<Item>();
+    //public Dictionary <int,Item> itemDatasDict = new Dictionary <int, Item>();
 
-    public Action<Item> ItemEvent;
+    public Action<Item> GetItemEvent;//아이템 드랍 대리자
+    public Action<Item> AddItemEvent;//아이템 Dictionary Add 대리자
+    
 
-    ItemDataBase itemData = new ItemDataBase();
+    public ItemDataBase itemData = new ItemDataBase();
 
-    public ItemIcon ITEMICON;
+    [SerializeField] GameObject InventoryObjct;
+    [SerializeField] Transform contantsu;
+    
     private void Awake()
     {
         if (Shared.InventoryManager == null)
@@ -32,17 +38,79 @@ public partial class InventoryManager : MonoBehaviour
     }
     private void Start()
     {
+        LoadObject();
+
+        //GetItemEvent += creatInventory;
+        //AddItemEvent += creatInventory;
+        //creatInventory();
         //Debug.Log($"{itemIcon}");
         //ItemEvent += AddItem;
         //inventoryItemObject = Resources.Load("Prefabs/Ui/ItemTab");
 
-        LoadInventory();
+        //LoadInventory();
 
     }
 
+    private void creatInventory(Item _item)
+    {
+        creatItem();
+        if (itemData.itemDatasDict.TryGetValue(ITEM,out ItemData data)) 
+        {
+        }
+    }
+
+    private void creatItem()
+    {
+        if (items.Count<=0) 
+        {
+            return;
+        }
+
+        GameObject tab = null ;// = Instantiate(contantsu.gameObject, InventoryObjct.transform);
+        int maxTabValue = 6;
+        for (int i = 0; i < items.Count; i++) 
+        {
+            if (i % maxTabValue == 0)
+            {
+                tab = Instantiate(contantsu.gameObject, InventoryObjct.transform);
+            }
+
+            if (itemData.itemDatasDict.TryGetValue(items[i], out ItemData data))
+            {
+                GameObject go = Instantiate(ITEMICON.gameObject, tab.transform);
+                ItemIcon icon = go.GetComponent<ItemIcon>();
+                icon.UpdateData(data);
+                items.RemoveAt(i);
+            }
+            else
+            {
+                tab = Instantiate(contantsu.gameObject, InventoryObjct.transform);
+            }
+        }
+        //for (int i = 0; i < itemData.itemDatasDict.Count; i++)
+        //{
+        //    GameObject go = Instantiate(ITEMICON.gameObject, contantsu);
+        //    ItemIcon icon = go.GetComponent<ItemIcon>();
+        //    if ()
+        //}
+        //GameObject go = Instantiate(ITEMICON.gameObject, contantsu);
+
+    }
+
+    public void LoadObject()
+    {
+        //UnityEngine.Object itemIcon => Resources.Load("Prefabs/Ui/ItemIcon");
+        //ItemIcon icon = itemIcon as ItemIcon;
+
+        GameObject go = Resources.Load<GameObject>("Prefabs/Ui/ItemIcon");
+        ItemIcon itemIcon = go.GetComponent<ItemIcon>();
+        ITEMICON = itemIcon;
+        //Debug.LogError($"ITEMICON = {ITEMICON}");
+    }
     private string GetSavePath()
     {
-        return Path.Combine(Application.persistentDataPath, "inventory.json");
+        //return Path.Combine(Application.persistentDataPath, "inventory.json");
+        return Path.Combine("/Assets/Resources/Json", "inventory.json");
     }
 
     public void SaveInventory()

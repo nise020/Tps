@@ -8,6 +8,7 @@ using UnityEngine.UIElements;
 public abstract partial class Charactor : Actor
 {
     protected HpBar HPBAR = new HpBar();
+    public Action<float, float> onHpChanged;
 
     //protected int power;//힘
     [SerializeField] GameObject hpBar;//uiHp
@@ -26,7 +27,6 @@ public abstract partial class Charactor : Actor
     protected Condition condition = Condition.health;//상태패턴
 
 
-    public Action<float, float> onHpChanged;
 
     protected Vector3 weaponOriginalPos = Vector3.zero;
     protected ObjectRenderType RenderType = ObjectRenderType.None;

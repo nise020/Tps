@@ -3,20 +3,20 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Table_State : Table_Base
+public class Table_Item_State : Table_Base
 {
     [Serializable]
     public class Info
     {
         public int Id;
-        public int MaxHP;   // 캐릭터 타입 (enum: Player, Monster, etc.)
         public int Power;    // → SkillTable의 Id
         public int Defense;   // → StatTable의 Id (기본 능력치 정보 등)
         public int Speed;  // → 리소스 로드용 프리팹 경로
         public int CritRate; // → UI에 사용할 이미지 경로fabs;
         public int CritDamage;     // → StringTable의 Id;
+        public int HP_Bonus;     // → 회복
     }
- 
+
     public Dictionary<int, Info> StateDictionary = new Dictionary<int, Info>();
 
     public Info Get(int _Id)
@@ -54,12 +54,12 @@ public class Table_State : Table_Base
     {
         if (_Reader.reset_row(_Row, _Col) == false) return false;
         _Reader.get(_Row, ref _info.Id);
-        _Reader.get(_Row, ref _info.MaxHP);
         _Reader.get(_Row, ref _info.Power);
         _Reader.get(_Row, ref _info.Defense);
         _Reader.get(_Row, ref _info.Speed);
         _Reader.get(_Row, ref _info.CritRate);
         _Reader.get(_Row, ref _info.CritDamage);
+        _Reader.get(_Row, ref _info.HP_Bonus);
 
 
         return true;

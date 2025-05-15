@@ -4,7 +4,8 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.IO;
 using UnityEngine;
-using static Photon.Pun.UtilityScripts.TabViewManager;
+using UnityEngine.UIElements;
+using WebSocketSharp;
 
 public partial class InventoryManager : MonoBehaviour 
 {
@@ -12,7 +13,15 @@ public partial class InventoryManager : MonoBehaviour
     ItemIcon ITEMICON;
 
     Item ITEM;
-    public List <Item> items = new List<Item>();
+
+    public class info 
+    {
+        public List<Transform> transforms = new List<Transform>();//slot
+
+    }
+    List<info> data = new List<info>();//줄
+    public List <Item> items = new List<Item>();//드랍 가능한 아이템 list
+    
     //public Dictionary <int,Item> itemDatasDict = new Dictionary <int, Item>();
 
     public Action<Item> GetItemEvent;//아이템 드랍 대리자
@@ -22,8 +31,11 @@ public partial class InventoryManager : MonoBehaviour
     public ItemDataBase itemData = new ItemDataBase();
 
     [SerializeField] GameObject InventoryObjct;
-    [SerializeField] Transform contantsu;
+    [SerializeField] GameObject contantsu;
+    [SerializeField] Transform creatTab;
     
+    List<GameObject> TabObject = new List<GameObject>();
+
     private void Awake()
     {
         if (Shared.InventoryManager == null)
@@ -38,65 +50,102 @@ public partial class InventoryManager : MonoBehaviour
     }
     private void Start()
     {
-        LoadObject();
-
-        //GetItemEvent += creatInventory;
-        //AddItemEvent += creatInventory;
-        //creatInventory();
-        //Debug.Log($"{itemIcon}");
-        //ItemEvent += AddItem;
-        //inventoryItemObject = Resources.Load("Prefabs/Ui/ItemTab");
-
-        //LoadInventory();
+        creatInventorySlot();
+        GameEvents.OnExitRange += AddPrompt;
+        GameEvents.OnEnterRange += RemovePrompt;
 
     }
-
-    private void creatInventory(Item _item)
+    private void OnDestroy()
     {
-        creatItem();
-        if (itemData.itemDatasDict.TryGetValue(ITEM,out ItemData data)) 
-        {
-        }
+        GameEvents.OnEnterRange -= AddPrompt;
+        GameEvents.OnExitRange -= RemovePrompt;
     }
-
-    private void creatItem()
+    private void Update()
     {
-        if (items.Count<=0) 
+        if (Input.GetKey(KeyCode.K)) 
         {
-            return;
+            AddItemData();
         }
-
-        GameObject tab = null ;// = Instantiate(contantsu.gameObject, InventoryObjct.transform);
-        int maxTabValue = 6;
-        for (int i = 0; i < items.Count; i++) 
+    }
+    void AddPrompt(Item item)
+    {
+        if (!items.Contains(item))
         {
-            if (i % maxTabValue == 0)
-            {
-                tab = Instantiate(contantsu.gameObject, InventoryObjct.transform);
-            }
-
-            if (itemData.itemDatasDict.TryGetValue(items[i], out ItemData data))
-            {
-                GameObject go = Instantiate(ITEMICON.gameObject, tab.transform);
-                ItemIcon icon = go.GetComponent<ItemIcon>();
-                icon.UpdateData(data);
-                items.RemoveAt(i);
-            }
-            else
-            {
-                tab = Instantiate(contantsu.gameObject, InventoryObjct.transform);
-            }
+            items.Add(item);
+            CreatePromptUI(item); // 실제 안내 메시지 생성
         }
-        //for (int i = 0; i < itemData.itemDatasDict.Count; i++)
-        //{
-        //    GameObject go = Instantiate(ITEMICON.gameObject, contantsu);
-        //    ItemIcon icon = go.GetComponent<ItemIcon>();
-        //    if ()
-        //}
-        //GameObject go = Instantiate(ITEMICON.gameObject, contantsu);
-
     }
 
+    void RemovePrompt(Item item)
+    {
+        if (items.Contains(item))
+        {
+            items.Remove(item);
+            RemovePromptUI(item); // 해당 메시지 제거
+        }
+    }
+
+    void CreatePromptUI(Item item)
+    {
+        int id = (int)item.ItemNumberValueLoad(ItemDataType.Id);
+        string image = item.ItemStringValueLoad(ItemDataType.Image);
+        string prefabs = item.ItemStringValueLoad(ItemDataType.Prefabs);
+
+
+
+        // item.item.name, item.item.icon 등 table에서 불러와 UI 생성
+    }
+
+    void RemovePromptUI(Item item)
+    {
+        // 해당 item에 대응되는 UI 오브젝트 제거
+    }
+
+    private void creatInventorySlot()
+    {
+        //GameObject InventoryObjct; 인벤토리 속 아이템 칸
+        //Transform contantsu;//인벤토리 속 아이템 줄
+        //Transform creatTab;//인벤토리 속 contantsu가 생성될 부모의 위치
+
+        int maxRows = 6;
+
+        for (int i = 0; i < maxRows; i++)
+        {
+            data.Add(new info());
+        }
+
+        for (int row = 0; row < maxRows; row++)
+        {
+            GameObject tab = Instantiate(contantsu, creatTab);
+
+            int count = contantsu.transform.childCount;
+
+            foreach (Transform t in contantsu.transform) 
+            {
+                data[row].transforms.Add(t);
+            }
+            TabObject.Add(tab);
+            tab.gameObject.SetActive(false);
+        }
+    }
+    int count = 0;
+    public void AddItemData() 
+    {
+        Item item = items[count];
+
+        for (int i = 0; i < TabObject.Count; i++) 
+        {
+            if (TabObject[i].gameObject.transform.childCount!=null) 
+            {
+
+            }
+        }
+
+
+        items.Remove(items[count]);
+        count++;
+
+    }
     public void LoadObject()
     {
         //UnityEngine.Object itemIcon => Resources.Load("Prefabs/Ui/ItemIcon");

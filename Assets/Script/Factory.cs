@@ -52,7 +52,7 @@ public static class Factory
         var iteminfo = Shared.TableManager.Item.Get(_value);
         if (iteminfo != null)
         {
-            item.Init(iteminfo, _type);
+            //item.Init(iteminfo, _type);
         }
         else
         {

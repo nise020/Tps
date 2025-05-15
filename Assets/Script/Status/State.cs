@@ -18,12 +18,12 @@ public partial class State : State_Base
     public void init(Actor _actor, int _stateId) 
     {
         Actor = _actor;
-        var info = Shared.TableManager.State.Get(_stateId);
+        var info = Shared.TableManager.Character_State.Get(_stateId);
         Debug.Log($"{_actor.name},{this}={info}");
         StateUpdate(info);
     }
 
-    private void StateUpdate(Table_State.Info info)
+    private void StateUpdate(Table_Character_State.Info info)
     {
         id = info.Id;
         maxHP = info.MaxHP;

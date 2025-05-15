@@ -46,42 +46,12 @@ public partial class UI_Battle : UiBase
     private void Start()
     {
         CursurRect = GetComponent<RectTransform>();
-        GameEvents.OnExitRange += AddPrompt;
-        GameEvents.OnEnterRange += RemovePrompt;
     }
     private void OnDestroy()
     {
-        GameEvents.OnEnterRange -= AddPrompt;
-        GameEvents.OnExitRange -= RemovePrompt;
     }
 
-    void AddPrompt(Item item)
-    {
-        if (!items.Contains(item))
-        {
-            items.Add(item);
-            CreatePromptUI(item); // 실제 안내 메시지 생성
-        }
-    }
-
-    void RemovePrompt(Item item)
-    {
-        if (items.Contains(item))
-        {
-            items.Remove(item);
-            RemovePromptUI(item); // 해당 메시지 제거
-        }
-    }
-
-    void CreatePromptUI(Item item)
-    {
-        // item.item.name, item.item.icon 등 table에서 불러와 UI 생성
-    }
-
-    void RemovePromptUI(Item item)
-    {
-        // 해당 item에 대응되는 UI 오브젝트 제거
-    }
+    
     private void Update()
     {
         while (Shared.InputManager.UiKeyinPutQueData.Count > 0)//key

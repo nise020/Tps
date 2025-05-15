@@ -81,6 +81,18 @@ public enum ItemType
     Consumable,
 
 }
+public enum ItemDataType
+{
+    Id,
+    Type,
+    Skill,
+    State,
+    Prefabs,
+    Image,
+    Name,
+    Dec,//Ό³Έν
+
+}
 public enum EffectType
 {
     None,
@@ -163,4 +175,5 @@ public enum ShaderOptionType
 public enum AtlasType
 {
     Damage,
+    Item
 }

@@ -7,7 +7,7 @@ using UnityEngine;
 public class ItemData
 {
     public int itemID;
-    public int itemName;
+    public string itemName;
     public int quantity;
     public Sprite ItemSprite;
     // 필요한 속성들 추가

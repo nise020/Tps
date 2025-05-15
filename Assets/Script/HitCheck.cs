@@ -7,7 +7,7 @@ public class HitCheck : MonoBehaviour
     Player PLAYER;
     Item item;
     TriggerZoneState triggerZoneState = TriggerZoneState.Trigger_Off;
-    List<Item> items;
+    List<Item> items = new List<Item>();
 
     public void init(Player _player) 
     {
@@ -17,13 +17,14 @@ public class HitCheck : MonoBehaviour
     public Queue<Item> itemsQueue = new Queue<Item>();
     private void OnTriggerEnter(Collider other)//체크박스에 닿으면 정렬에 추가
     {
+        //List<Item> items = new List<Item>();
         int Weapon = LayerMask.NameToLayer(LayerName.Weapon.ToString());
         int Item = LayerMask.NameToLayer(LayerName.Item.ToString());
 
         if (other.gameObject.layer == Item ||
             other.gameObject.layer == Weapon) 
         {
-            Item item = other.gameObject.GetComponent<Item>();
+            Item item = other.gameObject.GetComponentInParent<Item>();
             //itemsQueue.Enqueue(item);
             items.Add(item);
             GameEvents.OnEnterRange?.Invoke(item);
@@ -44,8 +45,4 @@ public class HitCheck : MonoBehaviour
         }
     }
     
-    void Update()
-    {
-        
-    }
 }

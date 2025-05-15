@@ -58,7 +58,7 @@ public partial class Charactor : Actor
         dec = _info.Dec;//Ό³Έν
         Debug.Log($"{gameObject}={_info.State}\\");
     }
-
+  
     protected void stateInIt()
     {
         hP = (int)STATE.StateValueLoad(StatusType.MaxHP);

@@ -65,10 +65,10 @@ public partial class HpBar : MonoBehaviour
         numberImages_100 = DamageTransformLoad(Place_100);
         numberImages_1000 = DamageTransformLoad(Place_100);
 
-        numberImages_1 = Shared.AtlasManager.AtlasLoad(numberImages_1, AtlasType.Damage);
-        numberImages_10 = Shared.AtlasManager.AtlasLoad(numberImages_10, AtlasType.Damage);
-        numberImages_100 = Shared.AtlasManager.AtlasLoad(numberImages_100, AtlasType.Damage);
-        numberImages_1000 = Shared.AtlasManager.AtlasLoad(numberImages_1000, AtlasType.Damage);
+        numberImages_1 = Shared.AtlasManager.AtlasLoad_List(numberImages_1, AtlasType.Damage);
+        numberImages_10 = Shared.AtlasManager.AtlasLoad_List(numberImages_10, AtlasType.Damage);
+        numberImages_100 = Shared.AtlasManager.AtlasLoad_List(numberImages_100, AtlasType.Damage);
+        numberImages_1000 = Shared.AtlasManager.AtlasLoad_List(numberImages_1000, AtlasType.Damage);
 
         Place_1.gameObject.SetActive(false);
         Place_10.gameObject.SetActive(false);

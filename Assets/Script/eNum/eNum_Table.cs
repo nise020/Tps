@@ -1,11 +1,12 @@
 public enum TableType 
 {
     Character,
+    Character_State,
     Item,
+    Item_State,
     ItemType,
     Weapon,
     WeaponType,
-    State,
     CharacterClass,
     EquipmentSlot,
     Skill,
@@ -33,7 +34,7 @@ public enum ItemTableType : byte
     Armor = 3,
     Accessory = 4,
     Quest = 5,        // 퀘스트 아이템
-    Etc = 6
+    Etc = 6,
 }
 public enum WeaponTableType : byte
 {

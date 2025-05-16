@@ -3,7 +3,9 @@ using System.Collections;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.IO;
+using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.EventSystems;
 using UnityEngine.UIElements;
 using WebSocketSharp;
 
@@ -28,7 +30,7 @@ public partial class InventoryManager : MonoBehaviour
     public Action<Item> AddItemEvent;//아이템 Dictionary Add 대리자
     
 
-    public ItemDataBase itemData = new ItemDataBase();
+    public ItemDataBase itemDatas = new ItemDataBase();
 
     [SerializeField] GameObject InventoryObjct;
     [SerializeField] GameObject contantsu;
@@ -51,8 +53,8 @@ public partial class InventoryManager : MonoBehaviour
     private void Start()
     {
         creatInventorySlot();
-        GameEvents.OnExitRange += AddPrompt;
-        GameEvents.OnEnterRange += RemovePrompt;
+        GameEvents.OnEnterRange += AddPrompt;
+        GameEvents.OnExitRange += RemovePrompt;
 
     }
     private void OnDestroy()
@@ -62,9 +64,10 @@ public partial class InventoryManager : MonoBehaviour
     }
     private void Update()
     {
-        if (Input.GetKey(KeyCode.K)) 
+        if (Input.GetKeyDown(KeyCode.K)) 
         {
-            AddItemData();
+            //AddItemData();
+            StartCoroutine(AddItemDataCoroutine());
         }
     }
     void AddPrompt(Item item)
@@ -98,17 +101,18 @@ public partial class InventoryManager : MonoBehaviour
 
     void RemovePromptUI(Item item)
     {
+        //if()
         // 해당 item에 대응되는 UI 오브젝트 제거
     }
 
-    private void creatInventorySlot()
+    private void creatInventorySlot()//슬롯 생성
     {
         //GameObject InventoryObjct; 인벤토리 속 아이템 칸
         //Transform contantsu;//인벤토리 속 아이템 줄
         //Transform creatTab;//인벤토리 속 contantsu가 생성될 부모의 위치
 
         int maxRows = 6;
-
+        int number = 0;
         for (int i = 0; i < maxRows; i++)
         {
             data.Add(new info());
@@ -120,70 +124,60 @@ public partial class InventoryManager : MonoBehaviour
 
             int count = contantsu.transform.childCount;
 
-            foreach (Transform t in contantsu.transform) 
+            foreach (Transform t in tab.transform) 
             {
+                ItemIcon icon = t.GetComponent<ItemIcon>();
+                icon.IconId = number;
+
                 data[row].transforms.Add(t);
+                number++;
             }
             TabObject.Add(tab);
-            tab.gameObject.SetActive(false);
+            //tab.gameObject.SetActive(false);
         }
     }
-    int count = 0;
-    public void AddItemData() 
+    int count = 0;//임시
+    int adress = 0;//임시
+    private IEnumerator AddItemDataCoroutine()
     {
-        Item item = items[count];
+        if (count >= items.Count)
+            yield break;
 
-        for (int i = 0; i < TabObject.Count; i++) 
+        Item item = items[adress];
+        int id = (int)item.ItemNumberValueLoad(ItemDataType.Id);
+
+        for (int i = 0; i < TabObject.Count; i++)
         {
-            if (TabObject[i].gameObject.transform.childCount!=null) 
-            {
+            Transform tab = TabObject[i].transform;
 
+            for (int j = 0; j < tab.childCount; j++)
+            {
+                Transform iconTransform = tab.GetChild(j);
+                ItemIcon icon = iconTransform.GetComponent<ItemIcon>();
+
+                if (!icon.ItemDataCheck(id))
+                {
+                    Debug.Log($"tab = {tab},iconTransform = {iconTransform}," +
+                              $"icon = {icon},item = {item},");
+
+                    ItemData data = itemDatas.itemDatasDict.GetValueOrDefault(item);
+                    icon.ItemDataCheck(data);
+                    items.RemoveAt(adress);
+                    yield break;
+                }
+                else 
+                {
+                    Debug.Log($"{icon}의 ID와 {id}는 같습니다");
+                }
+                
+                yield return null;
             }
         }
-
-
-        items.Remove(items[count]);
-        count++;
-
-    }
-    public void LoadObject()
-    {
-        //UnityEngine.Object itemIcon => Resources.Load("Prefabs/Ui/ItemIcon");
-        //ItemIcon icon = itemIcon as ItemIcon;
-
-        GameObject go = Resources.Load<GameObject>("Prefabs/Ui/ItemIcon");
-        ItemIcon itemIcon = go.GetComponent<ItemIcon>();
-        ITEMICON = itemIcon;
-        //Debug.LogError($"ITEMICON = {ITEMICON}");
-    }
-    private string GetSavePath()
-    {
-        //return Path.Combine(Application.persistentDataPath, "inventory.json");
-        return Path.Combine("/Assets/Resources/Json", "inventory.json");
     }
 
-    public void SaveInventory()
-    {
-        string json = JsonUtility.ToJson(ITEMICON, true); // true는 들여쓰기 옵션
-        File.WriteAllText(GetSavePath(), json);
-        Debug.Log("Inventory saved to: " + GetSavePath());
-    }
+    public void OnButten() { }
 
-    public void LoadInventory()
-    {
-        string path = GetSavePath();
-        if (File.Exists(path))
-        {
-            string json = File.ReadAllText(path);
-            ITEMICON = JsonUtility.FromJson<ItemIcon>(json);
-            Debug.Log("Inventory loaded.");
-        }
-        else
-        {
-            ITEMICON = new ItemIcon(); // 새 인벤토리 생성
-            Debug.Log("No save file found. Created new inventory.");
-        }
-    }
+
     public void AddItem(Item _item, int _id, int _quantity) 
     {
         items.Add(_item);
@@ -195,8 +189,29 @@ public partial class InventoryManager : MonoBehaviour
         //}
 
     }
+
     public void RemoveItem(Item _item) 
     {
 
     }
+
+    public void OnDwon(PointerEventData eventData) 
+    {
+
+    }
+
+    public void OnUP(PointerEventData eventData) 
+    {
+
+    }
+
+    public void OnDrag(PointerEventData eventData) 
+    {
+
+    }
+
+
+
+
+
 }

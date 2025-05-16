@@ -27,6 +27,9 @@ public class HitCheck : MonoBehaviour
             Item item = other.gameObject.GetComponentInParent<Item>();
             //itemsQueue.Enqueue(item);
             items.Add(item);
+            ItemData data = item.dataLoad();
+            Shared.InventoryManager.itemDatas.itemDatasDict.Add(item, data);
+
             GameEvents.OnEnterRange?.Invoke(item);
         }
     }

@@ -5,6 +5,8 @@ using UnityEngine;
 public abstract partial class Item : Actor
 {
     protected State STATE = new State();
+    protected ItemDataBase itemDatas => Shared.InventoryManager.itemDatas;
+
 
     protected int id_Item;
     protected byte type_Item;
@@ -63,6 +65,7 @@ public abstract partial class Item : Actor
         //dec = _info.Dec;////테이블 연결 필요
 
         //Data Setting
+
         ItemData itemData = new ItemData();
         itemData.itemID = id_Item;
         itemData.quantity = 1;
@@ -70,9 +73,16 @@ public abstract partial class Item : Actor
         //itemData.icon =  img//Atlas load 필요
 
         //Dictionary Add
-        Shared.InventoryManager.itemData.itemDatasDict.Add(this, itemData);
+        Shared.InventoryManager.itemDatas.itemDatasDict.Add(this, itemData);
     }
-
+    public ItemData dataLoad() 
+    {
+        ItemData itemData = new ItemData();
+        itemData.itemID = id_Item;
+        itemData.itemImage = img_Item;
+        itemData.quantity = 1;
+        return itemData;
+    } 
     public float ItemNumberValueLoad(ItemDataType _type)
     {
         switch (_type)

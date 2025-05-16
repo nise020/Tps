@@ -111,8 +111,15 @@ public partial class AtlasManager : MonoBehaviour
         {
             string atlasName = AtlasName[_number];
             Sprite sprite = GetSpritAtlas(atlasName, _spriteName[iNum]);
-            datas.Add(_spriteName[iNum], sprite);
 
+            if (sprite != null && !datas.ContainsKey(_spriteName[iNum]))
+            {
+                datas.Add(_spriteName[iNum], sprite);
+            }
+            else if (sprite == null)
+            {
+                Debug.LogWarning($"Sprite '{_spriteName[iNum]}' not found in atlas '{atlasName}'");
+            }
         };
         return datas;
     }

@@ -1,44 +1,51 @@
+ï»¿using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.ComponentModel;
 using UnityEngine;
-using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
-public partial class ItemIcon : MonoBehaviour//,IPointerDownHandler, IPointerUpHandler, IDragHandler
+public partial class ItemIcon : MonoBehaviour//,IPointerDownHandler//, IPointerUpHandler, IDragHandler
 {
-    [SerializeField]Image itemImage;//¾ÆÀÌÅÛ ÀÌ¹ÌÁö
-    [SerializeField]Image itemQuantityImage;//¾ÆÀÌÅÛ ¼ö·® ÀÌ¹ÌÁö
+    [SerializeField]Image itemImage;//ì•„ì´í…œ ì´ë¯¸ì§€
+    [SerializeField]Image itemQuantityImage;//ì•„ì´í…œ ìˆ˜ëŸ‰ ì´ë¯¸ì§€
 
     private Dictionary< string, Sprite> itemImageDatas = new Dictionary<string, Sprite>();
+    private Dictionary< int, Sprite> itemQuantityDatas = new Dictionary<int, Sprite>();
     Item Item;
 
     ItemData itemData;
     public int IconId;
 
-    int id_ItemIcon;
-    string img_ItemIcon;
-    int quantity_ItemIcon;
-    //private void OnEnable()//²¸Áú¶§
+    public ItemIconState itemIconState = ItemIconState.None_Item_Data;
+
+    [SerializeField] int item_Id_ItemIcon;
+    [SerializeField] string item_Img_ItemIcon;
+    [SerializeField] int item_Quantity_ItemIcon;
+    Image DefoltImage;
+    //private void OnEnable()//ê»´ì§ˆë•Œ
     //{
 
     //}
-    //private void OnDisable()//²¨Áú¶§
+    //private void OnDisable()//êº¼ì§ˆë•Œ
     //{
 
     //}
 
     private void Start()
     {
+        DefoltImage = itemImage;
         itemImageDatas = Shared.AtlasManager.AtlasLoad_Dictionary(AtlasType.Item);
+        //itemQuantityDatas = Shared.AtlasManager.AtlasLoad_Dictionary(AtlasType.Item);<- ìˆ˜ëŸ‰ìœ¼ë¡œ ë°”ê¿”ì•¼í•¨
 
         Debug.Log($"{gameObject},itemImageDatas.Count = {itemImageDatas.Count},Id = {IconId}");
         //gameObject.SetActive(false);
     }
     public bool ItemDataCheck(int _id) 
     {
-        if (_id == 0|| id_ItemIcon == _id) 
+        if (_id == item_Id_ItemIcon)
         {
-            Debug.LogError($"id_ItemIcon ={id_ItemIcon},_id = {_id} ÀÔ´Ï´Ù");
+            Debug.LogError($"id_ItemIcon ={item_Id_ItemIcon},_id = {_id} ì…ë‹ˆë‹¤");
             return true;
         }
         else
@@ -47,48 +54,141 @@ public partial class ItemIcon : MonoBehaviour//,IPointerDownHandler, IPointerUpH
         }
 
     }
-    public void ItemDataCheck(ItemData _data) 
+
+    public bool HasSameItem(int targetID)
+    {
+        return itemIconState == ItemIconState.Have_a_Item_Data && item_Id_ItemIcon == targetID;
+    }
+
+    public bool IsEmpty()
+    {
+        return itemIconState == ItemIconState.None_Item_Data || itemData.itemID == 0;
+    }
+
+    public void IncreaseQuantity(ItemData _data)
+    {
+        item_Quantity_ItemIcon += _data.quantity;
+        //UpdateQuantityDisplay();//ìˆ˜ëŸ‰ ì´ë¯¸ì§€ êµì²´
+    }
+
+    private void UpdateQuantityDisplay(int _count)
+    {
+        if (itemQuantityDatas.ContainsKey(_count))
+        {
+            Sprite sprite = itemQuantityDatas[_count];
+            itemImage.sprite = sprite;
+            //itemQuantityImage.sprite = sprite;
+            Debug.Log($"sprite = {sprite}");
+        }
+        else
+        {
+
+            Debug.LogError($"itemImageDatas ì•ˆì—{_count}ì— í•´ë‹¹í•˜ëŠ” ê°’ì´ ì—†ìŠµë‹ˆë‹¤");
+        }
+    }
+
+    public void ItemDataSave(ItemData _data) 
     {
         if (!gameObject.activeSelf) 
         {
             gameObject.SetActive(true);
         }
 
-        if (_data.itemID != id_ItemIcon)
-        {
-            id_ItemIcon = _data.itemID;
-            img_ItemIcon = _data.itemImage;
-            quantity_ItemIcon = _data.quantity;
+        item_Id_ItemIcon = _data.itemID;
+        item_Img_ItemIcon = _data.itemImage;
+        item_Quantity_ItemIcon = _data.quantity;
+        itemData = _data;
 
-            itemData = _data;
+        itemIconState = ItemIconState.Have_a_Item_Data;
+        UpdateSprite(item_Img_ItemIcon);
 
-            Debug.Log($"{gameObject},{IconId},{id_ItemIcon},{img_ItemIcon},{quantity_ItemIcon}");
-            // ItemTab1,1,Number3 7x10,1
-            UpdateSprite(img_ItemIcon);
-        }
-        else 
-        {
-            Debug.Log($"id_ItemIcon¿Í {_data.itemID}´Â °ªÀÌ °°½À´Ï´Ù");
-        }
-
-        
+        Debug.Log($"{gameObject},{IconId},{item_Id_ItemIcon},{item_Img_ItemIcon},{item_Quantity_ItemIcon}");
     }
+    public void QuantityPlus(ItemData _data) 
+    {
+        item_Quantity_ItemIcon += _data.quantity;
+    }
+    public void ItemDataSwap(ItemData _data) 
+    {
+        if (_data == null || _data.itemID == 0)
+        {
+            itemIconState = ItemIconState.None_Item_Data;
+            itemImage.sprite = DefoltImage.sprite;
+            item_Id_ItemIcon = 0;
+            item_Quantity_ItemIcon = 0;
+            item_Img_ItemIcon = null;
+            itemData = null;
+            return;
+        }
+
+        item_Id_ItemIcon = _data.itemID;
+        item_Img_ItemIcon = _data.itemImage;
+        item_Quantity_ItemIcon = _data.quantity;
+        itemData = _data;
+        itemIconState = ItemIconState.Have_a_Item_Data;
+
+        UpdateSprite(_data.itemImage);
+        //UpdateQuantityDisplay();//ìˆ˜ëŸ‰ ì´ë¯¸ì§€ êµì²´
+    }
+    public void Clear()
+    {
+        itemIconState = ItemIconState.None_Item_Data;
+        itemData = null;
+        item_Id_ItemIcon = 0;
+        item_Img_ItemIcon = null;
+        item_Quantity_ItemIcon = 0;
+        itemImage.sprite = DefoltImage.sprite;
+        //UpdateSprite(null);
+    }
+    public void UpdateVisual()
+    {
+        if (itemData == null || itemData.itemID == 0)
+        {
+            itemImage = DefoltImage;
+            itemIconState = ItemIconState.None_Item_Data;
+            item_Quantity_ItemIcon = 0;
+        }
+        else
+        {
+            itemImage.sprite = itemData.ItemSprite; // ë˜ëŠ” UpdateSprite(itemData.ItemSprite)
+            itemIconState = ItemIconState.Have_a_Item_Data;
+            item_Quantity_ItemIcon = itemData.quantity;
+        }
+    }
+
     public ItemData LoadData() 
     { 
         return itemData;
     }
     public void UpdateSprite(string _data)
     {
+        if (string.IsNullOrEmpty(_data))
+        {
+            Debug.LogWarning("UpdateSprite called with null or empty string.");
+            itemImage = DefoltImage;
+            return;
+        }
+        if (!itemImageDatas.TryGetValue(_data, out var sprite) || sprite == null)
+        {
+            Debug.LogError($"âŒ Sprite not found for key: {_data}");
+            itemImage.sprite = null;
+            return;
+        }
+
         if (itemImageDatas.ContainsKey(_data)) 
         {
-            Sprite sprite = itemImageDatas[_data];
-            itemImage.sprite = sprite;
-            Debug.Log($"sprite = {sprite}");
+            Sprite itemSprite = itemImageDatas[_data];
+
+            itemImage.sprite = itemSprite;
+            itemData.ItemSprite = itemSprite;
+            Debug.Log($"sprite: {itemSprite.name}, texture: {itemSprite.texture}");
+            //itemQuantityImage.sprite = sprite;
+            Debug.Log($"sprite = {itemSprite}");
         }
         else
         {
-            
-            Debug.LogError($"itemImageDatas ¾È¿¡{_data}¿¡ ÇØ´çÇÏ´Â °ªÀÌ ¾ø½À´Ï´Ù");
+            itemImage.sprite = DefoltImage.sprite;
+            Debug.LogError($"itemImageDatas ì•ˆì—{_data}ì— í•´ë‹¹í•˜ëŠ” ê°’ì´ ì—†ìŠµë‹ˆë‹¤");
         }
     }
     public void Use_Item_Butten()

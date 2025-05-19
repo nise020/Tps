@@ -41,9 +41,12 @@ public class HitCheck : MonoBehaviour
         if (other.gameObject.layer == Item ||
             other.gameObject.layer == Weapon)
         {
-            Item item = other.gameObject.GetComponent<Item>();
-            //itemsQueue.Enqueue(item);
-            items.Add(item);
+            Item item = other.gameObject.GetComponentInParent<Item>();
+            if (Shared.InventoryManager.itemDatas.itemDatasDict.ContainsKey(item))
+            {
+                Shared.InventoryManager.itemDatas.itemDatasDict.Remove(item);
+                GameEvents.OnExitRange?.Invoke(item);
+            }
             GameEvents.OnExitRange?.Invoke(item);
         }
     }

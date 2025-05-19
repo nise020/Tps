@@ -2,29 +2,47 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
+using UnityEngine.InputSystem;
+using UnityEngine.UI;
 
 public partial class ItemIcon : MonoBehaviour
 {
+    private Vector2 localMousePos;
+    private RectTransform rectTransform;
+    private RectTransform beforRectTransform;
+    private Canvas canvas;
+    private GameObject IconSwapImg;
     //IPointerDownHandler, IPointerUpHandler, IDragHandler
-    public void OnPointerDown(BaseEventData eventData)
+
+    private void Awake()
     {
+        rectTransform = GetComponent<RectTransform>();
+        //if (EventSystem.current.IsPointerOverGameObject(Mouse.current.deviceId))
+        //{
+        //    Debug.Log("신 Input 시스템에서 마우스가 UI 위에 있음");
+        //}
+    }
+    public void OnDown(BaseEventData eventData)//누름
+    {
+        Shared.InventoryManager.OnDown(eventData,this,itemData);
+    }
+
+    public void OnDrag(BaseEventData eventData)//따라 움직이지
+    {
+        Shared.InventoryManager.OnDrag(eventData);
+
+    }
+    public void OnUp(BaseEventData eventData)//땜
+    {
+        Shared.InventoryManager.EndDrag(eventData);
 
     }
 
-    public void OnDrag(BaseEventData eventData)
-    {
-        PointerEventData pointerData = eventData as PointerEventData;
-        //Shared.InventoryManager.UpdateDrag(pointerData.position);
-    }
-
-    public void OnPointerUp(BaseEventData eventData)
-    {
-
-    }
     public void OnDrop(BaseEventData eventData)
     {
 
     }
+
     public void UpdateData(ItemData _data)
     {
         itemData = _data;

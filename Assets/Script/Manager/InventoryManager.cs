@@ -1,13 +1,10 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.ComponentModel;
-using System.IO;
-using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UIElements;
-using WebSocketSharp;
+using static Photon.Pun.UtilityScripts.TabViewManager;
 
 public partial class InventoryManager : MonoBehaviour 
 {
@@ -18,8 +15,7 @@ public partial class InventoryManager : MonoBehaviour
 
     public class info 
     {
-        public List<Transform> transforms = new List<Transform>();//slot
-
+        public List<RectTransform> transforms = new List<RectTransform>();//slot
     }
     List<info> data = new List<info>();//줄
     public List <Item> items = new List<Item>();//드랍 가능한 아이템 list
@@ -37,7 +33,9 @@ public partial class InventoryManager : MonoBehaviour
     [SerializeField] Transform creatTab;
     
     List<GameObject> TabObject = new List<GameObject>();
+    Canvas CanvasInventory;
 
+    
     private void Awake()
     {
         if (Shared.InventoryManager == null)
@@ -49,6 +47,8 @@ public partial class InventoryManager : MonoBehaviour
         {
             Destroy(this);
         }
+        CanvasInventory = GetComponentInParent<Canvas>();
+        dragIcon.gameObject.SetActive(false);
     }
     private void Start()
     {
@@ -69,6 +69,7 @@ public partial class InventoryManager : MonoBehaviour
             //AddItemData();
             StartCoroutine(AddItemDataCoroutine());
         }
+        //draggingMove();
     }
     void AddPrompt(Item item)
     {
@@ -124,7 +125,7 @@ public partial class InventoryManager : MonoBehaviour
 
             int count = contantsu.transform.childCount;
 
-            foreach (Transform t in tab.transform) 
+            foreach (RectTransform t in tab.transform) 
             {
                 ItemIcon icon = t.GetComponent<ItemIcon>();
                 icon.IconId = number;
@@ -145,33 +146,37 @@ public partial class InventoryManager : MonoBehaviour
 
         Item item = items[adress];
         int id = (int)item.ItemNumberValueLoad(ItemDataType.Id);
+        ItemData data = itemDatas.itemDatasDict.GetValueOrDefault(item);
 
         for (int i = 0; i < TabObject.Count; i++)
         {
             Transform tab = TabObject[i].transform;
-
             for (int j = 0; j < tab.childCount; j++)
             {
                 Transform iconTransform = tab.GetChild(j);
                 ItemIcon icon = iconTransform.GetComponent<ItemIcon>();
 
-                if (!icon.ItemDataCheck(id))
+                if (icon.IsEmpty())//빈칸
                 {
-                    Debug.Log($"tab = {tab},iconTransform = {iconTransform}," +
-                              $"icon = {icon},item = {item},");
-
-                    ItemData data = itemDatas.itemDatasDict.GetValueOrDefault(item);
-                    icon.ItemDataCheck(data);
+                    icon.ItemDataSave(data);
                     items.RemoveAt(adress);
+                    itemDatas.itemDatasDict.Remove(item);
+                    item.gameObject.SetActive(false);
                     yield break;
                 }
-                else 
+                if(icon.HasSameItem(id))//수량증가
                 {
-                    Debug.Log($"{icon}의 ID와 {id}는 같습니다");
+                    icon.IncreaseQuantity(data);//수량 증가
+                    items.RemoveAt(adress);
+                    itemDatas.itemDatasDict.Remove(item);
+                    item.gameObject.SetActive(false);
+                    yield break;
                 }
-                
+
+
                 yield return null;
             }
+
         }
     }
 
@@ -195,20 +200,7 @@ public partial class InventoryManager : MonoBehaviour
 
     }
 
-    public void OnDwon(PointerEventData eventData) 
-    {
 
-    }
-
-    public void OnUP(PointerEventData eventData) 
-    {
-
-    }
-
-    public void OnDrag(PointerEventData eventData) 
-    {
-
-    }
 
 
 

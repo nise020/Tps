@@ -124,3 +124,8 @@ public enum DragState
 {
     None, Dragging 
 }
+public enum ItemIconState
+{
+    None_Item_Data,
+    Have_a_Item_Data,
+}

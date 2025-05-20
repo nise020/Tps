@@ -129,3 +129,12 @@ public enum ItemIconState
     None_Item_Data,
     Have_a_Item_Data,
 }
+public enum IconSlotType
+{
+    None,
+    Weapon,
+    Armor,
+    Boots,
+    Glove,
+    InvenTory
+}

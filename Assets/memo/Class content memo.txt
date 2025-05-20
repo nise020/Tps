@@ -188,3 +188,6 @@ Hp바를 흔드는걸로 타격감을 줄수 있다
 void OnParticleTrigger()
 void OnParticleCollision(GameObject other)
 //파티클이 많으면 과부화가 온다
+
+
+프로파일러 체크

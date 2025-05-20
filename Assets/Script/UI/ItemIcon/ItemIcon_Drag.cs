@@ -34,7 +34,7 @@ public partial class ItemIcon : MonoBehaviour
     }
     public void OnUp(BaseEventData eventData)//¶«
     {
-        Shared.InventoryManager.EndDrag(eventData);
+        Shared.InventoryManager.EndDrag(eventData,this, itemData);
 
     }
 

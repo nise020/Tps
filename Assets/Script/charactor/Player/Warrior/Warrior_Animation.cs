@@ -12,6 +12,7 @@ public partial class Warrior : Player
     public void RangeCheak() 
     {
         Vector3 weaponPos = new Vector3();
+
         if (firstSkillCheck == SkillState.SkillOn)
         {
             weaponPos = SkillParentObj1.transform.position;

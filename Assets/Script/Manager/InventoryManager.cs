@@ -5,6 +5,7 @@ using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UIElements;
 using static Photon.Pun.UtilityScripts.TabViewManager;
+using static UnityEditor.Progress;
 
 public partial class InventoryManager : MonoBehaviour 
 {
@@ -31,8 +32,14 @@ public partial class InventoryManager : MonoBehaviour
     [SerializeField] GameObject InventoryObjct;
     [SerializeField] GameObject contantsu;
     [SerializeField] Transform creatTab;
-    
-    List<GameObject> TabObject = new List<GameObject>();
+
+    [SerializeField] ItemIcon armorIcon;
+    [SerializeField] ItemIcon weaponIcon;
+    [SerializeField] ItemIcon gloveIcon;
+    [SerializeField] ItemIcon bootsIcon;
+
+    List<GameObject> TabObject = new List<GameObject>();//InvenTorySlotList
+    List<ItemIcon> ArmorObject = new List<ItemIcon>();//InvenTorySlotList
     Canvas CanvasInventory;
 
     
@@ -52,11 +59,32 @@ public partial class InventoryManager : MonoBehaviour
     }
     private void Start()
     {
+        ArmorIconAdd();
         creatInventorySlot();
         GameEvents.OnEnterRange += AddPrompt;
         GameEvents.OnExitRange += RemovePrompt;
 
     }
+
+    private void ArmorIconAdd()
+    {
+        armorIcon.acceptedItemType = ItemType.Armor;
+        weaponIcon.acceptedItemType = ItemType.Weapon;
+        bootsIcon.acceptedItemType = ItemType.Boots;
+        gloveIcon.acceptedItemType = ItemType.Gloves;
+
+        armorIcon.IsEquipmentSlot = true;
+        weaponIcon.IsEquipmentSlot = true;
+        bootsIcon.IsEquipmentSlot = true;
+        gloveIcon.IsEquipmentSlot = true;
+
+
+        ArmorObject.Add(armorIcon);
+        ArmorObject.Add(weaponIcon);
+        ArmorObject.Add(bootsIcon);
+        ArmorObject.Add(gloveIcon);
+    }
+
     private void OnDestroy()
     {
         GameEvents.OnEnterRange -= AddPrompt;
@@ -66,11 +94,72 @@ public partial class InventoryManager : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.K)) 
         {
-            //AddItemData();
-            StartCoroutine(AddItemDataCoroutine());
+            if (count >= items.Count) return;
+
+            Item item = items[adress];
+            ItemData data = itemDatas.itemDatasDict.GetValueOrDefault(item);
+            int id = (int)item.ItemNumberValueLoad(ItemDataType.Id);
+
+            StartCoroutine(AddItemDataCoroutine(data, item));
         }
         //draggingMove();
     }
+    private IEnumerator AddItemDataCoroutine(ItemData _data,Item _item)
+    {
+        //if (count >= items.Count)
+        //    yield break;
+
+        int id = 0;
+
+        if (_item != null) 
+        {
+            id = (int)_item.ItemNumberValueLoad(ItemDataType.Id);
+        }
+
+        for (int i = 0; i < TabObject.Count; i++)
+        {
+            Transform tab = TabObject[i].transform;
+            for (int j = 0; j < tab.childCount; j++)
+            {
+                Transform iconTransform = tab.GetChild(j);
+                ItemIcon icon = iconTransform.GetComponent<ItemIcon>();
+
+                if (icon.IsEmpty())//ºóÄ­
+                {
+                    icon.ItemDataSave(_data);
+
+                    items.RemoveAt(adress);
+
+                    if (itemDatas.itemDatasDict.ContainsKey(_item) && _item != null)
+                    {
+                        itemDatas.itemDatasDict.Remove(_item);
+                        _item.gameObject.SetActive(false);
+                    }
+
+                    yield break;
+                }
+                if (icon.HasSameItem(id))//¼ö·® Áõ°¡
+                {
+                    icon.IncreaseQuantity(_data);
+
+                    items.RemoveAt(adress);
+
+                    if (itemDatas.itemDatasDict.ContainsKey(_item)&& _item != null) 
+                    {
+                        itemDatas.itemDatasDict.Remove(_item);
+                        _item.gameObject.SetActive(false);
+                    }
+                    yield break;
+                }
+
+
+                yield return null;
+            }
+
+        }
+    }
+
+
     void AddPrompt(Item item)
     {
         if (!items.Contains(item))
@@ -129,7 +218,7 @@ public partial class InventoryManager : MonoBehaviour
             {
                 ItemIcon icon = t.GetComponent<ItemIcon>();
                 icon.IconId = number;
-
+                icon.iconSlotType = IconSlotType.InvenTory;
                 data[row].transforms.Add(t);
                 number++;
             }
@@ -139,46 +228,7 @@ public partial class InventoryManager : MonoBehaviour
     }
     int count = 0;//ÀÓ½Ã
     int adress = 0;//ÀÓ½Ã
-    private IEnumerator AddItemDataCoroutine()
-    {
-        if (count >= items.Count)
-            yield break;
-
-        Item item = items[adress];
-        int id = (int)item.ItemNumberValueLoad(ItemDataType.Id);
-        ItemData data = itemDatas.itemDatasDict.GetValueOrDefault(item);
-
-        for (int i = 0; i < TabObject.Count; i++)
-        {
-            Transform tab = TabObject[i].transform;
-            for (int j = 0; j < tab.childCount; j++)
-            {
-                Transform iconTransform = tab.GetChild(j);
-                ItemIcon icon = iconTransform.GetComponent<ItemIcon>();
-
-                if (icon.IsEmpty())//ºóÄ­
-                {
-                    icon.ItemDataSave(data);
-                    items.RemoveAt(adress);
-                    itemDatas.itemDatasDict.Remove(item);
-                    item.gameObject.SetActive(false);
-                    yield break;
-                }
-                if(icon.HasSameItem(id))//¼ö·®Áõ°¡
-                {
-                    icon.IncreaseQuantity(data);//¼ö·® Áõ°¡
-                    items.RemoveAt(adress);
-                    itemDatas.itemDatasDict.Remove(item);
-                    item.gameObject.SetActive(false);
-                    yield break;
-                }
-
-
-                yield return null;
-            }
-
-        }
-    }
+   
 
     public void OnButten() { }
 

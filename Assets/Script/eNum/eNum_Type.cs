@@ -78,6 +78,9 @@ public enum ItemType
     Material,
     QuestItem,
     Weapon,
+    Armor,
+    Boots,
+    Gloves,
     Consumable,
 
 }

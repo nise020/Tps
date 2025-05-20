@@ -18,11 +18,15 @@ public partial class ItemIcon : MonoBehaviour//,IPointerDownHandler//, IPointerU
     public int IconId;
 
     public ItemIconState itemIconState = ItemIconState.None_Item_Data;
+    public IconSlotType iconSlotType = IconSlotType.None;
+    public ItemType acceptedItemType = ItemType.None;
+    public ItemType itemType = ItemType.None;
+    public bool IsEquipmentSlot;
 
     [SerializeField] int item_Id_ItemIcon;
     [SerializeField] string item_Img_ItemIcon;
     [SerializeField] int item_Quantity_ItemIcon;
-    Image DefoltImage;
+    Sprite DefoltSprite;
     //private void OnEnable()//껴질때
     //{
 
@@ -34,7 +38,7 @@ public partial class ItemIcon : MonoBehaviour//,IPointerDownHandler//, IPointerU
 
     private void Start()
     {
-        DefoltImage = itemImage;
+        DefoltSprite = itemImage.sprite;//BackGround
         itemImageDatas = Shared.AtlasManager.AtlasLoad_Dictionary(AtlasType.Item);
         //itemQuantityDatas = Shared.AtlasManager.AtlasLoad_Dictionary(AtlasType.Item);<- 수량으로 바꿔야함
 
@@ -97,6 +101,8 @@ public partial class ItemIcon : MonoBehaviour//,IPointerDownHandler//, IPointerU
         item_Id_ItemIcon = _data.itemID;
         item_Img_ItemIcon = _data.itemImage;
         item_Quantity_ItemIcon = _data.quantity;
+        itemType = _data.itemType;
+
         itemData = _data;
 
         itemIconState = ItemIconState.Have_a_Item_Data;
@@ -112,39 +118,38 @@ public partial class ItemIcon : MonoBehaviour//,IPointerDownHandler//, IPointerU
     {
         if (_data == null || _data.itemID == 0)
         {
-            itemIconState = ItemIconState.None_Item_Data;
-            itemImage.sprite = DefoltImage.sprite;
-            item_Id_ItemIcon = 0;
-            item_Quantity_ItemIcon = 0;
-            item_Img_ItemIcon = null;
-            itemData = null;
+            Clear();
             return;
         }
 
         item_Id_ItemIcon = _data.itemID;
         item_Img_ItemIcon = _data.itemImage;
         item_Quantity_ItemIcon = _data.quantity;
+        itemType = _data.itemType;
+
         itemData = _data;
+
         itemIconState = ItemIconState.Have_a_Item_Data;
 
         UpdateSprite(_data.itemImage);
         //UpdateQuantityDisplay();//수량 이미지 교체
     }
-    public void Clear()
+    private void Clear()
     {
         itemIconState = ItemIconState.None_Item_Data;
+        itemType = ItemType.None;
         itemData = null;
         item_Id_ItemIcon = 0;
         item_Img_ItemIcon = null;
         item_Quantity_ItemIcon = 0;
-        itemImage.sprite = DefoltImage.sprite;
+        itemImage.sprite = DefoltSprite;
         //UpdateSprite(null);
     }
     public void UpdateVisual()
     {
         if (itemData == null || itemData.itemID == 0)
         {
-            itemImage = DefoltImage;
+            itemImage.sprite = DefoltSprite;
             itemIconState = ItemIconState.None_Item_Data;
             item_Quantity_ItemIcon = 0;
         }
@@ -165,7 +170,7 @@ public partial class ItemIcon : MonoBehaviour//,IPointerDownHandler//, IPointerU
         if (string.IsNullOrEmpty(_data))
         {
             Debug.LogWarning("UpdateSprite called with null or empty string.");
-            itemImage = DefoltImage;
+            itemImage.sprite = DefoltSprite;
             return;
         }
         if (!itemImageDatas.TryGetValue(_data, out var sprite) || sprite == null)
@@ -187,7 +192,7 @@ public partial class ItemIcon : MonoBehaviour//,IPointerDownHandler//, IPointerU
         }
         else
         {
-            itemImage.sprite = DefoltImage.sprite;
+            itemImage.sprite = DefoltSprite;
             Debug.LogError($"itemImageDatas 안에{_data}에 해당하는 값이 없습니다");
         }
     }

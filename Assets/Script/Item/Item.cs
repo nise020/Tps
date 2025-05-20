@@ -4,7 +4,7 @@ using UnityEngine;
 
 public abstract partial class Item : Actor
 {  
-    protected ItemType itemType = ItemType.None;
+    protected ItemType Type_Item = ItemType.None;
     int ItemValue = 0;
     
     protected virtual void WeaponItemInit(Table_Item.Info _info)
@@ -14,11 +14,11 @@ public abstract partial class Item : Actor
 
     public void ItemTypeSetting(ItemType _type) 
     {
-        itemType = _type;
+        Type_Item = _type;
     }
     public void Iteminit(ItemType _type) 
     {
-        _type = itemType;
+        _type = Type_Item;
     }
     //public virtual int useitem(ItemType _type) 
     //{

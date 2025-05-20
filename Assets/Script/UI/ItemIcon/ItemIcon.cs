@@ -14,7 +14,7 @@ public partial class ItemIcon : MonoBehaviour//,IPointerDownHandler//, IPointerU
     private Dictionary< int, Sprite> itemQuantityDatas = new Dictionary<int, Sprite>();
     Item Item;
 
-    ItemData itemData;
+    ItemData itemData = new ItemData();
     public int IconId;
 
     public ItemIconState itemIconState = ItemIconState.None_Item_Data;

@@ -81,6 +81,7 @@ public abstract partial class Item : Actor
         itemData.itemID = id_Item;
         itemData.itemImage = img_Item;
         itemData.quantity = 1;
+        itemData.itemType = Type_Item;
         return itemData;
     } 
     public float ItemNumberValueLoad(ItemDataType _type)

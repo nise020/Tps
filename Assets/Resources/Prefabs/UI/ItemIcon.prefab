@@ -1042,6 +1042,10 @@ MonoBehaviour:
   itemQuantityImage: {fileID: 5633807832287384646}
   IconId: 0
   itemIconState: 0
+  iconSlotType: 0
+  acceptedItemType: 0
+  itemType: 0
+  IsEquipmentSlot: 0
   item_Id_ItemIcon: 0
   item_Img_ItemIcon: 
   item_Quantity_ItemIcon: 0

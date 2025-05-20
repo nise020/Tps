@@ -182,40 +182,34 @@ public partial class InventoryManager : MonoBehaviour
         #endregion
 
     }
-    private void installItem(ItemIcon a, ItemIcon b) 
+    private void installItem(ItemIcon _start, ItemIcon _end) 
     {
-        if (a.IsEmpty() && b.IsEmpty()) return;
+        if (_start.IsEmpty() && _end.IsEmpty()) return;
 
-        ItemData dataA = a.LoadData();
-        ItemData dataB = b.LoadData();
+        ItemData dataA = _start.LoadData();
+        ItemData dataB = _end.LoadData();
 
-        if (!b.IsEmpty() && b.IsEquipmentSlot)
+        if(_end.IsEquipmentSlot && dataA != null)
         {
-            if (dataA.itemType != b.acceptedItemType)
+            if (dataA.itemType != _end.acceptedItemType)
             {
-                Debug.Log("❌ a 아이템 타입이 b 장비 슬롯 타입과 맞지 않음");
+                Debug.Log("❌ 드래그한 아이템 타입이 장비 슬롯 타입과 맞지 않음");
                 return;
             }
         }
 
-        // b → a 방향 스왑 시 a가 장비 슬롯이라면 타입 체크
-        if (!a.IsEmpty() && a.IsEquipmentSlot)
+        // 아이템 스왑
+        _start.ItemDataSwap(dataB);
+        _end.ItemDataSwap(dataA);
+
+        _start.UpdateVisual();
+        _end.UpdateVisual();
+
+        // 이전에 장착돼 있던 아이템이 인벤으로 돌아가는 경우만 코루틴 실행
+        if (_start.IsEquipmentSlot && dataB != null)
         {
-            if (dataB.itemType != a.acceptedItemType)
-            {
-                Debug.Log("❌ b 아이템 타입이 a 장비 슬롯 타입과 맞지 않음");
-                return;
-            }
+            StartCoroutine(AddItemDataCoroutine(dataB, null));
         }
-
-        a.ItemDataSwap(dataB);
-        b.ItemDataSwap(dataA);
-
-        a.UpdateVisual();
-        b.UpdateVisual();
-
-        StartCoroutine(AddItemDataCoroutine(dataB,null));
-
     }
     private bool IsCompatible(IconSlotType slot, ItemType item)
     {

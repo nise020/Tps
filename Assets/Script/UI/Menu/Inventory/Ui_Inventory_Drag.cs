@@ -4,59 +4,59 @@ using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
-using static UnityEngine.Rendering.DebugUI.Table;
 
-public partial class InventoryManager : MonoBehaviour
+public partial class Ui_Inventory : UiBase
 {
     public DragState currentState = DragState.None;
-    private ItemIcon draggingIcon;
-    ItemData swapItemData = null;
+    private ItemIcon SwapItemIcon;
+    //ItemData swapItemData = null;
     private GameObject draggingVisual;
-    [SerializeField] RectTransform dragIcon;
+    [SerializeField] RectTransform dragImageObject;
     RectTransform parentRect;
     private Vector2 dragOffset;
 
     [SerializeField] RectTransform inventoryTabRect;
     [SerializeField] RectTransform armorTabRect;
 
+    Dictionary<int,ItemIcon> ItemIconData = new Dictionary<int,ItemIcon>();
+
     public void OnDown(BaseEventData eventData, ItemIcon _itemIcon, ItemData _data)
     {
         if (_itemIcon.IsEmpty()) return;
 
-        swapItemData = _data;
-        draggingIcon = _itemIcon;
+        //swapItemData = _data;
+        SwapItemIcon = _itemIcon;
+        Debug.Log($"itemType = {SwapItemIcon.itemType},{SwapItemIcon.acceptedItemType}");
 
-
-        dragIcon.transform.SetParent(CanvasInventory.transform, worldPositionStays: false);
-        dragIcon.transform.SetAsLastSibling(); // 항상 위에 그리기
-
-
+        dragImageObject.transform.SetParent(CanvasInventory.transform, worldPositionStays: false);
+        dragImageObject.transform.SetAsLastSibling(); // 항상 위에 그리기
 
         PointerEventData pointer = eventData as PointerEventData;
 
-        parentRect = dragIcon.parent as RectTransform;
+        parentRect = dragImageObject.parent as RectTransform;
 
         Vector2 localPoint;
+
         RectTransformUtility.ScreenPointToLocalPointInRectangle(parentRect,pointer.position,
             CanvasInventory.worldCamera,out localPoint
         );
         //eventData.pressEventCamera
-        dragIcon.anchoredPosition = localPoint;
+        dragImageObject.anchoredPosition = localPoint;
 
-        Image image = dragIcon.GetComponent<Image>();
+        Image image = dragImageObject.GetComponent<Image>();
         image.sprite = _data.ItemSprite;
 
         Color color = image.color;
         color.a = 100;
         image.color = color;
 
-        dragIcon.SetAsLastSibling();
+        dragImageObject.SetAsLastSibling();
 
-        dragIcon.gameObject.SetActive(true);
+        dragImageObject.gameObject.SetActive(true);
     }
     public void OnDrag(BaseEventData eventData)
     {
-        if (dragIcon.gameObject.activeSelf)
+        if (dragImageObject.gameObject.activeSelf)
         {
             Vector2 pos;
             RectTransformUtility.ScreenPointToLocalPointInRectangle(
@@ -64,51 +64,91 @@ public partial class InventoryManager : MonoBehaviour
                 Input.mousePosition,
                 CanvasInventory.worldCamera,
                 out pos);
-            dragIcon.anchoredPosition = pos;
+            dragImageObject.anchoredPosition = pos;
         }
     }
 
     public void EndDrag(BaseEventData eventData,ItemIcon _icon, ItemData _data)
     {
-        if (dragIcon.gameObject.activeSelf)
+        if (dragImageObject.gameObject.activeSelf)
         {
-            Rect rectA = GetWorldRect(dragIcon);
+            Rect rectA = GetWorldRect(dragImageObject);
             Rect rectInventory = GetWorldRect(inventoryTabRect);
             Rect rectArmor = GetWorldRect(armorTabRect);
 
             if (rectA.Overlaps(rectInventory, true)) //in thr Inventory
             {
-                for (int row = 0; row < TabObject.Count; row++)
+                #region Before
+                //if(ItemIconData.TryGetValue(draggingIcon.IconId, out ItemIcon icon))
+                //    //Dictionary<int,ItemIcon> ItemIconData
+                //{
+                //    if (icon == draggingIcon) continue; // 자기 자신이면 스킵
+
+                //    Rect rectB = GetWorldRect(data[row].transforms[col]);
+
+                //    if (rectA.Overlaps(rectB, true))
+                //    {
+                //        SwapIcons(draggingIcon, targetIcon);
+                //        goto End;
+                //    }
+                //}
+                //InvenIconLists;
+
+                //for (int row = 0; row < TabObject.Count; row++)
+                //{
+                //    int count = TabObject[row].gameObject.transform.childCount;
+
+                //    for (int col = 0; col < count; col++)
+                //    {
+                //        ItemIcon targetIcon = data[row].transforms[col].GetComponent<ItemIcon>();
+
+                //        if (targetIcon == draggingIcon) continue; // 자기 자신이면 스킵
+
+                //        Rect rectB = GetWorldRect(data[row].transforms[col]);
+
+                //        if (rectA.Overlaps(rectB, true))
+                //        {
+                //            SwapIcons(draggingIcon, targetIcon);
+                //            goto End;
+                //        }
+                //    }
+                //}
+                #endregion
+                for (int row = 0; row < InvenIconLists.Count; row++)
                 {
-                    int count = TabObject[row].gameObject.transform.childCount;
+                    ItemIcon targetIcon = InvenIconLists[row].GetComponent<ItemIcon>();
 
-                    for (int col = 0; col < count; col++)
+                    RectTransform iconRect = targetIcon.gameObject.GetComponent<RectTransform>();
+
+                    Rect rectB = GetWorldRect(iconRect);
+
+                    if (targetIcon == SwapItemIcon && rectA.Overlaps(rectB, true)) continue; // 자기 자신이면 스킵
+
+                    if (rectA.Overlaps(rectB, true))
                     {
-                        ItemIcon targetIcon = data[row].transforms[col].GetComponent<ItemIcon>();
-
-                        if (targetIcon == draggingIcon) continue; // 자기 자신이면 스킵
-
-                        Rect rectB = GetWorldRect(data[row].transforms[col]);
-
-                        if (rectA.Overlaps(rectB, true))
-                        {
-                            SwapIcons(draggingIcon, targetIcon);
-                            goto End;
-                        }
+                        SwapIcons(SwapItemIcon, targetIcon);
+                        goto End;
                     }
+
                 }
+
+                
             }
             else if((rectA.Overlaps(rectArmor, true)))//in thr armorTab
             {
                 for (int row = 0; row < ArmorObject.Count; row++) 
                 {
-                    RectTransform rect = ArmorObject[row].GetComponent<RectTransform>();
+                    ItemIcon targetIcon = ArmorObject[row].GetComponent<ItemIcon>();
+
+                    RectTransform rect = targetIcon.gameObject.GetComponent<RectTransform>();
+
                     Rect rectB = GetWorldRect(rect);
+
+                    if (targetIcon == SwapItemIcon && rectA.Overlaps(rectB, true)) continue; // 자기 자신이면 스킵
 
                     if (rectA.Overlaps(rectB, true))
                     {
-                        //SwapIcons(draggingIcon, ArmorObject[row]);
-                        installItem(draggingIcon, ArmorObject[row]);
+                        installItem(SwapItemIcon, ArmorObject[row]);
                         goto End;
                     }
                 }
@@ -117,33 +157,36 @@ public partial class InventoryManager : MonoBehaviour
         }
 
         End:
-        dragIcon.gameObject.SetActive(false);
+        dragImageObject.gameObject.SetActive(false);
     }
 
 
     Rect GetWorldRect(RectTransform rt)
     {
         Vector3[] corners = new Vector3[4];
+
         rt.GetWorldCorners(corners); // 0: bottom-left, 1: top-left, 2: top-right, 3: bottom-right
+
         Vector2 size = corners[2] - corners[0]; // top-right - bottom-left → 가로, 세로 계산
+
         return new Rect(corners[0], size); // bottom-left 위치, size를 가진 Rect 반환
     }
-    private void SwapIcons(ItemIcon a, ItemIcon b)
+    private void SwapIcons(ItemIcon _start, ItemIcon _end)
     {
-        if (a.IsEmpty() && b.IsEmpty()) return;
+        if (_start.IsEmpty() && _end.IsEmpty()) return;
 
-        ItemData dataA = a.LoadData();
-        ItemData dataB = b.LoadData();
+        ItemData dataA = _start.LoadData();
+        ItemData dataB = _end.LoadData();
 
         if (dataA == dataB) return;
 
         //더블클릭
 
-        a.ItemDataSwap(dataB);
-        b.ItemDataSwap(dataA);
+        _start.ItemDataSwap(dataB);
+        _end.ItemDataSwap(dataA);
 
-        a.UpdateVisual();
-        b.UpdateVisual();
+        _start.UpdateVisual();
+        _end.UpdateVisual();
 
         #region memo
 
@@ -193,7 +236,7 @@ public partial class InventoryManager : MonoBehaviour
         {
             if (dataA.itemType != _end.acceptedItemType)
             {
-                Debug.Log("❌ 드래그한 아이템 타입이 장비 슬롯 타입과 맞지 않음");
+                Debug.LogError("❌ 드래그한 아이템 타입이 장비 슬롯 타입과 맞지 않음");
                 return;
             }
         }
@@ -205,7 +248,7 @@ public partial class InventoryManager : MonoBehaviour
         _start.UpdateVisual();
         _end.UpdateVisual();
 
-        // 이전에 장착돼 있던 아이템이 인벤으로 돌아가는 경우만 코루틴 실행
+        // 이전에 장착돼 있던 아이템이 인벤으로 돌아가는 경우
         if (_start.IsEquipmentSlot && dataB != null)
         {
             StartCoroutine(AddItemDataCoroutine(dataB, null));

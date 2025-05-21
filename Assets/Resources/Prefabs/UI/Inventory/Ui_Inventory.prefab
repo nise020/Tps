@@ -442,7 +442,6 @@ GameObject:
   m_Component:
   - component: {fileID: 8877249977206030499}
   - component: {fileID: 4009170331289058334}
-  - component: {fileID: 5127778306612652542}
   m_Layer: 5
   m_Name: Ui_Inventory
   m_TagString: Untagged
@@ -484,7 +483,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9ce0d637780f72a4d9c44940e0d682af, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  items: []
+  itemLists: []
   InventoryObjct: {fileID: 8899939576930400490, guid: bb83900fff874014289654f36944eebe, type: 3}
   contantsu: {fileID: 4101993811359520993, guid: debbe33daec83e6499477c614cb58efe, type: 3}
   creatTab: {fileID: 8419809461603194083}
@@ -493,35 +492,9 @@ MonoBehaviour:
   gloveIcon: {fileID: 5528350431663551884}
   bootsIcon: {fileID: 7848122308367296308}
   currentState: 0
-  dragIcon: {fileID: 3706920508522335312}
+  dragImageObject: {fileID: 3706920508522335312}
   inventoryTabRect: {fileID: 2157289491616513220}
   armorTabRect: {fileID: 1675040140456134909}
---- !u!114 &5127778306612652542
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3686430500790861623}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 30649d3a9faa99c48a7b1166b86bf2a0, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_Padding:
-    m_Left: 0
-    m_Right: 0
-    m_Top: 0
-    m_Bottom: 0
-  m_ChildAlignment: 0
-  m_Spacing: 0
-  m_ChildForceExpandWidth: 1
-  m_ChildForceExpandHeight: 1
-  m_ChildControlWidth: 0
-  m_ChildControlHeight: 1
-  m_ChildScaleWidth: 0
-  m_ChildScaleHeight: 0
-  m_ReverseArrangement: 0
 --- !u!1 &5159147113885702714
 GameObject:
   m_ObjectHideFlags: 0

@@ -29,3 +29,8 @@ public enum MonsterAttackState
     Attack_On,
     Attack_Off,
 }
+public enum MonsterDeathsState
+{
+    Deaths_Off,
+    Deaths_On,
+}

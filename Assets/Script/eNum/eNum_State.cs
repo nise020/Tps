@@ -138,3 +138,8 @@ public enum IconSlotType
     Glove,
     InvenTory
 }
+public enum UiState
+{
+    Ui_Off,
+    Ui_On,
+}

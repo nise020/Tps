@@ -31,25 +31,27 @@ public partial class UI_Battle : UiBase
     List<Item> items = new List<Item>();
     private void Awake()
     {
-        if (Shared.BattelUI == null)
-        {
-            Shared.BattelUI = this;
-            //SceneMgr ΩÃ±€≈Ê
-            DontDestroyOnLoad(gameObject);
-        }
-        else
-        {
-            Destroy(gameObject);
-        }
+        //if (Shared.BattelUI == null)
+        //{
+        //    Shared.BattelUI = this;
+        //    //SceneMgr ΩÃ±€≈Ê
+        //    DontDestroyOnLoad(gameObject);
+        //}
+        //else
+        //{
+        //    Destroy(gameObject);
+        //}
+        uiType = UiType.Menu;
     }
 
-    private void Start()
+    protected override void Start()
     {
+        base.Start();
         CursurRect = GetComponent<RectTransform>();
     }
-    private void OnDestroy()
-    {
-    }
+    //private void OnDestroy()
+    //{
+    //}
 
     
     private void Update()

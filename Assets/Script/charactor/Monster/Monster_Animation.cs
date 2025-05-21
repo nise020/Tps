@@ -6,7 +6,7 @@ public partial class Monster : Charactor
 {
     protected Animator monsterAnimator;
 
-    public void AttackAnimationEvent()//Event
+    public void AttackAnimationEvent()//AnimationEvent
     {
         //sin °î¼±<- gmsemffla
         if (monsterType == MonsterType.Sphere)
@@ -35,7 +35,35 @@ public partial class Monster : Charactor
     }
     public void DeathAnimationOut()//AnimationEvent
     {
-        monsterAnimator.SetInteger(MonsterAnimParameters.Death.ToString(), 0);
+        deathAnimation(MonsterDeathsState.Deaths_Off);
+
+        base.death();
+
+        ITEM.gameObject.SetActive(true);
+        ITEM.gameObject.transform.position = charactorModelTrs.position;
+        Debug.Log($"ITEM.gameObject.transform.position = {ITEM.gameObject.transform.position}\n" +
+                  $"charactorModelTrs.position = {charactorModelTrs.position}");
+
+        //Resurrection
+        Shared.MonsterManager.Resurrection(mobKey);
+
+        //Reset
+        stateInIt();
+        HPBAR.SetHp(maxHP, cheHP);
+
+        charactorModelTrs.gameObject.SetActive(false);//Body off
+    }
+    protected void deathAnimation(MonsterDeathsState _state) 
+    {
+        if (_state == MonsterDeathsState.Deaths_On)
+        {
+            monsterAnimator.SetInteger(MonsterAnimParameters.Death.ToString(), 1);
+            condition = Condition.Death;
+        }
+        else if (_state == MonsterDeathsState.Deaths_Off)
+        {
+            monsterAnimator.SetInteger(MonsterAnimParameters.Death.ToString(), 0);
+        }
     }
 
 
@@ -65,14 +93,6 @@ public partial class Monster : Charactor
         {
             //_state = MonsterAttackState.Attack_Off;
             monsterAnimator.SetInteger(MonsterAnimParameters.Attack.ToString(), 0);
-        }
-    }
-    protected void deathAnimation(MonsterAnimParameters _state) 
-    {
-        if (_state == MonsterAnimParameters.Death)
-        {
-            monsterAnimator.SetInteger(MonsterAnimParameters.Death.ToString(), 1);
-            condition = Condition.Death;
         }
     }
     protected bool AnimationCheck(MonsterWalkState _state)

@@ -20,15 +20,13 @@ public class ItemManager : MonoBehaviour
             Destroy(this);
         }
     }
-    void Start()
-    {
-        //creat();
-    }
+    
     public void ItemDataAdd(Monster _monster) 
     {
         int count = Random.Range(0, Items.Count);
-        creat();
+        GameObject go = Instantiate(Items[count].gameObject, _monster.transform);
         _monster.ItemUpdate(Items[count]);
+        //creat();
     }
     private void creat()
     {

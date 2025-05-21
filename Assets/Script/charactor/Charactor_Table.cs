@@ -56,20 +56,20 @@ public partial class Charactor : Actor
         prefabs = _info.Prefabs;
         //name = _info.Name;
         dec = _info.Dec;//Ό³Έν
-        Debug.Log($"{gameObject}={_info.State}\\");
+        //Debug.Log($"{gameObject}={_info.State}\\");
     }
   
     protected void stateInIt()
     {
-        hP = (int)STATE.StateValueLoad(StatusType.MaxHP);
+        maxHP = (int)STATE.StateValueLoad(StatusType.MaxHP);
         atkValue = STATE.StateValueLoad(StatusType.Power);
         speedValue = STATE.StateValueLoad(StatusType.Speed);
         defVAlue = STATE.StateValueLoad(StatusType.Defens);
         CritRateValue = STATE.StateValueLoad(StatusType.CritRate);
         CritDamageValue = STATE.StateValueLoad(StatusType.CritDamage);
 
-        cheHP = hP;
-        maxHP = hP;
-
+        hP = maxHP;
+        cheHP = maxHP;
+        Debug.Log($"{gameObject},hP = {hP},maxHP ={maxHP}");
     }
 }

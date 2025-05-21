@@ -5,7 +5,7 @@ using UnityEngine;
 public abstract partial class Item : Actor
 {
     protected State STATE = new State();
-    protected ItemDataBase itemDatas => Shared.InventoryManager.itemDatas;
+    protected ItemDataBase itemDatas => Shared.UiManager.UI_INVENTORY.itemDatas;
 
 
     protected int id_Item;
@@ -73,7 +73,7 @@ public abstract partial class Item : Actor
         //itemData.icon =  img//Atlas load ÇÊ¿ä
 
         //Dictionary Add
-        Shared.InventoryManager.itemDatas.itemDatasDict.Add(this, itemData);
+        Shared.UiManager.UI_INVENTORY.itemDatas.itemDatasDict.Add(this, itemData);
     }
     public ItemData dataLoad() 
     {

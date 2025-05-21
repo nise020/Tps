@@ -178,7 +178,7 @@ public partial class HpBar : MonoBehaviour
         imgHp.fillAmount = 1;
         imgEffect.fillAmount = 1;
     }
-    private void init()
+    public void init()
     {
         imgHp.fillAmount = 1;
         imgEffect.fillAmount = 1;

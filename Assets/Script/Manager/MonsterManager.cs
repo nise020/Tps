@@ -139,8 +139,8 @@ public class MonsterManager : MonoBehaviour
         MonsterList.Add(monster);
         monsterCount += 1;
 
+        Shared.ItemManager.ItemDataAdd(monster);
 
-        //Shared.ItemManager.ItemDataAdd(monster);
     }
     public void HpBarValue(int _max, int _min, Monster _monster)
     {
@@ -178,16 +178,22 @@ public class MonsterManager : MonoBehaviour
     public void Resurrection(int _number)
     {
         Monster monster = monsterData[_number];
-        StartCoroutine(Timer(monster.gameObject, 3.0f));
+        StartCoroutine(ResurrectionTimer(monster.gameObject, 3.0f));
         //Invoke("monsterData[_number].gameObject.SetActive(true)",10f);
     }
-    private IEnumerator Timer(GameObject _obj, float _time)
+    private IEnumerator ResurrectionTimer(GameObject _obj, float _time)
     {
         yield return new WaitForSeconds(_time);
         Monster monster = _obj.GetComponent<Monster>();
+
         Shared.ItemManager.ItemDataAdd(monster);
         monster.conditionUpdate(Condition.health);
-        _obj.gameObject.SetActive(true);
+
+        Transform monsterBody = monster.BodyObjectLoad();
+        monsterBody.gameObject.SetActive(true);
+
+        HpBar hpBar = monster.GetComponentInChildren<HpBar>();
+        hpBar.init();
     }
     public void PlayerCameraUpdate() 
     {

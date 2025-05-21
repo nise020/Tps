@@ -23,11 +23,6 @@ public partial class Monster : Charactor
         //STATE.MonsterState(monsterType);
         //stateInIt();
     }
-    protected virtual void FixedUpdate()
-    {
-        if (AI == null) { return; }
-        AI.State();
-    }
     private void LateUpdate()
     {
         //cameraInMonsterCheck();

@@ -14,15 +14,15 @@ public static class Shared //¸Ş¸ğ
     public static SoundManager SoundManager;
     public static ShakeCamera ShakeCamera;
     public static MainCamera MainCamera;
-    public static UI_Battle BattelUI;
+    //public static UI_Battle BattelUI;
     public static FaidInOut FaidInOut;
     public static InputManager InputManager;
     public static MonsterManager MonsterManager;
     public static CameraManager CameraManager;
     public static EffectManager EffectManager;
     public static ItemManager ItemManager;
-    public static InventoryManager InventoryManager;
-
+    //public static Ui_Inventory InventoryManager;
+    public static UiManager UiManager;
 
     public static TableManager TableManager;
     public static TableManager InutTableMgr() 

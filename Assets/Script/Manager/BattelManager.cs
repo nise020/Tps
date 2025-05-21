@@ -92,6 +92,8 @@ public class BattelManager : MonoBehaviour
     {
         float defenserHp = _defender.StatusTypeLoad(StatusType.HP);
 
+        if (defenserHp <= 0) return;
+
         float attakerPower = _attacker.StatusTypeLoad(StatusType.Power);
 
         float CriticalValue = _attacker.StatusTypeLoad(StatusType.CritRate);

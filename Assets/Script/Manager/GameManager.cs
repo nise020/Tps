@@ -118,7 +118,7 @@ public class GameManager : MonoBehaviour
         if (PLAYER == null) 
         {
             _player = WARRIOR;//юс╫ц
-            Shared.BattelUI.CharactorControllButten1();
+            Shared.UiManager.UI_BATTEL.CharactorControllButten1();
             return;
         }
         _player = PLAYER;

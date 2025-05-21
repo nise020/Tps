@@ -39,16 +39,13 @@ public enum ObjectType
     Bullet_Monster,
     Item,
 }
-//public enum ItemType
-//{
-//    None,
-//    Player,
-//    Monster,
-//    Gun,
-//    Bullet_Player,
-//    Bullet_Monster,
-//    Item,
-//}
+public enum UiType
+{
+    None,
+    Menu,
+    InvenTory,
+}
+
 public enum BodyType 
 {
     RightHand,

@@ -28,7 +28,7 @@ public class HitCheck : MonoBehaviour
             //itemsQueue.Enqueue(item);
             items.Add(item);
             ItemData data = item.dataLoad();
-            Shared.InventoryManager.itemDatas.itemDatasDict.Add(item, data);
+            Shared.UiManager.UI_INVENTORY.itemDatas.itemDatasDict.Add(item, data);
 
             GameEvents.OnEnterRange?.Invoke(item);
         }
@@ -42,12 +42,11 @@ public class HitCheck : MonoBehaviour
             other.gameObject.layer == Weapon)
         {
             Item item = other.gameObject.GetComponentInParent<Item>();
-            if (Shared.InventoryManager.itemDatas.itemDatasDict.ContainsKey(item))
+            if (Shared.UiManager.UI_INVENTORY.itemDatas.itemDatasDict.ContainsKey(item))
             {
-                Shared.InventoryManager.itemDatas.itemDatasDict.Remove(item);
+                Shared.UiManager.UI_INVENTORY.itemDatas.itemDatasDict.Remove(item);
                 GameEvents.OnExitRange?.Invoke(item);
             }
-            GameEvents.OnExitRange?.Invoke(item);
         }
     }
     

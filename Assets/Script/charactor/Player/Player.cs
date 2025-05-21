@@ -118,6 +118,6 @@ public partial class Player : Charactor
     }
     public void GetItem(Item _item) 
     {
-        Shared.InventoryManager.items.Add(_item);//이건 아이템 드랍시
+        Shared.UiManager.UI_INVENTORY.itemLists.Add(_item);//이건 아이템 드랍시
     }
 }

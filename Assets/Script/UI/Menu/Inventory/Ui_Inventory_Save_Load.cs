@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using UnityEngine;
 
-public partial class InventoryManager : MonoBehaviour
+public partial class Ui_Inventory : UiBase
 {
     public void LoadObject()
     {

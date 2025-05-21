@@ -42,7 +42,8 @@ public partial class ItemIcon : MonoBehaviour//,IPointerDownHandler//, IPointerU
         itemImageDatas = Shared.AtlasManager.AtlasLoad_Dictionary(AtlasType.Item);
         //itemQuantityDatas = Shared.AtlasManager.AtlasLoad_Dictionary(AtlasType.Item);<- 수량으로 바꿔야함
 
-        Debug.Log($"{gameObject},itemImageDatas.Count = {itemImageDatas.Count},Id = {IconId}");
+        Debug.Log($"{gameObject},itemImageDatas.Count = {itemImageDatas.Count}," +
+            $"Id = {IconId}");
         //gameObject.SetActive(false);
     }
     public bool ItemDataCheck(int _id) 
@@ -102,6 +103,7 @@ public partial class ItemIcon : MonoBehaviour//,IPointerDownHandler//, IPointerU
         item_Img_ItemIcon = _data.itemImage;
         item_Quantity_ItemIcon = _data.quantity;
         itemType = _data.itemType;
+        //acceptedItemType = _data.itemType;
 
         itemData = _data;
 
@@ -126,6 +128,7 @@ public partial class ItemIcon : MonoBehaviour//,IPointerDownHandler//, IPointerU
         item_Img_ItemIcon = _data.itemImage;
         item_Quantity_ItemIcon = _data.quantity;
         itemType = _data.itemType;
+        //acceptedItemType = _data.itemType;
 
         itemData = _data;
 
@@ -138,6 +141,7 @@ public partial class ItemIcon : MonoBehaviour//,IPointerDownHandler//, IPointerU
     {
         itemIconState = ItemIconState.None_Item_Data;
         itemType = ItemType.None;
+        //acceptedItemType = ItemType.None;
         itemData = null;
         item_Id_ItemIcon = 0;
         item_Img_ItemIcon = null;
@@ -167,18 +171,18 @@ public partial class ItemIcon : MonoBehaviour//,IPointerDownHandler//, IPointerU
     }
     public void UpdateSprite(string _data)
     {
-        if (string.IsNullOrEmpty(_data))
-        {
-            Debug.LogWarning("UpdateSprite called with null or empty string.");
-            itemImage.sprite = DefoltSprite;
-            return;
-        }
-        if (!itemImageDatas.TryGetValue(_data, out var sprite) || sprite == null)
-        {
-            Debug.LogError($"❌ Sprite not found for key: {_data}");
-            itemImage.sprite = null;
-            return;
-        }
+        //if (string.IsNullOrEmpty(_data))
+        //{
+        //    Debug.LogWarning("UpdateSprite called with null or empty string.");
+        //    itemImage.sprite = DefoltSprite;
+        //    return;
+        //}
+        //if (!itemImageDatas.TryGetValue(_data, out var sprite) || sprite == null)
+        //{
+        //    Debug.LogError($"❌ Sprite not found for key: {_data}");
+        //    itemImage.sprite = null;
+        //    return;
+        //}
 
         if (itemImageDatas.ContainsKey(_data)) 
         {
@@ -186,9 +190,9 @@ public partial class ItemIcon : MonoBehaviour//,IPointerDownHandler//, IPointerU
 
             itemImage.sprite = itemSprite;
             itemData.ItemSprite = itemSprite;
-            Debug.Log($"sprite: {itemSprite.name}, texture: {itemSprite.texture}");
+            //Debug.Log($"sprite: {itemSprite.name}, texture: {itemSprite.texture}");
             //itemQuantityImage.sprite = sprite;
-            Debug.Log($"sprite = {itemSprite}");
+            //Debug.Log($"sprite = {itemSprite}");
         }
         else
         {

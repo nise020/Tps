@@ -24,17 +24,17 @@ public partial class ItemIcon : MonoBehaviour
     }
     public void OnDown(BaseEventData eventData)//누름
     {
-        Shared.InventoryManager.OnDown(eventData,this,itemData);
+        Shared.UiManager.UI_INVENTORY.OnDown(eventData,this,itemData);
     }
 
     public void OnDrag(BaseEventData eventData)//따라 움직이지
     {
-        Shared.InventoryManager.OnDrag(eventData);
+        Shared.UiManager.UI_INVENTORY.OnDrag(eventData);
 
     }
     public void OnUp(BaseEventData eventData)//땜
     {
-        Shared.InventoryManager.EndDrag(eventData,this, itemData);
+        Shared.UiManager.UI_INVENTORY.EndDrag(eventData,this, itemData);
 
     }
 

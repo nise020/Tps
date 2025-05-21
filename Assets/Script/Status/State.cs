@@ -19,8 +19,8 @@ public partial class State : State_Base
     {
         Actor = _actor;
         var info = Shared.TableManager.Character_State.Get(_stateId);
-        Debug.Log($"{_actor.name},{this}={info}");
         StateUpdate(info);
+        Debug.Log($"{_actor.name},{this}={info},{maxHP}");
     }
 
     private void StateUpdate(Table_Character_State.Info info)
@@ -38,7 +38,7 @@ public partial class State : State_Base
     {
         switch (_status)
         {
-            case StatusType.HP:
+            case StatusType.MaxHP:
                 return maxHP;
 
             case StatusType.Power:

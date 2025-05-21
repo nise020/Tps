@@ -55,10 +55,7 @@ public abstract partial class Charactor : Actor
 
     public void conditionUpdate(Condition _condition) 
     {
-        if (condition == Condition.Death) 
-        {
-            condition = _condition;
-        }
+        condition = _condition;
     }
     public int StatusTypeLoad(StatusType _type) 
     {
@@ -86,19 +83,30 @@ public abstract partial class Charactor : Actor
         }
         return value;
     }
-    
-    protected virtual void checkHp(Collider other) //수정 필요
+    public void StatusUpLoad(float _hp)
     {
-        Debug.Log("Hit");
-        if (cheHP >= hP && hP >= 0)
+        if (condition == Condition.Death) { return; }
+        if (condition != Condition.Death)
         {
+            hP = (int)_hp;
             cheHP = hP;
-            if (hP == 0)
+            hbBarCheck(true);
+
+            //GameEvents.onHpChanged?.Invoke(this);
+
+            onHpChanged?.Invoke(maxHP, cheHP);
+
+            if (hP <= 0)
             {
-                Invoke("death", 1f);
+                Debug.Log("Dead");
+                Invoke("death", 0.3f);
+                return;
             }
+            //invincibleState();
         }
+
     }
+
     protected virtual void death() //사망 상태
     {
         if (objType == ObjectType.Player)
@@ -148,39 +156,17 @@ public abstract partial class Charactor : Actor
 
     protected void hbBarCheck(bool _check)
     {
-        if (_check)
+        if (!HPBAR.gameObject.activeSelf)
         {
             HPBAR.gameObject.SetActive(true);
         }
         else
         {
-            HPBAR.gameObject.SetActive(false);
+            return;
         }
     }
 
-    public void StatusUpLoad(float _hp)
-    {
-        if (condition == Condition.Death) { return; }
-        if (condition != Condition.Death)
-        {
-            hP = (int)_hp;
-            cheHP = hP;
-            hbBarCheck(true);
-
-            //GameEvents.onHpChanged?.Invoke(this);
-
-            onHpChanged?.Invoke(maxHP, cheHP);
-
-            if (hP <= 0)
-            {
-                Debug.Log("Dead");
-                Invoke("death", 1f);
-                return;
-            }
-            invincibleState();
-        }
-
-    }
+    
 
     protected void FindRenderObjectType(ObjectRenderType _renderType) 
     {

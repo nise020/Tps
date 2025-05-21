@@ -155,6 +155,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 7498225110312318730, guid: 69290175a1c0180428312cbc8954fc01, type: 3}
+      propertyPath: m_Text
+      value: Warrior
+      objectReference: {fileID: 0}
     - target: {fileID: 8074552933408726305, guid: 69290175a1c0180428312cbc8954fc01, type: 3}
       propertyPath: m_Name
       value: Player1 Butten

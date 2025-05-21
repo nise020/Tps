@@ -2,12 +2,8 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.EventSystems;
-using UnityEngine.UIElements;
-using static Photon.Pun.UtilityScripts.TabViewManager;
-using static UnityEditor.Progress;
 
-public partial class InventoryManager : MonoBehaviour 
+public partial class Ui_Inventory : UiBase
 {
     //UnityEngine.Object itemIcon => Resources.Load("Prefabs/Ui/ItemIcon");
     ItemIcon ITEMICON;
@@ -19,8 +15,9 @@ public partial class InventoryManager : MonoBehaviour
         public List<RectTransform> transforms = new List<RectTransform>();//slot
     }
     List<info> data = new List<info>();//줄
-    public List <Item> items = new List<Item>();//드랍 가능한 아이템 list
-    
+    public List <Item> itemLists = new List<Item>();//player 근처에 드랍 가능한 아이템 list(자주 추가,삭제)
+    int itemListsCount = 0;//itemLists의 index
+
     //public Dictionary <int,Item> itemDatasDict = new Dictionary <int, Item>();
 
     public Action<Item> GetItemEvent;//아이템 드랍 대리자
@@ -39,26 +36,30 @@ public partial class InventoryManager : MonoBehaviour
     [SerializeField] ItemIcon bootsIcon;
 
     List<GameObject> TabObject = new List<GameObject>();//InvenTorySlotList
-    List<ItemIcon> ArmorObject = new List<ItemIcon>();//InvenTorySlotList
+    List<ItemIcon> ArmorObject = new List<ItemIcon>();//ArmorSlotList
+    List<ItemIcon> InvenIconLists = new List<ItemIcon>();//InvenIconSlotList
     Canvas CanvasInventory;
 
-    
+    int adress = 0;//임시
+
     private void Awake()
     {
-        if (Shared.InventoryManager == null)
-        {
-            Shared.InventoryManager = this;
-            DontDestroyOnLoad(gameObject);
-        }
-        else
-        {
-            Destroy(this);
-        }
+        //if (Shared.InventoryManager == null)
+        //{
+        //    Shared.InventoryManager = this;
+        //    DontDestroyOnLoad(gameObject);
+        //}
+        //else
+        //{
+        //    Destroy(this);
+        //}
         CanvasInventory = GetComponentInParent<Canvas>();
-        dragIcon.gameObject.SetActive(false);
+        dragImageObject.gameObject.SetActive(false);
+        uiType = UiType.InvenTory;
     }
-    private void Start()
+    protected override void Start()
     {
+        base.Start();
         ArmorIconAdd();
         creatInventorySlot();
         GameEvents.OnEnterRange += AddPrompt;
@@ -92,17 +93,20 @@ public partial class InventoryManager : MonoBehaviour
     }
     private void Update()
     {
-        if (Input.GetKeyDown(KeyCode.K)) 
+        getItem();
+    }
+    private void getItem() 
+    {
+        if (Input.GetKeyDown(KeyCode.K))
         {
-            if (count >= items.Count) return;
+            if (itemListsCount >= itemLists.Count) return;
 
-            Item item = items[adress];
+            Item item = itemLists[adress];
             ItemData data = itemDatas.itemDatasDict.GetValueOrDefault(item);
             int id = (int)item.ItemNumberValueLoad(ItemDataType.Id);
 
             StartCoroutine(AddItemDataCoroutine(data, item));
         }
-        //draggingMove();
     }
     private IEnumerator AddItemDataCoroutine(ItemData _data,Item _item)
     {
@@ -128,7 +132,10 @@ public partial class InventoryManager : MonoBehaviour
                 {
                     icon.ItemDataSave(_data);
 
-                    items.RemoveAt(adress);
+                    if (itemLists.Count != 0) 
+                    {
+                        itemLists.RemoveAt(adress);
+                    }
 
                     if (itemDatas.itemDatasDict.ContainsKey(_item) && _item != null)
                     {
@@ -142,7 +149,10 @@ public partial class InventoryManager : MonoBehaviour
                 {
                     icon.IncreaseQuantity(_data);
 
-                    items.RemoveAt(adress);
+                    if (itemLists.Count != 0)
+                    {
+                        itemLists.RemoveAt(adress);
+                    }
 
                     if (itemDatas.itemDatasDict.ContainsKey(_item)&& _item != null) 
                     {
@@ -162,18 +172,18 @@ public partial class InventoryManager : MonoBehaviour
 
     void AddPrompt(Item item)
     {
-        if (!items.Contains(item))
+        if (!itemLists.Contains(item))
         {
-            items.Add(item);
+            itemLists.Add(item);
             CreatePromptUI(item); // 실제 안내 메시지 생성
         }
     }
 
     void RemovePrompt(Item item)
     {
-        if (items.Contains(item))
+        if (itemLists.Contains(item))
         {
-            items.Remove(item);
+            itemLists.Remove(item);
             RemovePromptUI(item); // 해당 메시지 제거
         }
     }
@@ -217,8 +227,13 @@ public partial class InventoryManager : MonoBehaviour
             foreach (RectTransform t in tab.transform) 
             {
                 ItemIcon icon = t.GetComponent<ItemIcon>();
+
                 icon.IconId = number;
                 icon.iconSlotType = IconSlotType.InvenTory;
+
+                ItemIconData.Add(icon.IconId, icon);
+                InvenIconLists.Add(icon);
+
                 data[row].transforms.Add(t);
                 number++;
             }
@@ -226,8 +241,7 @@ public partial class InventoryManager : MonoBehaviour
             //tab.gameObject.SetActive(false);
         }
     }
-    int count = 0;//임시
-    int adress = 0;//임시
+    
    
 
     public void OnButten() { }
@@ -235,7 +249,7 @@ public partial class InventoryManager : MonoBehaviour
 
     public void AddItem(Item _item, int _id, int _quantity) 
     {
-        items.Add(_item);
+        itemLists.Add(_item);
         //ItemDataBase existingItem = itemData.items.Find(item => ItemDataBase.info.itemID == _id);
 
         //if (existingItem != null) 

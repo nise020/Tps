@@ -53,8 +53,10 @@ public class Table_Base
         //string path = GetTablePath()+ "/Document/";
         //:path = 저장위치를 직접 갖다여야함
 
-        string path = "D:\\UnityFile\\Tps\\Document\\";//집
-        //string path = "D:\\tps\\Document\\";//학원D:\tps\Document
+        string homePath = "D:\\UnityFile\\Tps\\Document\\";//집
+        string academyPath = "D:\\tps\\Document\\";//학원D:\tps\Document
+
+        string path = Directory.Exists(homePath) ? homePath : academyPath;
 
         //if (new FileStream(path + _Name + ext, FileMode.Open, FileAccess.Read, FileShare.ReadWrite) == null) 
         //{

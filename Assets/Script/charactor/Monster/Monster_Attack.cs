@@ -51,19 +51,7 @@ public partial class Monster : Charactor
     }
     protected override void death() 
     {
-        deathAnimation(MonsterAnimParameters.Death);
-
-        base.death();
-
-        ITEM.gameObject.SetActive(true);
-        ITEM.gameObject.transform.position = charactorModelTrs.position;
-        Debug.Log($"ITEM.gameObject.transform.position = {ITEM.gameObject.transform.position}\n" +
-                  $"charactorModelTrs.position = {charactorModelTrs.position}");
-        Shared.MonsterManager.Resurrection(mobKey);
-
-        stateInIt();
-        HPBAR.SetHp(maxHP, cheHP);
-        gameObject.SetActive(false);
+        deathAnimation(MonsterDeathsState.Deaths_On);
     }
 
     

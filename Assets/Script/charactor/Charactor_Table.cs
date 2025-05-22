@@ -70,6 +70,6 @@ public partial class Charactor : Actor
 
         hP = maxHP;
         cheHP = maxHP;
-        Debug.Log($"{gameObject},hP = {hP},maxHP ={maxHP}");
+        //Debug.Log($"{gameObject},hP = {hP},maxHP ={maxHP}");
     }
 }

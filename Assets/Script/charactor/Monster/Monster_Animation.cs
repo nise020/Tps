@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Cinemachine.Utility;
 using UnityEngine;
 
 public partial class Monster : Charactor
@@ -36,13 +37,24 @@ public partial class Monster : Charactor
     public void DeathAnimationOut()//AnimationEvent
     {
         deathAnimation(MonsterDeathsState.Deaths_Off);
+    }
 
+    public void DeathEffect()//AnimationEvent
+    {
         base.death();
 
-        ITEM.gameObject.SetActive(true);
-        ITEM.gameObject.transform.position = charactorModelTrs.position;
-        Debug.Log($"ITEM.gameObject.transform.position = {ITEM.gameObject.transform.position}\n" +
-                  $"charactorModelTrs.position = {charactorModelTrs.position}");
+        int key = Random.Range(0, ITEMLists.Count);
+
+        if (DropItemData.TryGetValue(ITEMLists[key], out GameObject obj)) 
+        {
+            obj.transform.position = charactorModelTrs.position;
+            obj.SetActive(true);
+            //Debug.Log($"{obj} = {obj.transform.position}\n" +
+            //          $"{charactorModelTrs.gameObject} = {charactorModelTrs.position}");
+        }
+        
+        //Item_Object - Weapon1(UnityEngine.GameObject) = (6.95, 2.85, -23.29)
+        //Model(UnityEngine.GameObject) = (6.95, 2.85, -23.29)
 
         //Resurrection
         Shared.MonsterManager.Resurrection(mobKey);
@@ -51,8 +63,11 @@ public partial class Monster : Charactor
         stateInIt();
         HPBAR.SetHp(maxHP, cheHP);
 
+        charactorModelTrs.position = startPosition;//PositionReset
+
         charactorModelTrs.gameObject.SetActive(false);//Body off
     }
+
     protected void deathAnimation(MonsterDeathsState _state) 
     {
         if (_state == MonsterDeathsState.Deaths_On)

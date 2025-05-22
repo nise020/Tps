@@ -186,7 +186,7 @@ public class MonsterManager : MonoBehaviour
         yield return new WaitForSeconds(_time);
         Monster monster = _obj.GetComponent<Monster>();
 
-        Shared.ItemManager.ItemDataAdd(monster);
+        //Shared.ItemManager.ItemDataAdd(monster);
         monster.conditionUpdate(Condition.health);
 
         Transform monsterBody = monster.BodyObjectLoad();

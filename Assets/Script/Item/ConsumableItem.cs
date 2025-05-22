@@ -20,4 +20,12 @@ public class ConsumableItem : Item
         //prefabs_Item = "Item_Object";//
 
     }
+    //private void Start()
+    //{
+        
+    //}
+    //private void Update()
+    //{
+        
+    //}
 }

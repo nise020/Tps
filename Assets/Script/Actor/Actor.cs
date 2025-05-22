@@ -13,7 +13,10 @@ public abstract partial class Actor : MonoBehaviour
     {
         objType = _objType;
     }
-
+    public ObjectType TypeInit()
+    {
+        return objType;
+    }
     //오브젝트
     //리소스 재사용시 start문 사용 해야 하느가?
 

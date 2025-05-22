@@ -27,24 +27,31 @@ public partial class ItemIcon : MonoBehaviour//,IPointerDownHandler//, IPointerU
     [SerializeField] string item_Img_ItemIcon;
     [SerializeField] int item_Quantity_ItemIcon;
     Sprite DefoltSprite;
-    //private void OnEnable()//껴질때
-    //{
-
-    //}
     //private void OnDisable()//꺼질때
     //{
 
     //}
+    //private void OnEnable()//껴질때
+    //{
+    //    
+    //    
+    //}
+ 
+    //private void Start()
+    //{
+    //    DefoltSprite = itemImage.sprite;//BackGround
+    //    itemImageDatas = Shared.AtlasManager.AtlasLoad_Dictionary(AtlasType.Item);
+    //    //itemQuantityDatas = Shared.AtlasManager.AtlasLoad_Dictionary(AtlasType.Item);<- 수량으로 바꿔야함
 
-    private void Start()
+    //    //Debug.Log($"{gameObject},itemImageDatas.Count = {itemImageDatas.Count}," +
+    //     //   $"Id = {IconId}");
+    //    //gameObject.SetActive(false);
+    //}
+    public void Initialize() 
     {
+        rectTransform = GetComponent<RectTransform>();
         DefoltSprite = itemImage.sprite;//BackGround
         itemImageDatas = Shared.AtlasManager.AtlasLoad_Dictionary(AtlasType.Item);
-        //itemQuantityDatas = Shared.AtlasManager.AtlasLoad_Dictionary(AtlasType.Item);<- 수량으로 바꿔야함
-
-        Debug.Log($"{gameObject},itemImageDatas.Count = {itemImageDatas.Count}," +
-            $"Id = {IconId}");
-        //gameObject.SetActive(false);
     }
     public bool ItemDataCheck(int _id) 
     {

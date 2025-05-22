@@ -5,12 +5,16 @@ using UnityEngine;
 
 public partial class Monster : Charactor
 {
-    protected Item ITEM;
-    [SerializeField] Item viewItem;
+    protected List<Item> ITEMLists = new List<Item>();
+    protected List <GameObject> itemObjValue = new List<GameObject>();
+
+    protected Dictionary<Item, GameObject> DropItemData = new Dictionary<Item, GameObject>();
     protected AiMonster AI = new AiMonster();
     protected Skill_Monster SKILL = new Skill_Monster();
     
     public int mobKey = 0;
+
+    Vector3 startPosition;
 
     protected bool viewHpBar = false;
     protected override void Start() 
@@ -20,6 +24,9 @@ public partial class Monster : Charactor
         creatTabObj = Shared.GameManager.creatTab;//¿ÀºêÁ§Æ® »ý¼º ÅÇ(ex.ÃÑ¾Ë)
         AI.init(this, SKILL);
         AI.Type(monsterType);
+
+        startPosition = charactorModelTrs.position;
+
         //STATE.MonsterState(monsterType);
         //stateInIt();
     }
@@ -70,9 +77,20 @@ public partial class Monster : Charactor
     {
         mobKey = _key;
     }
-    public void ItemUpdate(Item _item) 
+    public void ItemUpdate(Dictionary<Item, GameObject> _itemObjData) 
     {
-        ITEM = _item;
-        viewItem = ITEM;
+        DropItemData = _itemObjData;
+
+        foreach (KeyValuePair<Item, GameObject> pair in _itemObjData)
+        {
+            ITEMLists.Add(pair.Key);//ITEMLists <- List
+            GameObject obj = pair.Value;
+            obj.transform.SetParent(gameObject.transform);
+
+        }
+
+        //itemObj = _itemObj;
+        //Item item = itemObj.GetComponent<Item>();
+        //ITEM = item;
     }
 }

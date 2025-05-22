@@ -63,6 +63,7 @@ public partial class Player : Charactor
     //protected GameObject WeaponObj;
     protected override void Start()
     {
+        objType = ObjectType.Player;
         base.Start();
         //STATE.init(charactor);//State
         //stateInIt();

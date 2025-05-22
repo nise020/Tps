@@ -98,9 +98,10 @@ public class BattelManager : MonoBehaviour
 
         float CriticalValue = _attacker.StatusTypeLoad(StatusType.CritRate);
 
-        attakerPower = DamageCalculator(attakerPower, CriticalValue);
+        //attakerPower = DamageCalculator(attakerPower, CriticalValue);
 
-        defenserHp = defenserHp - attakerPower;
+        //defenserHp = defenserHp - attakerPower;
+        defenserHp = defenserHp - 1000;
 
         _defender.StatusUpLoad(defenserHp);
 

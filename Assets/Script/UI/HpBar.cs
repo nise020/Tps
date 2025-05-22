@@ -13,12 +13,13 @@ public partial class HpBar : MonoBehaviour
     Charactor CHARACTER;
     Charactor PLAYERCHARACTOR;
     Camera playerCamera;
+    ObjectType ObjectType = ObjectType.None;
     int hpValue = 0;
 
     [SerializeField] GameObject FabHpBarObj;
     [SerializeField] GameObject DamageBarObj;
-    [SerializeField] Image imgHp;
-    [SerializeField] Image imgEffect;
+    [SerializeField] Image hpImg;
+    [SerializeField] Image hpLateImg;
 
     [SerializeField, Range(0.1f, 10f)] float effectTime = 1;
     //Vector3 posiTion = new Vector3(0,0.5f,0);
@@ -152,9 +153,10 @@ public partial class HpBar : MonoBehaviour
             _list.SetActive(false);
         }
     }
-    public void inIt(Charactor charactor) 
+    public void inIt(Charactor charactor) //캐릭터 타입 로드 필요
     {
         CHARACTER = charactor;
+        ObjectType = CHARACTER.TypeInit();
         CHARACTER.onHpChanged += SetHp;
         AttackDamageEvent += DamageImageActive;
         //CHARACTER.onHpChanged += OnHpChanged;
@@ -167,21 +169,24 @@ public partial class HpBar : MonoBehaviour
 
     private void LateUpdate()
     {
-        cameraInMonsterCheck();
-        chasePlayer();
-        //checkFillAmount();
+        if (ObjectType != ObjectType.Player) 
+        {
+            cameraInMonsterCheck();
+            chasePlayer();
+            //checkFillAmount();
+        }
         chekedPlayerDestroy();
     }
 
     private void Imageinit()
     {
-        imgHp.fillAmount = 1;
-        imgEffect.fillAmount = 1;
+        hpImg.fillAmount = 1;
+        hpLateImg.fillAmount = 1;
     }
     public void init()
     {
-        imgHp.fillAmount = 1;
-        imgEffect.fillAmount = 1;
+        hpImg.fillAmount = 1;
+        hpLateImg.fillAmount = 1;
     }
     public void PlayerUpdate() 
     {
@@ -210,38 +215,38 @@ public partial class HpBar : MonoBehaviour
     }
     private void checkFillAmount()
     {
-        if (imgHp.fillAmount == imgEffect.fillAmount)
+        if (hpImg.fillAmount == hpLateImg.fillAmount)
         {
             return;
         }
-        if (imgHp.fillAmount < imgEffect.fillAmount)
+        if (hpImg.fillAmount < hpLateImg.fillAmount)
         {
-            imgEffect.fillAmount -= (Time.deltaTime / effectTime);
-            if (imgHp.fillAmount > imgEffect.fillAmount)
+            hpLateImg.fillAmount -= (Time.deltaTime / effectTime);
+            if (hpImg.fillAmount > hpLateImg.fillAmount)
             {
-                imgEffect.fillAmount = imgHp.fillAmount;
+                hpLateImg.fillAmount = hpImg.fillAmount;
             }
         }
-        else if (imgHp.fillAmount > imgEffect.fillAmount)
+        else if (hpImg.fillAmount > hpLateImg.fillAmount)
         {
-            imgEffect.fillAmount = imgHp.fillAmount;
+            hpLateImg.fillAmount = hpImg.fillAmount;
         }
     }
     private IEnumerator animateEffectBar()
     {
-        while (imgEffect.fillAmount > imgHp.fillAmount)
+        while (hpLateImg.fillAmount > hpImg.fillAmount)
         {
-            imgEffect.fillAmount -= Time.deltaTime / effectTime;
-            if (imgEffect.fillAmount < imgHp.fillAmount)
+            hpLateImg.fillAmount -= Time.deltaTime / effectTime;
+            if (hpLateImg.fillAmount < hpImg.fillAmount)
             {
-                imgEffect.fillAmount = imgHp.fillAmount;
+                hpLateImg.fillAmount = hpImg.fillAmount;
             }
             yield return null;
         }
     }
     public void SetHp(float _maxHp, float _curHp)//0~1
     {
-        imgHp.fillAmount = _curHp / _maxHp;
+        hpImg.fillAmount = _curHp / _maxHp;
         StartCoroutine(animateEffectBar());
     }
 
@@ -257,7 +262,7 @@ public partial class HpBar : MonoBehaviour
 
     private void chekedPlayerDestroy()
     {
-        if (imgEffect.fillAmount == 0.1f)
+        if (hpLateImg.fillAmount == 0.1f)
         {
             gameObject.SetActive(false);
         }

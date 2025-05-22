@@ -29,24 +29,19 @@ public partial class UI_Battle : UiBase
     float secondsTime = 60.0f;
 
     List<Item> items = new List<Item>();
+
+    [SerializeField] PlayerChangeButten player_Change_Butten1 = new PlayerChangeButten();
+    [SerializeField] PlayerChangeButten player_Change_Butten2 = new PlayerChangeButten();
+
     private void Awake()
     {
-        //if (Shared.BattelUI == null)
-        //{
-        //    Shared.BattelUI = this;
-        //    //SceneMgr ΩÃ±€≈Ê
-        //    DontDestroyOnLoad(gameObject);
-        //}
-        //else
-        //{
-        //    Destroy(gameObject);
-        //}
         uiType = UiType.Menu;
     }
 
     protected override void Start()
     {
         base.Start();
+        ButtenInit();
         CursurRect = GetComponent<RectTransform>();
     }
     //private void OnDestroy()
@@ -62,10 +57,10 @@ public partial class UI_Battle : UiBase
             switch (type)
             {
                 case KeyCode.Alpha1:
-                    CharactorControllButten1();
+                    player_Change_Butten1.CharactorControllButten();
                     break;
                 case KeyCode.Alpha2:
-                    CharactorControllButten2();
+                    player_Change_Butten2.CharactorControllButten();
                     break;
             }
         }

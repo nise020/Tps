@@ -45,7 +45,12 @@ public enum UiType
     Menu,
     InvenTory,
 }
-
+public enum ButtenType
+{
+    None,
+    Warror_Change_Butten,
+    Gunne_Change_Buttenr,
+}
 public enum BodyType 
 {
     RightHand,

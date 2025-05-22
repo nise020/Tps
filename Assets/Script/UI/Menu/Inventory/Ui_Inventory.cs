@@ -29,6 +29,7 @@ public partial class Ui_Inventory : UiBase
     [SerializeField] GameObject InventoryObjct;
     [SerializeField] GameObject contantsu;
     [SerializeField] Transform creatTab;
+    [SerializeField] GameObject inventoryInterfaceTab;
 
     [SerializeField] ItemIcon armorIcon;
     [SerializeField] ItemIcon weaponIcon;
@@ -60,11 +61,13 @@ public partial class Ui_Inventory : UiBase
     protected override void Start()
     {
         base.Start();
-        ArmorIconAdd();
         creatInventorySlot();
         GameEvents.OnEnterRange += AddPrompt;
         GameEvents.OnExitRange += RemovePrompt;
 
+        ArmorIconAdd();
+        inventoryInterfaceTab.SetActive(false);
+        dragImageObject.gameObject.SetActive(false);
     }
 
     private void ArmorIconAdd()
@@ -78,6 +81,11 @@ public partial class Ui_Inventory : UiBase
         weaponIcon.IsEquipmentSlot = true;
         bootsIcon.IsEquipmentSlot = true;
         gloveIcon.IsEquipmentSlot = true;
+
+        armorIcon.Initialize();
+        weaponIcon.Initialize();
+        bootsIcon.Initialize();
+        gloveIcon.Initialize();
 
 
         ArmorObject.Add(armorIcon);
@@ -230,6 +238,8 @@ public partial class Ui_Inventory : UiBase
 
                 icon.IconId = number;
                 icon.iconSlotType = IconSlotType.InvenTory;
+
+                icon.Initialize();
 
                 ItemIconData.Add(icon.IconId, icon);
                 InvenIconLists.Add(icon);

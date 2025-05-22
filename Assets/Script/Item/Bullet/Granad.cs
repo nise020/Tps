@@ -43,8 +43,8 @@ public class Granad : Weapon
             int layer = LayerMask.NameToLayer(LayerName.Monster.ToString());
             if (hit.collider.gameObject.layer != layer) 
             {
-                Debug.Log($"hit = {hit.transform}");
-                Debug.Log($"transform.position = {transform.position}");
+                //Debug.Log($"hit = {hit.transform}");
+                //Debug.Log($"transform.position = {transform.position}");
                 skillstate = SkillState.SkillOn;
                 explotionEffect.gameObject.SetActive(true);
                 explotionEffect.Play();

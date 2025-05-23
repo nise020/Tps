@@ -12,19 +12,19 @@ public class PlayerChangeButten : MonoBehaviour
     Player NpcCharacter = new Player();
     HpBar hpBar = new HpBar();
 
-    [SerializeField] ButtenType buttenType = ButtenType.None;
+    //[SerializeField] ButtenType buttenType = ButtenType.None;
    
-    public void Initialize() 
+    public void Initialize(ButtenType _type) 
     {
-        switch (buttenType)
+        switch (_type)
         {
             case ButtenType.Gunne_Change_Buttenr:
-                PlayerCharacter = Shared.GameManager.PlayerDataLoad(CharactorJobEnum.Warrior);
-                NpcCharacter = Shared.GameManager.PlayerDataLoad(CharactorJobEnum.Gunner);
-                break;
-            case ButtenType.Warror_Change_Butten:
                 PlayerCharacter = Shared.GameManager.PlayerDataLoad(CharactorJobEnum.Gunner);
                 NpcCharacter = Shared.GameManager.PlayerDataLoad(CharactorJobEnum.Warrior);
+                break;
+            case ButtenType.Warror_Change_Butten:
+                PlayerCharacter = Shared.GameManager.PlayerDataLoad(CharactorJobEnum.Warrior);
+                NpcCharacter = Shared.GameManager.PlayerDataLoad(CharactorJobEnum.Gunner);
 
                 break;
         }
@@ -36,7 +36,7 @@ public class PlayerChangeButten : MonoBehaviour
         hpBar = gameObject.GetComponentInChildren<HpBar>();
         Charactor charactor = PlayerCharacter;
 
-        hpBar.inIt(charactor);
+        hpBar.CharactorInIt(charactor);
     }
     
 

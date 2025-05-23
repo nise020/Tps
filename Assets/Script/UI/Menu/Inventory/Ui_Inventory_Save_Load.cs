@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using UnityEngine;
 
-public partial class Ui_Inventory : UiBase
+public partial class UiInventory : UiBase
 {
     public void LoadObject()
     {

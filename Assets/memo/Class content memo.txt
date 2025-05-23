@@ -194,3 +194,7 @@ void OnParticleCollision(GameObject other)
 
 100번쨰 한번에 찾으려면 본인이 idx 를 사용한다
 딕션어리 안에 딕션어리를 넣어도 된다
+
+
+프렌드 
+Goto

@@ -17,6 +17,10 @@ public partial class Monster : Charactor
     Vector3 startPosition;
 
     protected bool viewHpBar = false;
+    protected virtual void Awake() 
+    {
+        objType = ObjectType.Monster;
+    }
     protected override void Start() 
     {
         base.Start();

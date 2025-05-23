@@ -5,7 +5,7 @@ using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
-public partial class Ui_Inventory : UiBase
+public partial class UiInventory : UiBase
 {
     public DragState currentState = DragState.None;
     private ItemIcon SwapItemIcon;
@@ -43,16 +43,15 @@ public partial class Ui_Inventory : UiBase
         //eventData.pressEventCamera
         dragImageObject.anchoredPosition = localPoint;
 
+
         Image image = dragImageObject.GetComponent<Image>();
         image.sprite = _data.ItemSprite;
 
         Color color = image.color;
         color.a = 100;
         image.color = color;
-
-        dragImageObject.SetAsLastSibling();
-
         dragImageObject.gameObject.SetActive(true);
+
     }
     public void OnDrag(BaseEventData eventData)
     {

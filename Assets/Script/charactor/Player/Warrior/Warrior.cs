@@ -5,11 +5,12 @@ using UnityEngine;
 public partial class Warrior : Player
 {
     GameObject Weapon;
-    private void Awake()
+    protected override void Awake()
     {
         id = 2;
         RenderType = ObjectRenderType.Skin;
         charctorState = CharctorStateEnum.Player;
+        base.Awake();
     }
     void OnDrawGizmosSelected()
     {

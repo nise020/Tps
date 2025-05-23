@@ -32,7 +32,9 @@ public partial class UI_Battle : UiBase
 
     [SerializeField] PlayerChangeButten player_Change_Butten1 = new PlayerChangeButten();
     [SerializeField] PlayerChangeButten player_Change_Butten2 = new PlayerChangeButten();
-
+    [SerializeField] GameObject On_Butten;
+    [SerializeField] GameObject Off_Butten;
+    //[SerializeField]
     private void Awake()
     {
         uiType = UiType.Menu;
@@ -41,13 +43,9 @@ public partial class UI_Battle : UiBase
     protected override void Start()
     {
         base.Start();
-        ButtenInit();
         CursurRect = GetComponent<RectTransform>();
+        StartCoroutine(ButtenInit());
     }
-    //private void OnDestroy()
-    //{
-    //}
-
     
     private void Update()
     {

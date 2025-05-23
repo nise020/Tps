@@ -160,7 +160,7 @@ public class MonsterManager : MonoBehaviour
         hpData.Add(_min, hpBar);
 
         hpBar.key = _min;
-        hpBar.inIt(_monster);
+        hpBar.CharactorInIt(_monster);
     }
     public bool GetMonsterPosition(int _value, out Vector3 _pos)
     {

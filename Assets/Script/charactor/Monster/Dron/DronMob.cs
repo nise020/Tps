@@ -4,8 +4,9 @@ using UnityEngine;
 
 public partial class DronMob : Monster
 {
-    private void Awake()
+    protected override void Awake()
     {
+        base.Awake();
         monsterType = MonsterType.Dron;
         RenderType = ObjectRenderType.Mesh;
         id = 103;

@@ -66,23 +66,6 @@ public partial class ItemIcon : MonoBehaviour//,IPointerDownHandler//, IPointerU
         }
 
     }
-
-    public bool HasSameItem(int targetID)
-    {
-        return itemIconState == ItemIconState.Have_a_Item_Data && item_Id_ItemIcon == targetID;
-    }
-
-    public bool IsEmpty()
-    {
-        return itemIconState == ItemIconState.None_Item_Data || itemData.itemID == 0;
-    }
-
-    public void IncreaseQuantity(ItemData _data)
-    {
-        item_Quantity_ItemIcon += _data.quantity;
-        //UpdateQuantityDisplay();//수량 이미지 교체
-    }
-
     private void UpdateQuantityDisplay(int _count)
     {
         if (itemQuantityDatas.ContainsKey(_count))
@@ -99,6 +82,22 @@ public partial class ItemIcon : MonoBehaviour//,IPointerDownHandler//, IPointerU
         }
     }
 
+    public bool HasSameItem(int targetID)
+    {
+        return itemIconState == ItemIconState.Have_a_Item_Data && item_Id_ItemIcon == targetID;
+    }
+
+    public bool IsEmpty()
+    {
+        return itemIconState == ItemIconState.None_Item_Data || itemData.itemID == 0;
+    }
+
+    public void IncreaseQuantity(ItemData _data)
+    {
+        item_Quantity_ItemIcon += _data.quantity;
+    }
+
+ 
     public void ItemDataSave(ItemData _data) 
     {
         if (!gameObject.activeSelf) 
@@ -119,10 +118,20 @@ public partial class ItemIcon : MonoBehaviour//,IPointerDownHandler//, IPointerU
 
         Debug.Log($"{gameObject},{IconId},{item_Id_ItemIcon},{item_Img_ItemIcon},{item_Quantity_ItemIcon}");
     }
-    public void QuantityPlus(ItemData _data) 
+
+    private void Clear()
     {
-        item_Quantity_ItemIcon += _data.quantity;
+        itemIconState = ItemIconState.None_Item_Data;
+        itemType = ItemType.None;
+
+        itemData = null;
+        item_Img_ItemIcon = null;
+
+        item_Id_ItemIcon = 0;
+        item_Quantity_ItemIcon = 0;
+        itemImage.sprite = DefoltSprite;
     }
+
     public void ItemDataSwap(ItemData _data) 
     {
         if (_data == null || _data.itemID == 0)
@@ -144,18 +153,7 @@ public partial class ItemIcon : MonoBehaviour//,IPointerDownHandler//, IPointerU
         UpdateSprite(_data.itemImage);
         //UpdateQuantityDisplay();//수량 이미지 교체
     }
-    private void Clear()
-    {
-        itemIconState = ItemIconState.None_Item_Data;
-        itemType = ItemType.None;
-        //acceptedItemType = ItemType.None;
-        itemData = null;
-        item_Id_ItemIcon = 0;
-        item_Img_ItemIcon = null;
-        item_Quantity_ItemIcon = 0;
-        itemImage.sprite = DefoltSprite;
-        //UpdateSprite(null);
-    }
+
     public void UpdateVisual()
     {
         if (itemData == null || itemData.itemID == 0)

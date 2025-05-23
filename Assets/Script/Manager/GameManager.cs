@@ -61,15 +61,17 @@ public class GameManager : MonoBehaviour
         {
             Destroy(gameObject);
         }
+        
     }
     void Start()
     {
         //GameObject go = Instantiate(creatTabObj);
         //creatTab = go.transform;
-
         CharctorTypeAdd(GUNNER, CharactorJobEnum.Gunner);
         CharctorTypeAdd(WARRIOR, CharactorJobEnum.Warrior);
+
         FindPlayer();
+
         PLAYER.gameObject.transform.position = startPointObj.gameObject.transform.position;
         playerKey = 0;
     }

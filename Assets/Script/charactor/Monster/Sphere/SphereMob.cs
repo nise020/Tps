@@ -4,8 +4,9 @@ using UnityEngine;
 
 public partial class SphereMob : Monster
 {
-    private void Awake()
+    protected override void Awake()
     {
+        base.Awake();
         monsterType = MonsterType.Sphere;
         RenderType = ObjectRenderType.Mesh;
         id = 102;

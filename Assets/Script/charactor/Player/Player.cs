@@ -58,12 +58,15 @@ public partial class Player : Charactor
 
     protected SkillStrategy skillStrategy = new SkillStrategy();
     //AudioListener audioListener => GetComponentInChildren<AudioListener>();
-    
-    
+
+    protected virtual void Awake()
+    {
+        objType = ObjectType.Player;
+    }
     //protected GameObject WeaponObj;
     protected override void Start()
     {
-        objType = ObjectType.Player;
+        
         base.Start();
         //STATE.init(charactor);//State
         //stateInIt();

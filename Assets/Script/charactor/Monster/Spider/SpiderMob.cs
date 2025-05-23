@@ -4,11 +4,12 @@ using UnityEngine;
 
 public partial class SpiderMob : Monster
 {
-    private void Awake()
+    protected override void Awake()
     {
+        base.Awake();
+        id = 101;
         monsterType = MonsterType.Spider;
         RenderType = ObjectRenderType.Skin;
-        id = 101;
     }
     protected override void Start()
     {

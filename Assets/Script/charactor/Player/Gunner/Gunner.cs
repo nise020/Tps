@@ -5,11 +5,12 @@ using UnityEngine.TextCore.Text;
 
 public partial class Gunner : Player
 {
-    private void Awake()
+    protected override void Awake()
     {
         id = 1;
         RenderType = ObjectRenderType.Skin;
         charctorState = CharctorStateEnum.Npc;
+        base.Awake();
     }
 
     protected override void Start()
@@ -33,36 +34,6 @@ public partial class Gunner : Player
         {
             inputrocessing();
         }
-        //groundCheak();
-        //WalkStateChange(playerWalkState);
-        //move(charctorState);
-        //skillAttack1(playerType);
-
-        ////Time.timeScale = 0;//Faraim Speed up,Down
-        ///
-
-        //if (charctorState == CharctorStateEnum.Player)
-        //{
-        //    if ((mouseClick))
-        //    {
-        //        //attack(charctorState);
-        //    }
-        //    else if (playerType == CharactorJobEnum.Gunner)//떼면 자동으로
-        //    {
-        //        if (mouseClickUp || GUN.nowbullet <= 0)
-        //        {
-        //            viewcam.cameraShakeAnim(false);
-        //            playerAnim.SetInteger(PlayerAnimParameters.Attack.ToString(), 0);
-        //        }
-        //    }
-        //    //reloding(playerType);//리로드
-        //    //shitdownCheak();//앉기
-        //}
-        //else
-        //{
-        //    return;
-        //}
-
     }
     protected override void shitdownCheak()
     {

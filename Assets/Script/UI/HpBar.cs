@@ -50,9 +50,6 @@ public partial class HpBar : MonoBehaviour
     }
     private void Start()
     {
-        init();
-        PlayerUpdate();
-
         rectTransform = GetComponent<RectTransform>();
         canvas = GetComponentInParent<Canvas>();
 
@@ -153,12 +150,19 @@ public partial class HpBar : MonoBehaviour
             _list.SetActive(false);
         }
     }
-    public void inIt(Charactor charactor) //캐릭터 타입 로드 필요
+    public void CharactorInIt(Charactor charactor) //캐릭터 타입 로드 필요
     {
         CHARACTER = charactor;
         ObjectType = CHARACTER.TypeInit();
         CHARACTER.onHpChanged += SetHp;
         AttackDamageEvent += DamageImageActive;
+
+        init();
+        if (ObjectType != ObjectType.Player)
+        {
+            PlayerUpdate();        
+        }
+
         //CHARACTER.onHpChanged += OnHpChanged;
         //HpImage(CHARACTER);
     }
@@ -169,7 +173,7 @@ public partial class HpBar : MonoBehaviour
 
     private void LateUpdate()
     {
-        if (ObjectType != ObjectType.Player) 
+        if (ObjectType == ObjectType.Monster) 
         {
             cameraInMonsterCheck();
             chasePlayer();

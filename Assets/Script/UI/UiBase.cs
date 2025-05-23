@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -9,6 +10,7 @@ public partial class UiBase : MonoBehaviour
 
     protected UiState state = UiState.Ui_Off;
     protected UiType uiType = UiType.None;
+    public Action UiEvent;
 
     protected virtual void Start()
     {
@@ -20,7 +22,7 @@ public partial class UiBase : MonoBehaviour
         state = UiState.Ui_On;
         if (Shared.UiManager != null) 
         {
-            Shared.UiManager.widgets.Push(this);
+            Shared.UiManager.WidgetStack.Push(this);
         }
     }
 
@@ -28,4 +30,16 @@ public partial class UiBase : MonoBehaviour
     {
         state = UiState.Ui_Off;
     }
+
+    public virtual void Open()
+    {
+        gameObject.SetActive(true);
+    }
+
+    public virtual void Close()
+    {
+        //gameObject.SetActive(false);
+        UiEvent?.Invoke(); // ´ÝÈú ¶§ ÄÝ¹é ½ÇÇà
+    }
+
 }

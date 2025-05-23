@@ -11,4 +11,5 @@ public static partial class GameEvents
     public static Action<Item> OnExitRange;
 
     public static Action<int> AttackDamageEvent;
+    public static Action<UiInventory> InventoryTabEvent;
 }

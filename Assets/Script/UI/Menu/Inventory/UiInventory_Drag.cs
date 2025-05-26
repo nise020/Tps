@@ -26,7 +26,7 @@ public partial class UiInventory : UiBase
 
         //swapItemData = _data;
         SwapItemIcon = _itemIcon;
-        Debug.Log($"itemType = {SwapItemIcon.itemType},{SwapItemIcon.acceptedItemType}");
+        //Debug.Log($"itemType = {SwapItemIcon.itemType},{SwapItemIcon.acceptedItemType}");
 
         dragImageObject.transform.SetParent(CanvasInventory.transform, worldPositionStays: false);
         dragImageObject.transform.SetAsLastSibling(); // 항상 위에 그리기
@@ -233,7 +233,7 @@ public partial class UiInventory : UiBase
 
         if(_end.IsEquipmentSlot && dataA != null)
         {
-            if (dataA.itemType != _end.acceptedItemType)
+            if (dataA.itemType != _end.AcceptedTypeLoad())
             {
                 Debug.LogError("❌ 드래그한 아이템 타입이 장비 슬롯 타입과 맞지 않음");
                 return;
@@ -253,24 +253,24 @@ public partial class UiInventory : UiBase
             StartCoroutine(AddItemDataCoroutine(dataB, null));
         }
     }
-    private bool IsCompatible(IconSlotType slot, ItemType item)
-    {
-        switch (slot)
-        {
-            case IconSlotType.InvenTory:
-                return true; // 인벤토리는 모든 아이템 허용
-            case IconSlotType.Weapon:
-                return item == ItemType.Weapon;
-            case IconSlotType.Armor:
-                return item == ItemType.Armor;
-            case IconSlotType.Boots:
-                return item == ItemType.Boots;
-            case IconSlotType.Glove:
-                return item == ItemType.Gloves;
-            default:
-                return false;
-        }
-    }
+    //private bool IsCompatible(IconSlotType slot, ItemType item)
+    //{
+    //    switch (slot)
+    //    {
+    //        case IconSlotType.InvenTory:
+    //            return true; // 인벤토리는 모든 아이템 허용
+    //        case IconSlotType.Weapon:
+    //            return item == ItemType.Weapon;
+    //        case IconSlotType.Armor:
+    //            return item == ItemType.Armor;
+    //        case IconSlotType.Boots:
+    //            return item == ItemType.Boots;
+    //        case IconSlotType.Glove:
+    //            return item == ItemType.Gloves;
+    //        default:
+    //            return false;
+    //    }
+    //}
     //public void BeginDrag(ItemIcon icon)
     //{
     //    ItemData date = icon.LoadData();

@@ -8,34 +8,9 @@ using UnityEngine;
 using UnityEngine.ProBuilder.Shapes;
 
 public partial class AiMonster : AiBase
-{
-    Transform creatTab;
-    bool attackOn = true;
-    int targetNumber;//공격할 목표의 번호
-    float timer = 0.0f;
-    float time = 5.0f;
-    //MobAnim mobAnimState = MobAnim.Idle;
-    Transform eyePos;
-    Animator animator;
-    bool searchAnim = false;
-    bool moveAnim = false;
-    public bool moveing = false;
-    public bool searchingOnOff = false;
-    bool attackCheck = false;
-    List<Vector3> searchPosObj;
-    Vector3 startPos = Vector3.zero;
-    
-    int moveNumber = 0;
-    public SearchState searchingState = SearchState.None;
+{    
+    SearchState searchingState = SearchState.None;
 
-
-
-    //Monster_Skill SKILL = new Monster_Skill();
-
-    //private eMobType MOBTYPE;
-    //Monster Monster;
-    //FSM
-    //캐릭터에서 AI를 호출할 필요
     public override void State()
     {
         switch (aIState)
@@ -67,7 +42,7 @@ public partial class AiMonster : AiBase
     {
         MONSTER.MovePoint(targetPos);
 
-        Debug.Log($"{MONSTER},Search");
+        //Debug.Log($"{MONSTER},Search");
 
         if(searchingState == SearchState.Wait) return;
 
@@ -80,7 +55,7 @@ public partial class AiMonster : AiBase
     //행렬
     protected override void Move(Vector3 _pos)//이동
     {
-        Debug.Log($"{MONSTER},Move");
+        //Debug.Log($"{MONSTER},Move");
 
         if (searchingState == SearchState.Move) 
         {
@@ -100,7 +75,7 @@ public partial class AiMonster : AiBase
 
     protected override void Attack()//공격
     {
-        Debug.Log($"{MONSTER},Attack");
+        //Debug.Log($"{MONSTER},Attack");
 
         MONSTER.MonsterAttack(out searchingState);//
 

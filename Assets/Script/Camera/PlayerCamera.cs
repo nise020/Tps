@@ -11,7 +11,7 @@ public partial class PlayerCamera : CameraBase
     Quaternion aimRot;
     public Animation Shake;
     public Animator camAnim;
-    CharactorJobEnum playerType = CharactorJobEnum.None;
+    PlayerType playerType = PlayerType.None;
 
     public float Distans = 0.0f;
     public float Hight = 0.0f;

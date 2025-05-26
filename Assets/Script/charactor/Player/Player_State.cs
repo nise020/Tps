@@ -2,13 +2,8 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public partial class Player : Charactor
+public partial class Player : Character
 {
-    //protected PlayerControllState playerControll = PlayerControllState.Off;
-    protected CharctorStateEnum charctorState;
-    protected CharactorJobEnum playerType;
-    float radius = 10.0f;
-    float fieldOfView = 90f;
 
 
 
@@ -37,23 +32,23 @@ public partial class Player : Charactor
             }
         }
     }
-    public void PlayerTypeInite(out CharactorJobEnum _type)
+    public void PlayerTypeInite(out PlayerType _type)
     {
-        _type = playerType;
+        _type = PlayerStateData.PlayerType;
     }
-    public void PlayerControllChange(CharctorStateEnum _type)
+    public void PlayerControllChange(PlayerModeState _type)
     {
-        charctorState = _type;
-        Debug.Log($"{gameObject}/{charctorState} = {_type}"); 
+        PlayerStateData.PlayerState = _type;
+        Debug.Log($"{gameObject}/{PlayerStateData.PlayerState} = {_type}"); 
     }
 
-    public void PlayerControllChack(out CharctorStateEnum _type)
+    public void PlayerControllChack(out PlayerModeState _type)
     {
-        _type = charctorState;
+        _type = PlayerStateData.PlayerState;
     }
-    public bool CharactorEnumCheck(CharactorJobEnum _player)
+    public bool CharactorEnumCheck(PlayerType _player)
     {
-        if (_player == playerType)
+        if (_player == PlayerStateData.PlayerType)
         {
             return true;
         }

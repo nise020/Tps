@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEditor;
 using UnityEngine;
 
-public partial class Monster : Charactor
+public partial class Monster : Character
 {
     public float viewDistance = 10f; // Å½Áö °Å¸®
     public float viewAngle = 40f;   // Å½Áö ½Ã¾ß°¢

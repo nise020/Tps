@@ -4,12 +4,13 @@ using UnityEngine;
 
 public partial class Warrior : Player
 {
-    GameObject Weapon;
+    //GameObject Weapon;
     protected override void Awake()
     {
         id = 2;
         RenderType = ObjectRenderType.Skin;
-        charctorState = CharctorStateEnum.Player;
+        PlayerStateData.PlayerState = PlayerModeState.Player;
+        PlayerStateData.PlayerType = PlayerType.Warrior;
         base.Awake();
     }
     void OnDrawGizmosSelected()
@@ -26,14 +27,7 @@ public partial class Warrior : Player
     protected override void Start()
     {
         base.Start();
-        weaponState = WeaponState.Sword_Off;
-
-        //FindRootBodyObject();
-
-        //Shared.InutTableMgr();
-        //Table_Charactor.Info info = Shared.TableManager.Character.Get(0);
-        //Name = info.Img;
-        //skillStrategy.WeaponInit(gun);
+        PlayerStateData.PlayerWeaponState = PlayerWeaponState.Sword_Off;
     }
 
     //protected void OnAnimatorMove()
@@ -57,7 +51,7 @@ public partial class Warrior : Player
         //runcheck(RunCheck);
 
         //groundCheak();
-        if (charctorState != CharctorStateEnum.Npc)
+        if (PlayerStateData.PlayerState != PlayerModeState.Npc)
         {
             transform.rotation = new Quaternion();
             inputrocessing();

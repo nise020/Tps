@@ -5,33 +5,12 @@ using UnityEngine;
 using UnityEngine.UIElements;
 using static UnityEngine.Rendering.DebugUI;
 
-public partial class Player : Charactor
+public partial class Player : Character
 {
-    //Input 기능을 사용할 경우 Que를 사용해서 저장 후에 순차적으로
-    //처리하게 하지 않으면 입력값이 소실 된다
 
-    //일정 시간이 지나도 가만히(움직이지 않으면) 있으면 안 움직인가는 판단
-    //분산시스템
-    float runDistanseValue = 15.0f;
-    float playerStopDistanseValue = 0.3f;
-    
-    protected PlayerWalkState playerWalkState = PlayerWalkState.Walk_Off;
-    protected PlayerRunState playerRunState = PlayerRunState.Run_Off;
-    protected PlayerShitState playerShitState = PlayerShitState.ShitUP;
-    protected NpcWalkState npcWalkState = NpcWalkState.Stop;
-    protected FindMoveObject objectInfo = FindMoveObject.None;
-    protected RunState runState = RunState.Walk;
-    //protected AttackState attackState = AttackState.None;
-
-    protected float notWalkTimer = 0;
-    protected float notWalkTime = 3.0f;
-    protected Vector3 movePosition = new Vector3();
-    protected Vector3 targetPos = new Vector3();
-    Queue<Vector3> fsmPosQue = new Queue<Vector3>();
-    LayerName layerName = LayerName.None;
     public bool PlayerObjectWalkCheck() 
     {
-        if (playerWalkState == PlayerWalkState.Walk_On)
+        if (PlayerStateData.PlayerWalkState == PlayerWalkState.Walk_On)
         {
             return true;
         }
@@ -44,18 +23,6 @@ public partial class Player : Charactor
     {
         return movePosition;
     }
-   
-    //public bool playerwalksateinit()//player state object
-    //{
-    //    //if (playerWalkState == PlayerWalkState.Walk_Off)
-    //    //{
-    //    //    return false;
-    //    //}
-    //    //else
-    //    //{
-    //    //    return true;
-    //    //}
-    //}
     
     public void PositionObjectInit(out List<GameObject> _objects)
     {
@@ -63,18 +30,18 @@ public partial class Player : Charactor
     }
 
    
-    protected override void move(CharctorStateEnum _value,Vector3 _pos)//Controll
+    protected override void move(PlayerModeState _value,Vector3 _pos)//Controll
     {
-        if (_value == CharctorStateEnum.Npc)
+        if (_value == PlayerModeState.Npc)
         {
             return;
         }
-        else if (_value == CharctorStateEnum.Player)
+        else if (_value == PlayerModeState.Player)
         {
-            if (playerShitState == PlayerShitState.ShitDown) 
+            if (PlayerStateData.PlayerShitState == PlayerShitState.ShitDown) 
             {
                 shitdownCheak();
-                playerShitState = PlayerShitState.ShitUP;
+                PlayerStateData.PlayerShitState = PlayerShitState.ShitUP;
             }
 
             if (_pos.magnitude > 0.1f)
@@ -84,7 +51,7 @@ public partial class Player : Charactor
 
                 float speed = speedValue;
 
-                if (runState == RunState.Run) 
+                if (PlayerStateData.runState == RunState.Run) 
                 {
                     speed = speedValue * 2;
                 }
@@ -108,7 +75,7 @@ public partial class Player : Charactor
 
                     Quaternion targetRotation = Quaternion.LookRotation(transform.TransformDirection(moveDir.normalized));
                     
-                    if (playerType == CharactorJobEnum.Gunner) 
+                    if (PlayerStateData.PlayerType == PlayerType.Gunner) 
                     {
                         targetRotation *= Quaternion.Euler(0, 60f, 0);//Animation Calibration Value
                     }
@@ -137,7 +104,7 @@ public partial class Player : Charactor
 
             }
         }
-        walkAnim(runState, _pos);
+        walkAnim(PlayerStateData.runState, _pos);
         //All
         //moveAnim(_pos.z);
         //Gunner

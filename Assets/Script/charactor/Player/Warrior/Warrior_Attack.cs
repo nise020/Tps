@@ -5,44 +5,97 @@ using UnityEngine.SocialPlatforms.Impl;
 
 public partial class Warrior : Player
 {
+    public void RangeCheak()
+    {
+        Vector3 weaponPos = new Vector3();
+
+        if (PlayerStateData.firstSkillCheck == SkillState.SkillOn)
+        {
+            weaponPos = SkillParentObj1.transform.position;
+        }
+        else if (PlayerStateData.secondSkillCheck == SkillState.SkillOn)
+        {
+            weaponPos = SkillParentObj2.transform.position;
+        }
+        else
+        {
+            weaponPos = weaponObj.transform.position;
+        }
+
+        List<Monster> monsetrPos = Shared.MonsterManager.MonsterList;
+
+        for (int iNum = 0; iNum < monsetrPos.Count; iNum++)
+        {
+            Transform body = monsetrPos[iNum].BodyObjectLoad();
+            float dist = Vector3.Distance(weaponPos, body.position);
+
+            if (dist < 3.5f)
+            {
+                Shared.BattelManager.DamageCheck(this, monsetrPos[iNum]);
+            }
+        }
+    }
+
+    public void SkillEffectOff(int _value)
+    {
+        if (PlayerStateData.firstSkillCheck == SkillState.SkillOn)
+        {
+            SkillAnimation(SkillType.Skill1, false);
+            SkillParentObj1.SetActive(false);
+            SkillEffectSystem1.Pause();
+        }
+        else if (PlayerStateData.secondSkillCheck == SkillState.SkillOn)
+        {
+            SkillAnimation(SkillType.Skill2, false);
+            SkillParentObj1.SetActive(false);
+            SkillEffectSystem2.Pause();
+        }
+        else
+        {
+            attackAnimation(AttackState.AttackOff);
+        }
+        PlayerStateData.PlayerWeaponState = PlayerWeaponState.Sword_Off;
+        scabbardCount = 0;
+
+    }
     protected override void attackMovement()
     {
         attackAnimation(AttackState.AttackOn);
     }
-    protected override void attack(CharctorStateEnum _state, CharactorJobEnum _job)
+    protected override void attack(PlayerModeState _state, PlayerType _job)
     {
-        if (_state == CharctorStateEnum.Player)
+        if (_state == PlayerModeState.Player)
         {
-            if (weaponState == WeaponState.Sword_Off)//Open Weapon
+            if (PlayerStateData.PlayerWeaponState == PlayerWeaponState.Sword_Off)//Open Weapon
             {
-                weaponState = WeaponState.Sword_On;
-                playerAnim.SetInteger(PlayerAnimParameters.GetWeapon.ToString(), 1);
+                PlayerStateData.PlayerWeaponState = PlayerWeaponState.Sword_On;
+                playerAnimtor.SetInteger(PlayerAnimParameters.GetWeapon.ToString(), 1);
             }
-            else if (weaponState == WeaponState.Sword_On)//attack 
+            else if (PlayerStateData.PlayerWeaponState == PlayerWeaponState.Sword_On)//attack 
             {
                 attackAnimation(AttackState.AttackOn);
             }  
         }
     }
 
-    protected override void commonRSkill(CharactorJobEnum _type)
+    protected override void commonRSkill(PlayerType _type)
     {
-        if (_type == CharactorJobEnum.Warrior) 
+        if (_type == PlayerType.Warrior) 
         {
 
         }
 
     }
-    protected override void commonskillAttack1(CharactorJobEnum _type)
+    protected override void commonskillAttack1(PlayerType _type)
     {
-        if (_type == CharactorJobEnum.Warrior)
+        if (_type == PlayerType.Warrior)
         {
-            if (firstSkillCheck == SkillState.SkillOff)
+            if (PlayerStateData.firstSkillCheck == SkillState.SkillOff)
             {
-                if (weaponState == WeaponState.Sword_Off) 
+                if (PlayerStateData.PlayerWeaponState == PlayerWeaponState.Sword_Off) 
                 {
-                    weaponState = WeaponState.Sword_On;
-                    playerAnim.SetInteger(PlayerAnimParameters.GetWeapon.ToString(), 1);
+                    PlayerStateData.PlayerWeaponState = PlayerWeaponState.Sword_On;
+                    playerAnimtor.SetInteger(PlayerAnimParameters.GetWeapon.ToString(), 1);
                 }
                 SkillAnimation(SkillType.Skill1, true);
                 //firstSkillCheck = SkillRunning.SkillOn;
@@ -51,7 +104,7 @@ public partial class Warrior : Player
 
                 int value = (int)atkValue;
 
-                skillStrategy.Skill(playerType, 1,out value);
+                skillStrategy.Skill(PlayerStateData.PlayerType, 1,out value);
 
                 SkillParentObj1.SetActive(true);
 
@@ -87,16 +140,16 @@ public partial class Warrior : Player
             }
         }
     }
-    protected override void commonskillAttack2(CharactorJobEnum _type)
+    protected override void commonskillAttack2(PlayerType _type)
     {
-        if (_type == CharactorJobEnum.Warrior)
+        if (_type == PlayerType.Warrior)
         {
-            if (secondSkillCheck == SkillState.SkillOff)
+            if (PlayerStateData.secondSkillCheck == SkillState.SkillOff)
             {
-                if (weaponState == WeaponState.Sword_Off)
+                if (PlayerStateData.PlayerWeaponState == PlayerWeaponState.Sword_Off)
                 {
-                    weaponState = WeaponState.Sword_On;
-                    playerAnim.SetInteger(PlayerAnimParameters.GetWeapon.ToString(), 1);
+                    PlayerStateData.PlayerWeaponState = PlayerWeaponState.Sword_On;
+                    playerAnimtor.SetInteger(PlayerAnimParameters.GetWeapon.ToString(), 1);
                 }
                 SkillAnimation(SkillType.Skill2, true);
                 //secondSkillCheck = SkillRunning.SkillOn;
@@ -104,7 +157,7 @@ public partial class Warrior : Player
 
                 int value = (int)atkValue;
 
-                skillStrategy.Skill(playerType, 2, out value);
+                skillStrategy.Skill(PlayerStateData.PlayerType, 2, out value);
 
                 SkillParentObj2.SetActive(true);
 
@@ -137,15 +190,15 @@ public partial class Warrior : Player
 
     protected override void skillValueReset()//Damage Reset
     {
-        if (firstSkillCheck == SkillState.SkillOn) 
+        if (PlayerStateData.firstSkillCheck == SkillState.SkillOn) 
         {
-            playerAnim.SetInteger(SkillType.Skill1.ToString(), 0);
-            firstSkillCheck = SkillState.SkillOff;
+            playerAnimtor.SetInteger(SkillType.Skill1.ToString(), 0);
+            PlayerStateData.firstSkillCheck = SkillState.SkillOff;
         }
-        if (secondSkillCheck == SkillState.SkillOn)
+        if (PlayerStateData.secondSkillCheck == SkillState.SkillOn)
         {
-            playerAnim.SetInteger(SkillType.Skill2.ToString(), 0);
-            secondSkillCheck = SkillState.SkillOff;
+            playerAnimtor.SetInteger(SkillType.Skill2.ToString(), 0);
+            PlayerStateData.secondSkillCheck = SkillState.SkillOff;
         }
         atkValue = attackReset;
     }

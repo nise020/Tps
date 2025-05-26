@@ -11,11 +11,11 @@ public partial class Gunner : Player
         attackAnimation(AttackState.AttackOn);
         gunShoot();
     }
-    protected override void attack(CharctorStateEnum _state, CharactorJobEnum _job)
+    protected override void attack(PlayerModeState _state, PlayerType _job)
     {
-        if (_job == CharactorJobEnum.Gunner)
+        if (_job == PlayerType.Gunner)
         {
-            if (reloadState == ReloadState.ReloadOff && 
+            if (PlayerStateData.reloadState == ReloadState.ReloadOff && 
                 WEAPON.ReturnTypeValue(BulletValueType.NowBullet) <= 0)
             {
                 Debug.Log($"bullet = {WEAPON.ReturnTypeValue(BulletValueType.NowBullet)}");
@@ -26,7 +26,7 @@ public partial class Gunner : Player
     }
     private void gunShoot() 
     {
-        playerAnim.SetLayerWeight(attackLayerIndex, 1.0f);
+        playerAnimtor.SetLayerWeight(attackLayerIndex, 1.0f);
 
         attackAnimation(AttackState.AttackOn);
 
@@ -52,21 +52,21 @@ public partial class Gunner : Player
     //    //    viewcam.cameraShakeAnim(_check);
     //    //}
     //}
-    protected override void commonRSkill(CharactorJobEnum _type)//Reload
+    protected override void commonRSkill(PlayerType _type)//Reload
     {
-        if (_type == CharactorJobEnum.Gunner ||
+        if (_type == PlayerType.Gunner ||
             WEAPON.ReturnTypeValue(BulletValueType.NowBullet) <= 0) 
         {
-            if (reloadState == ReloadState.ReloadOff)
+            if (PlayerStateData.reloadState == ReloadState.ReloadOff)
             {
-                reloadState = ReloadState.ReloadOn;
-                playerAnim.SetLayerWeight(attackLayerIndex, 1.0f);
-                playerAnim.SetInteger(PlayerAnimParameters.Reload.ToString(), 1);
+                PlayerStateData.reloadState = ReloadState.ReloadOn;
+                playerAnimtor.SetLayerWeight(attackLayerIndex, 1.0f);
+                playerAnimtor.SetInteger(PlayerAnimParameters.Reload.ToString(), 1);
             }
         }
 
 
-        if (firstSkillCheck == SkillState.SkillOff)
+        if (PlayerStateData.firstSkillCheck == SkillState.SkillOff)
         {
             gunShoot();
 
@@ -76,7 +76,7 @@ public partial class Gunner : Player
 
             //playerAnim.SetInteger(SkillType.Skill1.ToString(), 1);
             int value = (int)atkValue;
-            skillStrategy.Skill(playerType, 1, out value);
+            skillStrategy.Skill(PlayerStateData.PlayerType, 1, out value);
 
             SkillParentObj1.SetActive(true);
 
@@ -111,11 +111,11 @@ public partial class Gunner : Player
             return;
         }
     }
-    protected override void commonskillAttack1(CharactorJobEnum _type)
+    protected override void commonskillAttack1(PlayerType _type)
     {
-        if (_type == CharactorJobEnum.Gunner)
+        if (_type == PlayerType.Gunner)
         {
-            if (firstSkillCheck == SkillState.SkillOff)
+            if (PlayerStateData.firstSkillCheck == SkillState.SkillOff)
             {
                 //Invoke("SkillValueReset", 3);//clear
                 int value = (int)atkValue;
@@ -128,7 +128,7 @@ public partial class Gunner : Player
 
                 //playerAnim.SetInteger(SkillType.Skill1.ToString(), 1);
 
-                skillStrategy.Skill(playerType, 1, out value);
+                skillStrategy.Skill(PlayerStateData.PlayerType, 1, out value);
 
                 SkillParentObj1.SetActive(true);
 
@@ -150,18 +150,18 @@ public partial class Gunner : Player
         }
         else { return; }
     }
-    protected override void commonskillAttack2(CharactorJobEnum _type)
+    protected override void commonskillAttack2(PlayerType _type)
     {
-        if (_type == CharactorJobEnum.Gunner)
+        if (_type == PlayerType.Gunner)
         {
-            if (firstSkillCheck == SkillState.SkillOff)
+            if (PlayerStateData.firstSkillCheck == SkillState.SkillOff)
             {
                 int value = (int)atkValue;
 
-                skillStrategy.Skill(playerType, 2, out value);
-                firstSkillCheck = SkillState.SkillOn;
-                playerAnim.SetInteger("Skill1", 1);
-                playerAnim.SetInteger(PlayerAnimName.BuffSkill.ToString(), 1);
+                skillStrategy.Skill(PlayerStateData.PlayerType, 2, out value);
+                PlayerStateData.firstSkillCheck = SkillState.SkillOn;
+                playerAnimtor.SetInteger("Skill1", 1);
+                playerAnimtor.SetInteger(PlayerAnimName.BuffSkill.ToString(), 1);
                 Invoke("SkillValueReset", 3);//clear
             }
             else
@@ -188,17 +188,17 @@ public partial class Gunner : Player
     protected override void skillValueReset()//Damage Reset
     {
         atkValue = attackReset;
-        firstSkillCheck = SkillState.SkillOff;
-        playerAnim.SetInteger(PlayerAnimName.AttackSkill.ToString(), 0);
-        playerAnim.SetInteger(PlayerAnimName.BuffSkill.ToString(), 0);
+        PlayerStateData.firstSkillCheck = SkillState.SkillOff;
+        playerAnimtor.SetInteger(PlayerAnimName.AttackSkill.ToString(), 0);
+        playerAnimtor.SetInteger(PlayerAnimName.BuffSkill.ToString(), 0);
     }
     public void ReloadOut()//AnimationEvent
     {
         //AnimationEvent
-        reloadState = ReloadState.ReloadOff;
+        PlayerStateData.reloadState = ReloadState.ReloadOff;
         WEAPON.ReloadClearValue();
-        playerAnim.SetLayerWeight(attackLayerIndex, 0.0f);
+        playerAnimtor.SetLayerWeight(attackLayerIndex, 0.0f);
         //playerAnim.SetLayerWeight(BaseLayerIndex, 1.0f);
-        playerAnim.SetInteger(PlayerAnimParameters.Reload.ToString(), 0);
+        playerAnimtor.SetInteger(PlayerAnimParameters.Reload.ToString(), 0);
     }
 }

@@ -86,12 +86,11 @@ public enum NpcWalkState
     Walk,
     Run,
 }
-public enum WeaponState
+public enum PlayerWeaponState
 {
     None,
     Sword_On,
     Sword_Off,
-
 }
 public enum PlayerControllState
 {
@@ -108,8 +107,9 @@ public enum AttackState
     SwordOff,
 
 }
-public enum CharctorStateEnum
+public enum PlayerModeState
 {
+    None,   
     Npc,
     Player,
     AutoMode

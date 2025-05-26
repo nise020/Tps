@@ -5,33 +5,8 @@ using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UIElements;
 
-public abstract partial class Charactor : Actor
+public abstract partial class Character : Actor
 {
-    protected HpBar HPBAR = new HpBar();
-    public Action<float, float> onHpChanged;
-
-    //protected int power;//힘
-    [SerializeField] GameObject hpBar;//uiHp
-
-    protected Transform charactorModelTrs;//Modeling
-    protected Transform RootTransform;//RootModel
-    [SerializeField] protected GameObject weaponHandObject;//Hand
-    [SerializeField] protected GameObject weaponObj;//Weapon
-
-    protected float rotationSpeed = 20.0f;//나중에 조정
-    protected float skillCool_1;//1번 스킬쿨타임
-    protected float skillCool_2;//2번 스킬쿨타임
-    protected float buff;//버프
-    protected float burstCool;//버스트 쿨타임
-    //StatusType statusType = StatusType.None;
-    protected Condition condition = Condition.health;//상태패턴
-
-
-
-    protected Vector3 weaponOriginalPos = Vector3.zero;
-    protected ObjectRenderType RenderType = ObjectRenderType.None;
-
-    protected InvincibleState characterstate = InvincibleState.invincible_Off;
     protected virtual void FindWeaponObject(LayerName _name) { }
     protected void invincibleState()//무적
     {

@@ -4,7 +4,7 @@ using Unity.VisualScripting;
 using UnityEngine;
 //using static UnityEditor.Progress;
 
-public partial class Monster : Charactor
+public partial class Monster : Character
 {
     public Transform target;
     public float height = 5f;

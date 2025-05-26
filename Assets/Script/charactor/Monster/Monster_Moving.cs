@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public partial class Monster : Charactor
+public partial class Monster : Character
 {
     //protected override void OnTriggerEnter(Collider other)
     //{

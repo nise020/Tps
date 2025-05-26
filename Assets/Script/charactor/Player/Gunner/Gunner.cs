@@ -9,7 +9,8 @@ public partial class Gunner : Player
     {
         id = 1;
         RenderType = ObjectRenderType.Skin;
-        charctorState = CharctorStateEnum.Npc;
+        PlayerStateData.PlayerState = PlayerModeState.Npc;
+        PlayerStateData.PlayerType = PlayerType.Gunner;
         base.Awake();
     }
 
@@ -18,19 +19,11 @@ public partial class Gunner : Player
         base.Start();
         WEAPON = GetComponentInChildren<Gun>();
         FindWeaponObject(LayerName.Weapon);
-        //playerType = CharactorJobEnum.Gunner;
-        //charctorState = CharctorStateEnum.Player;
-        //playerControll = PlayerControllState.On; 
-        //Shared.InutTableMgr();
-        //Table_Charactor.Info info = Shared.TableManager.Character.Get(1);
-        //Name = info.Img;
-        //skillStrategy.PlayerInit(this);
-        //skillStrategy.WeaponInit(gun);
     }
 
     private void Update()
     {
-        if (charctorState == CharctorStateEnum.Player) 
+        if (PlayerStateData.PlayerState == PlayerModeState.Player) 
         {
             inputrocessing();
         }
@@ -44,6 +37,7 @@ public partial class Gunner : Player
     {
         //MeshRenderer[] Mesh = GetComponentsInChildren<MeshRenderer>();
         Weapon[] Mesh = GetComponentsInChildren<Weapon>();
+
         //granadObj
         int value = LayerMask.NameToLayer(_name.ToString());
         foreach (var MeshObj in Mesh)

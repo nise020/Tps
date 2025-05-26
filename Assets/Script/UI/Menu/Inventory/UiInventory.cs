@@ -68,8 +68,6 @@ public partial class UiInventory : UiBase
         }
     }
 
-
-
     private void OnDestroy()
     {
         GameEvents.OnEnterRange -= AddPrompt;
@@ -92,21 +90,21 @@ public partial class UiInventory : UiBase
             StartCoroutine(AddItemDataCoroutine(data, item));
         }
     }
-    public override void Open()
-    {
-        if (!inventoryInterfaceTab.activeSelf)
-        {
-            inventoryInterfaceTab.SetActive(true);
-        }
-        else 
-        {
-            inventoryInterfaceTab.SetActive(false);
-        }
-    }
+    //public override void Open()
+    //{
+    //    if (!inventoryInterfaceTab.activeSelf)
+    //    {
+    //        inventoryInterfaceTab.SetActive(true);
+    //    }
+    //    else 
+    //    {
+    //        inventoryInterfaceTab.SetActive(false);
+    //    }
+    //}
 
-    public override void Close()
-    {
-        //gameObject.SetActive(false);
-        UiEvent?.Invoke(); // ´ÝÈú ¶§ ÄÝ¹é ½ÇÇà
-    }
+    //public override void Close()
+    //{
+    //    //gameObject.SetActive(false);
+    //    UiEvent?.Invoke(); // ´ÝÈú ¶§ ÄÝ¹é ½ÇÇà
+    //}
 }

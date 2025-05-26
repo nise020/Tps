@@ -9,65 +9,13 @@ public partial class Warrior : Player
     int scabbardCount = 0;
     int scabbardMaxCount = 2;
     
-    public void RangeCheak() 
-    {
-        Vector3 weaponPos = new Vector3();
-
-        if (firstSkillCheck == SkillState.SkillOn)
-        {
-            weaponPos = SkillParentObj1.transform.position;
-        }
-        else if (secondSkillCheck == SkillState.SkillOn) 
-        {
-            weaponPos = SkillParentObj2.transform.position;
-        }
-        else 
-        {
-            weaponPos = weaponObj.transform.position;
-        }
-
-        List <Monster> monsetrPos = Shared.MonsterManager.MonsterList;
-
-        for (int iNum = 0; iNum < monsetrPos.Count; iNum++)
-        {
-            Transform body = monsetrPos[iNum].BodyObjectLoad();
-            float dist = Vector3.Distance(weaponPos, body.position);
-
-            if (dist < 3.5f)
-            {
-                Shared.BattelManager.DamageCheck(this, monsetrPos[iNum]);
-            }
-        }
-    }
-    
-    public void SkillEffectOff(int _value) 
-    {
-        if (firstSkillCheck == SkillState.SkillOn)
-        {
-            SkillAnimation(SkillType.Skill1, false);
-            SkillParentObj1.SetActive(false);
-            SkillEffectSystem1.Pause();
-        }
-        else if (secondSkillCheck == SkillState.SkillOn) 
-        {
-            SkillAnimation(SkillType.Skill2, false);
-            SkillParentObj1.SetActive(false);
-            SkillEffectSystem2.Pause();
-        }
-        else
-        {
-            attackAnimation(AttackState.AttackOff);
-        }
-        weaponState = WeaponState.Sword_Off;
-        scabbardCount = 0;
-
-    }
+   
     public void GetSword()//AnimationEvent
     {
         GameObject go = weaponObj.gameObject;
         go.transform.SetParent(weaponHandObject.gameObject.transform);
         go.transform.localPosition = Vector3.zero;
-        weaponState = WeaponState.Sword_On;
+        PlayerStateData.PlayerWeaponState = PlayerWeaponState.Sword_On;
 
         //CreatSkill(SkillEffectObj1, SkillParentObj1);
         //CreatSkill(SkillEffectObj2, SkillParentObj2);
@@ -78,7 +26,7 @@ public partial class Warrior : Player
     {
         if (scabbardMaxCount == scabbardCount)
         {
-            playerAnim.SetInteger(PlayerAnimParameters.GetWeapon.ToString(), 0);
+            playerAnimtor.SetInteger(PlayerAnimParameters.GetWeapon.ToString(), 0);
             scabbardCount = 0;
         }
         else 
@@ -92,27 +40,27 @@ public partial class Warrior : Player
         GameObject go = weaponObj.gameObject;
         go.transform.SetParent(scabbard.gameObject.transform);
         go.transform.localPosition = weaponOriginalPos;
-        weaponState = WeaponState.Sword_Off;
+        PlayerStateData.PlayerWeaponState = PlayerWeaponState.Sword_Off;
     }
     protected override void walkAnim(RunState _runState, Vector3 _pos)
     {
         if (_runState == RunState.Walk)
         {
-            if (playerWalkState == PlayerWalkState.Walk_On) { return; }
+            if (PlayerStateData.PlayerWalkState == PlayerWalkState.Walk_On) { return; }
 
-            playerWalkState = PlayerWalkState.Walk_On;
-            playerAnim.SetInteger(PlayerAnimParameters.Walk.ToString(), 1);
+            PlayerStateData.PlayerWalkState = PlayerWalkState.Walk_On;
+            playerAnimtor.SetInteger(PlayerAnimParameters.Walk.ToString(), 1);
         }
         else if (_runState == RunState.Run)
         {
-            if (playerRunState == PlayerRunState.Run_On) { return; }
+            if (PlayerStateData.PlayerRunState == PlayerRunState.Run_On) { return; }
 
-            playerRunState = PlayerRunState.Run_On;
-            playerAnim.SetInteger(PlayerAnimParameters.Run.ToString(), 1);
+            PlayerStateData.PlayerRunState = PlayerRunState.Run_On;
+            playerAnimtor.SetInteger(PlayerAnimParameters.Run.ToString(), 1);
         }
     }
     
-    protected override void clearWalkAnimation(CharactorJobEnum _type)
+    protected override void clearWalkAnimation(PlayerType _type)
     {
         base.clearWalkAnimation(_type);
     }

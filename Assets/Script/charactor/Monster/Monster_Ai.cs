@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
 
-public partial class Monster : Charactor
+public partial class Monster : Character
 {
     Player HItPalyer;
     List<Slot>slots = new List<Slot>();

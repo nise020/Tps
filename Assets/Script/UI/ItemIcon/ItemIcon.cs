@@ -14,18 +14,22 @@ public partial class ItemIcon : MonoBehaviour//,IPointerDownHandler//, IPointerU
     private Dictionary< int, Sprite> itemQuantityDatas = new Dictionary<int, Sprite>();
     Item Item;
 
-    ItemData itemData = new ItemData();
-    public int IconId;
 
-    public ItemIconState itemIconState = ItemIconState.None_Item_Data;
-    public IconSlotType iconSlotType = IconSlotType.None;
-    public ItemType acceptedItemType = ItemType.None;
-    public ItemType itemType = ItemType.None;
+    //public ItemIconState itemIconState = ItemIconState.None_Item_Data;
+    //public IconSlotType iconSlotType = IconSlotType.None;
+    //public ItemType acceptedItemType = ItemType.None;
     public bool IsEquipmentSlot;
 
+    ItemData itemData = new ItemData();
+    ItemSlotData slotData = new ItemSlotData();
+
+
+
+    public int IconId;
     [SerializeField] int item_Id_ItemIcon;
     [SerializeField] string item_Img_ItemIcon;
     [SerializeField] int item_Quantity_ItemIcon;
+    [SerializeField] ItemType itemType = ItemType.None;
     Sprite DefoltSprite;
     //private void OnDisable()//꺼질때
     //{
@@ -36,7 +40,7 @@ public partial class ItemIcon : MonoBehaviour//,IPointerDownHandler//, IPointerU
     //    
     //    
     //}
- 
+
     //private void Start()
     //{
     //    DefoltSprite = itemImage.sprite;//BackGround
@@ -47,6 +51,20 @@ public partial class ItemIcon : MonoBehaviour//,IPointerDownHandler//, IPointerU
     //     //   $"Id = {IconId}");
     //    //gameObject.SetActive(false);
     //}
+    public void AcceptedTypeUpdate(ItemType _type)
+    {
+        slotData.AcceptedItemType = _type;
+    }
+    public ItemType AcceptedTypeLoad()
+    {
+        return slotData.AcceptedItemType;
+    }
+    public void SlotDataUpdate(int _value, IconSlotType _type)
+    {
+        IconId = _value;
+        slotData.Type = _type;
+    }
+
     public void Initialize() 
     {
         rectTransform = GetComponent<RectTransform>();
@@ -84,12 +102,12 @@ public partial class ItemIcon : MonoBehaviour//,IPointerDownHandler//, IPointerU
 
     public bool HasSameItem(int targetID)
     {
-        return itemIconState == ItemIconState.Have_a_Item_Data && item_Id_ItemIcon == targetID;
+        return slotData.State == ItemIconState.Have_a_Item_Data && item_Id_ItemIcon == targetID;
     }
 
     public bool IsEmpty()
     {
-        return itemIconState == ItemIconState.None_Item_Data || itemData.itemID == 0;
+        return slotData.State == ItemIconState.None_Item_Data || itemData.itemID == 0;
     }
 
     public void IncreaseQuantity(ItemData _data)
@@ -113,7 +131,7 @@ public partial class ItemIcon : MonoBehaviour//,IPointerDownHandler//, IPointerU
 
         itemData = _data;
 
-        itemIconState = ItemIconState.Have_a_Item_Data;
+        slotData.State = ItemIconState.Have_a_Item_Data;
         UpdateSprite(item_Img_ItemIcon);
 
         Debug.Log($"{gameObject},{IconId},{item_Id_ItemIcon},{item_Img_ItemIcon},{item_Quantity_ItemIcon}");
@@ -121,7 +139,7 @@ public partial class ItemIcon : MonoBehaviour//,IPointerDownHandler//, IPointerU
 
     private void Clear()
     {
-        itemIconState = ItemIconState.None_Item_Data;
+        slotData.State = ItemIconState.None_Item_Data;
         itemType = ItemType.None;
 
         itemData = null;
@@ -148,7 +166,7 @@ public partial class ItemIcon : MonoBehaviour//,IPointerDownHandler//, IPointerU
 
         itemData = _data;
 
-        itemIconState = ItemIconState.Have_a_Item_Data;
+        slotData.State = ItemIconState.Have_a_Item_Data;
 
         UpdateSprite(_data.itemImage);
         //UpdateQuantityDisplay();//수량 이미지 교체
@@ -159,13 +177,13 @@ public partial class ItemIcon : MonoBehaviour//,IPointerDownHandler//, IPointerU
         if (itemData == null || itemData.itemID == 0)
         {
             itemImage.sprite = DefoltSprite;
-            itemIconState = ItemIconState.None_Item_Data;
+            slotData.State = ItemIconState.None_Item_Data;
             item_Quantity_ItemIcon = 0;
         }
         else
         {
             itemImage.sprite = itemData.ItemSprite; // 또는 UpdateSprite(itemData.ItemSprite)
-            itemIconState = ItemIconState.Have_a_Item_Data;
+            slotData.State = ItemIconState.Have_a_Item_Data;
             item_Quantity_ItemIcon = itemData.quantity;
         }
     }

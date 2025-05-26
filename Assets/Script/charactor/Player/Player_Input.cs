@@ -3,18 +3,10 @@ using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
 
-public partial class Player : Charactor
+public partial class Player : Character
 {
     protected void inputrocessing() 
     {
-        //int keyinPut = Shared.InputManager.keyinPutQueBase.Count;
-        //int mouseinPut = Shared.InputManager.mouseQueBase.Count;
-        //int moveinPut = Shared.InputManager.moveQueBase.Count;
-
-        //if (keyinPut == 0 && mouseinPut == 0 && moveinPut == 0) { return; }
-        
-        //중복처리를 방지 하기 위한 예외 처리 추가 필요
-
         while (Shared.InputManager.KeyinPutQueData.Count > 0)//key 
         {
 
@@ -23,16 +15,16 @@ public partial class Player : Charactor
             switch (type)
             {
                 case KeyCode.Mouse1:
-                    walkStateChange(runState);
+                    walkStateChange(PlayerStateData.runState);
                     break;
                 case KeyCode.R:
-                    commonRSkill(playerType);
+                    commonRSkill(PlayerStateData.PlayerType);
                     break;
                 case KeyCode.Q:
-                    commonskillAttack1(playerType);//SkillQ
+                    commonskillAttack1(PlayerStateData.PlayerType);//SkillQ
                     break;
                 case KeyCode.E:
-                    commonskillAttack2(playerType);//SkillE
+                    commonskillAttack2(PlayerStateData.PlayerType);//SkillE
                     break;
                 case KeyCode.Z:
                     shitdownCheak();//shitdown
@@ -42,87 +34,46 @@ public partial class Player : Charactor
                     break;
             }
         }
+
         while (Shared.InputManager.MouseInputQueData.Count > 0)//mouseClick == Attack
         {
             MouseInputType type = Shared.InputManager.MouseInputQueData.Dequeue();
             switch (type) 
             {
                 case MouseInputType.Click://mouseClick
-                    attack(charctorState, playerType);
+                    attack(PlayerStateData.PlayerState, PlayerStateData.PlayerType);
                     break;
                 case MouseInputType.Release://mouseClickUp
                     //inPutCameraAnimation(false)
                     ;
                     break;
                 case MouseInputType.Hold://mouseClickDown
-                    attack(charctorState, playerType);
+                    attack(PlayerStateData.PlayerState, PlayerStateData.PlayerType);
                     //inPutCameraAnimation(true)
                     ;
                     break;
             }
                 
         }
+
         if (Shared.InputManager.MoveQueData.Count == 0) 
         {
-            clearWalkAnimation(playerType);
+            clearWalkAnimation(PlayerStateData.PlayerType);
         }
         while (Shared.InputManager.MoveQueData.Count > 0)//move
         {
             Vector3 type = Shared.InputManager.MoveQueData.Dequeue();
-            move(charctorState,type);
+            move(PlayerStateData.PlayerState,type);
         }
-        
-
-
 
         notWalkTimer += Time.deltaTime;
+
         if (notWalkTimer > notWalkTime &&
-            playerWalkState == PlayerWalkState.Walk_On)
+            PlayerStateData.PlayerWalkState == PlayerWalkState.Walk_On)
         {
-            playerWalkState = PlayerWalkState.Walk_Off;
+            PlayerStateData.PlayerWalkState = PlayerWalkState.Walk_Off;
         }
         
     }
 
-
-
-
-    //InputManager input_Base = new InputManager();
-    //protected Queue<KeyCode> keyinPutQue => input_Base.keyinPutQueBase;
-    //protected Queue<MouseInputType> mouseQue => input_Base.mouseQueBase;
-    //protected Queue<Vector3> moveQue => input_Base.moveQueBase;
-    //protected bool mouseClick => Input.GetMouseButton(0);
-    //protected bool mouseClickUp => Input.GetMouseButtonUp(0);
-    //protected bool mouseClickDown => Input.GetMouseButtonDown(0);
-    //protected bool RunCheck => Input.GetKeyDown(KeyCode.Mouse1);
-    //protected bool reloadOn => Input.GetKeyDown(KeyCode.R);
-    //protected Vector3 inPutPos => new Vector3(Input.GetAxisRaw("Horizontal"), 0,
-    //    Input.GetAxisRaw("Vertical"));
-    //protected bool Skill1 => Input.GetKeyDown(KeyCode.Q);
-    //protected bool Skill2 => Input.GetKeyDown(KeyCode.E);
-
-    //Queue<bool> inPutQueValue = new Queue<bool>();
-    //Queue<Vector3> moveQueValue = new Queue<Vector3>();
-    //public void InputEventAdd(bool _input) 
-    //{
-    //    //좀 더 수정이 필요함
-    //    if (!_input) { return; }
-    //    if (_input) 
-    //    {
-    //        inPutQueValue.Enqueue(_input);
-    //    }
-    //    bool vector = inPutQueValue.Peek();
-    //    fsmPosQue.Dequeue();
-    //}
-    //public void InputMoveAdd(Vector3 _input)
-    //{
-    //    //좀 더 수정이 필요함
-    //    if (_input.magnitude > 0.1f) { return; }
-    //    if (_input.magnitude < 0.1f)
-    //    {
-    //        moveQueValue.Enqueue(_input);
-    //    }
-    //    Vector3 vector = moveQueValue.Peek();
-    //    moveQueValue.Dequeue();
-    //}
 }

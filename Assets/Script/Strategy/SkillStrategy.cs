@@ -9,14 +9,14 @@ public partial class SkillStrategy : Strategy
     GameObject WarriorSkillEffect2 => Resources.Load<GameObject>("Assets\\Resources\\Prefabs\\Effect\\Fab_SwordEffect 2");
     GameObject GunnerSkillEffect1 => Resources.Load<GameObject>("Assets\\Resources\\Prefabs\\Effect\\Fab_SwordEffect");
     //GameObject GunnerSkillEffect2 => Resources.Load<GameObject>("Assets\\Resources\\Prefabs\\Effect\\Fab_SwordEffect");
-    public override void Skill(CharactorJobEnum _type, int _skillNumber,out int _damageValue)
+    public override void Skill(PlayerType _type, int _skillNumber,out int _damageValue)
     {
         switch (_type)
         {
-            case CharactorJobEnum.Gunner:
+            case PlayerType.Gunner:
                 Damagevalue = GunnerSkill(_skillNumber, Damagevalue);
                 break;
-            case CharactorJobEnum.Warrior:
+            case PlayerType.Warrior:
                 Damagevalue = WarriorSkill(_skillNumber, Damagevalue);
                 break;
         }

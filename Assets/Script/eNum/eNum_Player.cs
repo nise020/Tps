@@ -45,7 +45,7 @@ public enum Scene //예전에는 앞에 sScene을 붙여야 했다
 
 }
 
-public enum CharactorJobEnum
+public enum PlayerType
 {
     None,
     Warrior,

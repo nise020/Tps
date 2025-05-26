@@ -53,31 +53,24 @@ public partial class AiBase
                 break;
         }
     }
-    public virtual void State(CharctorStateEnum _state, Player _player,out NpcAiState _Ai)
-    {
-        if (_state == CharctorStateEnum.Player) 
-        {
-            _Ai = new NpcAiState();
-            return;
-        } 
-
-        switch (npcAi)
-        {
-            case NpcAiState.Search:
-                Search();
-                break;
-            case NpcAiState.Move:
-                Move(targetPos);
-                break;
-            case NpcAiState.Attack:
-                Attack();
-                break;
-            case NpcAiState.Reset:
-                Reset();
-                break;
-        }
-        _Ai = new NpcAiState();
-    }
+    //public virtual void State()
+    //{
+    //    switch (npcAi)
+    //    {
+    //        case NpcAiState.Search:
+    //            Search();
+    //            break;
+    //        case NpcAiState.Move:
+    //            Move(targetPos);
+    //            break;
+    //        case NpcAiState.Attack:
+    //            Attack();
+    //            break;
+    //        case NpcAiState.Reset:
+    //            Reset();
+    //            break;
+    //    }
+    //}
     protected virtual void Create() 
     {
         aIState = MonsterAiState.Search;
@@ -99,25 +92,25 @@ public partial class AiBase
         aIState = MonsterAiState.Search;
     }
 
-    protected virtual void Create(Player _obj)
-    {
-        npcAi = NpcAiState.Search;
-    }
-    protected virtual void Search(Player _obj)
-    {
-        npcAi = NpcAiState.Attack;
-    }
-    protected virtual void Move(Player _obj, Vector3 _pos)
-    {
-        npcAi = NpcAiState.Move;
-    }
-    protected virtual void Attack(Player _obj)
-    {
-        npcAi = NpcAiState.Reset;
-    }
-    public static int LayerNameEnum(LayerName layer)
-    {
-        return LayerMask.NameToLayer(layer.ToString());
-    }
+    //protected virtual void Create(Player _obj)
+    //{
+    //    npcAi = NpcAiState.Search;
+    //}
+    //protected virtual void Search(Player _obj)
+    //{
+    //    npcAi = NpcAiState.Attack;
+    //}
+    //protected virtual void Move(Player _obj, Vector3 _pos)
+    //{
+    //    npcAi = NpcAiState.Move;
+    //}
+    //protected virtual void Attack(Player _obj)
+    //{
+    //    npcAi = NpcAiState.Reset;
+    //}
+    //public static int LayerNameEnum(LayerName layer)
+    //{
+    //    return LayerMask.NameToLayer(layer.ToString());
+    //}
 }
     

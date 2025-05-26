@@ -9,7 +9,7 @@ public partial class Weapon : Item
     //[SerializeField] GameObject SkillEffectObj2;
 
     protected WeaponEnum weaponType;
-    protected CharactorJobEnum PlayerType;
+    protected PlayerType PlayerType;
 
     //protected float Range;//¹üÀ§
     //protected float Power;//Èû
@@ -45,7 +45,7 @@ public partial class Weapon : Item
     public virtual void ClearTypeValue(BulletValueType _type)
     {
     }
-    protected virtual void ControllWeapon(CharactorJobEnum _type) 
+    protected virtual void ControllWeapon(PlayerType _type) 
     {
 
     }

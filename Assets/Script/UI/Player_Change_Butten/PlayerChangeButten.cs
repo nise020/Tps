@@ -6,7 +6,7 @@ using UnityEngine.UI;
 public class PlayerChangeButten : MonoBehaviour
 {
     PlayerCamera MOVECAMERA;
-    CharactorJobEnum playerType;
+    PlayerType playerType;
 
     Player PlayerCharacter = new Player();
     Player NpcCharacter = new Player();
@@ -19,22 +19,24 @@ public class PlayerChangeButten : MonoBehaviour
         switch (_type)
         {
             case ButtenType.Gunne_Change_Buttenr:
-                PlayerCharacter = Shared.GameManager.PlayerDataLoad(CharactorJobEnum.Gunner);
-                NpcCharacter = Shared.GameManager.PlayerDataLoad(CharactorJobEnum.Warrior);
+                PlayerCharacter = Shared.GameManager.PlayerDataLoad(PlayerType.Gunner);
+                NpcCharacter = Shared.GameManager.PlayerDataLoad(PlayerType.Warrior);
+  
                 break;
             case ButtenType.Warror_Change_Butten:
-                PlayerCharacter = Shared.GameManager.PlayerDataLoad(CharactorJobEnum.Warrior);
-                NpcCharacter = Shared.GameManager.PlayerDataLoad(CharactorJobEnum.Gunner);
+                PlayerCharacter = Shared.GameManager.PlayerDataLoad(PlayerType.Warrior);
+                NpcCharacter = Shared.GameManager.PlayerDataLoad(PlayerType.Gunner);
 
                 break;
         }
+        NpcCharacter.AiUpdate(PlayerCharacter);
 
         Text text = GetComponentInChildren<Text>();
         text.text = PlayerCharacter.name.ToString();
 
 
         hpBar = gameObject.GetComponentInChildren<HpBar>();
-        Charactor charactor = PlayerCharacter;
+        Character charactor = PlayerCharacter;
 
         hpBar.CharactorInIt(charactor);
     }
@@ -42,28 +44,18 @@ public class PlayerChangeButten : MonoBehaviour
 
     public void CharactorControllButten()//OnClick
     {
-        Shared.GameManager.CharctorContoll(PlayerCharacter, CharctorStateEnum.Player);
-        PlayerCharacter.ClearAllAnimation(CharactorJobEnum.Warrior);
-        PlayerCameraCheck(PlayerCharacter, CharctorStateEnum.Player);
-        AnotherPlayerReset(NpcCharacter, playerType, CharctorStateEnum.Npc);
-        //if (PlayerCharacter.CharactorEnumCheck(CharactorJobEnum.Warrior) == true)
-        //{
-        //    Shared.GameManager.CharctorContoll(PlayerCharacter, CharctorStateEnum.Player);
-        //    PlayerCharacter.ClearAllAnimation(CharactorJobEnum.Warrior);
-        //    PlayerCameraCheck(PlayerCharacter, CharctorStateEnum.Player);
-        //    AnotherPlayerReset(NpcCharacter, playerType, CharctorStateEnum.Npc);
-
-        //    if (NpcCharacter.CharactorEnumCheck(CharactorJobEnum.Gunner) == true)
-        //    {
-        //    }
-        //}
+        Shared.GameManager.CharctorContoll(PlayerCharacter, PlayerModeState.Player);
+        PlayerCharacter.ClearAllAnimation(PlayerType.Warrior);
+        PlayerCameraCheck(PlayerCharacter, PlayerModeState.Player);
+        AnotherPlayerReset(NpcCharacter, playerType, PlayerModeState.Npc);
+        
     }
 
-    public void PlayerCameraCheck(Player _player, CharctorStateEnum _check)
+    public void PlayerCameraCheck(Player _player, PlayerModeState _check)
     {
         _player.init(out MOVECAMERA);
         Camera camera = MOVECAMERA.gameObject.GetComponent<Camera>();
-        if (_check == CharctorStateEnum.Player)
+        if (_check == PlayerModeState.Player)
         {
             MOVECAMERA.gameObject.SetActive(true);
             camera = Camera.main;
@@ -76,11 +68,12 @@ public class PlayerChangeButten : MonoBehaviour
         }
         //MOVECAMERA.gameObject.transform.SetParent(_player.transform);
     }
-    public void AnotherPlayerReset(Player _player, CharactorJobEnum _type, CharctorStateEnum _check)
+    public void AnotherPlayerReset(Player _npc, PlayerType _type, PlayerModeState _check)
     {
+        _npc.AiUpdate(PlayerCharacter);
         //_player.playerTypeInite(out _type);//Load
-        _player.ClearAllAnimation(_type);//Animation reset
-        PlayerCameraCheck(_player, _check);//Camera On_Off
-        Shared.GameManager.CharctorContoll(_player, CharctorStateEnum.Npc);//Controll Off
+        _npc.ClearAllAnimation(_type);//Animation reset
+        PlayerCameraCheck(_npc, _check);//Camera On_Off
+        Shared.GameManager.CharctorContoll(_npc, PlayerModeState.Npc);//Controll Off
     }
 }

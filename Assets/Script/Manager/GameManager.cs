@@ -12,11 +12,11 @@ public class GameManager : MonoBehaviour
     //SceneMgr 기능별로 나눌수 있다
 
     [SerializeField] Button[] PlayerButtons;//현재 조작 중인 플블
-    Dictionary<int,Player> PlayerCount = new Dictionary<int, Player>();
+    Dictionary<Player, GameObject> PlayerData = new Dictionary<Player, GameObject>();
     int playerKey = 0;
 
     [Header("Player Charactor")]
-    Player PLAYER;
+    [SerializeField] Player PLAYER;
     [SerializeField] Gunner GUNNER;
     [SerializeField] Warrior WARRIOR;
     public List<Player> PlayerObj;//플블 번호
@@ -40,17 +40,17 @@ public class GameManager : MonoBehaviour
     {
         GameObject go = Instantiate(WARRIOR.gameObject, startPointObj.gameObject.transform.position,
             Quaternion.identity);
-        Charactor charactor = go.GetComponent<Charactor>();
+        Character charactor = go.GetComponent<Character>();
         //Charactor player = Factory.CreateCharactor(ObjectType.Player);
         //charactor = player;
 
     }
  
-    public void onbtnTitle() 
-    {
-        //SceneManager.LoadScene("Login");
-        //shared.SceneMgr.chageSecen
-    }
+    //public void onbtnTitle() 
+    //{
+    //    //SceneManager.LoadScene("Login");
+    //    //shared.SceneMgr.chageSecen
+    //}
     private void Awake()
     {
         if (Shared.GameManager == null)
@@ -65,15 +65,14 @@ public class GameManager : MonoBehaviour
     }
     void Start()
     {
-        //GameObject go = Instantiate(creatTabObj);
-        //creatTab = go.transform;
-        CharctorTypeAdd(GUNNER, CharactorJobEnum.Gunner);
-        CharctorTypeAdd(WARRIOR, CharactorJobEnum.Warrior);
+        CharctorAdd(PlayerModeState.Npc,GUNNER);
+        CharctorAdd(PlayerModeState.Player,WARRIOR);
 
         FindPlayer();
 
         PLAYER.gameObject.transform.position = startPointObj.gameObject.transform.position;
         playerKey = 0;
+
     }
     public Transform CreatTransform()
     {
@@ -85,13 +84,13 @@ public class GameManager : MonoBehaviour
     }
     public void FindPlayer() 
     {
-        foreach (KeyValuePair<int, Player> playerData in PlayerCount)
+        foreach (KeyValuePair<Player, GameObject> playerData in PlayerData)
         {
-            Player player = playerData.Value;
-            player.PlayerControllChack(out CharctorStateEnum _type);
-            if (_type == CharctorStateEnum.Player) 
+            Player player = playerData.Key;
+            player.PlayerControllChack(out PlayerModeState _type);
+            if (_type == PlayerModeState.Player)
             {
-                PLAYER = playerData.Value;
+                PLAYER = player;
                 Camera camera = PLAYER.GetComponentInChildren<Camera>();
                 Shared.CameraManager.CameraChange(camera);
                 break;
@@ -103,19 +102,19 @@ public class GameManager : MonoBehaviour
     {
         return PLAYER;
     }
-    public Player PlayerDataLoad(CharactorJobEnum _job)
+    public Player PlayerDataLoad(PlayerType _job)
     {
-        if (_job ==CharactorJobEnum.Gunner) 
+        if (_job ==PlayerType.Gunner) 
         {
             return GUNNER;
         }
-        else if (_job == CharactorJobEnum.Warrior)
+        else if (_job == PlayerType.Warrior)
         {
             return WARRIOR;
         }
         return null;
     }
-    public void PlayerData(out Player _player) 
+    public void PlayerLoad(out Player _player) 
     {
         if (PLAYER == null) 
         {
@@ -130,18 +129,18 @@ public class GameManager : MonoBehaviour
         _pos = PLAYER.gameObject.transform.position;
         return _pos;
     }
-    public void CharctorContoll(Player _player, CharctorStateEnum _state) 
+    public void CharctorContoll(Player _player, PlayerModeState _state) 
     {
         _player.PlayerControllChange(_state);//On,Off
-        if (_state == CharctorStateEnum.Player) 
+        if (_state == PlayerModeState.Player) 
         {
             PLAYER = _player;         
         }
     }
-    private void CharctorTypeAdd(Player _player, CharactorJobEnum _type) 
+    private void CharctorAdd(PlayerModeState _type, Player _player) 
     {
-        _player.TypeInit(_type, playerKey);
-        PlayerCount.Add(playerKey, _player);
+        _player.PlayerModeUpdate(_type);
+        PlayerData.Add(_player,_player.gameObject);
         playerKey += 1;
         PlayerObj.Add(_player);
 
@@ -149,9 +148,9 @@ public class GameManager : MonoBehaviour
 
         Shared.CameraManager.CameraAdd(cam);
     }
-    public void PlayerbleDataLoad(out Dictionary<int, Player> _value) 
+    public void PlayerbleDataLoad(out Dictionary<Player, GameObject> _value) 
     {
-        _value = PlayerCount;   
+        _value = PlayerData;   
     }
     // Start is called before the first frame update
     

@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Threading;
 using UnityEngine;
 
-public partial class Monster : Charactor
+public partial class Monster : Character
 {
     protected List<Item> ITEMLists = new List<Item>();
     protected List <GameObject> itemObjValue = new List<GameObject>();

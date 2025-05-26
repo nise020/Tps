@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using Cinemachine.Utility;
 using UnityEngine;
 
-public partial class Monster : Charactor
+public partial class Monster : Character
 {
     protected Animator monsterAnimator;
 

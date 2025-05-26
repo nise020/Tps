@@ -6,7 +6,7 @@ using UnityEngine;
 using UnityEngine.TextCore.Text;
 using static UnityEngine.UI.CanvasScaler;
 
-public abstract partial class Charactor : Actor
+public abstract partial class Character : Actor
 {
     //델리게이트
     //지연이 걸리는 부분에 사용
@@ -116,23 +116,23 @@ public abstract partial class Charactor : Actor
     protected virtual void search() {}
     protected virtual void moveAnimation(MonsterWalkState _state) {}
     protected virtual void attackAnimation(MonsterAttackState _state) {}
-    protected virtual void move(CharctorStateEnum _value,Vector3 _pos) 
+    protected virtual void move(PlayerModeState _value,Vector3 _pos) 
     {
 
     }
-    protected virtual void move(CharctorStateEnum _value, Player _player)
+    protected virtual void move(PlayerModeState _value, Player _player)
     {
 
     }
-    protected virtual void attack(CharctorStateEnum _state, CharactorJobEnum _job) 
+    protected virtual void attack(PlayerModeState _state, PlayerType _job) 
     {
 
     }
-    protected virtual void commonskillAttack1(CharactorJobEnum _type) 
+    protected virtual void commonskillAttack1(PlayerType _type) 
     {
 
     }
-    protected virtual void commonskillAttack2(CharactorJobEnum _type)
+    protected virtual void commonskillAttack2(PlayerType _type)
     {
 
     }

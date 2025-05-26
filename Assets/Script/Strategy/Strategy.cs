@@ -9,9 +9,9 @@ public abstract partial class Strategy : MonoBehaviour
     protected Weapon Weapon;
 
     protected WeaponEnum WeaponType = WeaponEnum.None;
-    protected CharactorJobEnum playerType = CharactorJobEnum.None;
+    protected PlayerType playerType = PlayerType.None;
     protected int DamegeUp;
-    abstract public void Skill(CharactorJobEnum _type, int _skillNumber, out int _damageValue);
+    abstract public void Skill(PlayerType _type, int _skillNumber, out int _damageValue);
     public void init(State _state) 
     {
         State = _state;
@@ -24,7 +24,7 @@ public abstract partial class Strategy : MonoBehaviour
     {
         Weapon = _gun;
     }
-    public void InitType(CharactorJobEnum _type)
+    public void InitType(PlayerType _type)
     {
         playerType = _type;
     }

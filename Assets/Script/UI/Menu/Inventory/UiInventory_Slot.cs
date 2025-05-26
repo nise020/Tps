@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public partial class UiInventory : UiBase
@@ -9,10 +10,10 @@ public partial class UiInventory : UiBase
 
     private void ArmorIconAdd()
     {
-        armorIcon.acceptedItemType = ItemType.Armor;
-        weaponIcon.acceptedItemType = ItemType.Weapon;
-        bootsIcon.acceptedItemType = ItemType.Boots;
-        gloveIcon.acceptedItemType = ItemType.Gloves;
+        armorIcon.AcceptedTypeUpdate(ItemType.Armor);
+        weaponIcon.AcceptedTypeUpdate(ItemType.Weapon);
+        bootsIcon.AcceptedTypeUpdate(ItemType.Boots);
+        gloveIcon.AcceptedTypeUpdate(ItemType.Gloves);
 
         armorIcon.IsEquipmentSlot = true;
         weaponIcon.IsEquipmentSlot = true;
@@ -131,12 +132,37 @@ public partial class UiInventory : UiBase
         //Transform contantsu;//인벤토리 속 아이템 줄
         //Transform creatTab;//인벤토리 속 contantsu가 생성될 부모의 위치
 
-        int maxRows = 6;
-        int number = 0;
-        for (int i = 0; i < maxRows; i++)
-        {
-            data.Add(new info());
-        }
+        int maxRows = 30;
+        int IconIdNumber = 0;
+        //for (int i = 0; i < maxRows; i++)
+        //{
+        //    data.Add(new info());
+        //}
+
+        //for (int row = 0; row < maxRows; row++)
+        //{
+        //    GameObject tab = Instantiate(contantsu, creatTab);
+
+        //    int count = contantsu.transform.childCount;
+
+        //    foreach (RectTransform t in tab.transform)
+        //    {
+        //        ItemIcon icon = t.GetComponent<ItemIcon>();
+
+        //        icon.SlotDataUpdate(IconIdNumber, IconSlotType.InvenTory);
+
+        //        icon.Initialize();
+
+        //        ItemIconData.Add(icon.IconId, icon);
+        //        InvenIconLists.Add(icon);
+
+        //        data[row].transforms.Add(t);
+        //        IconIdNumber++;
+        //    }
+        //    TabObject.Add(tab);
+        //    //tab.gameObject.SetActive(false);
+        //}
+
 
         for (int row = 0; row < maxRows; row++)
         {
@@ -144,23 +170,17 @@ public partial class UiInventory : UiBase
 
             int count = contantsu.transform.childCount;
 
-            foreach (RectTransform t in tab.transform)
-            {
-                ItemIcon icon = t.GetComponent<ItemIcon>();
+            ItemIcon icon = tab.GetComponent<ItemIcon>();
 
-                icon.IconId = number;
-                icon.iconSlotType = IconSlotType.InvenTory;
+            icon.SlotDataUpdate(IconIdNumber, IconSlotType.InvenTory);
 
-                icon.Initialize();
+            icon.Initialize();
 
-                ItemIconData.Add(icon.IconId, icon);
-                InvenIconLists.Add(icon);
+            ItemIconData.Add(icon.IconId, icon);
+            InvenIconLists.Add(icon);
 
-                data[row].transforms.Add(t);
-                number++;
-            }
+            IconIdNumber++;
             TabObject.Add(tab);
-            //tab.gameObject.SetActive(false);
         }
     }
 

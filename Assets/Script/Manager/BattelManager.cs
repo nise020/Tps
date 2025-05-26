@@ -77,10 +77,10 @@ public class BattelManager : MonoBehaviour
             Destroy(gameObject);
         }
     }
-    private void Start()
-    {
-        //DamageShadarLoad();
-    }
+    //private void Start()
+    //{
+    //    //DamageShadarLoad();
+    //}
 
     private void DamageShadarLoad()
     {
@@ -88,7 +88,7 @@ public class BattelManager : MonoBehaviour
         Debug.Log($"damageShader = {damageShader}");
     }
 
-    public void DamageCheck(Charactor _attacker, Charactor _defender) 
+    public void DamageCheck(Character _attacker, Character _defender) 
     {
         float defenserHp = _defender.StatusTypeLoad(StatusType.HP);
 
@@ -100,8 +100,8 @@ public class BattelManager : MonoBehaviour
 
         //attakerPower = DamageCalculator(attakerPower, CriticalValue);
 
-        //defenserHp = defenserHp - attakerPower;
-        defenserHp = defenserHp - 1000;
+        defenserHp = defenserHp - attakerPower;
+        //defenserHp = defenserHp - 1000;
 
         _defender.StatusUpLoad(defenserHp);
 
@@ -121,7 +121,7 @@ public class BattelManager : MonoBehaviour
 
         return _attakerPower;
     }
-    private void DamageColor(Charactor _defender) 
+    private void DamageColor(Character _defender) 
     {
         SkinnedMeshRenderer[] renderers = _defender.gameObject.GetComponentsInChildren<SkinnedMeshRenderer>();
         //originalShaders.Clear();
@@ -195,7 +195,7 @@ public class BattelManager : MonoBehaviour
     private void creatObject() 
     {
         //player
-        CharctorStateEnum controll = CharctorStateEnum.Player;
+        PlayerModeState controll = PlayerModeState.Player;
 
         PLAYER.gameObject.transform.position = startPointObj.gameObject.transform.position;
         PLAYER.PlayerControllChange(controll);

@@ -7,7 +7,7 @@ public abstract partial class Actor : MonoBehaviour
     protected Camera cam;
     //protected State STATE = new State();
     
-    protected ObjectType objType = ObjectType.None;//현재 몬스터만 적용
+    protected ObjectType objType = ObjectType.None;
 
     public void TypeInit(ObjectType _objType) 
     {

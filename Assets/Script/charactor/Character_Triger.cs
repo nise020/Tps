@@ -3,14 +3,9 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public abstract partial class Charactor : Actor
+public abstract partial class Character : Actor
 {
-    protected float gravityValue = -9.81f;
-    Vector3 velocity;
-    CapsuleCollider CpasuleColl;
-    [SerializeField] float groundCheckLenght;
-    float groundCheckRadius = 0.3f;
-    GroundTouchState GroundTouchState = GroundTouchState.GroundNoneTouch;
+    
     protected void groundCheak()
     {
         int layer = LayerMask.NameToLayer(LayerName.Ground.ToString());

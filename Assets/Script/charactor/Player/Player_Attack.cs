@@ -3,26 +3,14 @@ using System.Collections.Generic;
 using UnityEngine;
 //using static UnityEditor.SceneView;
 
-public partial class Player : Charactor
+public partial class Player : Character
 {
-    Player followPlayerObj;
-
-    float distancingValue = 3.0f;
-    protected SkillState firstSkillCheck = SkillState.SkillOff;
-    protected SkillState secondSkillCheck = SkillState.SkillOff;
-    protected PlayerCameraMode cameraMode = PlayerCameraMode.CameraRotationMode;
-    [SerializeField] Vector3 playerStopDistansePos;
-    int movetimeCount;
-    float timeValue;
-    Queue <Time> fsmMoveTime = new Queue<Time>();
-    List<GameObject> backPositionObject;//my position Object
-
     protected virtual void skillValueReset()//Damage Reset
     {
         atkValue = attackReset;
-        firstSkillCheck = SkillState.SkillOff;
-        playerAnim.SetInteger(PlayerAnimName.AttackSkill.ToString(), 0);
-        playerAnim.SetInteger(PlayerAnimName.BuffSkill.ToString(), 0);
+        PlayerStateData.firstSkillCheck = SkillState.SkillOff;
+        playerAnimtor.SetInteger(PlayerAnimName.AttackSkill.ToString(), 0);
+        playerAnimtor.SetInteger(PlayerAnimName.BuffSkill.ToString(), 0);
     }
     protected virtual void cameraModeChange() 
     {

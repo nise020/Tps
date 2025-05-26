@@ -6,9 +6,9 @@ public static class Factory
 {
     //Util
     //동적
-    public static Charactor CreateCharactor(int _value, ObjectType _type) 
+    public static Character CreateCharactor(int _value, ObjectType _type) 
     {
-        Charactor charactor = null;//테이블로 대체시
+        Character charactor = null;//테이블로 대체시
 
         Shared.InutTableMgr();
         var info = Shared.TableManager.Character.Get(_value);

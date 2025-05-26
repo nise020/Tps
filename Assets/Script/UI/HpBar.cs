@@ -10,8 +10,8 @@ using UnityEngine.UI;
 public partial class HpBar : MonoBehaviour 
 {
     public int key = 0;
-    Charactor CHARACTER;
-    Charactor PLAYERCHARACTOR;
+    Character CHARACTER;
+    Character PLAYERCHARACTOR;
     Camera playerCamera;
     ObjectType ObjectType = ObjectType.None;
     int hpValue = 0;
@@ -150,7 +150,7 @@ public partial class HpBar : MonoBehaviour
             _list.SetActive(false);
         }
     }
-    public void CharactorInIt(Charactor charactor) //캐릭터 타입 로드 필요
+    public void CharactorInIt(Character charactor) //캐릭터 타입 로드 필요
     {
         CHARACTER = charactor;
         ObjectType = CHARACTER.TypeInit();
@@ -166,7 +166,7 @@ public partial class HpBar : MonoBehaviour
         //CHARACTER.onHpChanged += OnHpChanged;
         //HpImage(CHARACTER);
     }
-    public void HpImage(Charactor charactor) 
+    public void HpImage(Character charactor) 
     {
         //charactor.
     }
@@ -182,11 +182,6 @@ public partial class HpBar : MonoBehaviour
         chekedPlayerDestroy();
     }
 
-    private void Imageinit()
-    {
-        hpImg.fillAmount = 1;
-        hpLateImg.fillAmount = 1;
-    }
     public void init()
     {
         hpImg.fillAmount = 1;

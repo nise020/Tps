@@ -2,32 +2,8 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public partial class Charactor : Actor
+public partial class Character : Actor
 {
-    [Header("Table/State")]
-    protected State STATE = new State();
-    protected int hP;//실제 체력
-    protected int cheHP;//보여지는 체력
-    protected int maxHP;//최대체력
-
-    [Header("Table/Character")]
-    protected int id;
-    protected byte type;
-    protected int skill1;
-    protected int skill2;
-    protected int ai;
-    protected int state;
-    protected string prefabs;
-    protected string img;
-    protected new int name;
-    protected int dec;//설명
-
-    protected float atkValue;//공격력
-    protected float defVAlue;//방어력
-    protected float speedValue;//이동속도
-    protected float CritRateValue;
-    protected float CritDamageValue;//이동속도
-
     protected void InfoLoad()
     {
         Shared.InutTableMgr();

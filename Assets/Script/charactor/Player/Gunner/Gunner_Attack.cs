@@ -8,14 +8,14 @@ public partial class Gunner : Player
     [SerializeField] Granad granadObj;
     protected override void attackMovement()
     {
-        attackAnimation(AttackState.AttackOn);
+        attackAnimation(PlayerAttackState.AttackOn);
         gunShoot();
     }
     protected override void attack(PlayerModeState _state, PlayerType _job)
     {
         if (_job == PlayerType.Gunner)
         {
-            if (PlayerStateData.reloadState == ReloadState.ReloadOff && 
+            if (PlayerStateData.reloadState == ReloadState.Reload_Off && 
                 WEAPON.ReturnTypeValue(BulletValueType.NowBullet) <= 0)
             {
                 Debug.Log($"bullet = {WEAPON.ReturnTypeValue(BulletValueType.NowBullet)}");
@@ -28,7 +28,7 @@ public partial class Gunner : Player
     {
         playerAnimtor.SetLayerWeight(attackLayerIndex, 1.0f);
 
-        attackAnimation(AttackState.AttackOn);
+        attackAnimation(PlayerAttackState.AttackOn);
 
         Vector3 AimDirection = weaponObj.transform.forward;
 
@@ -57,7 +57,7 @@ public partial class Gunner : Player
         if (_type == PlayerType.Gunner ||
             WEAPON.ReturnTypeValue(BulletValueType.NowBullet) <= 0) 
         {
-            if (PlayerStateData.reloadState == ReloadState.ReloadOff)
+            if (PlayerStateData.reloadState == ReloadState.Reload_Off)
             {
                 PlayerStateData.reloadState = ReloadState.ReloadOn;
                 playerAnimtor.SetLayerWeight(attackLayerIndex, 1.0f);
@@ -111,7 +111,7 @@ public partial class Gunner : Player
             return;
         }
     }
-    protected override void commonskillAttack1(PlayerType _type)
+    protected override void skillAttack_common1(PlayerType _type)
     {
         if (_type == PlayerType.Gunner)
         {
@@ -150,7 +150,7 @@ public partial class Gunner : Player
         }
         else { return; }
     }
-    protected override void commonskillAttack2(PlayerType _type)
+    protected override void skillAttack_common2(PlayerType _type)
     {
         if (_type == PlayerType.Gunner)
         {
@@ -195,7 +195,7 @@ public partial class Gunner : Player
     public void ReloadOut()//AnimationEvent
     {
         //AnimationEvent
-        PlayerStateData.reloadState = ReloadState.ReloadOff;
+        PlayerStateData.reloadState = ReloadState.Reload_Off;
         WEAPON.ReloadClearValue();
         playerAnimtor.SetLayerWeight(attackLayerIndex, 0.0f);
         //playerAnim.SetLayerWeight(BaseLayerIndex, 1.0f);

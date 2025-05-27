@@ -10,7 +10,7 @@ public partial class Player : Character
     }
     public void PlayerModeUpdate(PlayerModeState _playerMode) 
     {
-        PlayerStateData.PlayerState = _playerMode;
+        PlayerStateData.ModeState = _playerMode;
     }
     public void Ai_Move(Player _player)
     {

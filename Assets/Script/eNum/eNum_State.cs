@@ -36,7 +36,7 @@ public enum ReloadState
 {
     None,
     ReloadOn,
-    ReloadOff
+    Reload_Off
 }
 public enum InvincibleState
 {
@@ -88,7 +88,6 @@ public enum NpcWalkState
 }
 public enum PlayerWeaponState
 {
-    None,
     Sword_On,
     Sword_Off,
 }
@@ -97,11 +96,11 @@ public enum PlayerControllState
     Off,
     On,
 }
-public enum AttackState
+public enum PlayerAttackState
 {
     None,
     AttackOn,
-    AttackOff,
+    Attack_Off,
     Reload,
     SwordOn,
     SwordOff,
@@ -143,3 +142,4 @@ public enum UiState
     Ui_Off,
     Ui_On,
 }
+

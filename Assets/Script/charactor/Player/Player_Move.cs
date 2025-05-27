@@ -10,7 +10,7 @@ public partial class Player : Character
 
     public bool PlayerObjectWalkCheck() 
     {
-        if (PlayerStateData.PlayerWalkState == PlayerWalkState.Walk_On)
+        if (PlayerStateData.WalkState == PlayerWalkState.Walk_On)
         {
             return true;
         }
@@ -38,10 +38,10 @@ public partial class Player : Character
         }
         else if (_value == PlayerModeState.Player)
         {
-            if (PlayerStateData.PlayerShitState == PlayerShitState.ShitDown) 
+            if (PlayerStateData.ShitState == PlayerShitState.ShitDown) 
             {
                 shitdownCheak();
-                PlayerStateData.PlayerShitState = PlayerShitState.ShitUP;
+                PlayerStateData.ShitState = PlayerShitState.ShitUP;
             }
 
             if (_pos.magnitude > 0.1f)

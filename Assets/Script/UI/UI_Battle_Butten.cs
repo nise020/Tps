@@ -15,11 +15,13 @@ public partial class UI_Battle : UiBase
         Shared.UiManager.UI_INVENTORY.InventoryTabCheck(true);
         Off_Butten.gameObject.SetActive(true);
         On_Butten.gameObject.SetActive(false);
+        Shared.InputManager.uiState = UiState.Ui_On;
     }
     public void OFF_Menu()
     {
         Shared.UiManager.UI_INVENTORY.InventoryTabCheck(false);
         On_Butten.gameObject.SetActive(true);
         Off_Butten.gameObject.SetActive(false);
+        Shared.InputManager.uiState = UiState.Ui_Off;
     }
 }

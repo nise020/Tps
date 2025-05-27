@@ -38,16 +38,18 @@ public class CharacterStateData
 public class PlayerStateData : CharacterStateData
 {
     [Header("Player")]
-    public PlayerModeState PlayerState = PlayerModeState.None;
+    public PlayerModeState ModeState = PlayerModeState.None;
     public PlayerType PlayerType = PlayerType.None;
-    public PlayerWeaponState PlayerWeaponState = PlayerWeaponState.None;
 
+    [Header("Weapon")]
+    public PlayerWeaponState WeaponState = PlayerWeaponState.Sword_Off;
+    public ReloadState reloadState = ReloadState.Reload_Off;
 
-    public PlayerWalkState PlayerWalkState = PlayerWalkState.Walk_Off;
-    public PlayerRunState PlayerRunState = PlayerRunState.Run_Off;
-    public PlayerShitState PlayerShitState = PlayerShitState.ShitUP;
+    public PlayerAttackState AttackState = PlayerAttackState.Attack_Off;
+    public PlayerWalkState WalkState = PlayerWalkState.Walk_Off;
+    public PlayerRunState RunState = PlayerRunState.Run_Off;
+    public PlayerShitState ShitState = PlayerShitState.ShitUP;
 
-    public ReloadState reloadState = ReloadState.ReloadOff;
 
     [Header("Npc")]
     public NpcAiState aIState = NpcAiState.Search;

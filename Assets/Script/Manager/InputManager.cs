@@ -18,7 +18,10 @@ public class InputManager : MonoBehaviour
     }
     private void Update()
     {
-        inputEvent();
+        if (uiState != UiState.Ui_On) 
+        {
+            inputEvent();
+        }
     }
     //Player
     public Queue<KeyCode> KeyinPutQueData = new Queue<KeyCode>();
@@ -30,6 +33,8 @@ public class InputManager : MonoBehaviour
     float Speed = 10.0f;
     //Ui
     public Queue<KeyCode> UiKeyinPutQueData = new Queue<KeyCode>();
+
+    public UiState uiState = UiState.Ui_Off;
     public void inputEvent() 
     {
         PlayerInput();
@@ -38,8 +43,10 @@ public class InputManager : MonoBehaviour
 
     private void UiButtenInput()
     {
+        
         if (Input.GetKeyDown(KeyCode.Alpha1))
             UiKeyinPutQueData.Enqueue(KeyCode.Alpha1);//CharactorChangeButten1
+
         if (Input.GetKeyDown(KeyCode.Alpha2))
             UiKeyinPutQueData.Enqueue(KeyCode.Alpha2);//CharactorChangeButten2
     }

@@ -38,13 +38,13 @@ public partial class Player : Character
     }
     public void PlayerControllChange(PlayerModeState _type)
     {
-        PlayerStateData.PlayerState = _type;
-        Debug.Log($"{gameObject}/{PlayerStateData.PlayerState} = {_type}"); 
+        PlayerStateData.ModeState = _type;
+        Debug.Log($"{gameObject}/{PlayerStateData.ModeState} = {_type}"); 
     }
 
     public void PlayerControllChack(out PlayerModeState _type)
     {
-        _type = PlayerStateData.PlayerState;
+        _type = PlayerStateData.ModeState;
     }
     public bool CharactorEnumCheck(PlayerType _player)
     {

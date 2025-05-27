@@ -15,7 +15,8 @@ public partial class Warrior : Player
         GameObject go = weaponObj.gameObject;
         go.transform.SetParent(weaponHandObject.gameObject.transform);
         go.transform.localPosition = Vector3.zero;
-        PlayerStateData.PlayerWeaponState = PlayerWeaponState.Sword_On;
+        go.transform.localRotation = Quaternion.identity;
+        PlayerStateData.WeaponState = PlayerWeaponState.Sword_On;
 
         //CreatSkill(SkillEffectObj1, SkillParentObj1);
         //CreatSkill(SkillEffectObj2, SkillParentObj2);
@@ -35,27 +36,28 @@ public partial class Warrior : Player
         }
             
     }
-    public void ScabbardInTheSword() 
+    public void ScabbardInTheSword() //AnimationEvent
     {
         GameObject go = weaponObj.gameObject;
         go.transform.SetParent(scabbard.gameObject.transform);
         go.transform.localPosition = weaponOriginalPos;
-        PlayerStateData.PlayerWeaponState = PlayerWeaponState.Sword_Off;
+        go.transform.localRotation = Quaternion.identity;
+        PlayerStateData.WeaponState = PlayerWeaponState.Sword_Off;
     }
     protected override void walkAnim(RunState _runState, Vector3 _pos)
     {
         if (_runState == RunState.Walk)
         {
-            if (PlayerStateData.PlayerWalkState == PlayerWalkState.Walk_On) { return; }
+            if (PlayerStateData.WalkState == PlayerWalkState.Walk_On) { return; }
 
-            PlayerStateData.PlayerWalkState = PlayerWalkState.Walk_On;
+            PlayerStateData.WalkState = PlayerWalkState.Walk_On;
             playerAnimtor.SetInteger(PlayerAnimParameters.Walk.ToString(), 1);
         }
         else if (_runState == RunState.Run)
         {
-            if (PlayerStateData.PlayerRunState == PlayerRunState.Run_On) { return; }
+            if (PlayerStateData.RunState == PlayerRunState.Run_On) { return; }
 
-            PlayerStateData.PlayerRunState = PlayerRunState.Run_On;
+            PlayerStateData.RunState = PlayerRunState.Run_On;
             playerAnimtor.SetInteger(PlayerAnimParameters.Run.ToString(), 1);
         }
     }

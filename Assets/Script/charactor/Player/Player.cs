@@ -15,7 +15,7 @@ public partial class Player : Character
     {      
         base.Start();
         viewcam = GetComponentInChildren<PlayerCamera>();
-        if (PlayerStateData.PlayerState == PlayerModeState.Npc)
+        if (PlayerStateData.ModeState == PlayerModeState.Npc)
         {
             viewcam.gameObject.SetActive(false);
         }
@@ -33,7 +33,7 @@ public partial class Player : Character
 
     private void FixedUpdate()
     {
-        if (PlayerStateData.PlayerState != PlayerModeState.Player)
+        if (PlayerStateData.ModeState != PlayerModeState.Player)
         {
             PLAYERAI.State();
         }

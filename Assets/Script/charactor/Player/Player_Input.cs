@@ -21,10 +21,10 @@ public partial class Player : Character
                     commonRSkill(PlayerStateData.PlayerType);
                     break;
                 case KeyCode.Q:
-                    commonskillAttack1(PlayerStateData.PlayerType);//SkillQ
+                    skillAttack_common1(PlayerStateData.PlayerType);//SkillQ
                     break;
                 case KeyCode.E:
-                    commonskillAttack2(PlayerStateData.PlayerType);//SkillE
+                    skillAttack_common2(PlayerStateData.PlayerType);//SkillE
                     break;
                 case KeyCode.Z:
                     shitdownCheak();//shitdown
@@ -41,14 +41,14 @@ public partial class Player : Character
             switch (type) 
             {
                 case MouseInputType.Click://mouseClick
-                    attack(PlayerStateData.PlayerState, PlayerStateData.PlayerType);
+                    //attack(PlayerStateData.PlayerState, PlayerStateData.PlayerType);
                     break;
                 case MouseInputType.Release://mouseClickUp
                     //inPutCameraAnimation(false)
                     ;
                     break;
                 case MouseInputType.Hold://mouseClickDown
-                    attack(PlayerStateData.PlayerState, PlayerStateData.PlayerType);
+                    attack(PlayerStateData.ModeState, PlayerStateData.PlayerType);
                     //inPutCameraAnimation(true)
                     ;
                     break;
@@ -63,15 +63,15 @@ public partial class Player : Character
         while (Shared.InputManager.MoveQueData.Count > 0)//move
         {
             Vector3 type = Shared.InputManager.MoveQueData.Dequeue();
-            move(PlayerStateData.PlayerState,type);
+            move(PlayerStateData.ModeState,type);
         }
 
         notWalkTimer += Time.deltaTime;
 
         if (notWalkTimer > notWalkTime &&
-            PlayerStateData.PlayerWalkState == PlayerWalkState.Walk_On)
+            PlayerStateData.WalkState == PlayerWalkState.Walk_On)
         {
-            PlayerStateData.PlayerWalkState = PlayerWalkState.Walk_Off;
+            PlayerStateData.WalkState = PlayerWalkState.Walk_Off;
         }
         
     }

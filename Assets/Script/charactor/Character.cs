@@ -128,11 +128,11 @@ public abstract partial class Character : Actor
     {
 
     }
-    protected virtual void commonskillAttack1(PlayerType _type) 
+    protected virtual void skillAttack_common1(PlayerType _type) 
     {
 
     }
-    protected virtual void commonskillAttack2(PlayerType _type)
+    protected virtual void skillAttack_common2(PlayerType _type)
     {
 
     }

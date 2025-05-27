@@ -13,7 +13,7 @@ public enum PlayerAnimParameters
     GetWeapon,
     Close,
     Death,
-
+    AttackCombo,
 }
 
 public enum PlayerAnimName

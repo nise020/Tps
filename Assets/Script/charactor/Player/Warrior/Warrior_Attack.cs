@@ -5,6 +5,8 @@ using UnityEngine.SocialPlatforms.Impl;
 
 public partial class Warrior : Player
 {
+    int currentCombo = 0;
+    bool isComboPossible = false;
     public void RangeCheak()
     {
         Vector3 weaponPos = new Vector3();
@@ -52,30 +54,88 @@ public partial class Warrior : Player
         }
         else
         {
-            attackAnimation(AttackState.AttackOff);
+            attackAnimation(PlayerAttackState.Attack_Off);
         }
-        PlayerStateData.PlayerWeaponState = PlayerWeaponState.Sword_Off;
+        PlayerStateData.WeaponState = PlayerWeaponState.Sword_Off;
         scabbardCount = 0;
 
     }
     protected override void attackMovement()
     {
-        attackAnimation(AttackState.AttackOn);
+        attackAnimation(PlayerAttackState.AttackOn);
     }
     protected override void attack(PlayerModeState _state, PlayerType _job)
     {
         if (_state == PlayerModeState.Player)
         {
-            if (PlayerStateData.PlayerWeaponState == PlayerWeaponState.Sword_Off)//Open Weapon
+            if (PlayerStateData.WeaponState == PlayerWeaponState.Sword_Off)//Open Weapon
             {
-                PlayerStateData.PlayerWeaponState = PlayerWeaponState.Sword_On;
-                playerAnimtor.SetInteger(PlayerAnimParameters.GetWeapon.ToString(), 1);
+                StartCoroutine(getSwordEvent(1.5f,0.10f));//speed,event
             }
-            else if (PlayerStateData.PlayerWeaponState == PlayerWeaponState.Sword_On)//attack 
+
+            if (isComboPossible && currentCombo < 3)
             {
-                attackAnimation(AttackState.AttackOn);
-            }  
+                currentCombo++;
+                isComboPossible = false;
+                return;
+            }
+
+            if (PlayerStateData.WeaponState == PlayerWeaponState.Sword_On&&
+                PlayerStateData.AttackState == PlayerAttackState.Attack_Off)//attack 
+            {
+                PlayerStateData.AttackState = PlayerAttackState.AttackOn;
+                StartCoroutine(PlayAttackCombo());
+            }
         }
+    }
+    IEnumerator getSwordEvent(float _animationSpeed,float _event) 
+    {
+        playerAnimtor.SetInteger(PlayerAnimParameters.GetWeapon.ToString(), 1);
+
+        float originalTimeToAttach = _event; //Event Time
+
+        float delay = originalTimeToAttach / _animationSpeed;
+
+        yield return new WaitForSeconds(delay);
+
+        GetSword();
+    }
+    IEnumerator PlayAttackCombo()
+    {
+        currentCombo = 1;
+        isComboPossible = true;
+        Debug.Log($"currentCombo = {currentCombo}");
+
+        while (currentCombo <= 3)
+        {
+            //playerAnimtor.speed = 1.5f;
+            playerAnimtor.SetInteger(PlayerAnimParameters.AttackCombo.ToString(), currentCombo);
+
+            yield return new WaitForSeconds(0.2f);
+
+            isComboPossible = true;
+
+            float timer = 0f;
+
+            while (timer < 0.5f)
+            {
+                if (!isComboPossible) break; // 입력 들어오면 빠져나감
+                timer += Time.deltaTime;
+                yield return null;
+            }
+
+            isComboPossible = false;
+
+            if (timer >= 0.5f)
+            {
+                break;
+            }
+        }
+
+        playerAnimtor.SetInteger(PlayerAnimParameters.AttackCombo.ToString(), 0);
+        playerAnimtor.speed = 1.0f;
+        currentCombo = 0;
+        PlayerStateData.AttackState = PlayerAttackState.Attack_Off;
     }
 
     protected override void commonRSkill(PlayerType _type)
@@ -86,15 +146,15 @@ public partial class Warrior : Player
         }
 
     }
-    protected override void commonskillAttack1(PlayerType _type)
+    protected override void skillAttack_common1(PlayerType _type)
     {
         if (_type == PlayerType.Warrior)
         {
             if (PlayerStateData.firstSkillCheck == SkillState.SkillOff)
             {
-                if (PlayerStateData.PlayerWeaponState == PlayerWeaponState.Sword_Off) 
+                if (PlayerStateData.WeaponState == PlayerWeaponState.Sword_Off) 
                 {
-                    PlayerStateData.PlayerWeaponState = PlayerWeaponState.Sword_On;
+                    PlayerStateData.WeaponState = PlayerWeaponState.Sword_On;
                     playerAnimtor.SetInteger(PlayerAnimParameters.GetWeapon.ToString(), 1);
                 }
                 SkillAnimation(SkillType.Skill1, true);
@@ -140,15 +200,15 @@ public partial class Warrior : Player
             }
         }
     }
-    protected override void commonskillAttack2(PlayerType _type)
+    protected override void skillAttack_common2(PlayerType _type)
     {
         if (_type == PlayerType.Warrior)
         {
             if (PlayerStateData.secondSkillCheck == SkillState.SkillOff)
             {
-                if (PlayerStateData.PlayerWeaponState == PlayerWeaponState.Sword_Off)
+                if (PlayerStateData.WeaponState == PlayerWeaponState.Sword_Off)
                 {
-                    PlayerStateData.PlayerWeaponState = PlayerWeaponState.Sword_On;
+                    PlayerStateData.WeaponState = PlayerWeaponState.Sword_On;
                     playerAnimtor.SetInteger(PlayerAnimParameters.GetWeapon.ToString(), 1);
                 }
                 SkillAnimation(SkillType.Skill2, true);

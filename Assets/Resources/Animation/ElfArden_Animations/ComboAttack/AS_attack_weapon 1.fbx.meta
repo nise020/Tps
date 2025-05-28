@@ -5,7 +5,7 @@ ModelImporter:
   internalIDToNameTable:
   - first:
       74: -7580245267261809556
-    second: attack_weapon
+    second: Attack_Combo_Weapon_1
   externalObjects: {}
   materials:
     materialImportMode: 1
@@ -41,7 +41,9 @@ ModelImporter:
       has translation animation that will be discarded.\n\t'lowerarm_l' has translation
       animation that will be discarded.\n\t'head' has translation animation that
       will be discarded.\n\t'calf_r' has translation animation that will be discarded.\n\t'calf_l'
-      has translation animation that will be discarded.\n"
+      has translation animation that will be discarded.\nEvent ComboEventCheck has
+      a time (0.766667) outside the clip's valid range (0.000000..0.766666). It will
+      never be fired"
     animationRetargetingWarnings: 
     animationDoRetargetingWarnings: 0
     importAnimatedCustomProperties: 0
@@ -55,7 +57,7 @@ ModelImporter:
     extraUserProperties: []
     clipAnimations:
     - serializedVersion: 16
-      name: attack_weapon
+      name: Attack_Combo_Weapon_1
       takeName: attack_weapon
       internalID: -7580245267261809556
       firstFrame: 322
@@ -79,36 +81,15 @@ ModelImporter:
       bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
       curves: []
       events:
-      - time: 0.11059585
-        functionName: AttackCameraEvent
-        data: 
-        objectReferenceParameter: {instanceID: 0}
-        floatParameter: 0
-        intParameter: 1
-        messageOptions: 0
-      - time: 0.12727262
-        functionName: RangeCheak
-        data: 
-        objectReferenceParameter: {instanceID: 0}
-        floatParameter: 0
-        intParameter: 1
-        messageOptions: 0
-      - time: 0.23333332
-        functionName: AttackCameraEvent
-        data: 
-        objectReferenceParameter: {instanceID: 0}
-        floatParameter: 0
-        intParameter: 1
-        messageOptions: 0
-      - time: 0.24848473
-        functionName: RangeCheak
-        data: 
-        objectReferenceParameter: {instanceID: 0}
-        floatParameter: 0
-        intParameter: 1
-        messageOptions: 0
       - time: 0.50412273
         functionName: AttackCameraEvent
+        data: 
+        objectReferenceParameter: {instanceID: 0}
+        floatParameter: 0
+        intParameter: 1
+        messageOptions: 0
+      - time: 0.52820355
+        functionName: RangeCheak
         data: 
         objectReferenceParameter: {instanceID: 0}
         floatParameter: 0
@@ -121,12 +102,12 @@ ModelImporter:
         floatParameter: 0
         intParameter: 1
         messageOptions: 0
-      - time: 0.926469
-        functionName: SkillEffectOff
+      - time: 0.9741379
+        functionName: ComboEventCheck
         data: 
         objectReferenceParameter: {instanceID: 0}
         floatParameter: 0
-        intParameter: 3
+        intParameter: 1
         messageOptions: 0
       transformMask: []
       maskType: 3

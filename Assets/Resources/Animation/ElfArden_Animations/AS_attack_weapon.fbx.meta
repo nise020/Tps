@@ -5,7 +5,7 @@ ModelImporter:
   internalIDToNameTable:
   - first:
       74: -7580245267261809556
-    second: attack_weapon
+    second: Full_Attack_weapon
   externalObjects: {}
   materials:
     materialImportMode: 1
@@ -55,11 +55,11 @@ ModelImporter:
     extraUserProperties: []
     clipAnimations:
     - serializedVersion: 16
-      name: attack_weapon
+      name: Full_Attack_weapon
       takeName: attack_weapon
       internalID: -7580245267261809556
       firstFrame: 322
-      lastFrame: 345
+      lastFrame: 423
       wrapMode: 0
       orientationOffsetY: 0
       level: 0
@@ -128,64 +128,6 @@ ModelImporter:
         floatParameter: 0
         intParameter: 3
         messageOptions: 0
-      transformMask: []
-      maskType: 3
-      maskSource: {instanceID: 0}
-      additiveReferencePoseFrame: 321.9
-    - serializedVersion: 16
-      name: attack_weapon (1)
-      takeName: attack_weapon
-      internalID: 3907173095311654923
-      firstFrame: 345
-      lastFrame: 358
-      wrapMode: 0
-      orientationOffsetY: 0
-      level: 0
-      cycleOffset: 0
-      loop: 0
-      hasAdditiveReferencePose: 0
-      loopTime: 0
-      loopBlend: 0
-      loopBlendOrientation: 0
-      loopBlendPositionY: 0
-      loopBlendPositionXZ: 0
-      keepOriginalOrientation: 0
-      keepOriginalPositionY: 1
-      keepOriginalPositionXZ: 0
-      heightFromFeet: 0
-      mirror: 0
-      bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
-      curves: []
-      events: []
-      transformMask: []
-      maskType: 3
-      maskSource: {instanceID: 0}
-      additiveReferencePoseFrame: 321.9
-    - serializedVersion: 16
-      name: attack_weapon (2)
-      takeName: attack_weapon
-      internalID: 1579248015043039937
-      firstFrame: 358
-      lastFrame: 422
-      wrapMode: 0
-      orientationOffsetY: 0
-      level: 0
-      cycleOffset: 0
-      loop: 0
-      hasAdditiveReferencePose: 0
-      loopTime: 0
-      loopBlend: 0
-      loopBlendOrientation: 0
-      loopBlendPositionY: 0
-      loopBlendPositionXZ: 0
-      keepOriginalOrientation: 0
-      keepOriginalPositionY: 1
-      keepOriginalPositionXZ: 0
-      heightFromFeet: 0
-      mirror: 0
-      bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
-      curves: []
-      events: []
       transformMask: []
       maskType: 3
       maskSource: {instanceID: 0}

@@ -8,7 +8,7 @@ public partial class Gunner : Player
     [SerializeField] Granad granadObj;
     protected override void attackMovement()
     {
-        attackAnimation(PlayerAttackState.AttackOn);
+        attackAnimation(PlayerAttackState.Attack_On);
         gunShoot();
     }
     protected override void attack(PlayerModeState _state, PlayerType _job)
@@ -28,7 +28,7 @@ public partial class Gunner : Player
     {
         playerAnimtor.SetLayerWeight(attackLayerIndex, 1.0f);
 
-        attackAnimation(PlayerAttackState.AttackOn);
+        attackAnimation(PlayerAttackState.Attack_On);
 
         Vector3 AimDirection = weaponObj.transform.forward;
 

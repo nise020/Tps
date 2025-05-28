@@ -99,7 +99,7 @@ public enum PlayerControllState
 public enum PlayerAttackState
 {
     None,
-    AttackOn,
+    Attack_On,
     Attack_Off,
     Reload,
     SwordOn,

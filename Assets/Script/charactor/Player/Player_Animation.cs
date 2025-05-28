@@ -8,6 +8,26 @@ using UnityEngine.InputSystem.LowLevel;
 
 public partial class Player : Character
 {
+    
+    
+    public void AnimationOut(string _type) //AnimationEvent
+    {
+        if (_type == null) 
+        {
+            Debug.LogError($"_type 값의 해당하는 애니메이션이 아닙니다");
+            return;
+        }
+
+        if (_type == "Attack") 
+        {
+            
+            playerAnimtor.SetInteger(PlayerAnimParameters.Attack.ToString(), 0);
+        }
+        else if (_type == "ComboAttack")
+        {
+            playerAnimtor.SetInteger(PlayerAnimParameters.AttackCombo.ToString(), 0);
+        }
+    }
     public void AttackCameraEvent(int _value) //AnimationEvent
     {
         if (_value == 1) 
@@ -112,7 +132,7 @@ public partial class Player : Character
     }
     protected void attackAnimation(PlayerAttackState _state)
     {
-        if (_state == PlayerAttackState.AttackOn)//Off
+        if (_state == PlayerAttackState.Attack_On)//Off
         {
             //viewcam.cameraShakeAnim(true);
             playerAnimtor.SetInteger(PlayerAnimParameters.Attack.ToString(), 1);

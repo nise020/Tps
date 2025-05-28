@@ -33,7 +33,7 @@ public partial class Player : Character
 
     public void Attack()//거리이내에 있는 적에게 데미지 로직 필요
     {
-        attackAnimation(PlayerAttackState.AttackOn);
+        attackAnimation(PlayerAttackState.Attack_On);
     }
     
 }

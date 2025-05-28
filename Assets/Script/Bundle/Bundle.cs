@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using System.IO;
 using System;
+using UnityEngine.U2D;
 
 public class Bundle : MonoBehaviour
 {
@@ -29,6 +30,7 @@ public class Bundle : MonoBehaviour
                 yield break;
 
             AssetBundleRequest asset = local.LoadAssetAsync<GameObject>($"{bundle}");
+            //bundle <- file name
 
             yield return asset;
 
@@ -39,6 +41,39 @@ public class Bundle : MonoBehaviour
                 local.Unload(true);
             }
         }
-       
+    }
+
+    IEnumerator AtlrasILoad()//new
+    {
+        foreach (var bundle in bundleName)
+        {
+            AssetBundleCreateRequest async =
+            AssetBundle.LoadFromFileAsync(Path.Combine
+            (Application.streamingAssetsPath, $"AtlasItem"));//"" <- Path(name)
+
+            yield return async;
+
+            AssetBundle local = async.assetBundle;
+
+            if (local == null)
+                yield break;
+
+            AssetBundleRequest asset = local.LoadAssetAsync<GameObject>($"Item");
+
+            var obj = local.LoadAsset("Itme");
+
+            SpriteAtlas sa = asset.asset as SpriteAtlas;
+
+            //bundle <- file name
+
+
+            //yield return asset;
+
+            //if (prefab != null)
+            //{
+            //    local.Unload(true);
+            //}
+        }
+
     }
 }

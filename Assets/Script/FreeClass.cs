@@ -33,6 +33,7 @@ public class CharacterStateData
 
 
     public RunState runState = RunState.Walk;
+
 }
 
 public class PlayerStateData : CharacterStateData
@@ -43,15 +44,17 @@ public class PlayerStateData : CharacterStateData
 
     [Header("Weapon")]
     public PlayerWeaponState WeaponState = PlayerWeaponState.Sword_Off;
-    public ReloadState reloadState = ReloadState.Reload_Off;
 
     public PlayerAttackState AttackState = PlayerAttackState.Attack_Off;
-    public PlayerWalkState WalkState = PlayerWalkState.Walk_Off;
+    public ReloadState reloadState = ReloadState.Reload_Off;//Attackdp 합류
+
+    public PlayerWalkState WalkState = PlayerWalkState.Walk_Off;//하나로 합칠것
     public PlayerRunState RunState = PlayerRunState.Run_Off;
+
     public PlayerShitState ShitState = PlayerShitState.ShitUP;
 
 
-    [Header("Npc")]
+    [Header("Npc")]//따로 분리 할것
     public NpcAiState aIState = NpcAiState.Search;
 
     public NpcWalkState NpcWalkState = NpcWalkState.Stop;

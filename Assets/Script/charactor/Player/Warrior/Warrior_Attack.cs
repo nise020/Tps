@@ -6,7 +6,7 @@ using UnityEngine.SocialPlatforms.Impl;
 public partial class Warrior : Player
 {
     int currentCombo = 0;
-    bool isComboPossible = false;
+    bool canReceiveInput = false;
     public void RangeCheak()
     {
         Vector3 weaponPos = new Vector3();
@@ -62,7 +62,7 @@ public partial class Warrior : Player
     }
     protected override void attackMovement()
     {
-        attackAnimation(PlayerAttackState.AttackOn);
+        attackAnimation(PlayerAttackState.Attack_On);
     }
     protected override void attack(PlayerModeState _state, PlayerType _job)
     {
@@ -73,23 +73,30 @@ public partial class Warrior : Player
                 StartCoroutine(getSwordEvent(1.5f,0.10f));//speed,event
             }
 
-            if (isComboPossible && currentCombo < 3)
+            if (canReceiveInput == true && currentCombo < 2)
             {
                 currentCombo++;
-                isComboPossible = false;
+                canReceiveInput = false;
+                scabbardCount = 0;//idel state count Reset
+                //playerAnimtor.SetInteger(PlayerAnimParameters.AttackCombo.ToString(), currentCombo);
                 return;
             }
 
             if (PlayerStateData.WeaponState == PlayerWeaponState.Sword_On&&
                 PlayerStateData.AttackState == PlayerAttackState.Attack_Off)//attack 
             {
-                PlayerStateData.AttackState = PlayerAttackState.AttackOn;
-                StartCoroutine(PlayAttackCombo());
+                playerAnimtor.speed = 1.5f;
+                PlayerStateData.AttackState = PlayerAttackState.Attack_On;
+
+                attackAnimation(PlayerAttackState.Attack_On);
+
+                canReceiveInput = true;
             }
         }
     }
     IEnumerator getSwordEvent(float _animationSpeed,float _event) 
     {
+
         playerAnimtor.SetInteger(PlayerAnimParameters.GetWeapon.ToString(), 1);
 
         float originalTimeToAttach = _event; //Event Time
@@ -100,35 +107,50 @@ public partial class Warrior : Player
 
         GetSword();
     }
+
     IEnumerator PlayAttackCombo()
     {
         currentCombo = 1;
-        isComboPossible = true;
+        canReceiveInput = true;
         Debug.Log($"currentCombo = {currentCombo}");
 
         while (currentCombo <= 3)
         {
             //playerAnimtor.speed = 1.5f;
             playerAnimtor.SetInteger(PlayerAnimParameters.AttackCombo.ToString(), currentCombo);
+            Debug.Log($"currentCombo = {currentCombo}");
 
-            yield return new WaitForSeconds(0.2f);
 
-            isComboPossible = true;
+            float clipLength = GetClipLength($"Attack_Combo_Weapon_{currentCombo}");
 
+            if (clipLength <= 0f)
+            {
+                Debug.LogWarning("해당 클립을 찾지 못했습니다.");
+                break;
+            }
+
+            float adjustedTime = clipLength / playerAnimtor.speed;
+
+            
+            yield return new WaitForSeconds(adjustedTime * 0.7f);
+            canReceiveInput = true;
+
+
+            float inputWindow = adjustedTime * 0.3f;
             float timer = 0f;
 
-            while (timer < 0.5f)
+            while (timer < inputWindow)
             {
-                if (!isComboPossible) break; // 입력 들어오면 빠져나감
+                if (!canReceiveInput) break; // 입력 들어옴
                 timer += Time.deltaTime;
                 yield return null;
             }
 
-            isComboPossible = false;
+            canReceiveInput = false;
 
-            if (timer >= 0.5f)
+            if (currentCombo >= 3 || timer >= inputWindow)
             {
-                break;
+                break; // 더 이상 콤보 없음
             }
         }
 
@@ -137,7 +159,16 @@ public partial class Warrior : Player
         currentCombo = 0;
         PlayerStateData.AttackState = PlayerAttackState.Attack_Off;
     }
-
+    float GetClipLength(string clipName)
+    {
+        foreach (AnimationClip clip in playerAnimtor.runtimeAnimatorController.animationClips)
+        {
+            if (clip.name == clipName)
+                Debug.Log($"clip.length = {clip.length}");
+                return clip.length;
+        }
+        return 0f;
+    }
     protected override void commonRSkill(PlayerType _type)
     {
         if (_type == PlayerType.Warrior) 

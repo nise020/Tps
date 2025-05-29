@@ -9,27 +9,28 @@ public partial class Gunner : Player
     protected override void attackMovement()
     {
         attackAnimation(PlayerAttackState.Attack_On);
-        gunShoot();
+        //gunShoot();
     }
     protected override void attack(PlayerModeState _state, PlayerType _job)
     {
         if (_job == PlayerType.Gunner)
         {
-            if (PlayerStateData.reloadState == ReloadState.Reload_Off && 
+            if (playerStateData.AttackState == PlayerAttackState.Reload_Off && 
                 WEAPON.ReturnTypeValue(BulletValueType.NowBullet) <= 0)
             {
                 Debug.Log($"bullet = {WEAPON.ReturnTypeValue(BulletValueType.NowBullet)}");
                 return;
             }
-            gunShoot();
+            playerAnimtor.SetLayerWeight(attackLayerIndex, 1.0f);
+            attackAnimation(PlayerAttackState.Attack_On);
         }
+    }
+    public void GunShootEvent() //Animation Event
+    {
+        gunShoot();
     }
     private void gunShoot() 
     {
-        playerAnimtor.SetLayerWeight(attackLayerIndex, 1.0f);
-
-        attackAnimation(PlayerAttackState.Attack_On);
-
         Vector3 AimDirection = weaponObj.transform.forward;
 
         WEAPON.Attack(AimDirection);
@@ -57,16 +58,16 @@ public partial class Gunner : Player
         if (_type == PlayerType.Gunner ||
             WEAPON.ReturnTypeValue(BulletValueType.NowBullet) <= 0) 
         {
-            if (PlayerStateData.reloadState == ReloadState.Reload_Off)
+            if (playerStateData.AttackState == PlayerAttackState.Reload_Off)
             {
-                PlayerStateData.reloadState = ReloadState.ReloadOn;
+                playerStateData.AttackState = PlayerAttackState.Reload_On;
                 playerAnimtor.SetLayerWeight(attackLayerIndex, 1.0f);
                 playerAnimtor.SetInteger(PlayerAnimParameters.Reload.ToString(), 1);
             }
         }
 
 
-        if (PlayerStateData.firstSkillCheck == SkillState.SkillOff)
+        if (playerStateData.firstSkillCheck == SkillState.SkillOff)
         {
             gunShoot();
 
@@ -76,7 +77,7 @@ public partial class Gunner : Player
 
             //playerAnim.SetInteger(SkillType.Skill1.ToString(), 1);
             int value = (int)atkValue;
-            skillStrategy.Skill(PlayerStateData.PlayerType, 1, out value);
+            skillStrategy.Skill(playerStateData.PlayerType, 1, out value);
 
             SkillParentObj1.SetActive(true);
 
@@ -115,7 +116,7 @@ public partial class Gunner : Player
     {
         if (_type == PlayerType.Gunner)
         {
-            if (PlayerStateData.firstSkillCheck == SkillState.SkillOff)
+            if (playerStateData.firstSkillCheck == SkillState.SkillOff)
             {
                 //Invoke("SkillValueReset", 3);//clear
                 int value = (int)atkValue;
@@ -128,7 +129,7 @@ public partial class Gunner : Player
 
                 //playerAnim.SetInteger(SkillType.Skill1.ToString(), 1);
 
-                skillStrategy.Skill(PlayerStateData.PlayerType, 1, out value);
+                skillStrategy.Skill(playerStateData.PlayerType, 1, out value);
 
                 SkillParentObj1.SetActive(true);
 
@@ -154,12 +155,12 @@ public partial class Gunner : Player
     {
         if (_type == PlayerType.Gunner)
         {
-            if (PlayerStateData.firstSkillCheck == SkillState.SkillOff)
+            if (playerStateData.firstSkillCheck == SkillState.SkillOff)
             {
                 int value = (int)atkValue;
 
-                skillStrategy.Skill(PlayerStateData.PlayerType, 2, out value);
-                PlayerStateData.firstSkillCheck = SkillState.SkillOn;
+                skillStrategy.Skill(playerStateData.PlayerType, 2, out value);
+                playerStateData.firstSkillCheck = SkillState.SkillOn;
                 playerAnimtor.SetInteger("Skill1", 1);
                 playerAnimtor.SetInteger(PlayerAnimName.BuffSkill.ToString(), 1);
                 Invoke("SkillValueReset", 3);//clear
@@ -188,14 +189,14 @@ public partial class Gunner : Player
     protected override void skillValueReset()//Damage Reset
     {
         atkValue = attackReset;
-        PlayerStateData.firstSkillCheck = SkillState.SkillOff;
+        playerStateData.firstSkillCheck = SkillState.SkillOff;
         playerAnimtor.SetInteger(PlayerAnimName.AttackSkill.ToString(), 0);
         playerAnimtor.SetInteger(PlayerAnimName.BuffSkill.ToString(), 0);
     }
     public void ReloadOut()//AnimationEvent
     {
         //AnimationEvent
-        PlayerStateData.reloadState = ReloadState.Reload_Off;
+        playerStateData.AttackState = PlayerAttackState.Reload_On;
         WEAPON.ReloadClearValue();
         playerAnimtor.SetLayerWeight(attackLayerIndex, 0.0f);
         //playerAnim.SetLayerWeight(BaseLayerIndex, 1.0f);

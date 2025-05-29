@@ -10,7 +10,7 @@ public partial class Player : Character
 
     public bool PlayerObjectWalkCheck() 
     {
-        if (PlayerStateData.WalkState == PlayerWalkState.Walk_On)
+        if (playerStateData.WalkState == PlayerWalkState.Walk_On)
         {
             return true;
         }
@@ -38,10 +38,10 @@ public partial class Player : Character
         }
         else if (_value == PlayerModeState.Player)
         {
-            if (PlayerStateData.ShitState == PlayerShitState.ShitDown) 
+            if (playerStateData.ShitState == PlayerShitState.ShitDown) 
             {
                 shitdownCheak();
-                PlayerStateData.ShitState = PlayerShitState.ShitUP;
+                playerStateData.ShitState = PlayerShitState.ShitUP;
             }
 
             if (_pos.magnitude > 0.1f)
@@ -51,7 +51,7 @@ public partial class Player : Character
 
                 float speed = speedValue;
 
-                if (PlayerStateData.runState == RunState.Run) 
+                if (playerStateData.runState == RunCheckState.Run) 
                 {
                     speed = speedValue * 2;
                 }
@@ -75,7 +75,7 @@ public partial class Player : Character
 
                     Quaternion targetRotation = Quaternion.LookRotation(transform.TransformDirection(moveDir.normalized));
                     
-                    if (PlayerStateData.PlayerType == PlayerType.Gunner) 
+                    if (playerStateData.PlayerType == PlayerType.Gunner) 
                     {
                         targetRotation *= Quaternion.Euler(0, 60f, 0);//Animation Calibration Value
                     }
@@ -104,7 +104,7 @@ public partial class Player : Character
 
             }
         }
-        walkAnim(PlayerStateData.runState, _pos);
+        walkAnim(playerStateData.runState, _pos);
         //All
         //moveAnim(_pos.z);
         //Gunner

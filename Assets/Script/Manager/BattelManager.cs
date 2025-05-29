@@ -3,6 +3,7 @@ using SimpleJSON;
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Net.Mail;
 using UnityEditor;
 using UnityEngine;
 using UnityEngine.Networking;
@@ -105,7 +106,15 @@ public class BattelManager : MonoBehaviour
 
         _defender.StatusUpLoad(defenserHp);
 
-        //GAMEEVENTS.TakeDamage(defenserHp);
+        if (defenserHp <= 0)
+        {
+            //GameEvents.DefenderState(true);
+            _attacker.AttackEvent?.Invoke(true);
+        }
+        else
+        {
+            _attacker.AttackEvent?.Invoke(false);
+        }
 
         DamageColor(_defender);
 

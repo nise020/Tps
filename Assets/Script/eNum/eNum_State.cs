@@ -75,7 +75,7 @@ public enum NpcRunState
     Run_On,
     Run_Off,
 }
-public enum RunState
+public enum RunCheckState
 {
     Walk,
     Run,
@@ -101,7 +101,9 @@ public enum PlayerAttackState
     None,
     Attack_On,
     Attack_Off,
-    Reload,
+    Attack_Combo,
+    Reload_On,
+    Reload_Off,
     SwordOn,
     SwordOff,
 

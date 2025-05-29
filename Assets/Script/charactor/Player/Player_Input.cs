@@ -15,16 +15,16 @@ public partial class Player : Character
             switch (type)
             {
                 case KeyCode.Mouse1:
-                    walkStateChange(PlayerStateData.runState);
+                    walkStateChange(playerStateData.runState);
                     break;
                 case KeyCode.R:
-                    commonRSkill(PlayerStateData.PlayerType);
+                    commonRSkill(playerStateData.PlayerType);
                     break;
                 case KeyCode.Q:
-                    skillAttack_common1(PlayerStateData.PlayerType);//SkillQ
+                    skillAttack_common1(playerStateData.PlayerType);//SkillQ
                     break;
                 case KeyCode.E:
-                    skillAttack_common2(PlayerStateData.PlayerType);//SkillE
+                    skillAttack_common2(playerStateData.PlayerType);//SkillE
                     break;
                 case KeyCode.Z:
                     shitdownCheak();//shitdown
@@ -48,7 +48,7 @@ public partial class Player : Character
                     ;
                     break;
                 case MouseInputType.Hold://mouseClickDown
-                    attack(PlayerStateData.ModeState, PlayerStateData.PlayerType);
+                    attack(playerStateData.ModeState, playerStateData.PlayerType);
                     //inPutCameraAnimation(true)
                     ;
                     break;
@@ -58,20 +58,25 @@ public partial class Player : Character
 
         if (Shared.InputManager.MoveQueData.Count == 0) 
         {
-            clearWalkAnimation(PlayerStateData.PlayerType);
+            clearWalkAnimation(playerStateData.PlayerType);
         }
         while (Shared.InputManager.MoveQueData.Count > 0)//move
         {
+            if (playerStateData.AttackState == PlayerAttackState.Attack_On) 
+            {
+                playerStateData.AttackState = PlayerAttackState.Attack_Off;
+                canReceiveInput = true;
+            }
             Vector3 type = Shared.InputManager.MoveQueData.Dequeue();
-            move(PlayerStateData.ModeState,type);
+            move(playerStateData.ModeState,type);
         }
 
         notWalkTimer += Time.deltaTime;
 
         if (notWalkTimer > notWalkTime &&
-            PlayerStateData.WalkState == PlayerWalkState.Walk_On)
+            playerStateData.WalkState == PlayerWalkState.Walk_On)
         {
-            PlayerStateData.WalkState = PlayerWalkState.Walk_Off;
+            playerStateData.WalkState = PlayerWalkState.Walk_Off;
         }
         
     }

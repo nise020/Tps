@@ -9,8 +9,8 @@ public partial class Gunner : Player
     {
         id = 1;
         RenderType = ObjectRenderType.Skin;
-        PlayerStateData.ModeState = PlayerModeState.Npc;
-        PlayerStateData.PlayerType = PlayerType.Gunner;
+        playerStateData.ModeState = PlayerModeState.Npc;
+        playerStateData.PlayerType = PlayerType.Gunner;
         base.Awake();
     }
 
@@ -23,7 +23,7 @@ public partial class Gunner : Player
 
     private void Update()
     {
-        if (PlayerStateData.ModeState == PlayerModeState.Player) 
+        if (playerStateData.ModeState == PlayerModeState.Player) 
         {
             inputrocessing();
         }

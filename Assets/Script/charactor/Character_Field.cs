@@ -62,5 +62,7 @@ public partial class Character : Actor
     [SerializeField] float groundCheckLenght;
     float groundCheckRadius = 0.3f;
 
+    [Header("Action")]
+    public Action<bool> AttackEvent;
 
 }

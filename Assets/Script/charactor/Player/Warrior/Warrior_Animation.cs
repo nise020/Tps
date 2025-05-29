@@ -11,27 +11,35 @@ public partial class Warrior : Player
 
     public void ComboEventCheck(int _value) //AnimationEvent
     {
-        attackAnimation(PlayerAttackState.Attack_Off);
-        if (_value >= 2) // 마지막 콤보 (더 이상 연결 없음)
+        
+        if (_value == 0 || (_value <= 2 && canReceiveInput)) // 마지막 콤보 (더 이상 연결 없음)
         {
+            playerAnimtor.SetInteger(PlayerAnimParameters.AttackCombo.ToString(), 0);
 
-            ResetCombo();
+            attackAnimation(PlayerAttackState.Attack_Off);
+
+            playerAnimtor.speed = 1.0f;
+
+            if (!canReceiveInput) 
+            {
+                canReceiveInput = true;
+            }
+
+            playerStateData.AttackState = PlayerAttackState.Attack_Off;
+
+            currentCombo = 0;
             return;
         }
-
-        // 중간 콤보에서 다음 입력이 들어왔을 경우
-        if (currentCombo == _value + 1) // 다음 콤보로 연결할 조건
+        else if (canReceiveInput == false && _value <= 2) 
         {
-            playerAnimtor.SetInteger(PlayerAnimParameters.AttackCombo.ToString(), currentCombo);
+            attackAnimation(PlayerAttackState.Attack_Off);
+            playerStateData.AttackState = PlayerAttackState.Attack_Combo;
+
+            playerAnimtor.SetInteger(PlayerAnimParameters.AttackCombo.ToString(), _value);
             playerAnimtor.speed = 1.5f;
+
             canReceiveInput = true;
-            return;
         }
-
-        // 입력 없으면 리셋
-
-        ResetCombo();
-
 
         //float clipLength = GetClipLength($"Attack_Combo_Weapon_{currentCombo}");
 
@@ -52,7 +60,7 @@ public partial class Warrior : Player
         playerAnimtor.SetInteger(PlayerAnimParameters.AttackCombo.ToString(), 0);
         playerAnimtor.speed = 1.0f;
 
-        PlayerStateData.AttackState = PlayerAttackState.Attack_Off;
+        playerStateData.AttackState = PlayerAttackState.Attack_Off;
     }
     IEnumerator PlayAttackComboCheck(float _timer,int _value) 
     {
@@ -79,7 +87,7 @@ public partial class Warrior : Player
         go.transform.SetParent(weaponHandObject.gameObject.transform);
         go.transform.localPosition = Vector3.zero;
         go.transform.localRotation = Quaternion.identity;
-        PlayerStateData.WeaponState = PlayerWeaponState.Sword_On;
+        playerStateData.WeaponState = PlayerWeaponState.Sword_On;
 
         //CreatSkill(SkillEffectObj1, SkillParentObj1);
         //CreatSkill(SkillEffectObj2, SkillParentObj2);
@@ -106,22 +114,22 @@ public partial class Warrior : Player
         go.transform.SetParent(scabbard.gameObject.transform);
         go.transform.localPosition = weaponOriginalPos;
         go.transform.localRotation = Quaternion.identity;
-        PlayerStateData.WeaponState = PlayerWeaponState.Sword_Off;
+        playerStateData.WeaponState = PlayerWeaponState.Sword_Off;
     }
-    protected override void walkAnim(RunState _runState, Vector3 _pos)
+    protected override void walkAnim(RunCheckState _runState, Vector3 _pos)
     {
-        if (_runState == RunState.Walk)
+        if (_runState == RunCheckState.Walk)
         {
-            if (PlayerStateData.WalkState == PlayerWalkState.Walk_On) { return; }
+            if (playerStateData.WalkState == PlayerWalkState.Walk_On) { return; }
 
-            PlayerStateData.WalkState = PlayerWalkState.Walk_On;
+            playerStateData.WalkState = PlayerWalkState.Walk_On;
             playerAnimtor.SetInteger(PlayerAnimParameters.Walk.ToString(), 1);
         }
-        else if (_runState == RunState.Run)
+        else if (_runState == RunCheckState.Run)
         {
-            if (PlayerStateData.RunState == PlayerRunState.Run_On) { return; }
+            if (playerStateData.RunState == PlayerRunState.Run_On) { return; }
 
-            PlayerStateData.RunState = PlayerRunState.Run_On;
+            playerStateData.RunState = PlayerRunState.Run_On;
             playerAnimtor.SetInteger(PlayerAnimParameters.Run.ToString(), 1);
         }
     }

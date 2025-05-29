@@ -28,10 +28,7 @@ public partial class AiBase
         MONSTER = _Monster;
         SKILL = _SKILL;
     }
-    public void init(Player _player)
-    {
-        PLAYER = _player;
-    }
+    
     public virtual void State() 
     {
         switch (aIState)

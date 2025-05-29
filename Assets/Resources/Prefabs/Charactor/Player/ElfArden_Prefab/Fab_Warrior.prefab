@@ -53,7 +53,7 @@ Animator:
   m_Controller: {fileID: 9100000, guid: deff27e858beaba4e928ccd160b559b1, type: 2}
   m_CullingMode: 1
   m_UpdateMode: 0
-  m_ApplyRootMotion: 1
+  m_ApplyRootMotion: 0
   m_LinearVelocityBlending: 0
   m_StabilizeFeet: 0
   m_WarningMessage: 
@@ -87,7 +87,6 @@ MonoBehaviour:
   SkillEffectObj2: {fileID: 4799312573300115351, guid: fd60ee17d72e67a4b8461b09c0ecbc87, type: 3}
   SkillParentObj1: {fileID: 871859395443901358}
   SkillParentObj2: {fileID: 2510196653466369340}
-  playerStopDistansePos: {x: 0, y: 0, z: 0}
   scabbard: {fileID: 5156620270057898951}
 --- !u!54 &5998566012273802008
 Rigidbody:

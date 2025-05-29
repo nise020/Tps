@@ -32,7 +32,7 @@ public abstract partial class Character : Actor
     {
         condition = _condition;
     }
-    public int StatusTypeLoad(StatusType _type) 
+    public virtual int StatusTypeLoad(StatusType _type) 
     {
         int value = 0;
         switch (_type)
@@ -40,7 +40,7 @@ public abstract partial class Character : Actor
             case StatusType.HP:
                 value = (int)hP;
                 break;
-            case StatusType.Power:            
+            case StatusType.Power:
                 value = (int)atkValue;
                 break;
             case StatusType.Speed:
@@ -58,6 +58,7 @@ public abstract partial class Character : Actor
         }
         return value;
     }
+
     public void StatusUpLoad(float _hp)
     {
         if (condition == Condition.Death) { return; }
@@ -98,10 +99,6 @@ public abstract partial class Character : Actor
 
             Shared.EffectManager.Play(EffectType.BoomEffect, charactorModelTrs.position);
         }
-    }
-    public Transform FindTargetBody()
-    {
-        return charactorModelTrs;
     }
     
     protected void FindBodyObject()

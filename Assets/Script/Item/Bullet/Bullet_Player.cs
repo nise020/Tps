@@ -2,9 +2,11 @@ using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
+using UnityEngine.TextCore.Text;
 
 public partial class Bullet_Player : MonoBehaviour
 {
+    Character character;
     Bullet BULLET = new Bullet();
     BulletType BulletType = BulletType.Playerbullet;
     public Vector3 targetPos;//총의 방향
@@ -19,10 +21,21 @@ public partial class Bullet_Player : MonoBehaviour
     bool coroutinRun = false;
     //Vector3 targetPos;//몬스터가 공격할 목표
     RaycastHit hit;//총알이 맞출 목표
+    public void CharcterInit(Character _charactor) 
+    {
+        character = _charactor;
+    }
     private void OnTriggerEnter(Collider other)
     {
-        if (other.gameObject.layer == Delivery.LayerNameEnum(LayerName.Monster) ||
-                other.gameObject.layer == Delivery.LayerNameEnum(LayerName.Cover))
+        if (other.gameObject.layer == Delivery.LayerNameEnum(LayerName.Monster))
+        {
+            Monster monster = other.gameObject.GetComponent<Monster>();
+            Shared.BattelManager.DamageCheck(character, monster);
+            gameObject.transform.localPosition = new Vector3();
+            gameObject.SetActive(false);
+
+        }
+        else 
         {
             gameObject.transform.localPosition = new Vector3();
             gameObject.SetActive(false);

@@ -41,9 +41,7 @@ ModelImporter:
       has translation animation that will be discarded.\n\t'lowerarm_l' has translation
       animation that will be discarded.\n\t'head' has translation animation that
       will be discarded.\n\t'calf_r' has translation animation that will be discarded.\n\t'calf_l'
-      has translation animation that will be discarded.\nEvent ComboEventCheck has
-      a time (0.766667) outside the clip's valid range (0.000000..0.766666). It will
-      never be fired"
+      has translation animation that will be discarded.\n"
     animationRetargetingWarnings: 
     animationDoRetargetingWarnings: 0
     importAnimatedCustomProperties: 0
@@ -71,7 +69,7 @@ ModelImporter:
       loopTime: 0
       loopBlend: 0
       loopBlendOrientation: 1
-      loopBlendPositionY: 0
+      loopBlendPositionY: 1
       loopBlendPositionXZ: 0
       keepOriginalOrientation: 1
       keepOriginalPositionY: 1

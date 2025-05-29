@@ -15,7 +15,7 @@ public partial class Player : Character
     {      
         base.Start();
         viewcam = GetComponentInChildren<PlayerCamera>();
-        if (PlayerStateData.ModeState == PlayerModeState.Npc)
+        if (playerStateData.ModeState == PlayerModeState.Npc)
         {
             viewcam.gameObject.SetActive(false);
         }
@@ -29,11 +29,12 @@ public partial class Player : Character
         SkillEffectSystem1 = CreatSkill(SkillEffectObj1, SkillParentObj1);
         SkillEffectSystem2 = CreatSkill(SkillEffectObj2, SkillParentObj2);
 
+        AttackEvent += AiTagetUpdate;
     }
 
     private void FixedUpdate()
     {
-        if (PlayerStateData.ModeState != PlayerModeState.Player)
+        if (playerStateData.ModeState != PlayerModeState.Player)
         {
             PLAYERAI.State();
         }

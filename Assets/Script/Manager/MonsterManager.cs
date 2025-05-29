@@ -60,11 +60,18 @@ public class MonsterManager : MonoBehaviour
     }
     public Vector3 monsterSearch(GameObject _playerObj,float _radius) 
     {
+        if (MonsterList.Count == 0) 
+        {
+            Debug.LogError($"MonsterList.Count ={MonsterList.Count}");
+            return Vector3.zero;
+        }
         List<Monster> nearbyMonsters = new List<Monster>();
 
-        foreach (Monster monster in MonsterList)
+        for (int i = 0; i < MonsterList.Count; i++) 
         {
-            float dist = Vector3.Distance(monster.transform.position, _playerObj.transform.position);
+            Monster monster = MonsterList[i];
+            Transform pos = monster.BodyObjectLoad();
+            float dist = Vector3.Distance(pos.transform.position, _playerObj.transform.position);
             if (dist <= _radius)
             {
                 nearbyMonsters.Add(monster);
@@ -93,6 +100,19 @@ public class MonsterManager : MonoBehaviour
         });
 
         return nearbyMonsters[0].transform.position;
+
+        //foreach (Monster monster in MonsterList)
+        //{
+        //    Transform pos = monster.BodyObjectLoad();
+        //    float dist = Vector3.Distance(pos.transform.position, _playerObj.transform.position);
+        //    if (dist <= _radius)
+        //    {
+        //        nearbyMonsters.Add(monster);
+        //        //nomallize
+        //        //Vector
+        //    }
+        //}
+
     }
     private void spownListArrange(GameObject _stage)
     {

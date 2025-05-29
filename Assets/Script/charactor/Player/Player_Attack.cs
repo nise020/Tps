@@ -8,7 +8,7 @@ public partial class Player : Character
     protected virtual void skillValueReset()//Damage Reset
     {
         atkValue = attackReset;
-        PlayerStateData.firstSkillCheck = SkillState.SkillOff;
+        playerStateData.firstSkillCheck = SkillState.SkillOff;
         playerAnimtor.SetInteger(PlayerAnimName.AttackSkill.ToString(), 0);
         playerAnimtor.SetInteger(PlayerAnimName.BuffSkill.ToString(), 0);
     }

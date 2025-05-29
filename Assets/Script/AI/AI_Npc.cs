@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using Unity.VisualScripting;
@@ -10,6 +11,26 @@ public class AI_Npc : AiBase
     float viewDistance = 10f;
     float viewAngle = 60f;
     Player FollowPlayer;
+    Monster TagetMonster;
+    public Action<bool> AttackEvent;
+
+    public void init(Player _player)
+    {
+        PLAYER = _player;
+       //GameEvents.DefenderStateCheck += DefenderState;
+    }
+    
+    public void DefenderState(bool isDefenderDead)//Reset
+    {
+        if (isDefenderDead)
+        {
+            npcAi = NpcAiState.Search;
+        }
+        else
+        {
+            npcAi = NpcAiState.Move;
+        }
+    }
     public void ChangePlayer(Player _player) 
     {
         FollowPlayer = _player;
@@ -21,8 +42,8 @@ public class AI_Npc : AiBase
             case NpcAiState.Search:
                 Search();
                 break;
-            case NpcAiState.Move://선빵필승
-                Move(targetPos);
+            case NpcAiState.Move:
+                Move(tagetPos);
                 break;
             case NpcAiState.Attack:
                 Attack();
@@ -35,8 +56,6 @@ public class AI_Npc : AiBase
     
     protected override void Search()
     {
-        //Shared.GameManager.PlayerLoad(out Player _player);
-        PLAYER.Ai_Move(FollowPlayer);
 
         //Debug.Log($"npcAi={npcAi}\n_player = {_player}");
         if (PLAYER.SearchCheck(out tagetPos) == true)
@@ -45,7 +64,7 @@ public class AI_Npc : AiBase
         }
         else //Not Find Monster
         {
-            return;
+            PLAYER.Ai_Move(FollowPlayer);
         }
     }
     protected override void Move(Vector3 _pos)
@@ -61,14 +80,14 @@ public class AI_Npc : AiBase
     protected override void Attack()
     {
         //Debug.Log($"npcAi={npcAi}");
-        PLAYER.AiAttack();
+        PLAYER.Ai_Attack();//일정 타임 마다 동작
         npcAi = NpcAiState.Reset;
     }
+    
+    
     protected override void Reset()
     {
-        npcAi = NpcAiState.Search;
         tagetPos = new Vector3();
-        //npcAi = NpcAiState.Search;
     }
 
 }

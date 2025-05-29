@@ -97,4 +97,11 @@ public partial class Monster : Character
         //Item item = itemObj.GetComponent<Item>();
         //ITEM = item;
     }
+
+    public override int StatusTypeLoad(StatusType _type)
+    {
+        int status = 0;
+        status = base.StatusTypeLoad(_type);
+        return status;
+    }
 }

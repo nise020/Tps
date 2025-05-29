@@ -102,8 +102,8 @@ public partial class PlayerCamera : CameraBase
 
         float shakeLimit = 1.0f;
         offset.x = Mathf.Clamp(offset.x, -shakeLimit, shakeLimit);
+        offset.y = Mathf.Clamp(offset.y, -0.1f, 0.1f);
         //shakeTrs.localPosition = viewObj.position + offset;
-
         shakeTrs.localPosition = offset;
 
         //transform.position = viewObj.position + rotation * distans;

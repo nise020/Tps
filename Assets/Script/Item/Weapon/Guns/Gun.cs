@@ -32,6 +32,10 @@ public partial class Gun : Weapon
             GameObject go = Instantiate(bulletObj.gameObject, gunHoleObj.transform.position,
                     Quaternion.identity, magazine.transform);//Creat bullet
             go.SetActive(false);
+            Bullet_Player bullet= go.GetComponent<Bullet_Player>();
+
+            bullet.CharcterInit(PLAYER);
+
             bulletData.Add(bulletcount, go);
             bulletcount++;
         }

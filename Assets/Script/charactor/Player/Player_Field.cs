@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -37,7 +38,7 @@ public partial class Player : Character
     protected int BaseLayerIndex = 0;
     [SerializeField] bool shitCheack = false;
     [SerializeField] bool closeCheck = false;
-    
+    protected bool canReceiveInput = false;
 
     [Header("Skill Effect")]
     [SerializeField] protected GameObject SkillEffectObj1;
@@ -49,7 +50,7 @@ public partial class Player : Character
 
 
     [Header("CharacterData")]
-    protected PlayerStateData PlayerStateData = new PlayerStateData();
+    protected PlayerStateData playerStateData = new PlayerStateData();
 
     protected PlayerCameraMode cameraMode = PlayerCameraMode.CameraRotationMode;
 
@@ -68,6 +69,8 @@ public partial class Player : Character
     protected float notWalkTimer = 0;
     protected float notWalkTime = 3.0f;
 
+    protected GameObject playerBackObject;
+
     protected Vector3 movePosition = new Vector3();
     protected Vector3 targetPos = new Vector3();
     Queue<Vector3> aiMovePosQue = new Queue<Vector3>();
@@ -75,4 +78,5 @@ public partial class Player : Character
     List<Slot> slotLists = new List<Slot>();
     float radius = 10.0f;
 
+    
 }

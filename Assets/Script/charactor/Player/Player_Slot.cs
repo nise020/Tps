@@ -39,8 +39,9 @@ public partial class Player : Character
         }
         return new Vector3();
     }
-    public void movePointSearch(out LayerName _layer)//Player State Object
+    public GameObject movePointSearch(out LayerName _layer)//Player State Object
     {
+        GameObject go = null;
         int count = slotLists.Count;
         for (int i = 0; i < count; i++) 
         {
@@ -51,17 +52,20 @@ public partial class Player : Character
                 {
                     slotlayerName = LayerName.BackPosition1;
                     slot.ObjectState = PositionObjectState.Occupied;
+                    go = rightObj.gameObject;
                     break;
                 }
                 else if (slot.gameObject.layer == LayerMask.NameToLayer(LayerName.BackPosition2.ToString()))
                 {
                     slotlayerName = LayerName.BackPosition2;
                     slot.ObjectState = PositionObjectState.Occupied;
+                    go = reftObj.gameObject;
                     break;
                 }
             }
         }
         _layer = slotlayerName;
+        return go;
     }
 
 }

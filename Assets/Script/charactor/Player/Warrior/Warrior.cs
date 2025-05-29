@@ -9,8 +9,8 @@ public partial class Warrior : Player
     {
         id = 2;
         RenderType = ObjectRenderType.Skin;
-        PlayerStateData.ModeState = PlayerModeState.Player;
-        PlayerStateData.PlayerType = PlayerType.Warrior;
+        playerStateData.ModeState = PlayerModeState.Player;
+        playerStateData.PlayerType = PlayerType.Warrior;
         base.Awake();
     }
     void OnDrawGizmosSelected()
@@ -27,7 +27,7 @@ public partial class Warrior : Player
     protected override void Start()
     {
         base.Start();
-        PlayerStateData.WeaponState = PlayerWeaponState.Sword_Off;
+        playerStateData.WeaponState = PlayerWeaponState.Sword_Off;
     }
 
     //protected void OnAnimatorMove()
@@ -46,14 +46,9 @@ public partial class Warrior : Player
 
     private void Update()
     {
-        //inputrocessing();
-        //move(charctorState);
-        //runcheck(RunCheck);
-
-        //groundCheak();
-        if (PlayerStateData.ModeState != PlayerModeState.Npc)
+        if (playerStateData.ModeState != PlayerModeState.Npc)
         {
-            transform.rotation = new Quaternion();
+            //transform.rotation = new Quaternion();
             inputrocessing();
         }
         else 

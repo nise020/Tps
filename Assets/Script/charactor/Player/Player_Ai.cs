@@ -4,13 +4,17 @@ using UnityEngine;
 
 public partial class Player : Character
 {
+    public void AiTagetUpdate(bool _check)
+    {
+        PLAYERAI.DefenderState(_check);
+    }
     public void AiUpdate(Player _player) 
     {
         PLAYERAI.ChangePlayer(_player);
     }
     public void PlayerModeUpdate(PlayerModeState _playerMode) 
     {
-        PlayerStateData.ModeState = _playerMode;
+        playerStateData.ModeState = _playerMode;
     }
     public void Ai_Move(Player _player)
     {
@@ -23,11 +27,11 @@ public partial class Player : Character
         //PlayerWalkState state = PlayerWalkState.None;
         //Shared.GameManager.PlayerData(out Player PLAYER);
 
-        if (PlayerStateData.objectInfo == FindMoveObject.None)//Object Search
+        if (playerStateData.objectInfo == FindMoveObject.None)//Object Search
         {
-            _player.movePointSearch(out LayerName layer);
+            playerBackObject = _player.movePointSearch(out LayerName layer);
             slotlayerName = layer;
-            PlayerStateData.objectInfo = FindMoveObject.Find;
+            playerStateData.objectInfo = FindMoveObject.Find;
         }
 
         //movePosition = PLAYER.MovePointSearchInit(movePosition);//movePosition
@@ -36,6 +40,12 @@ public partial class Player : Character
         Vector3 vector = Vector3.zero;
 
         float distanse = Vector3.Distance(movePosition, gameObject.transform.position);
+
+        if (distanse <= 3.0f)
+        {
+            npcRunStateAnimation(0.0f); // 정지 애니메이션 강제
+            return;
+        }
 
         if (distanse < playerStopDistanseValue)//distanse < 0.3
         {
@@ -57,7 +67,10 @@ public partial class Player : Character
             #region Player Follow
             if (_player.PlayerObjectWalkCheck() == false)//player stop
             {
-                aiMovePosQue.Clear();
+                if (aiMovePosQue.Count != 0) 
+                {
+                    aiMovePosQue.Clear();
+                }
                 aiMovePosQue.Enqueue(movePosition);//value Plus
             }
             else//player walk
@@ -69,7 +82,8 @@ public partial class Player : Character
             }
             vector = aiMovePosQue.Peek();//front value
             #endregion
-            Vector3 stopPoint = vector;
+
+            Vector3 stopPoint = movePosition;
             Vector3 disTance = (stopPoint - gameObject.transform.position);
             disTance.y = 0.0f;//일시적
 
@@ -116,17 +130,57 @@ public partial class Player : Character
         return value;
     }
 
-    public bool AttackDistanseCheck(float value)
+    public bool AttackDistanseCheck(float _value)
     {
-        if (value <= 0.1)//값을 상수가 아닌값으로 수정 필요
+        float typeVAlue = 0.0f;
+        switch (playerStateData.PlayerType) 
         {
-            value = 0;
+            case PlayerType.Gunner:
+                typeVAlue = 3.0f;
+                break;
+            case PlayerType.Warrior:
+                typeVAlue = 0.3f;
+                break;
+            default:
+               Debug.LogError($"playerStateData.PlayerType = {playerStateData.PlayerType}") ;
+                break;
+        }
+
+        if (_value <= typeVAlue)//값을 상수가 아닌값으로 수정 필요
+        {
+            // _value = 0;
             return true;
         }
 
         return false;
     }
-    public void AiAttack()//거리이내에 있는 적에게 데미지 로직 필요
+    public bool SearchCheck(out Vector3 _pos) //매니저 한테서 서치 하는 방향으로 고치기 필요
+    {
+        //float radius = 8f;
+        //float fieldOfView = 90f;
+        Vector3 position = Shared.MonsterManager.monsterSearch(gameObject, radius);
+        if (position == Vector3.zero)
+        {
+            _pos = Vector3.zero;
+            return false;
+        }
+        else
+        {
+            float distance = Vector3.Distance(position, gameObject.transform.position);
+            if (radius >= distance)
+            {
+                _pos = position;
+                return true;
+            }
+            else
+            {
+                _pos = Vector3.zero;
+                return false;
+            }
+        }
+    }
+
+    public void Ai_Attack()//거리이내에 있는 적에게 데미지 로직 필요
     {
         attackMovement();
     }
@@ -134,4 +188,6 @@ public partial class Player : Character
     {
 
     }
+
+
 }

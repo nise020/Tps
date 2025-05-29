@@ -7,48 +7,24 @@ public partial class Player : Character
 
 
 
-    public bool SearchCheck(out Vector3 _pos) //매니저 한테서 서치 하는 방향으로 고치기 필요
-    {
-        //float radius = 8f;
-        //float fieldOfView = 90f;
-        Vector3 position = Shared.MonsterManager.monsterSearch(gameObject, radius);
-        if (position == Vector3.zero)
-        {
-            _pos = Vector3.zero;
-            return false;
-        }
-        else 
-        {
-            float distance = Vector3.Distance(position, gameObject.transform.position);
-            if (radius >= distance)
-            {
-                _pos = position;
-                return true;
-            }
-            else
-            {
-                _pos = Vector3.zero;
-                return false;
-            }
-        }
-    }
+    
     public void PlayerTypeInite(out PlayerType _type)
     {
-        _type = PlayerStateData.PlayerType;
+        _type = playerStateData.PlayerType;
     }
     public void PlayerControllChange(PlayerModeState _type)
     {
-        PlayerStateData.ModeState = _type;
-        Debug.Log($"{gameObject}/{PlayerStateData.ModeState} = {_type}"); 
+        playerStateData.ModeState = _type;
+        Debug.Log($"{gameObject}/{playerStateData.ModeState} = {_type}"); 
     }
 
     public void PlayerControllChack(out PlayerModeState _type)
     {
-        _type = PlayerStateData.ModeState;
+        _type = playerStateData.ModeState;
     }
     public bool CharactorEnumCheck(PlayerType _player)
     {
-        if (_player == PlayerStateData.PlayerType)
+        if (_player == playerStateData.PlayerType)
         {
             return true;
         }
@@ -62,5 +38,45 @@ public partial class Player : Character
         base.death();
         gameObject.SetActive(false);
     }
+    public override int StatusTypeLoad(StatusType _type)
+    {
+        int value = 0;
+        switch (_type)
+        {
+            case StatusType.HP:
+                value = (int)hP;
+                break;
+            case StatusType.Power:
+                value = AttackComboStateCheck();
+                break;
+            case StatusType.Speed:
+                value = (int)speedValue;
+                break;
+            case StatusType.Defens:
+                value = (int)defVAlue;
+                break;
+            case StatusType.CritDamage:
+                value = (int)CritRateValue;
+                break;
+            case StatusType.CritRate:
+                value = (int)CritDamageValue;
+                break;
+        }
+        return value;
+    }
 
+    protected int AttackComboStateCheck()
+    {
+        int stateValue = 0;
+        if (playerStateData.AttackState == PlayerAttackState.Attack_On) 
+        {
+            stateValue = (int)atkValue;
+        }
+        else if (playerStateData.AttackState == PlayerAttackState.Attack_Combo) 
+        {
+            float combo = atkValue * 1.5f;
+            stateValue = (int)combo;
+        }
+        return stateValue;
+    }
 }

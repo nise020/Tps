@@ -32,7 +32,7 @@ public class CharacterStateData
     public SkillState secondSkillCheck = SkillState.SkillOff;
 
 
-    public RunState runState = RunState.Walk;
+    public RunCheckState runState = RunCheckState.Walk;
 
 }
 
@@ -46,7 +46,7 @@ public class PlayerStateData : CharacterStateData
     public PlayerWeaponState WeaponState = PlayerWeaponState.Sword_Off;
 
     public PlayerAttackState AttackState = PlayerAttackState.Attack_Off;
-    public ReloadState reloadState = ReloadState.Reload_Off;//Attackdp 합류
+    //public ReloadState reloadState = ReloadState.Reload_Off;//Attackdp 합류
 
     public PlayerWalkState WalkState = PlayerWalkState.Walk_Off;//하나로 합칠것
     public PlayerRunState RunState = PlayerRunState.Run_Off;

@@ -9,7 +9,7 @@ public partial class Gunner : Player
         attackAnimation(PlayerAttackState.Attack_Off);
         playerAnimtor.SetLayerWeight(attackLayerIndex, 0.0f);
     }
-    protected override void walkAnim(RunState _runState, Vector3 _pos)
+    protected override void walkAnim(RunCheckState _runState, Vector3 _pos)
     {
         if (_pos.x == 1)//rigrt
         {
@@ -21,14 +21,14 @@ public partial class Gunner : Player
         }
         else if (_pos.z == 1)//front
         {
-            if (_runState == RunState.Walk)
+            if (_runState == RunCheckState.Walk)
             {
-                PlayerStateData.WalkState = PlayerWalkState.Walk_On;
+                playerStateData.WalkState = PlayerWalkState.Walk_On;
                 playerAnimtor.SetInteger(PlayerAnimParameters.Walk.ToString(), (int)_pos.z);
             }
-            else if (_runState == RunState.Run)
+            else if (_runState == RunCheckState.Run)
             {
-                PlayerStateData.RunState = PlayerRunState.Run_On;
+                playerStateData.RunState = PlayerRunState.Run_On;
                 playerAnimtor.SetInteger(PlayerAnimParameters.Run.ToString(), (int)_pos.z);
             }
         }

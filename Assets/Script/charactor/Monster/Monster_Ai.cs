@@ -19,9 +19,18 @@ public partial class Monster : Character
 
     protected virtual void FixedUpdate()
     {
-        if (AI == null||condition == Condition.Death) { return; }
-        AI.State();
+        if (MONSTERAI == null||condition == Condition.Death) { return; }
+        MONSTERAI.State();
     }
+    public void AiTagetUpdate(bool _check)
+    {
+        MONSTERAI.DefenderState(_check);
+    }
+    public void AiUpdate(Player _player)
+    {
+        MONSTERAI.ChangeTarget(_player);
+    }
+
 
     public void Compomentinit()
     {
@@ -205,7 +214,7 @@ public partial class Monster : Character
     {
         yield return new WaitForSeconds(3.0f);
         _search = SearchState.None;
-        AI.searchingStateUpdate(_search);
+        MONSTERAI.searchingStateUpdate(_search);
     }
     protected void attackRangeCheck()
     {
@@ -219,6 +228,42 @@ public partial class Monster : Character
     }
     protected void SortingObject()
     {
+
+    }
+
+    public float TargetDistanseCheck(Vector3 _pos)//수정 필요
+    {
+        Vector3 direction = _pos - transform.position;
+        direction.y = 0f;
+
+        float distance = direction.magnitude;
+
+        return distance;
+    }
+    public bool AttackDistanseCheck(float _value)
+    {
+        float typeVAlue = 0.0f;
+        //switch (playerStateData.PlayerType)
+        //{
+        //    case PlayerType.Gunner:
+        //        typeVAlue = 15.0f;
+        //        break;
+        //    case PlayerType.Warrior:
+        //        typeVAlue = 0.3f;
+        //        break;
+        //    default:
+        //        Debug.LogError($"playerStateData.PlayerType = {playerStateData.PlayerType}");
+        //        break;
+        //}
+        if (_value <= typeVAlue)//값을 상수가 아닌값으로 수정 필요
+        {
+            // _value = 0;
+            return true;
+        }
+        else
+        {
+            return false;
+        }
 
     }
 }

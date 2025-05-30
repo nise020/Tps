@@ -116,7 +116,7 @@ MonoBehaviour:
   gunHoleObj: {fileID: 4064885540784625271}
   gunObj: {fileID: 9141356711389114997}
   bulletObj: {fileID: 8315013135361078018, guid: f91a1c6d90c566a4dbd6048e4c71d4e9, type: 3}
-  magazine: {fileID: 4184524972744609795}
+  magazine: {fileID: 4933935171146441810}
   gunRotSpeed: 80
   razerEndObj: {fileID: 0}
   angleOn: 0

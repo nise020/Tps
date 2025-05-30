@@ -60,7 +60,7 @@ public partial class Warrior : Player
         scabbardCount = 0;
 
     }
-    protected override void attackMovement()
+    protected override void AutoAttack()
     {
         attackAnimation(PlayerAttackState.Attack_On);
     }

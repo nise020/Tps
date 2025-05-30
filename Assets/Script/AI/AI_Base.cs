@@ -10,8 +10,8 @@ public partial class AiBase
     protected Monster MONSTER;
     protected Player PLAYER;
     protected Skill_Monster SKILL;
-    protected MonsterAiState aIState = MonsterAiState.Create;
-    protected NpcAiState npcAi = NpcAiState.Search;
+    protected MonsterAiState aIState = MonsterAiState.Search;
+    
     protected MonsterType MobType;
     protected GameObject startObj;
     protected Vector3 targetPos = new Vector3(0f, 0f, 0f);

@@ -27,7 +27,15 @@ public abstract partial class Character : Actor
             condition = Condition.health;
         }
     }
-
+    public bool ConditionLoad()
+    {
+        if (condition != Condition.Death) 
+        {
+            return true;
+        }
+        else
+        return false;
+    }
     public void conditionUpdate(Condition _condition) 
     {
         condition = _condition;
@@ -74,6 +82,7 @@ public abstract partial class Character : Actor
 
             if (hP <= 0)
             {
+                condition = Condition.Death;
                 Debug.Log("Dead");
                 Invoke("death", 0.3f);
                 return;
@@ -170,8 +179,6 @@ public abstract partial class Character : Actor
         //    Debug.Log($"{gameObject}\ncharactorModelTrs = {charactorModelTrs}");
         //}
     }
-    
-
     
     //protected void FindMeshBodyObject()
     //{

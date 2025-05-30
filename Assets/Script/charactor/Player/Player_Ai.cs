@@ -1,6 +1,8 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
+using static UnityEditor.ShaderGraph.Internal.KeywordDependentCollection;
 
 public partial class Player : Character
 {
@@ -106,28 +108,27 @@ public partial class Player : Character
 
 
     }
-
-    public float TargetPosition_Move(Vector3 _pos)//수정 필요
+    public void AI_TargetMove(Vector3 _pos,float _distance) 
     {
-        Vector3 stopPoint = _pos;
-        Vector3 disTance = (stopPoint - gameObject.transform.position);
+        Vector3 direction = _pos - transform.position;
 
-        Quaternion rotation = Quaternion.LookRotation(disTance.normalized);
-        charactorModelTrs.rotation = Quaternion.Slerp(charactorModelTrs.rotation, rotation, Time.deltaTime * rotationSpeed);
-        
-        float diatanse = Vector3.Distance(stopPoint , gameObject.transform.position);
+        Quaternion targetRotation = Quaternion.LookRotation(direction);
+        charactorModelTrs.rotation = Quaternion.Slerp(charactorModelTrs.rotation, targetRotation, Time.deltaTime * rotationSpeed);
 
-        if (diatanse > 0) 
-        {
-            gameObject.transform.position += disTance.normalized * speedValue * Time.deltaTime;
-        }
 
-        float value = Vector3.Distance(gameObject.transform.position, _pos);
+        Vector3 moveDir = direction.normalized;
+        transform.position += moveDir * speedValue * Time.deltaTime;
 
-        playerAnimtor.SetInteger(PlayerAnimParameters.Run.ToString(), 0);
-        playerAnimtor.SetInteger(PlayerAnimParameters.Walk.ToString(), 0);
+        npcRunStateAnimation(_distance);
+    }
+    public float TargetDistanseCheck(Vector3 _pos)//수정 필요
+    {
+        Vector3 direction = _pos - transform.position;
+        direction.y = 0f; 
 
-        return value;
+        float distance = direction.magnitude;
+
+        return distance;
     }
 
     public bool AttackDistanseCheck(float _value)
@@ -136,7 +137,7 @@ public partial class Player : Character
         switch (playerStateData.PlayerType) 
         {
             case PlayerType.Gunner:
-                typeVAlue = 3.0f;
+                typeVAlue = 15.0f;
                 break;
             case PlayerType.Warrior:
                 typeVAlue = 0.3f;
@@ -145,46 +146,59 @@ public partial class Player : Character
                Debug.LogError($"playerStateData.PlayerType = {playerStateData.PlayerType}") ;
                 break;
         }
-
         if (_value <= typeVAlue)//값을 상수가 아닌값으로 수정 필요
         {
             // _value = 0;
             return true;
         }
+        else 
+        {
+            return false;
+        }
 
-        return false;
     }
-    public bool SearchCheck(out Vector3 _pos) //매니저 한테서 서치 하는 방향으로 고치기 필요
+    public bool SearchCheck(out Monster _monster) //매니저 한테서 서치 하는 방향으로 고치기 필요
     {
         //float radius = 8f;
         //float fieldOfView = 90f;
-        Vector3 position = Shared.MonsterManager.monsterSearch(gameObject, radius);
-        if (position == Vector3.zero)
+        _monster = Shared.MonsterManager.monsterSearch(gameObject, radius);
+
+        if (_monster == null)
         {
-            _pos = Vector3.zero;
+            Debug.LogError($"_monster = {_monster}");
             return false;
         }
         else
         {
-            float distance = Vector3.Distance(position, gameObject.transform.position);
+            Vector3 targetPos = _monster.BodyObjectLoad().position;
+            Vector3 myPos = gameObject.transform.position;
+
+            float distance = Vector3.Distance(targetPos, myPos);
+
             if (radius >= distance)
             {
-                _pos = position;
                 return true;
             }
             else
             {
-                _pos = Vector3.zero;
+                _monster = null;
                 return false;
             }
         }
     }
 
-    public void Ai_Attack()//거리이내에 있는 적에게 데미지 로직 필요
+    public void Ai_Attack(Transform _transform)//거리이내에 있는 적에게 데미지 로직 필요
     {
-        attackMovement();
+        //charactorModelTrs.rotation = Quaternion.LookRotation(_transform.position);
+        charactorModelTrs.LookAt(_transform);
+        //Debug.Log($"{_transform.position}");
+        //charactorModelTrs.rotation = Quaternion.Slerp(charactorModelTrs.rotation, targetRotation, Time.deltaTime * rotationSpeed);
+       
+        npcRunStateAnimation(0.0f);
+        
+        AutoAttack();
     }
-    protected virtual void attackMovement() 
+    protected virtual void AutoAttack() 
     {
 
     }

@@ -6,9 +6,29 @@ using UnityEngine;
 public partial class Gunner : Player
 {
     [SerializeField] Granad granadObj;
-    protected override void attackMovement()
+    protected override void AutoAttack()
     {
-        attackAnimation(PlayerAttackState.Attack_On);
+        playerAnimtor.SetLayerWeight(attackLayerIndex, 1.0f);
+
+        if (WEAPON.ReturnTypeValue(BulletValueType.NowBullet) <= 0)
+        {
+            playerStateData.AttackState = PlayerAttackState.Reload_On;
+            playerAnimtor.SetLayerWeight(attackLayerIndex, 1.0f);
+            playerAnimtor.SetInteger(PlayerAnimParameters.Reload.ToString(), 1);
+        }
+        else if(playerStateData.AttackState == PlayerAttackState.Reload_On)
+        {
+            return;
+        }
+        else 
+        {
+            attackAnimation(PlayerAttackState.Attack_On);
+        }
+            //skillAttack_common1(playerStateData.PlayerType);
+
+            //skillAttack_common2(playerStateData.PlayerType);
+
+            //attackAnimation(PlayerAttackState.Attack_On);
         //gunShoot();
     }
     protected override void attack(PlayerModeState _state, PlayerType _job)
@@ -35,7 +55,6 @@ public partial class Gunner : Player
 
         WEAPON.Attack(AimDirection);
 
-        //playerAnim.SetLayerWeight(attackLayerIndex, 0.0f);
     }
     //protected override void inPutCameraAnimation(bool _check)
     //{
@@ -155,12 +174,12 @@ public partial class Gunner : Player
     {
         if (_type == PlayerType.Gunner)
         {
-            if (playerStateData.firstSkillCheck == SkillState.SkillOff)
+            if (playerStateData.secondSkillCheck == SkillState.SkillOff)
             {
                 int value = (int)atkValue;
 
                 skillStrategy.Skill(playerStateData.PlayerType, 2, out value);
-                playerStateData.firstSkillCheck = SkillState.SkillOn;
+                playerStateData.secondSkillCheck = SkillState.SkillOn;
                 playerAnimtor.SetInteger("Skill1", 1);
                 playerAnimtor.SetInteger(PlayerAnimName.BuffSkill.ToString(), 1);
                 Invoke("SkillValueReset", 3);//clear

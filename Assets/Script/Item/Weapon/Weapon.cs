@@ -8,8 +8,8 @@ public partial class Weapon : Item
     //[SerializeField] GameObject SkillEffectObj1;
     //[SerializeField] GameObject SkillEffectObj2;
 
-    protected WeaponEnum weaponType;
-    protected PlayerType PlayerType;
+    //protected WeaponEnum weaponType;
+    //protected PlayerType PlayerType;
 
     //protected float Range;//¹üÀ§
     //protected float Power;//Èû
@@ -24,7 +24,7 @@ public partial class Weapon : Item
     }
     public WeaponEnum Weapontype() 
     {
-        return weaponType;
+        return ItemStateData.weaponType;
     }
     public virtual void Attack()//sword 
     {
@@ -53,15 +53,5 @@ public partial class Weapon : Item
     {
 
     }
-    //public override float ItemStatusLoad(ItemStatusType _status) 
-    //{
-    //    float value = 0.0f;
-    //    switch (_status) 
-    //    {
-    //        case ItemStatusType.None:
-    //            value = Range;
-    //            break;
-    //    }
-    //    return value;
-    //}
+
 }

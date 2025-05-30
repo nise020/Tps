@@ -13,7 +13,7 @@ public static partial class GameEvents
     public static Action<int> AttackDamageEvent;
     public static Action<UiInventory> InventoryTabEvent;
 
-    public static Action<AI_Npc> PlyerChangeEvent;
+    public static Action<AI_Auto> PlyerChangeEvent;
 
 
     public static event Action<Character, Character> OnAttack;

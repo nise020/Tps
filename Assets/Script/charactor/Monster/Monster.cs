@@ -9,7 +9,7 @@ public partial class Monster : Character
     protected List <GameObject> itemObjValue = new List<GameObject>();
 
     protected Dictionary<Item, GameObject> DropItemData = new Dictionary<Item, GameObject>();
-    protected AiMonster AI = new AiMonster();
+    protected AiMonster MONSTERAI = new AiMonster();
     protected Skill_Monster SKILL = new Skill_Monster();
     
     public int mobKey = 0;
@@ -26,11 +26,12 @@ public partial class Monster : Character
         base.Start();
         monsterAnimator = GetComponent<Animator>();
         creatTabObj = Shared.GameManager.creatTab;//¿ÀºêÁ§Æ® »ý¼º ÅÇ(ex.ÃÑ¾Ë)
-        AI.init(this, SKILL);
-        AI.Type(monsterType);
+        MONSTERAI.init(this, SKILL);
+        MONSTERAI.Type(monsterType);
 
         startPosition = charactorModelTrs.position;
 
+        Compomentinit();
         //STATE.MonsterState(monsterType);
         //stateInIt();
     }

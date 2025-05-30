@@ -101,9 +101,10 @@ public class BattelManager : MonoBehaviour
 
         //attakerPower = DamageCalculator(attakerPower, CriticalValue);
 
-        defenserHp = defenserHp - attakerPower;
-        //defenserHp = defenserHp - 1000;
+        //defenserHp = defenserHp - attakerPower;
+        defenserHp = defenserHp - 1000;
 
+        //State
         _defender.StatusUpLoad(defenserHp);
 
         if (defenserHp <= 0)
@@ -116,6 +117,7 @@ public class BattelManager : MonoBehaviour
             _attacker.AttackEvent?.Invoke(false);
         }
 
+        //sharder
         DamageColor(_defender);
 
         HpBar hpBar = _defender.GetComponentInChildren<HpBar>();//임시로 몬스터만 있음

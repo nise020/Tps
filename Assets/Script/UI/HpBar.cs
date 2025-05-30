@@ -245,8 +245,11 @@ public partial class HpBar : MonoBehaviour
     }
     public void SetHp(float _maxHp, float _curHp)//0~1
     {
-        hpImg.fillAmount = _curHp / _maxHp;
-        StartCoroutine(animateEffectBar());
+        if (gameObject.activeSelf) 
+        {
+            hpImg.fillAmount = _curHp / _maxHp;
+            StartCoroutine(animateEffectBar());
+        }
     }
 
     private void chasePlayer()

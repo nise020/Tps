@@ -11,6 +11,6 @@ public class Sword : Weapon
     }
     private void Awake()
     {
-        weaponType = WeaponEnum.Sword;
+        ItemStateData.weaponType = WeaponEnum.Sword;
     }
 }

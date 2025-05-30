@@ -27,7 +27,7 @@ Transform:
   m_GameObject: {fileID: 2367429089660032736}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 5, y: 5, z: 5}
+  m_LocalScale: {x: 20, y: 20, z: 20}
   m_ConstrainProportionsScale: 1
   m_Children:
   - {fileID: 4635537413739725211}
@@ -50,12 +50,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: eea484dcd1ba9e446b0b9743f05dd1d8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  CharactorId: 0
   hpBar: {fileID: 9135575270855701387, guid: e3d5465fd69dd4e4bad042dc6f58d2d8, type: 3}
   weaponHandObject: {fileID: 0}
   weaponObj: {fileID: 0}
   groundCheckLenght: 0
-  viewItem: {fileID: 0}
   mobKey: 0
   SphereRadius: 1
   target: {fileID: 0}

@@ -109,23 +109,20 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2881e48d055dae74eb875049ee936918, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  CharactorId: 0
   hpBar: {fileID: 0}
+  weaponHandObject: {fileID: 0}
+  weaponObj: {fileID: 0}
+  groundCheckLenght: 0
   WeaponPrefab: {fileID: 7208749909875244897}
   shortSword: {fileID: 0}
   AimtransPos: {fileID: 0}
   ControlBtn: {fileID: 0}
-  HandObj: {fileID: 0}
-  weaponObj: {fileID: 0}
-  playerStopDistansePos: {x: 0, y: 0, z: 0}
   shitCheack: 0
   closeCheck: 0
   SkillEffectObj1: {fileID: 4799312573300115351, guid: a88d7cefaae7e184696ea2a1efd4779a, type: 3}
   SkillEffectObj2: {fileID: 4799312573300115351, guid: 15d280cc6a5446b43a82f1eaa64a1d78, type: 3}
   SkillParentObj1: {fileID: 7119097427240176788}
   SkillParentObj2: {fileID: 348033900356103323}
-  groundCheckLenght: 0
-  charctorState: 1
   granadObj: {fileID: 0}
 --- !u!54 &4268791606964638330
 Rigidbody:
@@ -1072,6 +1069,22 @@ PrefabInstance:
       propertyPath: creatTabObj
       value: 
       objectReference: {fileID: 0}
+    - target: {fileID: 9141356711389212245, guid: 494318586390ca24b9f2bd507d02ccf8, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 9141356711389212245, guid: 494318586390ca24b9f2bd507d02ccf8, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 9141356711389212245, guid: 494318586390ca24b9f2bd507d02ccf8, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 9141356711389212245, guid: 494318586390ca24b9f2bd507d02ccf8, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -1311,6 +1324,10 @@ PrefabInstance:
       propertyPath: m_Layer
       value: 16
       objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: 4cf2e55ff61475a41a3d1cfb6c18679c, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -1338,6 +1355,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   startPos: {x: 0, y: 0, z: 0}
   explotionObj: {fileID: 1000011797152326, guid: acf39d9f4addf294d93fa56fa373961b, type: 3}
+  skillstate: 1
 --- !u!4 &8784519521604273524 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: 4cf2e55ff61475a41a3d1cfb6c18679c, type: 3}

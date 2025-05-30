@@ -47,7 +47,15 @@ public abstract partial class Character : Actor
 
     public Transform BodyObjectLoad() 
     {
-        return charactorModelTrs;
+        if (charactorModelTrs == null)
+        {
+            FindBodyObject();
+            return charactorModelTrs;
+        }
+        else 
+        {
+            return charactorModelTrs;
+        }
     }
 
     //protected virtual void OnTriggerEnter(Collider other)//세분화 필요

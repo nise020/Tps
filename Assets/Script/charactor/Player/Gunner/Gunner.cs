@@ -54,6 +54,7 @@ public partial class Gunner : Player
                 }
                 else if (type == WeaponEnum.Gun) 
                 {
+                    WEAPON = MeshObj.GetComponentInParent<Weapon>();
                     weaponObj = MeshObj.gameObject;
                 }
                 else if (type == WeaponEnum.Granad) 

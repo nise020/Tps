@@ -6,14 +6,13 @@ using UnityEngine.UI;
 
 public partial class Gun : Weapon
 {
-    
     public Dictionary<int, GameObject> bulletData = new Dictionary<int, GameObject>();
     public int bulletcount;
     Player PLAYER;
     //GameObject playerUpperBody;
     private void Awake()
     {
-        weaponType = WeaponEnum.Gun;
+        ItemStateData.weaponType = WeaponEnum.Gun;
     }
     private void Start()
     {

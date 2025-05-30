@@ -73,7 +73,6 @@ public partial class Monster : Character
         if (_state == MonsterDeathsState.Deaths_On)
         {
             monsterAnimator.SetInteger(MonsterAnimParameters.Death.ToString(), 1);
-            condition = Condition.Death;
         }
         else if (_state == MonsterDeathsState.Deaths_Off)
         {

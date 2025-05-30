@@ -14,7 +14,7 @@ public class ConsumableItem : Item
         id_Item = id;
         img_Item = Image;
         prefabs_Item = prefabs;//
-        Type_Item = Type;
+        ItemStateData.Type_Item = Type;
         //id_Item = 1;
         //img_Item = "Number3 7x10";
         //prefabs_Item = "Item_Object";//

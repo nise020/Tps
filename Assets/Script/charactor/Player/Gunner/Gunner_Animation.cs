@@ -4,7 +4,7 @@ using UnityEngine;
 
 public partial class Gunner : Player
 {
-    public void GunAttackAnimationOut() 
+    public void GunAttackAnimationOut() //AnimationEvent
     {
         attackAnimation(PlayerAttackState.Attack_Off);
         playerAnimtor.SetLayerWeight(attackLayerIndex, 0.0f);

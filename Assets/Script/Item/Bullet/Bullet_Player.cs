@@ -29,7 +29,8 @@ public partial class Bullet_Player : MonoBehaviour
     {
         if (other.gameObject.layer == Delivery.LayerNameEnum(LayerName.Monster))
         {
-            Monster monster = other.gameObject.GetComponent<Monster>();
+            //Monster monster = new Monster();
+            Monster monster = other.gameObject.GetComponentInParent<Monster>();
             Shared.BattelManager.DamageCheck(character, monster);
             gameObject.transform.localPosition = new Vector3();
             gameObject.SetActive(false);

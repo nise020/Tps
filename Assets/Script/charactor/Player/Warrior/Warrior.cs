@@ -70,6 +70,7 @@ public partial class Warrior : Player
         {
             if (skinObj.gameObject.layer == value)
             {
+                WEAPON = skinObj.GetComponentInParent<Weapon>();
                 weaponObj = skinObj.rootBone.gameObject;
                 weaponOriginalPos = weaponObj.transform.localPosition;
                 break;

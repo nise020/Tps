@@ -23,6 +23,7 @@ public partial class Character : Actor
     protected new int name;
     protected int dec;//설명
 
+    [Header("CharacterState")]
     protected float atkValue;//공격력
     protected float defVAlue;//방어력
     protected float speedValue;//이동속도
@@ -35,17 +36,20 @@ public partial class Character : Actor
     GroundTouchState GroundTouchState = GroundTouchState.GroundNoneTouch;
     protected InvincibleState characterstate = InvincibleState.invincible_Off;
 
+    [Header("HpBar")]
     protected HpBar HPBAR = new HpBar();
     public Action<float, float> onHpChanged;
 
     //protected int power;//힘
     [SerializeField] GameObject hpBar;//uiHp
 
+    [Header("Model")]
     protected Transform charactorModelTrs;//Modeling
     protected Transform RootTransform;//RootModel
     [SerializeField] protected GameObject weaponHandObject;//Hand
     [SerializeField] protected GameObject weaponObj;//Weapon
 
+    [Header("Skill")]
     protected float rotationSpeed = 20.0f;//나중에 조정
     protected float skillCool_1;//1번 스킬쿨타임
     protected float skillCool_2;//2번 스킬쿨타임
@@ -64,5 +68,9 @@ public partial class Character : Actor
 
     [Header("Action")]
     public Action<bool> AttackEvent;
+
+    [Header("Weapon")]
+    [SerializeField] protected Weapon WEAPON;
+
 
 }

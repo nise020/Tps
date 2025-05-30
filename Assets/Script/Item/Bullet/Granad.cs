@@ -75,7 +75,7 @@ public class Granad : Weapon
     }
     private void Awake()
     {
-        weaponType = WeaponEnum.Granad;
+        ItemStateData.weaponType = WeaponEnum.Granad;
 
         MeshRenderer mesh = GetComponentInChildren<MeshRenderer>();
         modelingObject = mesh.gameObject;

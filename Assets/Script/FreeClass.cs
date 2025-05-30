@@ -65,3 +65,11 @@ public class MonsterStateData : CharacterStateData
 {
     public MonsterType monsterType = MonsterType.Defolt;
 }
+
+public class ItemStateData 
+{
+    public ItemType Type_Item = ItemType.None;
+
+    public WeaponEnum weaponType = WeaponEnum.None;
+    public PlayerType PlayerType = PlayerType.None;
+}

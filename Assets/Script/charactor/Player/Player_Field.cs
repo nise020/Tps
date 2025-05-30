@@ -7,8 +7,7 @@ using UnityEngine.UI;
 public partial class Player : Character
 {
     protected PlayerCamera viewcam;
-    protected AI_Npc PLAYERAI = new AI_Npc();
-    protected Weapon WEAPON;
+    protected AI_Auto PLAYERAI = new AI_Auto();
     
     protected Rigidbody rigid;
     protected Animator playerAnimtor;
@@ -76,7 +75,7 @@ public partial class Player : Character
     Queue<Vector3> aiMovePosQue = new Queue<Vector3>();
     LayerName slotlayerName = LayerName.None;
     List<Slot> slotLists = new List<Slot>();
-    float radius = 10.0f;
+    protected float radius = 20.0f;
 
     
 }

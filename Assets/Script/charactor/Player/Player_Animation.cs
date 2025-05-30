@@ -160,8 +160,8 @@ public partial class Player : Character
         if (dist > runDistanseValue &&
             playerStateData.NpcWalkState != NpcWalkState.Run)//run
         {
-            //npcRunState = NpcRunState.Run_On;
             playerStateData.NpcWalkState = NpcWalkState.Run;
+
             playerAnimtor.SetInteger(PlayerAnimParameters.Run.ToString(), 1);
             playerAnimtor.SetInteger(PlayerAnimParameters.Walk.ToString(), 0);
             return;
@@ -169,8 +169,8 @@ public partial class Player : Character
         else if (dist <= runDistanseValue && dist >= playerStopDistanseValue &&
             playerStateData.NpcWalkState != NpcWalkState.Walk)//walk
         {
-            //npcRunState = NpcRunState.Run_Off;
             playerStateData.NpcWalkState = NpcWalkState.Walk;
+
             playerAnimtor.SetInteger(PlayerAnimParameters.Walk.ToString(), 1);
             playerAnimtor.SetInteger(PlayerAnimParameters.Run.ToString(), 0);
             return;
@@ -178,8 +178,9 @@ public partial class Player : Character
         else if (dist < playerStopDistanseValue &&
             playerStateData.NpcWalkState != NpcWalkState.Stop)//&& PLAYER.playerwalksateinit() == false
         {
-            //npcRunState = NpcRunState.None;
             playerStateData.NpcWalkState = NpcWalkState.Stop;
+
+            playerAnimtor.SetInteger(PlayerAnimParameters.Run.ToString(), 0);
             playerAnimtor.SetInteger(PlayerAnimParameters.Walk.ToString(), 0);
         }
         else { return; }
@@ -292,29 +293,29 @@ public partial class Player : Character
     {
         clearWalkAnimation(_type);
     }
-    public void animCheck(string _parameterText, string _animText) 
-    {
-        int index = attackLayerIndex;
+    //public void animCheck(string _parameterText, string _animText) 
+    //{
+    //    int index = attackLayerIndex;
 
-        AnimatorStateInfo animStateInfo = playerAnimtor.GetCurrentAnimatorStateInfo(index);
-        float time = animStateInfo.normalizedTime;
+    //    AnimatorStateInfo animStateInfo = playerAnimtor.GetCurrentAnimatorStateInfo(index);
+    //    float time = animStateInfo.normalizedTime;
 
-        if (time >= 1.0f && animStateInfo.IsName(_animText))
-        {
-            string reloading = ($"{PlayerAnimName.reloading}");
-            string closeAttack = ($"{PlayerAnimName.closeAttack}");
-            if (_animText == reloading)
-            {
-                //StartCoroutine(reLoadout(index));
-            }
-            else if (_animText == closeAttack)
-            {
-                closeCheck = false;
-            }
-            playerAnimtor.SetLayerWeight(index, 0.0f);
-            playerAnimtor.SetInteger(_parameterText, 0);
-        }
-    }
+    //    if (time >= 1.0f && animStateInfo.IsName(_animText))
+    //    {
+    //        string reloading = ($"{PlayerAnimName.reloading}");
+    //        string closeAttack = ($"{PlayerAnimName.closeAttack}");
+    //        if (_animText == reloading)
+    //        {
+    //            //StartCoroutine(reLoadout(index));
+    //        }
+    //        else if (_animText == closeAttack)
+    //        {
+    //            closeCheck = false;
+    //        }
+    //        playerAnimtor.SetLayerWeight(index, 0.0f);
+    //        playerAnimtor.SetInteger(_parameterText, 0);
+    //    }
+    //}
     protected void SkillAnimation(SkillType _type, bool _check)
     {
         if (_type == SkillType.Skill1)

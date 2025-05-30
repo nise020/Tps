@@ -58,48 +58,33 @@ public class MonsterManager : MonoBehaviour
         //monster
         spownListArrange(STAGE[stageLevel]);
     }
-    public Vector3 monsterSearch(GameObject _playerObj,float _radius) 
+    public Monster monsterSearch(GameObject _playerObj,float _radius) 
     {
         if (MonsterList.Count == 0) 
         {
             Debug.LogError($"MonsterList.Count ={MonsterList.Count}");
-            return Vector3.zero;
+            return null;
         }
-        List<Monster> nearbyMonsters = new List<Monster>();
+        Monster nearest = null;
+        float minDist = _radius;// * _radius;
 
         for (int i = 0; i < MonsterList.Count; i++) 
         {
             Monster monster = MonsterList[i];
-            Transform pos = monster.BodyObjectLoad();
-            float dist = Vector3.Distance(pos.transform.position, _playerObj.transform.position);
-            if (dist <= _radius)
+
+            if (monster.ConditionLoad()) 
             {
-                nearbyMonsters.Add(monster);
-                //nomallize
-                //Vector
+                float dist = Vector3.Distance(monster.BodyObjectLoad().position, _playerObj.transform.position);//.sqrMagnitude;
+                if (dist <= minDist)
+                {
+                    //minDist = dist;
+                    nearest = monster;
+                    break;
+                }
             }
         }
-        if (nearbyMonsters.Count == 0)
-        {
-            return Vector3.zero;//none
-        }
-        nearbyMonsters.Sort((a, b) =>
-        {
-            float distA = Vector3.Distance(a.transform.position, _playerObj.transform.position);
-            float distB = Vector3.Distance(b.transform.position, _playerObj.transform.position);
 
-            int compareDist = distA.CompareTo(distB);
-            if (compareDist != 0)
-            {
-                return compareDist;//distanse
-            }
-            else
-            {
-                return a.name.CompareTo(b.name);//name
-            }
-        });
-
-        return nearbyMonsters[0].transform.position;
+        return nearest;
 
         //foreach (Monster monster in MonsterList)
         //{

@@ -5,18 +5,7 @@ using UnityEngine;
 
 public partial class Monster : Character
 {
-    Player HItPalyer;
-    List<Slot>slots = new List<Slot>();
-    int slotCount = 0;
-    protected MonsterWalkState walkState = MonsterWalkState.Walk_Off;
-    protected MonsterAttackState attackState = MonsterAttackState.Attack_Off;
-    public float SphereRadius = 1.0f; // 구 반지름
-    protected float stopDistanseValue = 0.2f;
-    protected float searchRange = 20.0f;
-    protected float attackRange = 5.0f;
-    Vector3 targetPos;
-    Vector3 movePosition = Vector3.zero;
-
+    
     protected virtual void FixedUpdate()
     {
         if (MONSTERAI == null||condition == Condition.Death) { return; }
@@ -24,7 +13,7 @@ public partial class Monster : Character
     }
     public void AiTagetUpdate(bool _check)
     {
-        MONSTERAI.DefenderState(_check);
+        MONSTERAI.TargetStatUpdate(_check);
     }
     public void AiUpdate(Player _player)
     {
@@ -48,42 +37,72 @@ public partial class Monster : Character
             }
         }
     }
-    
-    public void MovePoint(Vector3 _pos)//Search
+    public bool TargetSearch(out Player _player) //Search bool
     {
-        //Vector3 vector = Vector3.zero;
-        if (walkState != MonsterWalkState.Walk_On)
+        _player = Shared.GameManager.playerSearch(gameObject, radius);
+        if (_player == null)
         {
-            slotCount = Random.Range(0, slots.Count);
-            if (slots[slotCount] == null) 
+            Debug.LogError($"_player = {_player}");
+            return false;
+        }
+        else
+        {
+            Vector3 targetPos = _player.BodyObjectLoad().position;
+            Vector3 myPos = gameObject.transform.position;
+
+            float distance = Vector3.Distance(targetPos, myPos);
+
+            if (radius >= distance)
             {
-                slotCount = 0;
+                return true;
             }
-            walkState = MonsterWalkState.Walk_On;
+            else
+            {
+                _player = null;
+                return false;
+            }
+        }
+    }
+    public Vector3 FindSlot() 
+    {
+        slotCount = Random.Range(0, slots.Count);
+        if (slots[slotCount] == null)
+        {
+            slotCount = 0;
+        }
+        monsterStateData.WalkState = MonsterWalkState.Walk_On;
+
+        return slots[slotCount].gameObject.transform.position;
+    }
+    public void MovePoint()//Search
+    {
+        if (stopDilay == false) return;
+
+        if (movePosition == Vector3.zero) 
+        {
+            movePosition = FindSlot();
         }
 
-        Vector3 pos = slots[slotCount].gameObject.transform.position;
-
-        Vector3 disTance = (pos - charactorModelTrs.position);
+        Vector3 disTance = (movePosition - charactorModelTrs.position);
         disTance.y = 0.0f;
 
-        float dist = Vector3.Distance(pos,charactorModelTrs.position);
+        float dist = Vector3.Distance(movePosition, charactorModelTrs.position);
 
-        Quaternion rotation = Quaternion.LookRotation(disTance.normalized);
-        if (dist < stopDistanseValue)
+        if (dist <= stopDistanseValue)
         {
-            //Debug.Log($"[모델 위치] {charactorModelTrs.position} / [타겟 위치] {targetPos} / [거리] {disTance}");
-            walkState = MonsterWalkState.Walk_Off;
+            //stopDilay = false;
+            movePosition = Vector3.zero;
+            if (monsterStateData.WalkState != MonsterWalkState.Walk_Off)
+            {
+                monsterStateData.WalkState = MonsterWalkState.Walk_Off;
+            }
             //slotCount++;
         }
-        else 
+        else
         {
-            //charactorModelTrs.position += disTance.normalized * speedValue * Time.deltaTime;
+            Quaternion rotation = Quaternion.LookRotation(disTance.normalized);
 
-            //charactorModelTrs.rotation = Quaternion.Slerp(charactorModelTrs.rotation,
-            //    rotation, Time.deltaTime * rotationSpeed);
-
-            if (monsterType == MonsterType.Sphere)
+            if (monsterStateData.MonsterType == MonsterType.Sphere)
             {
                 RootTransform.position += disTance.normalized * speedValue * Time.deltaTime;
 
@@ -98,137 +117,20 @@ public partial class Monster : Character
                     rotation, Time.deltaTime * rotationSpeed);
             }
 
-
-            //charactorModelTrs.position += movePos;
-
-            //Quaternion rotation = Quaternion.LookRotation(disTance.normalized);
-
-            // charactorModelTrs.rotation = Quaternion.Slerp(charactorModelTrs.rotation,rotation, Time.deltaTime * rotationSpeed);
-
-            //charactorModelTrs.position += Vector3.forward * speedValue * Time.deltaTime;
-            //Vector3 movePos = charactorModelTrs.forward * speedValue * Time.deltaTime;
-
-            //charactorModelTrs.Translate(movePos);
-
-            //transform.position += movePos;
-
-            //transform.position += movePos.normalized * speedValue * Time.deltaTime;
-            //Debug.Log($"[이동 전] {Pos} -> [이동 후] {charactorModelTrs.localPosition}");
-
-
-            //charactorModelTrs.position += Vector3.forward * Time.deltaTime * 10f;
+            moveAnimation(monsterStateData.WalkState);
         }
-        moveAnimation(walkState);
 
     }
-    public bool TargetSearch() //Search bool
-    {
 
-        List<Player> playerData = Shared.GameManager.PlayerObj;
-        
-        for (int i = 0; i < playerData.Count; i++ ) 
-        {
-            Player player = playerData[i];
-            float value = Vector3.Distance(player.gameObject.transform.position,
-                charactorModelTrs.position);
-            if (value <= searchRange)
-            {
-                targetPos = player.gameObject.transform.position;
-                HItPalyer = player;
-
-                
-                return true;
-            }
-        }
-        return false;
-    }
-    public bool TargetAttackMove(out SearchState _state)//move bool
-    {
-        float distanse = Vector3.Distance(targetPos, charactorModelTrs.transform.position);
-
-        if (distanse < attackRange)
-        {
-            _state = SearchState.Stop;//멈추고 공격 준비
-
-            walkState = MonsterWalkState.Walk_Off;
-            moveAnimation(walkState);
-
-            return true;
-        }
-        else 
-        {
-            if (distanse > 20.0f) 
-            {
-                _state = SearchState.Move;//다시 이동
-                return false; 
-            }
-
-            _state = SearchState.TargetOn;//목표물 까지 이동
-
-            Vector3 dist = targetPos - charactorModelTrs.transform.position;
-            dist.y = 0f;
-            Quaternion rotation = Quaternion.LookRotation(dist.normalized);
-
-            //charactorModelTrs.transform.position += dist.normalized * speedValue * Time.deltaTime;
-            
-
-            if (monsterType == MonsterType.Sphere)
-            {
-                RootTransform.position += dist.normalized * speedValue * Time.deltaTime;
-                charactorModelTrs.parent.rotation = Quaternion.Slerp(charactorModelTrs.parent.rotation,
-                rotation, Time.deltaTime * rotationSpeed);
-            }
-            else
-            {
-                charactorModelTrs.transform.position += dist.normalized * speedValue * Time.deltaTime;
-                charactorModelTrs.rotation = Quaternion.Slerp(charactorModelTrs.rotation,
-                rotation, Time.deltaTime * rotationSpeed);
-            }
-
-        }
-        return false;
-    }
-
-    public void MonsterAttack(out SearchState _state)
-        //돌진 공격을 하는 몬스터는 로직을 다르게 할 필요가 있음
-        //Attack
-    {
-        if (monsterType == MonsterType.Sphere||
-            monsterType == MonsterType.Dron)
-        {
-            attackAnimation(MonsterAttackState.Attack_On);
-        }
-        else if (monsterType == MonsterType.Spider) 
-        {
-            Granad granad = weaponObj.GetComponent<Granad>();
-
-            if (granad.skillstate == SkillState.SkillOff)
-            {
-                attackAnimation(MonsterAttackState.Attack_On);
-            }
-        }
-        _state = SearchState.Wait;
-        StartCoroutine(WaitTimer(_state));
-    }
-    IEnumerator WaitTimer(SearchState _search)
-    {
-        yield return new WaitForSeconds(3.0f);
-        _search = SearchState.None;
-        MONSTERAI.searchingStateUpdate(_search);
-    }
     protected void attackRangeCheck()
     {
         attackAnimation(MonsterAttackState.Attack_On);
 
         float dist = Vector3.Distance(charactorModelTrs.position, HItPalyer.transform.position);
-        if (dist < stopDistanseValue) 
+        if (dist < stopDistanseValue)
         {
             Shared.BattelManager.DamageCheck(this, HItPalyer);
         }
-    }
-    protected void SortingObject()
-    {
-
     }
 
     public float TargetDistanseCheck(Vector3 _pos)//수정 필요
@@ -243,18 +145,21 @@ public partial class Monster : Character
     public bool AttackDistanseCheck(float _value)
     {
         float typeVAlue = 0.0f;
-        //switch (playerStateData.PlayerType)
-        //{
-        //    case PlayerType.Gunner:
-        //        typeVAlue = 15.0f;
-        //        break;
-        //    case PlayerType.Warrior:
-        //        typeVAlue = 0.3f;
-        //        break;
-        //    default:
-        //        Debug.LogError($"playerStateData.PlayerType = {playerStateData.PlayerType}");
-        //        break;
-        //}
+        switch (monsterStateData.MonsterType)
+        {
+            case MonsterType.Spider:
+                typeVAlue = 15.0f;
+                break;
+            case MonsterType.Dron:
+                typeVAlue = 0.3f;
+                break;
+            case MonsterType.Sphere:
+                typeVAlue = 0.3f;
+                break;
+            default:
+                Debug.LogError($"monsterStateData.MonsterType = {monsterStateData.MonsterType}");
+                break;
+        }
         if (_value <= typeVAlue)//값을 상수가 아닌값으로 수정 필요
         {
             // _value = 0;
@@ -266,4 +171,80 @@ public partial class Monster : Character
         }
 
     }
+
+    public void Ai_TargetMove(Vector3 _pos, float _distance)
+    {
+        Vector3 direction = _pos - charactorModelTrs.transform.position;
+        float distanse = Vector3.Distance(_pos, charactorModelTrs.transform.position);
+
+        Quaternion targetRotation = Quaternion.LookRotation(direction);
+        //charactorModelTrs.rotation = Quaternion.Slerp(charactorModelTrs.rotation, targetRotation, Time.deltaTime * rotationSpeed);
+
+
+        if (monsterStateData.MonsterType == MonsterType.Sphere)
+        {
+            RootTransform.position += direction.normalized * speedValue * Time.deltaTime;
+
+            charactorModelTrs.parent.rotation = Quaternion.Slerp(charactorModelTrs.parent.rotation,
+            targetRotation, Time.deltaTime * rotationSpeed);
+        }
+        else
+        {
+            charactorModelTrs.transform.position += direction.normalized * speedValue * Time.deltaTime;
+
+            charactorModelTrs.rotation = Quaternion.Slerp(charactorModelTrs.rotation,
+            targetRotation, Time.deltaTime * rotationSpeed);
+        }
+
+        moveAnimation(monsterStateData.WalkState);
+    }
+    public void Ai_Attack(Transform _transform)//거리이내에 있는 적에게 데미지 로직 필요
+    {
+        //charactorModelTrs.rotation = Quaternion.LookRotation(_transform.position);
+        
+        stopDilay = true;
+
+        monsterStateData.WalkState = MonsterWalkState.Walk_Off;
+        moveAnimation(monsterStateData.WalkState);
+
+        charactorModelTrs.LookAt(_transform);
+
+        MonsterAttack();
+
+        //Debug.Log($"{_transform.position}");
+        //charactorModelTrs.rotation = Quaternion.Slerp(charactorModelTrs.rotation, targetRotation, Time.deltaTime * rotationSpeed);
+
+        //npcRunStateAnimation(0.0f);
+
+        //AutoAttack();
+    }
+
+    public virtual void MonsterAttack()
+    //돌진 공격을 하는 몬스터는 로직을 다르게 할 필요가 있음
+    //Attack
+    {
+        if (monsterStateData.MonsterType == MonsterType.Sphere ||
+           monsterStateData.MonsterType == MonsterType.Dron)
+        {
+            attackAnimation(MonsterAttackState.Attack_On);
+        }
+        else if (monsterStateData.MonsterType == MonsterType.Spider)
+        {
+            Granad granad = weaponObj.GetComponent<Granad>();
+
+            if (granad.skillstate == SkillState.SkillOff)
+            {
+                attackAnimation(MonsterAttackState.Attack_On);
+            }
+        }
+        //_state = SearchState.Wait;
+        //StartCoroutine(WaitTimer(_state));
+    }
+    //IEnumerator WaitTimer(SearchState _search)
+    //{
+    //    yield return new WaitForSeconds(3.0f);
+    //    _search = SearchState.None;
+    //    MONSTERAI.searchingStateUpdate(_search);
+    //}
+
 }

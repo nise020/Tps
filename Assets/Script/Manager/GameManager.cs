@@ -153,8 +153,35 @@ public class GameManager : MonoBehaviour
         _value = PlayerData;   
     }
     // Start is called before the first frame update
-    
 
-    
-    
+    public Player playerSearch(GameObject _playerObj, float _radius)
+    {
+        if (PlayerObj.Count == 0)
+        {
+            Debug.LogError($"MonsterList.Count ={PlayerObj.Count}");
+            return null;
+        }
+        Player nearest = null;
+        float minDist = _radius;// * _radius;
+
+        for (int i = 0; i < PlayerObj.Count; i++)
+        {
+            Player monster = PlayerObj[i];
+
+            if (monster.ConditionLoad())//DeadCheck
+            {
+                float dist = Vector3.Distance(monster.BodyObjectLoad().position, _playerObj.transform.position);//.sqrMagnitude;
+                if (dist <= minDist)
+                {
+                    //minDist = dist;
+                    nearest = monster;
+                    break;
+                }
+            }
+        }
+
+        return nearest;
+    }
+
+
 }

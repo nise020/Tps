@@ -1,11 +1,11 @@
 
-public enum NpcAiState //Npc AI 상태
-{
-    Search,
-    Move,
-    Attack,
-    Reset,
-}
+//public enum AiState //Npc AI 상태
+//{
+//    Search,
+//    Move,
+//    Attack,
+//    Reset,
+//}
 public enum ShakeMode
 {
     StaticCamera,

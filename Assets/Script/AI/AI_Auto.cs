@@ -15,13 +15,12 @@ public class AI_Auto : AiBase
     public Action<bool> AttackEvent;
     bool TagetAive = false;
 
-    protected NpcAiState npcAi = NpcAiState.Search;
     public void init(Player _player)
     {
         PLAYER = _player;
     }
     
-    public void DefenderState(bool isDefenderDead)//Reset
+    public void TargetStateUpdate(bool isDefenderDead)//Reset
     {
         if (isDefenderDead)
         {
@@ -30,12 +29,10 @@ public class AI_Auto : AiBase
             tagetTrs = null;
             Debug.Log($"Monster = {TagetMonster}");
         }
-        if (npcAi == NpcAiState.Attack || npcAi == NpcAiState.Reset || npcAi == NpcAiState.Move)
+        if (aIState == AiState.Attack || aIState == AiState.Reset || aIState == AiState.Move)
         {
-            npcAi = NpcAiState.Search;
+            aIState = AiState.Search;
         }
-
-        Debug.Log($"[Dead] 타겟 초기화 완료, 상태 초기화");
     }
     public void ChangePlayer(Player _player) 
     {
@@ -43,23 +40,23 @@ public class AI_Auto : AiBase
     }
     public override void State()
     {
-        if (!TagetAive && npcAi != NpcAiState.Search)
+        if (!TagetAive && aIState != AiState.Search)
         {
-            npcAi = NpcAiState.Search;
+            aIState = AiState.Search;
         }
 
-        switch (npcAi)
+        switch (aIState)
         {
-            case NpcAiState.Search:
+            case AiState.Search:
                 Search();
                 break;
-            case NpcAiState.Move:
+            case AiState.Move:
                 Move(tagetTrs.position);
                 break;
-            case NpcAiState.Attack:
+            case AiState.Attack:
                 Attack();
                 break;
-            case NpcAiState.Reset:
+            case AiState.Reset:
                 Reset();
                 break;
         }
@@ -71,11 +68,11 @@ public class AI_Auto : AiBase
         {
             tagetTrs = TagetMonster.BodyObjectLoad();
             TagetAive = true;
-            npcAi = NpcAiState.Move;
+            aIState = AiState.Move;
         }
         else //Not Find Monster
         {
-            Debug.Log($"npcAi={npcAi}");
+            Debug.Log($"npcAi={aIState}");
             PLAYER.Ai_Move(FollowPlayer);
         }
     }
@@ -83,30 +80,30 @@ public class AI_Auto : AiBase
     {
         //_pos <- 목표물과의 거리
         //value = 거리를 수치로
-        Debug.Log($"npcAi={npcAi}");
+        Debug.Log($"npcAi={aIState}");
 
         float value = PLAYER.TargetDistanseCheck(_pos);
 
         if (PLAYER.AttackDistanseCheck(value) == true)//Move
         {
-            npcAi = NpcAiState.Attack;
+            aIState = AiState.Attack;
         }
         else 
         {
-            PLAYER.AI_TargetMove(_pos, value);
+            PLAYER.Ai_TargetMove(_pos, value);
         }
     }
     protected override void Attack()
     {
         if (!TagetAive || tagetTrs == null) 
         {
-            npcAi = NpcAiState.Search;
+            aIState = AiState.Search;
             return;
         }
-        Debug.Log($"npcAi={npcAi}");
+        Debug.Log($"npcAi={aIState}");
         PLAYER.Ai_Attack(tagetTrs);//일정 타임 마다 동작
 
-        npcAi = NpcAiState.Reset;
+        aIState = AiState.Reset;
     }
     
     
@@ -116,11 +113,11 @@ public class AI_Auto : AiBase
 
         if (PLAYER.AttackDistanseCheck(value) == true)//Move
         {
-            npcAi = NpcAiState.Attack;
+            aIState = AiState.Attack;
         }
         else
         {
-            npcAi = NpcAiState.Move;
+            aIState = AiState.Move;
         }
     }
 

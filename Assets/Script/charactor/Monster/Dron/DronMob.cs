@@ -7,7 +7,7 @@ public partial class DronMob : Monster
     protected override void Awake()
     {
         base.Awake();
-        monsterType = MonsterType.Dron;
+        monsterStateData.MonsterType = MonsterType.Dron;
         RenderType = ObjectRenderType.Mesh;
         id = 103;
     }

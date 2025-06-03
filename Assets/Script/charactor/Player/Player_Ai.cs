@@ -8,7 +8,7 @@ public partial class Player : Character
 {
     public void AiTagetUpdate(bool _check)
     {
-        PLAYERAI.DefenderState(_check);
+        PLAYERAI.TargetStateUpdate(_check);
     }
     public void AiUpdate(Player _player) 
     {
@@ -108,7 +108,7 @@ public partial class Player : Character
 
 
     }
-    public void AI_TargetMove(Vector3 _pos,float _distance) 
+    public void Ai_TargetMove(Vector3 _pos,float _distance) 
     {
         Vector3 direction = _pos - transform.position;
 
@@ -157,7 +157,7 @@ public partial class Player : Character
         }
 
     }
-    public bool SearchCheck(out Monster _monster) //매니저 한테서 서치 하는 방향으로 고치기 필요
+    public bool SearchCheck(out Monster _monster)
     {
         //float radius = 8f;
         //float fieldOfView = 90f;

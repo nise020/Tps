@@ -4,7 +4,7 @@ public enum Condition //상태패턴
     hard,
     Death,
 }
-public enum MonsterAiState //Monster AI 상태
+public enum AiState //Monster AI 상태
 {
     Create,
     Search,

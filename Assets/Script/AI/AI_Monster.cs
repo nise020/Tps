@@ -13,8 +13,8 @@ public partial class AiMonster : AiBase
     Player TagetPlayer;
     public Action<bool> AttackEvent;
     bool TagetAive = false;
-    SearchState searchingState = SearchState.None;
-    public void DefenderState(bool isDefenderDead)//Reset
+    //SearchState searchingState = SearchState.None;
+    public void TargetStatUpdate(bool isDefenderDead)//Reset
     {
         if (isDefenderDead)
         {
@@ -23,9 +23,9 @@ public partial class AiMonster : AiBase
             tagetTrs = null;
             Debug.Log($"Monster = {TagetPlayer}");
         }
-        if (aIState == MonsterAiState.Attack || aIState == MonsterAiState.Reset || aIState == MonsterAiState.Move)
+        if (aIState == AiState.Attack || aIState == AiState.Reset || aIState == AiState.Move)
         {
-            aIState = MonsterAiState.Search;
+            aIState = AiState.Search;
         }
 
         Debug.Log($"[Dead] 타겟 초기화 완료, 상태 초기화");
@@ -36,18 +36,23 @@ public partial class AiMonster : AiBase
     }
     public override void State()
     {
+        if (!TagetAive && aIState != AiState.Search)
+        {
+            aIState = AiState.Search;
+        }
+
         switch (aIState)
         {
-            case MonsterAiState.Search:
+            case AiState.Search:
                 Search();
                 break;
-            case MonsterAiState.Move:
+            case AiState.Move:
                 Move(targetPos);
                 break;
-            case MonsterAiState.Attack:
+            case AiState.Attack:
                 Attack();
                 break;
-            case MonsterAiState.Reset:
+            case AiState.Reset:
                 Reset();
                 break;
         }
@@ -55,15 +60,17 @@ public partial class AiMonster : AiBase
 
     protected override void Search()//공격할 대상 찾기
     {
-        MONSTER.MovePoint(targetPos);
+        MONSTER.MovePoint();
 
         //Debug.Log($"{MONSTER},Search");
 
-        if(searchingState == SearchState.Wait) return;
+        //if(searchingState == SearchState.Wait) return;
 
-        if (MONSTER.TargetSearch() == true)
+        if (MONSTER.TargetSearch(out TagetPlayer) == true)
         {
-            aIState = MonsterAiState.Move;//Target On
+            tagetTrs = TagetPlayer.BodyObjectLoad();
+            TagetAive = true;
+            aIState = AiState.Move;//Target On
         }
     }
  
@@ -72,29 +79,30 @@ public partial class AiMonster : AiBase
     {
         //Debug.Log($"{MONSTER},Move");
 
-        if (searchingState == SearchState.Move) 
-        {
-            aIState = MonsterAiState.Search;//Re Search
-            return;
-        }
+        //if (searchingState == SearchState.Move) 
+        //{
+        //    aIState = MonsterAiState.Search;//Re Search
+        //    return;
+        //}
 
-        if (MONSTER.TargetAttackMove(out searchingState))//목표를 놓쳤을때 로직 필요
-        {
-            if (searchingState == SearchState.Stop) 
-            {
-                aIState = MonsterAiState.Attack;
-            }
-        }
+        //if (MONSTER.TargetAttackMove(out searchingState))//목표를 놓쳤을때 로직 필요
+        //{
+        //    if (searchingState == SearchState.Stop) 
+        //    {
+        //        aIState = MonsterAiState.Attack;
+        //    }
+        //}
 
 
         float value = MONSTER.TargetDistanseCheck(_pos);
 
-        if (PLAYER.AttackDistanseCheck(value) == true)//Move
+        if (MONSTER.AttackDistanseCheck(value) == true)//Move
         {
-            aIState = MonsterAiState.Reset;
+            aIState = AiState.Attack;
         }
         else
         {
+            MONSTER.Ai_TargetMove(_pos, value);
             //PLAYER.AI_TargetMove(_pos, value);
         }
 
@@ -105,12 +113,12 @@ public partial class AiMonster : AiBase
         //Debug.Log($"{MONSTER},Attack");
         if (!TagetAive || tagetTrs == null)
         {
-            aIState = MonsterAiState.Search;
+            aIState = AiState.Search;
             return;
         }
-        MONSTER.MonsterAttack(out searchingState);//
+        MONSTER.Ai_Attack(tagetTrs);//
 
-        aIState = MonsterAiState.Reset;
+        aIState = AiState.Reset;
     }
     protected override void Reset()//사이클 끝(보통 다시 공격 대상 탐색)
     {
@@ -118,18 +126,16 @@ public partial class AiMonster : AiBase
 
         if (MONSTER.AttackDistanseCheck(value) == true)//Move
         {
-            aIState = MonsterAiState.Attack;
+            aIState = AiState.Attack;
         }
         else
         {
-            aIState = MonsterAiState.Move;
+            aIState = AiState.Move;
         }
-        //searchingState = SearchState.Wait;
-        //aIState = MonsterAiState.Search;
     }
 
     public void searchingStateUpdate(SearchState _state) 
     {
-        searchingState = _state;
+        //searchingState = _state;
     }
 }

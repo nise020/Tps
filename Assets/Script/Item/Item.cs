@@ -15,11 +15,11 @@ public abstract partial class Item : Actor
 
     public void ItemTypeSetting(ItemType _type) 
     {
-        ItemStateData.Type_Item = _type;
+        ItemStateData.itemType = _type;
     }
     public void Iteminit(ItemType _type) 
     {
-        _type = ItemStateData.Type_Item;
+        _type = ItemStateData.itemType;
     }
     //public virtual int useitem(ItemType _type) 
     //{

@@ -75,7 +75,7 @@ public partial class Player : Character
     Queue<Vector3> aiMovePosQue = new Queue<Vector3>();
     LayerName slotlayerName = LayerName.None;
     List<Slot> slotLists = new List<Slot>();
-    protected float radius = 20.0f;
+    
 
     
 }

@@ -13,9 +13,9 @@ public partial class Monster : Character
     public GameObject MobGrenade;//ÅõÃ´¹° ÇÁ¸®ÆÕ
     public GameObject MobBullet;//ÀÏ¹Ý°ø°Ý ÃÑ¾Ë ÇÁ¸®ÆÕ
 
-    protected MonsterType monsterType;
+    //protected MonsterType monsterType;
 
-    protected MonsterAiState aIState = MonsterAiState.Create;
+    //protected AiState aIState = AiState.Create;
 
     protected Transform creatTabObj;//ÃÑ¾Ë ÀúÀåÅÇ
     public void creatTab(Transform _tab) 
@@ -54,4 +54,20 @@ public partial class Monster : Character
     public Rigidbody monsterRigid;
     protected Collider monsterColl;
     //public Vector3 startPos;
+
+    [Header("Ai")]
+    Player HItPalyer;
+    List<Slot> slots = new List<Slot>();
+    int slotCount = 0;
+    //protected MonsterWalkState walkState = MonsterWalkState.Walk_Off;
+    //protected MonsterAttackState attackState = MonsterAttackState.Attack_Off;
+    public float SphereRadius = 1.0f; // ±¸ ¹ÝÁö¸§
+    protected float stopDistanseValue = 0.2f;
+    protected float searchRange = 20.0f;
+    protected float attackRange = 5.0f;
+    //Vector3 targetPos;
+    Vector3 movePosition = Vector3.zero;
+    bool stopDilay = false;
+
+    protected MonsterStateData monsterStateData = new MonsterStateData();
 }

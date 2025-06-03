@@ -43,6 +43,7 @@ public abstract partial class Character : Actor
         FindBodyObject();
         FindWeaponObject(LayerName.Weapon);
         InfoLoad();
+        
     }
 
     public Transform BodyObjectLoad() 

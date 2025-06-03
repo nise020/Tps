@@ -54,8 +54,8 @@ public class PlayerStateData : CharacterStateData
     public PlayerShitState ShitState = PlayerShitState.ShitUP;
 
 
-    [Header("Npc")]//따로 분리 할것
-    public NpcAiState aIState = NpcAiState.Search;
+    [Header("Etc")]//따로 분리 할것
+    public AiState aIState = AiState.Search;
 
     public NpcWalkState NpcWalkState = NpcWalkState.Stop;
     public FindMoveObject objectInfo = FindMoveObject.None;
@@ -63,13 +63,15 @@ public class PlayerStateData : CharacterStateData
 
 public class MonsterStateData : CharacterStateData
 {
-    public MonsterType monsterType = MonsterType.Defolt;
+    public MonsterType MonsterType = MonsterType.Defolt;
+    public MonsterWalkState WalkState = MonsterWalkState.Walk_Off;
+    public MonsterAttackState AttackState = MonsterAttackState.Attack_Off;
 }
 
 public class ItemStateData 
 {
-    public ItemType Type_Item = ItemType.None;
+    public ItemType itemType = ItemType.None;
 
-    public WeaponEnum weaponType = WeaponEnum.None;
-    public PlayerType PlayerType = PlayerType.None;
+    public WeaponEnum WeaponType = WeaponEnum.None;
+    public PlayerType AcceptType = PlayerType.None;
 }

@@ -8,7 +8,7 @@ public partial class SpiderMob : Monster
     {
         base.Awake();
         id = 101;
-        monsterType = MonsterType.Spider;
+        monsterStateData.MonsterType = MonsterType.Spider;
         RenderType = ObjectRenderType.Skin;
     }
     protected override void Start()

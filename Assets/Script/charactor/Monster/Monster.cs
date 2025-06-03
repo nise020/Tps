@@ -27,18 +27,16 @@ public partial class Monster : Character
         monsterAnimator = GetComponent<Animator>();
         creatTabObj = Shared.GameManager.creatTab;//¿ÀºêÁ§Æ® »ý¼º ÅÇ(ex.ÃÑ¾Ë)
         MONSTERAI.init(this, SKILL);
-        MONSTERAI.Type(monsterType);
+        MONSTERAI.Type(monsterStateData.MonsterType);
 
         startPosition = charactorModelTrs.position;
 
         Compomentinit();
         //STATE.MonsterState(monsterType);
         //stateInIt();
+        AttackEvent += AiTagetUpdate;
     }
-    private void LateUpdate()
-    {
-        //cameraInMonsterCheck();
-    }
+
     protected override void FindWeaponObject(LayerName _name)
     {
         MeshRenderer[] mesh = GetComponentsInChildren<MeshRenderer>();

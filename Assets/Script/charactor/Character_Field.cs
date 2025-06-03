@@ -29,6 +29,7 @@ public partial class Character : Actor
     protected float speedValue;//이동속도
     protected float CritRateValue;
     protected float CritDamageValue;//이동속도
+    protected float radius = 20.0f;
 
     [Header("State")]
     protected CharacterStateData characterData = new CharacterStateData();

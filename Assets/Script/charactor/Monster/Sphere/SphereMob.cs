@@ -7,7 +7,7 @@ public partial class SphereMob : Monster
     protected override void Awake()
     {
         base.Awake();
-        monsterType = MonsterType.Sphere;
+        monsterStateData.MonsterType = MonsterType.Sphere;
         RenderType = ObjectRenderType.Mesh;
         id = 102;
     }

@@ -24,7 +24,7 @@ public partial class Weapon : Item
     }
     public WeaponEnum Weapontype() 
     {
-        return ItemStateData.weaponType;
+        return ItemStateData.WeaponType;
     }
     public virtual void Attack()//sword 
     {

@@ -12,7 +12,7 @@ public partial class Gun : Weapon
     //GameObject playerUpperBody;
     private void Awake()
     {
-        ItemStateData.weaponType = WeaponEnum.Gun;
+        ItemStateData.WeaponType = WeaponEnum.Gun;
     }
     private void Start()
     {

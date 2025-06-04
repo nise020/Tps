@@ -10,7 +10,7 @@ public partial class Player : Character
     protected AI_Auto PLAYERAI = new AI_Auto();
     
     protected Rigidbody rigid;
-    protected Animator playerAnimtor;
+    protected Animator playerAnimator;
 
     protected GameObject cameraViewObj;
 
@@ -22,12 +22,18 @@ public partial class Player : Character
     [SerializeField] Transform AimtransPos;//명중 오브젝트
     [SerializeField] Button ControlBtn;
 
-    [Header("Status")]
+    [Header("Walk State")]
     float burst_RunTime;
     protected int attackReset;
 
     protected int pluse_bullet;
     protected int RelodingBullet;
+    protected float walkStateChangeTime = 3.0f;
+    protected float walkStateChangeTimer = 0.0f;
+    [Header("Avoidance Status")]
+    protected float moveHeight = 2.0f;
+    protected float backDistance = 5f;
+
 
 
     protected SkillStrategy skillStrategy = new SkillStrategy();
@@ -75,7 +81,8 @@ public partial class Player : Character
     Queue<Vector3> aiMovePosQue = new Queue<Vector3>();
     LayerName slotlayerName = LayerName.None;
     List<Slot> slotLists = new List<Slot>();
-    
 
-    
+    [Header("Battel System")]
+    BattelTrigger battelTrigger = new BattelTrigger();
+
 }

@@ -96,18 +96,20 @@ public partial class PlayerCamera : CameraBase
         viewObj.rotation = rotation;//
         //Vector3 distans = rotation * new Vector3(0, 0, -Distans);
 
-        shakeCamera.ShakeMOdeChange(ShakeMode.MoveCamera);
+        //shakeCamera.ShakeMOdeChange(ShakeMode.MoveCamera);
         Vector3 offset = rotation * shakeCamera.ShakePos();
 
 
         float shakeLimit = 1.0f;
         offset.x = Mathf.Clamp(offset.x, -shakeLimit, shakeLimit);
         offset.y = Mathf.Clamp(offset.y, -0.1f, 0.1f);
-        //shakeTrs.localPosition = viewObj.position + offset;
+
         shakeTrs.localPosition = offset;
 
+        transform.LookAt(shakeTrs.parent);
+
+        //shakeTrs.localPosition = viewObj.position + offset;
         //transform.position = viewObj.position + rotation * distans;
-        //transform.LookAt(viewObj);
     }
     private void shootCamera(Vector3 _pos)
     {

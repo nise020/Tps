@@ -14,6 +14,11 @@ public enum SkillState
     SkillOff
 }
 
+public enum AvoidanceState
+{
+    Avoidance_On,
+    Avoidance_Off,
+}
 
 public enum WeaponEnum 
 {

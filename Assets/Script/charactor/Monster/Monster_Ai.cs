@@ -11,6 +11,22 @@ public partial class Monster : Character
         if (MONSTERAI == null||condition == Condition.Death) { return; }
         MONSTERAI.State();
     }
+    public bool AttackStateLoad()
+    {
+        if (monsterStateData.AttackState == MonsterAttackState.Attack_On)
+        {
+            return true;
+        }
+        else 
+        {
+            return false;
+        }
+    }
+    public void AiStateUpdate(AiState _state)
+    {
+        monsterStateData.AttackState = MonsterAttackState.Attack_On;
+        MONSTERAI.AIStateUpdate(_state);
+    }
     public void AiTagetUpdate(bool _check)
     {
         MONSTERAI.TargetStatUpdate(_check);
@@ -18,6 +34,17 @@ public partial class Monster : Character
     public void AiUpdate(Player _player)
     {
         MONSTERAI.ChangeTarget(_player);
+    }
+    public bool RadiusCheck(float _value) 
+    {
+        if (_value < radius)
+        {
+            return true;
+        }
+        else 
+        {
+            return false;
+        }
     }
 
 
@@ -95,8 +122,9 @@ public partial class Monster : Character
             if (monsterStateData.WalkState != MonsterWalkState.Walk_Off)
             {
                 monsterStateData.WalkState = MonsterWalkState.Walk_Off;
+                stopDilay = false;
             }
-            //slotCount++;
+            moveAnimation(monsterStateData.WalkState);
         }
         else
         {
@@ -203,13 +231,13 @@ public partial class Monster : Character
         //charactorModelTrs.rotation = Quaternion.LookRotation(_transform.position);
         
         stopDilay = true;
-
+        
         monsterStateData.WalkState = MonsterWalkState.Walk_Off;
         moveAnimation(monsterStateData.WalkState);
 
         charactorModelTrs.LookAt(_transform);
 
-        MonsterAttack();
+        //MonsterAttack();
 
         //Debug.Log($"{_transform.position}");
         //charactorModelTrs.rotation = Quaternion.Slerp(charactorModelTrs.rotation, targetRotation, Time.deltaTime * rotationSpeed);

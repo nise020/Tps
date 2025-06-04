@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using Unity.VisualScripting;
@@ -15,7 +16,8 @@ public partial class Player : Character
             switch (type)
             {
                 case KeyCode.Mouse1:
-                    walkStateChange(playerStateData.runState);
+                    //walkStateChange(playerStateData.runState);
+                    AvoidanceCheck();
                     break;
                 case KeyCode.R:
                     commonRSkill(playerStateData.PlayerType);
@@ -56,19 +58,38 @@ public partial class Player : Character
                 
         }
 
-        if (Shared.InputManager.MoveQueData.Count == 0) 
+        if (Shared.InputManager.MoveQueData.Count != 0)
         {
-            clearWalkAnimation(playerStateData.PlayerType);
-        }
-        while (Shared.InputManager.MoveQueData.Count > 0)//move
-        {
-            if (playerStateData.AttackState == PlayerAttackState.Attack_On) 
+            while (Shared.InputManager.MoveQueData.Count > 0)//move
             {
-                playerStateData.AttackState = PlayerAttackState.Attack_Off;
-                canReceiveInput = true;
+                if (playerStateData.AttackState == PlayerAttackState.Attack_On)
+                {
+                    playerStateData.AttackState = PlayerAttackState.Attack_Off;
+                    canReceiveInput = true;
+                }
+                Vector3 type = Shared.InputManager.MoveQueData.Dequeue();
+
+                move(playerStateData.ModeState, type);
+
+                if (walkStateChangeTimer >= walkStateChangeTime &&
+                    playerStateData.runState != RunCheckState.Run)
+                {
+                    playerStateData.runState = RunCheckState.Run;
+                    clearWalkAnimation(playerStateData.runState);
+                }
+                else if(walkStateChangeTimer <= walkStateChangeTime)
+                {
+                    walkStateChangeTimer += Time.deltaTime;
+                }
+                
             }
-            Vector3 type = Shared.InputManager.MoveQueData.Dequeue();
-            move(playerStateData.ModeState,type);
+        }
+        else 
+        {
+            playerStateData.runState = RunCheckState.Walk;
+            clearWalkAnimation(playerStateData.runState);
+
+            walkStateChangeTimer = 0.0f;
         }
 
         notWalkTimer += Time.deltaTime;
@@ -81,4 +102,5 @@ public partial class Player : Character
         
     }
 
+    
 }

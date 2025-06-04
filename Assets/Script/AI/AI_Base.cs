@@ -19,9 +19,10 @@ public partial class AiBase
     public bool nowPatternOn = true;
     public bool moveChange = true;
     
-    public void Type(MonsterType _eNum) 
+
+    public void AIStateUpdate(AiState _state) 
     {
-        MobType = _eNum;
+        aIState = _state;
     }
     public void init(Monster _Monster, Skill_Monster _SKILL) 
     {

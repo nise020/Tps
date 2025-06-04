@@ -13,7 +13,7 @@ public partial class AiMonster : AiBase
     Player TagetPlayer;
     public Action<bool> AttackEvent;
     bool TagetAive = false;
-    //SearchState searchingState = SearchState.None;
+    
     public void TargetStatUpdate(bool isDefenderDead)//Reset
     {
         if (isDefenderDead)
@@ -62,7 +62,7 @@ public partial class AiMonster : AiBase
     {
         MONSTER.MovePoint();
 
-        //Debug.Log($"{MONSTER},Search");
+        Debug.Log($"{MONSTER},Search");
 
         //if(searchingState == SearchState.Wait) return;
 
@@ -77,7 +77,7 @@ public partial class AiMonster : AiBase
     //행렬
     protected override void Move(Vector3 _pos)//이동
     {
-        //Debug.Log($"{MONSTER},Move");
+        Debug.Log($"{MONSTER},Move");
 
         //if (searchingState == SearchState.Move) 
         //{
@@ -96,7 +96,8 @@ public partial class AiMonster : AiBase
 
         float value = MONSTER.TargetDistanseCheck(_pos);
 
-        if (MONSTER.AttackDistanseCheck(value) == true)//Move
+        if (MONSTER.AttackDistanseCheck(value) == true&&
+            MONSTER.RadiusCheck(value) == true)//Move
         {
             aIState = AiState.Attack;
         }
@@ -110,7 +111,7 @@ public partial class AiMonster : AiBase
 
     protected override void Attack()//공격
     {
-        //Debug.Log($"{MONSTER},Attack");
+        Debug.Log($"{MONSTER},Attack");
         if (!TagetAive || tagetTrs == null)
         {
             aIState = AiState.Search;

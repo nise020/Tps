@@ -38,6 +38,8 @@ public partial class Player : Character
         }
         else if (_value == PlayerModeState.Player)
         {
+
+
             if (playerStateData.ShitState == PlayerShitState.ShitDown) 
             {
                 shitdownCheak();

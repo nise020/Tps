@@ -86,17 +86,36 @@ public class MonsterManager : MonoBehaviour
 
         return nearest;
 
-        //foreach (Monster monster in MonsterList)
-        //{
-        //    Transform pos = monster.BodyObjectLoad();
-        //    float dist = Vector3.Distance(pos.transform.position, _playerObj.transform.position);
-        //    if (dist <= _radius)
-        //    {
-        //        nearbyMonsters.Add(monster);
-        //        //nomallize
-        //        //Vector
-        //    }
-        //}
+    }
+    public List<Monster> monsterListSearch(GameObject _playerObj, float _radius)
+    {
+        List<Monster> monsters = new List< Monster >();
+
+        if (MonsterList.Count == 0)
+        {
+            Debug.LogError($"MonsterList.Count ={MonsterList.Count}");
+            return null;
+        }
+
+        float minDist = _radius;// * _radius;
+
+        for (int i = 0; i < MonsterList.Count; i++)
+        {
+            Monster monster = MonsterList[i];
+
+            if (monster.ConditionLoad())
+            {
+                float dist = Vector3.Distance(monster.BodyObjectLoad().position, _playerObj.transform.position);//.sqrMagnitude;
+                if (dist <= minDist)
+                {
+                    //minDist = dist;
+                    monsters.Add(monster);
+                    //break;
+                }
+            }
+        }
+
+        return monsters;
 
     }
     private void spownListArrange(GameObject _stage)
@@ -151,16 +170,6 @@ public class MonsterManager : MonoBehaviour
     {
         HpBar hpBar = _monster.GetComponentInChildren<HpBar>();
 
-        //RectTransform rect = hpBar.gameObject.GetComponent<RectTransform>();
-        //rect.localPosition = new Vector3(0, 0.5f, 0);
-
-        //float monsterHeight = _monster.GetComponent<Collider>().bounds.size.y;
-        //float BaseHeight = 1.0f;
-        //float scaleMultiplier = monsterHeight / BaseHeight;
-        //rect.localScale = new Vector3(scaleMultiplier, scaleMultiplier, 1);
-
-
-        //HpBar hp = _monster.GetComponent<HpBar>();
         _monster.HpInIt(hpBar);
         hpData.Add(_min, hpBar);
 

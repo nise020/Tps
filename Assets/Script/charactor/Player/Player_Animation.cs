@@ -2,14 +2,62 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Xml;
+using Photon.Pun.Demo.PunBasics;
 using Unity.VisualScripting;
+using UnityEditor;
 using UnityEngine;
 using UnityEngine.InputSystem.LowLevel;
 
 public partial class Player : Character
 {
-    
-    
+    IEnumerator AnimationEventTiming(PlayerAnimParameters _type, float _animationSpeed, float _event) 
+    {
+        float originalTimeToAttach = _event; //Event Time
+
+        float delay = originalTimeToAttach / _animationSpeed;
+
+        yield return new WaitForSeconds(delay);
+
+        switch (_type) 
+        {
+            case PlayerAnimParameters.Avoidance:
+                //BackAvoid(gameObject);
+                break;
+        }
+    }
+    public void AnimationStart(string _type) //AnimationEvent
+    {
+
+        if (_type == "")
+        {
+            Debug.LogError($"_type 값의 해당하는 애니메이션이 아닙니다");
+            return;
+        }
+        if (_type == "Attack")
+        {
+            playerAnimator.SetInteger(PlayerAnimParameters.Attack.ToString(), 0);
+        }
+        else if (_type == "ComboAttack")
+        {
+            playerAnimator.SetInteger(PlayerAnimParameters.AttackCombo.ToString(), 0);
+        }
+        else if (_type == PlayerAnimParameters.Avoidance.ToString())
+        {
+
+            AnimatorStateInfo info = playerAnimator.GetCurrentAnimatorStateInfo(0);
+            float animLength = info.length / playerAnimator.speed;
+            float normalizedTime = info.normalizedTime % 1f;
+
+            float remainingTime = animLength * (1f - normalizedTime);
+
+
+
+            StartCoroutine(BackAvoid(gameObject,remainingTime));
+            //AnimationEventTiming(PlayerAnimParameters.Avoidance, 1.5f,0.10f);
+        }
+    }
+
+
     public void AnimationOut(string _type) //AnimationEvent
     {
         if (_type == null) 
@@ -18,14 +66,19 @@ public partial class Player : Character
             return;
         }
 
-        if (_type == "Attack") 
+        if (_type == "Attack")
         {
-            
-            playerAnimtor.SetInteger(PlayerAnimParameters.Attack.ToString(), 0);
+            playerAnimator.SetInteger(PlayerAnimParameters.Attack.ToString(), 0);
         }
         else if (_type == "ComboAttack")
         {
-            playerAnimtor.SetInteger(PlayerAnimParameters.AttackCombo.ToString(), 0);
+            playerAnimator.SetInteger(PlayerAnimParameters.AttackCombo.ToString(), 0);
+        }
+        else if(_type == PlayerAnimParameters.Avoidance.ToString())
+        {
+            playerAnimator.SetInteger(PlayerAnimParameters.Avoidance.ToString(), 0);
+
+            playerStateData.avoidanceState = AvoidanceState.Avoidance_Off;
         }
     }
     public void AttackCameraEvent(int _value) //AnimationEvent
@@ -64,9 +117,16 @@ public partial class Player : Character
         //SkillParentObj1.transform.rotation = Quaternion.identity;
         //SkillParentObj1.SetActive(false);
     }
-    protected virtual void inPutCameraAnimation(bool _check) 
+    protected virtual void AvoidanceAnimation(AvoidanceState _avoidanceState) 
     {
-
+        if (_avoidanceState == AvoidanceState.Avoidance_On)
+        {
+            playerAnimator.SetInteger(PlayerAnimParameters.Avoidance.ToString(), 1);
+        }
+        else 
+        {
+            playerAnimator.SetInteger(PlayerAnimParameters.Avoidance.ToString(), 0);
+        }
     }
     protected virtual void walkAnim(RunCheckState _runState, Vector3 _pos) 
     {
@@ -75,7 +135,7 @@ public partial class Player : Character
             if (playerStateData.WalkState == PlayerWalkState.Walk_Off) 
             {
                 playerStateData.WalkState = PlayerWalkState.Walk_On;
-                playerAnimtor.SetInteger(PlayerAnimParameters.Walk.ToString(), 1);
+                playerAnimator.SetInteger(PlayerAnimParameters.Walk.ToString(), 1);
             }
         }
         else if (_runState == RunCheckState.Run)
@@ -83,7 +143,7 @@ public partial class Player : Character
             if (playerStateData.RunState == PlayerRunState.Run_On)
             {
                 playerStateData.RunState = PlayerRunState.Run_On;
-                playerAnimtor.SetInteger(PlayerAnimParameters.Run.ToString(), 1);
+                playerAnimator.SetInteger(PlayerAnimParameters.Run.ToString(), 1);
             }
         }
     }
@@ -91,56 +151,56 @@ public partial class Player : Character
     {
         if (_pos.x == 1)//rigrt
         {
-            playerAnimtor.SetInteger(PlayerAnimParameters.Right.ToString(), (int)_pos.x);
+            playerAnimator.SetInteger(PlayerAnimParameters.Right.ToString(), (int)_pos.x);
         }
         else if (_pos.x == -1)//left
         {
-            playerAnimtor.SetInteger(PlayerAnimParameters.Left.ToString(), (int)_pos.x);
+            playerAnimator.SetInteger(PlayerAnimParameters.Left.ToString(), (int)_pos.x);
         }
         else if (_pos.z == 1)//front
         {
             if (_runState == RunCheckState.Walk)
             {
                 playerStateData.WalkState = PlayerWalkState.Walk_On;
-                playerAnimtor.SetInteger(PlayerAnimParameters.Walk.ToString(), 1);
+                playerAnimator.SetInteger(PlayerAnimParameters.Walk.ToString(), 1);
             }
             else if (_runState == RunCheckState.Run)
             {
                 playerStateData.RunState = PlayerRunState.Run_On;
-                playerAnimtor.SetInteger(PlayerAnimParameters.Run.ToString(), 1);
+                playerAnimator.SetInteger(PlayerAnimParameters.Run.ToString(), 1);
             }
         }
         else if (_pos.z == -1)//back
         {
-            playerAnimtor.SetInteger(PlayerAnimParameters.Back.ToString(), (int)_pos.z);
+            playerAnimator.SetInteger(PlayerAnimParameters.Back.ToString(), (int)_pos.z);
         }
     }
-    protected void moveAnim(float _move)
-    {
-        if (_move != 0.0)//Off
-        {
-            weaponWalkAnim(_move, playerStateData.WeaponState);
-        }
-        else if (_move != 0.0)
-        {
-            runAnimation(_move);
-        }
-        else if (_move == 0)
-        {
-            clearWalkAnimation(playerStateData.PlayerType);
-        }
-    }
+    //protected void moveAnim(float _move)
+    //{
+    //    if (_move != 0.0)//Off
+    //    {
+    //        weaponWalkAnim(_move, playerStateData.WeaponState);
+    //    }
+    //    else if (_move != 0.0)
+    //    {
+    //        runAnimation(_move);
+    //    }
+    //    else if (_move == 0)
+    //    {
+    //        clearWalkAnimation(playerStateData.PlayerType);
+    //    }
+    //}
     protected void attackAnimation(PlayerAttackState _state)
     {
         if (_state == PlayerAttackState.Attack_On)//Off
         {
             //viewcam.cameraShakeAnim(true);
-            playerAnimtor.SetInteger(PlayerAnimParameters.Attack.ToString(), 1);
+            playerAnimator.SetInteger(PlayerAnimParameters.Attack.ToString(), 1);
         }
         else if (_state == PlayerAttackState.Attack_Off)
         {
             //viewcam.cameraShakeAnim(false);
-            playerAnimtor.SetInteger(PlayerAnimParameters.Attack.ToString(), 0);
+            playerAnimator.SetInteger(PlayerAnimParameters.Attack.ToString(), 0);
         }
     }
     protected void runAnimation(float _move)
@@ -148,11 +208,11 @@ public partial class Player : Character
         //if(playerType ==CharactorJobEnum.None)
         if (_move > 0)//Off
         {
-            playerAnimtor.SetInteger(PlayerAnimParameters.Run.ToString(), (int)_move);
+            playerAnimator.SetInteger(PlayerAnimParameters.Run.ToString(), (int)_move);
         }
         else if (_move < 0)
         {
-            playerAnimtor.SetInteger(PlayerAnimParameters.Back.ToString(), (int)_move);
+            playerAnimator.SetInteger(PlayerAnimParameters.Back.ToString(), (int)_move);
         }
     }
     protected void npcRunStateAnimation(float dist)
@@ -162,8 +222,8 @@ public partial class Player : Character
         {
             playerStateData.NpcWalkState = NpcWalkState.Run;
 
-            playerAnimtor.SetInteger(PlayerAnimParameters.Run.ToString(), 1);
-            playerAnimtor.SetInteger(PlayerAnimParameters.Walk.ToString(), 0);
+            playerAnimator.SetInteger(PlayerAnimParameters.Run.ToString(), 1);
+            playerAnimator.SetInteger(PlayerAnimParameters.Walk.ToString(), 0);
             return;
         }
         else if (dist <= runDistanseValue && dist >= playerStopDistanseValue &&
@@ -171,8 +231,8 @@ public partial class Player : Character
         {
             playerStateData.NpcWalkState = NpcWalkState.Walk;
 
-            playerAnimtor.SetInteger(PlayerAnimParameters.Walk.ToString(), 1);
-            playerAnimtor.SetInteger(PlayerAnimParameters.Run.ToString(), 0);
+            playerAnimator.SetInteger(PlayerAnimParameters.Walk.ToString(), 1);
+            playerAnimator.SetInteger(PlayerAnimParameters.Run.ToString(), 0);
             return;
         }
         else if (dist < playerStopDistanseValue &&
@@ -180,8 +240,8 @@ public partial class Player : Character
         {
             playerStateData.NpcWalkState = NpcWalkState.Stop;
 
-            playerAnimtor.SetInteger(PlayerAnimParameters.Run.ToString(), 0);
-            playerAnimtor.SetInteger(PlayerAnimParameters.Walk.ToString(), 0);
+            playerAnimator.SetInteger(PlayerAnimParameters.Run.ToString(), 0);
+            playerAnimator.SetInteger(PlayerAnimParameters.Walk.ToString(), 0);
         }
         else { return; }
     }
@@ -192,22 +252,22 @@ public partial class Player : Character
         {
             if (_move > 0)
             {
-                playerAnimtor.SetInteger(PlayerAnimParameters.WeaponWalk.ToString(), (int)_move);
+                playerAnimator.SetInteger(PlayerAnimParameters.WeaponWalk.ToString(), (int)_move);
             }
             else if (_move < 0)
             {
-                playerAnimtor.SetInteger(PlayerAnimParameters.Back.ToString(), (int)_move);
+                playerAnimator.SetInteger(PlayerAnimParameters.Back.ToString(), (int)_move);
             }
         }
         else if (_state == PlayerWeaponState.Sword_Off)//Warrior
         {
             if (_move > 0)
             {
-                playerAnimtor.SetInteger(PlayerAnimParameters.Walk.ToString(), (int)_move);
+                playerAnimator.SetInteger(PlayerAnimParameters.Walk.ToString(), (int)_move);
             }
             else if (_move < 0)
             {
-                playerAnimtor.SetInteger(PlayerAnimParameters.Back.ToString(), (int)_move);
+                playerAnimator.SetInteger(PlayerAnimParameters.Back.ToString(), (int)_move);
             }
         }
         //else if (_state == PlayerWeaponState.)//Gunner
@@ -222,41 +282,41 @@ public partial class Player : Character
         //    }
         //}
     }
-    protected void walkStateChange(RunCheckState _cheack)
-    {
-        if (_cheack == RunCheckState.Walk)//Walk_Off State
-        {
-            _cheack = RunCheckState.Run;
-            playerStateData.runState = _cheack;
-            clearWalkAnimation(playerStateData.PlayerType);
-        }
-        else if (_cheack == RunCheckState.Run)//Walk_On State
-        {
-            _cheack = RunCheckState.Walk;
-            playerStateData.runState = _cheack;
-            clearWalkAnimation(playerStateData.PlayerType);
-        }
-    }
-    protected virtual void clearWalkAnimation(PlayerType _type) 
+    //protected void walkStateChange(RunCheckState _cheack)
+    //{
+    //    if (_cheack == RunCheckState.Walk)//Walk_Off State
+    //    {
+    //        _cheack = RunCheckState.Run;
+    //        playerStateData.runState = _cheack;
+    //        clearWalkAnimation(playerStateData.PlayerType);
+    //    }
+    //    else if (_cheack == RunCheckState.Run)//Walk_On State
+    //    {
+    //        _cheack = RunCheckState.Walk;
+    //        playerStateData.runState = _cheack;
+    //        clearWalkAnimation(playerStateData.PlayerType);
+    //    }
+    //}
+    protected virtual void clearWalkAnimation(RunCheckState _type) 
     {
         if (playerStateData.WalkState == PlayerWalkState.Walk_On)
         {
             playerStateData.WalkState = PlayerWalkState.Walk_Off;
 
-            playerAnimtor.SetInteger(PlayerAnimParameters.Walk.ToString(), 0);
+            playerAnimator.SetInteger(PlayerAnimParameters.Walk.ToString(), 0);
         }
         if (playerStateData.RunState == PlayerRunState.Run_On)
         {
             playerStateData.RunState = PlayerRunState.Run_Off;
 
-            playerAnimtor.SetInteger(PlayerAnimParameters.Run.ToString(), 0);
+            playerAnimator.SetInteger(PlayerAnimParameters.Run.ToString(), 0);
         }
         if (playerStateData.NpcWalkState != NpcWalkState.Stop) 
         {
             playerStateData.NpcWalkState = NpcWalkState.Stop;
 
-            playerAnimtor.SetInteger(PlayerAnimParameters.Walk.ToString(), 0);
-            playerAnimtor.SetInteger(PlayerAnimParameters.Run.ToString(), 0);
+            playerAnimator.SetInteger(PlayerAnimParameters.Walk.ToString(), 0);
+            playerAnimator.SetInteger(PlayerAnimParameters.Run.ToString(), 0);
         }
         else { return; }
     }
@@ -265,12 +325,12 @@ public partial class Player : Character
         if (_check)
         {
             playerStateData.ShitState = PlayerShitState.ShitDown;
-            playerAnimtor.SetInteger(PlayerAnimName.Shit.ToString(), 1);
+            playerAnimator.SetInteger(PlayerAnimName.Shit.ToString(), 1);
         }
         else 
         {
             playerStateData.ShitState = PlayerShitState.ShitUP;
-            playerAnimtor.SetInteger(PlayerAnimName.Shit.ToString(), 0);
+            playerAnimator.SetInteger(PlayerAnimName.Shit.ToString(), 0);
         }
     }
     protected virtual void shitdownCheak()
@@ -284,14 +344,14 @@ public partial class Player : Character
 
         if (_check)
         {
-            playerAnimtor.SetLayerWeight(attackLayerIndex, 1.0f);
-            playerAnimtor.SetInteger(PlayerAnimParameters.Close.ToString(), 1);
+            playerAnimator.SetLayerWeight(attackLayerIndex, 1.0f);
+            playerAnimator.SetInteger(PlayerAnimParameters.Close.ToString(), 1);
             //animCheck(PlayerAnimParameters.Close.ToString(), PlayerAnimName.closeAttack.ToString());
         }
     }
     public void ClearAllAnimation(PlayerType _type)//PlayerChange
     {
-        clearWalkAnimation(_type);
+        clearWalkAnimation(playerStateData.runState);
     }
     //public void animCheck(string _parameterText, string _animText) 
     //{
@@ -323,12 +383,12 @@ public partial class Player : Character
             if (_check)
             {
                 playerStateData.firstSkillCheck = SkillState.SkillOn;
-                playerAnimtor.SetInteger(SkillType.Skill1.ToString(), 1);
+                playerAnimator.SetInteger(SkillType.Skill1.ToString(), 1);
             }
             else
             {
                 playerStateData.firstSkillCheck = SkillState.SkillOff;
-                playerAnimtor.SetInteger(SkillType.Skill1.ToString(), 0);
+                playerAnimator.SetInteger(SkillType.Skill1.ToString(), 0);
             }
         }
         else if (_type == SkillType.Skill2)
@@ -336,12 +396,12 @@ public partial class Player : Character
             if (_check)
             {
                 playerStateData.secondSkillCheck = SkillState.SkillOn;
-                playerAnimtor.SetInteger(SkillType.Skill2.ToString(), 1);
+                playerAnimator.SetInteger(SkillType.Skill2.ToString(), 1);
             }
             else
             {
                 playerStateData.secondSkillCheck = SkillState.SkillOff;
-                playerAnimtor.SetInteger(SkillType.Skill2.ToString(), 0);
+                playerAnimator.SetInteger(SkillType.Skill2.ToString(), 0);
             }
         }
     }

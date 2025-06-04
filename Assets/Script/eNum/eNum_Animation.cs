@@ -14,6 +14,7 @@ public enum PlayerAnimParameters
     Close,
     Death,
     AttackCombo,
+    Avoidance,
 }
 
 public enum PlayerAnimName

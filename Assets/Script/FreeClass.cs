@@ -56,6 +56,8 @@ public class PlayerStateData : CharacterStateData
 
     [Header("Etc")]//따로 분리 할것
     public AiState aIState = AiState.Search;
+    public AvoidanceState avoidanceState = AvoidanceState.Avoidance_Off;
+
 
     public NpcWalkState NpcWalkState = NpcWalkState.Stop;
     public FindMoveObject objectInfo = FindMoveObject.None;

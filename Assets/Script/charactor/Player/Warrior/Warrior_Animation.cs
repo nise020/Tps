@@ -14,11 +14,11 @@ public partial class Warrior : Player
         
         if (_value == 0 || (_value <= 2 && canReceiveInput)) // 마지막 콤보 (더 이상 연결 없음)
         {
-            playerAnimtor.SetInteger(PlayerAnimParameters.AttackCombo.ToString(), 0);
+            playerAnimator.SetInteger(PlayerAnimParameters.AttackCombo.ToString(), 0);
 
             attackAnimation(PlayerAttackState.Attack_Off);
 
-            playerAnimtor.speed = 1.0f;
+            playerAnimator.speed = 1.0f;
 
             if (!canReceiveInput) 
             {
@@ -35,8 +35,8 @@ public partial class Warrior : Player
             attackAnimation(PlayerAttackState.Attack_Off);
             playerStateData.AttackState = PlayerAttackState.Attack_Combo;
 
-            playerAnimtor.SetInteger(PlayerAnimParameters.AttackCombo.ToString(), _value);
-            playerAnimtor.speed = 1.5f;
+            playerAnimator.SetInteger(PlayerAnimParameters.AttackCombo.ToString(), _value);
+            playerAnimator.speed = 1.5f;
 
             canReceiveInput = true;
         }
@@ -57,8 +57,8 @@ public partial class Warrior : Player
         currentCombo = 0;
         canReceiveInput = false;
 
-        playerAnimtor.SetInteger(PlayerAnimParameters.AttackCombo.ToString(), 0);
-        playerAnimtor.speed = 1.0f;
+        playerAnimator.SetInteger(PlayerAnimParameters.AttackCombo.ToString(), 0);
+        playerAnimator.speed = 1.0f;
 
         playerStateData.AttackState = PlayerAttackState.Attack_Off;
     }
@@ -68,12 +68,12 @@ public partial class Warrior : Player
         if (_value == currentCombo)
         {
             canReceiveInput = true;
-            playerAnimtor.SetInteger(PlayerAnimParameters.AttackCombo.ToString(), currentCombo);
+            playerAnimator.SetInteger(PlayerAnimParameters.AttackCombo.ToString(), currentCombo);
         }
         else 
         {
             currentCombo = 0;
-            playerAnimtor.SetInteger(PlayerAnimParameters.AttackCombo.ToString(), 0);
+            playerAnimator.SetInteger(PlayerAnimParameters.AttackCombo.ToString(), 0);
         }
 
 
@@ -98,7 +98,7 @@ public partial class Warrior : Player
     {
         if (scabbardMaxCount == scabbardCount)
         {
-            playerAnimtor.SetInteger(PlayerAnimParameters.GetWeapon.ToString(), 0);
+            playerAnimator.SetInteger(PlayerAnimParameters.GetWeapon.ToString(), 0);
             //currentCombo = 0;//reset
             scabbardCount = 0;
         }
@@ -123,18 +123,18 @@ public partial class Warrior : Player
             if (playerStateData.WalkState == PlayerWalkState.Walk_On) { return; }
 
             playerStateData.WalkState = PlayerWalkState.Walk_On;
-            playerAnimtor.SetInteger(PlayerAnimParameters.Walk.ToString(), 1);
+            playerAnimator.SetInteger(PlayerAnimParameters.Walk.ToString(), 1);
         }
         else if (_runState == RunCheckState.Run)
         {
             if (playerStateData.RunState == PlayerRunState.Run_On) { return; }
 
             playerStateData.RunState = PlayerRunState.Run_On;
-            playerAnimtor.SetInteger(PlayerAnimParameters.Run.ToString(), 1);
+            playerAnimator.SetInteger(PlayerAnimParameters.Run.ToString(), 1);
         }
     }
     
-    protected override void clearWalkAnimation(PlayerType _type)
+    protected override void clearWalkAnimation(RunCheckState _type)
     {
         base.clearWalkAnimation(_type);
     }

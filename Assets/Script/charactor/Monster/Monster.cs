@@ -27,7 +27,7 @@ public partial class Monster : Character
         monsterAnimator = GetComponent<Animator>();
         creatTabObj = Shared.GameManager.creatTab;//¿ÀºêÁ§Æ® »ý¼º ÅÇ(ex.ÃÑ¾Ë)
         MONSTERAI.init(this, SKILL);
-        MONSTERAI.Type(monsterStateData.MonsterType);
+        //MONSTERAI.Type(monsterStateData.MonsterType);
 
         startPosition = charactorModelTrs.position;
 
@@ -35,6 +35,7 @@ public partial class Monster : Character
         //STATE.MonsterState(monsterType);
         //stateInIt();
         AttackEvent += AiTagetUpdate;
+        StateEvent += AiStateUpdate;
     }
 
     protected override void FindWeaponObject(LayerName _name)

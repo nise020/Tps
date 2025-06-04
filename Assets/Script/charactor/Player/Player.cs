@@ -23,13 +23,16 @@ public partial class Player : Character
         slotinit();
 
         rigid = GetComponent<Rigidbody>();//Kinematic Controll
-        playerAnimtor = GetComponent<Animator>();
+        playerAnimator = GetComponent<Animator>();
 
         skillStrategy.PlayerInit(this);
         SkillEffectSystem1 = CreatSkill(SkillEffectObj1, SkillParentObj1);
         SkillEffectSystem2 = CreatSkill(SkillEffectObj2, SkillParentObj2);
 
         AttackEvent += AiTagetUpdate;
+
+        battelTrigger = GetComponentInChildren<BattelTrigger>();
+        //battelTrigger
     }
 
     private void FixedUpdate()

@@ -69,6 +69,7 @@ public partial class Character : Actor
 
     [Header("Action")]
     public Action<bool> AttackEvent;
+    public Action<AiState> StateEvent;
 
     [Header("Weapon")]
     [SerializeField] protected Weapon WEAPON;

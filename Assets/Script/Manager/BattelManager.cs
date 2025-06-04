@@ -111,6 +111,7 @@ public class BattelManager : MonoBehaviour
         {
             //GameEvents.DefenderState(true);
             _attacker.AttackEvent?.Invoke(true);
+            _defender.StateEvent?.Invoke(AiState.Search);
         }
         else
         {
@@ -118,6 +119,7 @@ public class BattelManager : MonoBehaviour
         }
 
         //sharder
+        //if()
         DamageColor(_defender);
 
         HpBar hpBar = _defender.GetComponentInChildren<HpBar>();//임시로 몬스터만 있음
@@ -198,11 +200,23 @@ public class BattelManager : MonoBehaviour
             renderer.materials = originalMats;
         }
     }
-    public void Playerinit() 
+    public void JustAvoidance() 
     {
-
+        TriggerSlowMotion();
+    }
+    public void TriggerSlowMotion(float scale = 0.3f, float duration = 0.5f)
+    {
+        StartCoroutine(SlowMotionCoroutine(scale, duration));
     }
 
+    IEnumerator SlowMotionCoroutine(float scale, float duration)
+    {
+        Time.timeScale = scale;
+        Time.fixedDeltaTime = 0.02f * scale;
+        yield return new WaitForSecondsRealtime(duration);
+        Time.timeScale = 1f;
+        Time.fixedDeltaTime = 0.02f;
+    }
     private void creatObject() 
     {
         //player

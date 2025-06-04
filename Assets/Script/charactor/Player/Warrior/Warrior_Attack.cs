@@ -80,7 +80,7 @@ public partial class Warrior : Player
                 playerStateData.AttackState = PlayerAttackState.Attack_On;
 
                 attackAnimation(PlayerAttackState.Attack_On);
-                playerAnimtor.speed = 1.5f;
+                playerAnimator.speed = 1.5f;
 
                 canReceiveInput = true;
             }
@@ -98,7 +98,7 @@ public partial class Warrior : Player
     IEnumerator getSwordEvent(float _animationSpeed,float _event) 
     {
 
-        playerAnimtor.SetInteger(PlayerAnimParameters.GetWeapon.ToString(), 1);
+        playerAnimator.SetInteger(PlayerAnimParameters.GetWeapon.ToString(), 1);
 
         float originalTimeToAttach = _event; //Event Time
 
@@ -118,7 +118,7 @@ public partial class Warrior : Player
         while (currentCombo <= 3)
         {
             //playerAnimtor.speed = 1.5f;
-            playerAnimtor.SetInteger(PlayerAnimParameters.AttackCombo.ToString(), currentCombo);
+            playerAnimator.SetInteger(PlayerAnimParameters.AttackCombo.ToString(), currentCombo);
             Debug.Log($"currentCombo = {currentCombo}");
 
 
@@ -130,7 +130,7 @@ public partial class Warrior : Player
                 break;
             }
 
-            float adjustedTime = clipLength / playerAnimtor.speed;
+            float adjustedTime = clipLength / playerAnimator.speed;
 
             
             yield return new WaitForSeconds(adjustedTime * 0.7f);
@@ -155,14 +155,14 @@ public partial class Warrior : Player
             }
         }
 
-        playerAnimtor.SetInteger(PlayerAnimParameters.AttackCombo.ToString(), 0);
-        playerAnimtor.speed = 1.0f;
+        playerAnimator.SetInteger(PlayerAnimParameters.AttackCombo.ToString(), 0);
+        playerAnimator.speed = 1.0f;
         currentCombo = 0;
         playerStateData.AttackState = PlayerAttackState.Attack_Off;
     }
     float GetClipLength(string clipName)
     {
-        foreach (AnimationClip clip in playerAnimtor.runtimeAnimatorController.animationClips)
+        foreach (AnimationClip clip in playerAnimator.runtimeAnimatorController.animationClips)
         {
             if (clip.name == clipName)
                 Debug.Log($"clip.length = {clip.length}");
@@ -187,7 +187,7 @@ public partial class Warrior : Player
                 if (playerStateData.WeaponState == PlayerWeaponState.Sword_Off) 
                 {
                     playerStateData.WeaponState = PlayerWeaponState.Sword_On;
-                    playerAnimtor.SetInteger(PlayerAnimParameters.GetWeapon.ToString(), 1);
+                    playerAnimator.SetInteger(PlayerAnimParameters.GetWeapon.ToString(), 1);
                 }
                 SkillAnimation(SkillType.Skill1, true);
                 //firstSkillCheck = SkillRunning.SkillOn;
@@ -241,7 +241,7 @@ public partial class Warrior : Player
                 if (playerStateData.WeaponState == PlayerWeaponState.Sword_Off)
                 {
                     playerStateData.WeaponState = PlayerWeaponState.Sword_On;
-                    playerAnimtor.SetInteger(PlayerAnimParameters.GetWeapon.ToString(), 1);
+                    playerAnimator.SetInteger(PlayerAnimParameters.GetWeapon.ToString(), 1);
                 }
                 SkillAnimation(SkillType.Skill2, true);
                 //secondSkillCheck = SkillRunning.SkillOn;
@@ -284,12 +284,12 @@ public partial class Warrior : Player
     {
         if (playerStateData.firstSkillCheck == SkillState.SkillOn) 
         {
-            playerAnimtor.SetInteger(SkillType.Skill1.ToString(), 0);
+            playerAnimator.SetInteger(SkillType.Skill1.ToString(), 0);
             playerStateData.firstSkillCheck = SkillState.SkillOff;
         }
         if (playerStateData.secondSkillCheck == SkillState.SkillOn)
         {
-            playerAnimtor.SetInteger(SkillType.Skill2.ToString(), 0);
+            playerAnimator.SetInteger(SkillType.Skill2.ToString(), 0);
             playerStateData.secondSkillCheck = SkillState.SkillOff;
         }
         atkValue = attackReset;

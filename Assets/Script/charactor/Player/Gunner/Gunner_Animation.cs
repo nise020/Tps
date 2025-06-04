@@ -7,49 +7,46 @@ public partial class Gunner : Player
     public void GunAttackAnimationOut() //AnimationEvent
     {
         attackAnimation(PlayerAttackState.Attack_Off);
-        playerAnimtor.SetLayerWeight(attackLayerIndex, 0.0f);
+        playerAnimator.SetLayerWeight(attackLayerIndex, 0.0f);
     }
     protected override void walkAnim(RunCheckState _runState, Vector3 _pos)
     {
         if (_pos.x == 1)//rigrt
         {
-            playerAnimtor.SetInteger(PlayerAnimParameters.Right.ToString(), (int)_pos.x);
+            playerAnimator.SetInteger(PlayerAnimParameters.Right.ToString(), (int)_pos.x);
         }
         else if (_pos.x == -1)//left
         {
-            playerAnimtor.SetInteger(PlayerAnimParameters.Left.ToString(), (int)_pos.x);
+            playerAnimator.SetInteger(PlayerAnimParameters.Left.ToString(), (int)_pos.x);
         }
         else if (_pos.z == 1)//front
         {
             if (_runState == RunCheckState.Walk)
             {
                 playerStateData.WalkState = PlayerWalkState.Walk_On;
-                playerAnimtor.SetInteger(PlayerAnimParameters.Walk.ToString(), (int)_pos.z);
+                playerAnimator.SetInteger(PlayerAnimParameters.Walk.ToString(), (int)_pos.z);
             }
             else if (_runState == RunCheckState.Run)
             {
                 playerStateData.RunState = PlayerRunState.Run_On;
-                playerAnimtor.SetInteger(PlayerAnimParameters.Run.ToString(), (int)_pos.z);
+                playerAnimator.SetInteger(PlayerAnimParameters.Run.ToString(), (int)_pos.z);
             }
         }
         else if (_pos.z == -1)//back
         {
-            playerAnimtor.SetInteger(PlayerAnimParameters.Back.ToString(), (int)_pos.z);
+            playerAnimator.SetInteger(PlayerAnimParameters.Back.ToString(), (int)_pos.z);
         }
     }
 
-    protected override void clearWalkAnimation(PlayerType _type)
+    protected override void clearWalkAnimation(RunCheckState _type)
     {
         base.clearWalkAnimation(_type);
 
-        if (_type == PlayerType.Gunner)
-        {
-            playerAnimtor.SetInteger(PlayerAnimParameters.Walk.ToString(), 0);
-            playerAnimtor.SetInteger(PlayerAnimParameters.Back.ToString(), 0);
-            playerAnimtor.SetInteger(PlayerAnimParameters.Run.ToString(), 0);
-            playerAnimtor.SetInteger(PlayerAnimParameters.Right.ToString(), 0);
-            playerAnimtor.SetInteger(PlayerAnimParameters.Left.ToString(), 0);
-        }
+        playerAnimator.SetInteger(PlayerAnimParameters.Walk.ToString(), 0);
+        playerAnimator.SetInteger(PlayerAnimParameters.Back.ToString(), 0);
+        playerAnimator.SetInteger(PlayerAnimParameters.Run.ToString(), 0);
+        playerAnimator.SetInteger(PlayerAnimParameters.Right.ToString(), 0);
+        playerAnimator.SetInteger(PlayerAnimParameters.Left.ToString(), 0);
     }
     public void GunSkillShoot() 
     {

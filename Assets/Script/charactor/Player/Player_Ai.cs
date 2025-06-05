@@ -203,5 +203,20 @@ public partial class Player : Character
 
     }
 
+    public override bool DamageEventCheck()
+    {
+        if (playerStateData.DamageEvent == DamageEvent.Event_On)
+        {
+            return false;
+        }
+        else 
+        {
+            return true;
+        }
+    }
 
+    public override void DamageEventUpdate(DamageEvent _event)
+    {
+        playerStateData.DamageEvent = _event;
+    }
 }

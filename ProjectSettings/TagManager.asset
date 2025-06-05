@@ -38,7 +38,7 @@ TagManager:
   - TriggerZone
   - Item
   - 
-  - 
+  - PostProcessVolume
   m_SortingLayers:
   - name: Default
     uniqueID: 0

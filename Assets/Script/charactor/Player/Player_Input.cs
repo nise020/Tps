@@ -60,44 +60,53 @@ public partial class Player : Character
 
         if (Shared.InputManager.MoveQueData.Count != 0)
         {
+            //notWalkTimer = 0.0f;
+
             while (Shared.InputManager.MoveQueData.Count > 0)//move
             {
+                Vector3 type = Shared.InputManager.MoveQueData.Dequeue();
+
+
                 if (playerStateData.AttackState == PlayerAttackState.Attack_On)
                 {
                     playerStateData.AttackState = PlayerAttackState.Attack_Off;
+
                     canReceiveInput = true;
                 }
-                Vector3 type = Shared.InputManager.MoveQueData.Dequeue();
 
-                move(playerStateData.ModeState, type);
-
-                if (walkStateChangeTimer >= walkStateChangeTime &&
-                    playerStateData.runState != RunCheckState.Run)
+                if (walkStateChangeTimer >= walkStateChangeTime)
                 {
-                    playerStateData.runState = RunCheckState.Run;
-                    clearWalkAnimation(playerStateData.runState);
+                    playerStateData.WalkState = PlayerWalkState.Run;
                 }
-                else if(walkStateChangeTimer <= walkStateChangeTime)
+                else if(walkStateChangeTimer < walkStateChangeTime)
                 {
+                    playerStateData.WalkState = PlayerWalkState.Walk;
+
                     walkStateChangeTimer += Time.deltaTime;
                 }
-                
+
+                if (playerStateData.WalkState != PlayerWalkState.Dash)
+                {
+                    move(playerStateData.ModeState, type);
+                }
+                else { return; }
+
+
             }
         }
         else 
         {
-            playerStateData.runState = RunCheckState.Walk;
-            clearWalkAnimation(playerStateData.runState);
+            playerStateData.WalkState = PlayerWalkState.Stop;
+            clearWalkAnimation();
 
             walkStateChangeTimer = 0.0f;
-        }
+            //notWalkTimer += Time.deltaTime;
 
-        notWalkTimer += Time.deltaTime;
-
-        if (notWalkTimer > notWalkTime &&
-            playerStateData.WalkState == PlayerWalkState.Walk_On)
-        {
-            playerStateData.WalkState = PlayerWalkState.Walk_Off;
+            //if (notWalkTimer > notWalkTime &&
+            //playerStateData.WalkState != PlayerWalkState.Stop)
+            //{
+            //    playerStateData.WalkState = PlayerWalkState.Stop;
+            //}
         }
         
     }

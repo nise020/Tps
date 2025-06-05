@@ -10,7 +10,7 @@ public partial class Player : Character
 
     public bool PlayerObjectWalkCheck() 
     {
-        if (playerStateData.WalkState == PlayerWalkState.Walk_On)
+        if (playerStateData.WalkState == PlayerWalkState.Walk)
         {
             return true;
         }
@@ -53,7 +53,7 @@ public partial class Player : Character
 
                 float speed = speedValue;
 
-                if (playerStateData.runState == RunCheckState.Run) 
+                if (playerStateData.WalkState == PlayerWalkState.Run) 
                 {
                     speed = speedValue * 2;
                 }
@@ -106,7 +106,7 @@ public partial class Player : Character
 
             }
         }
-        walkAnim(playerStateData.runState, _pos);
+        walkAnim(playerStateData.WalkState, _pos);
         //All
         //moveAnim(_pos.z);
         //Gunner

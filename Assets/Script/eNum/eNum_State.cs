@@ -59,27 +59,29 @@ public enum PositionObjectState
 }
 public enum PlayerWalkState
 {
-    None,
-    Walk_On,
-    Walk_Off,
+    Stop,
+    Walk,
+    Run,
+    //Walk_Off,
+    Dash,
 }
-public enum PlayerRunState
-{
-    None,
-    Run_On,
-    Run_Off,
-}
+//public enum PlayerRunState
+//{
+//    None,
+//    Run_On,
+//    Run_Off,
+//}
 public enum NpcRunState
 {
     None,
     Run_On,
     Run_Off,
 }
-public enum RunCheckState
-{
-    Walk,
-    Run,
-}
+//public enum RunCheckState
+//{
+//    Walk,
+//    Run,
+//}
 public enum NpcWalkState
 {
     Stop,
@@ -143,5 +145,10 @@ public enum UiState
 {
     Ui_Off,
     Ui_On,
+}
+public enum DamageEvent
+{
+    Event_On,
+    Event_Off,
 }
 

@@ -11,11 +11,11 @@ public partial class Warrior : Player
     {
         Vector3 weaponPos = new Vector3();
 
-        if (playerStateData.firstSkillCheck == SkillState.SkillOn)
+        if (playerStateData.FirstSkillCheck == SkillState.SkillOn)
         {
             weaponPos = SkillParentObj1.transform.position;
         }
-        else if (playerStateData.secondSkillCheck == SkillState.SkillOn)
+        else if (playerStateData.SecondSkillCheck == SkillState.SkillOn)
         {
             weaponPos = SkillParentObj2.transform.position;
         }
@@ -40,13 +40,13 @@ public partial class Warrior : Player
 
     public void SkillEffectOff(int _value)
     {
-        if (playerStateData.firstSkillCheck == SkillState.SkillOn)
+        if (playerStateData.FirstSkillCheck == SkillState.SkillOn)
         {
             SkillAnimation(SkillType.Skill1, false);
             SkillParentObj1.SetActive(false);
             SkillEffectSystem1.Pause();
         }
-        else if (playerStateData.secondSkillCheck == SkillState.SkillOn)
+        else if (playerStateData.SecondSkillCheck == SkillState.SkillOn)
         {
             SkillAnimation(SkillType.Skill2, false);
             SkillParentObj1.SetActive(false);
@@ -182,7 +182,7 @@ public partial class Warrior : Player
     {
         if (_type == PlayerType.Warrior)
         {
-            if (playerStateData.firstSkillCheck == SkillState.SkillOff)
+            if (playerStateData.FirstSkillCheck == SkillState.SkillOff)
             {
                 if (playerStateData.WeaponState == PlayerWeaponState.Sword_Off) 
                 {
@@ -236,7 +236,7 @@ public partial class Warrior : Player
     {
         if (_type == PlayerType.Warrior)
         {
-            if (playerStateData.secondSkillCheck == SkillState.SkillOff)
+            if (playerStateData.SecondSkillCheck == SkillState.SkillOff)
             {
                 if (playerStateData.WeaponState == PlayerWeaponState.Sword_Off)
                 {
@@ -282,15 +282,15 @@ public partial class Warrior : Player
 
     protected override void skillValueReset()//Damage Reset
     {
-        if (playerStateData.firstSkillCheck == SkillState.SkillOn) 
+        if (playerStateData.FirstSkillCheck == SkillState.SkillOn) 
         {
             playerAnimator.SetInteger(SkillType.Skill1.ToString(), 0);
-            playerStateData.firstSkillCheck = SkillState.SkillOff;
+            playerStateData.FirstSkillCheck = SkillState.SkillOff;
         }
-        if (playerStateData.secondSkillCheck == SkillState.SkillOn)
+        if (playerStateData.SecondSkillCheck == SkillState.SkillOn)
         {
             playerAnimator.SetInteger(SkillType.Skill2.ToString(), 0);
-            playerStateData.secondSkillCheck = SkillState.SkillOff;
+            playerStateData.SecondSkillCheck = SkillState.SkillOff;
         }
         atkValue = attackReset;
     }

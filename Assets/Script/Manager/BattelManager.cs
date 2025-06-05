@@ -36,6 +36,7 @@ public class BattelManager : MonoBehaviour
     [SerializeField] Shader damageShader;
     [SerializeField] Material damageMaterial;
 
+    //private HashSet<SkinnedMeshRenderer> damagedRenderers = new();
     Dictionary<Material, Shader> originalShaders = new();
 
     //Vector3 targetPos;
@@ -101,8 +102,8 @@ public class BattelManager : MonoBehaviour
 
         //attakerPower = DamageCalculator(attakerPower, CriticalValue);
 
-        //defenserHp = defenserHp - attakerPower;
-        defenserHp = defenserHp - 1000;
+        defenserHp = defenserHp - attakerPower;
+        //defenserHp = defenserHp - 1000;
 
         //State
         _defender.StatusUpLoad(defenserHp);
@@ -119,13 +120,15 @@ public class BattelManager : MonoBehaviour
         }
 
         //sharder
-        //if()
-        DamageColor(_defender);
+        if (_defender.DamageEventCheck()) 
+        {
+            _defender.DamageEventUpdate(DamageEvent.Event_On);
+            DamageColor(_defender);
+        }
 
         HpBar hpBar = _defender.GetComponentInChildren<HpBar>();//임시로 몬스터만 있음
         hpBar.AttackDamageEvent?.Invoke((int)attakerPower);
 
-        //Shader[] shader = _defender.gameObject.GetComponentsInChildren<Shader>();
     }
     private float DamageCalculator(float _attakerPower ,float _cri) 
     {
@@ -143,7 +146,7 @@ public class BattelManager : MonoBehaviour
 
         foreach (SkinnedMeshRenderer renderer in renderers)
         {
-            Material[] originalMats = renderer.materials;
+            Material[] originalMats = renderer.sharedMaterials;
             Material[] damageMet = new Material[originalMats.Length];
 
             for (int i = 0; i < originalMats.Length; i++)
@@ -174,6 +177,7 @@ public class BattelManager : MonoBehaviour
             }
             renderer.materials = damageMet;
             backup.Add((renderer, originalMats));
+            //damagedRenderers.Add(renderer);
             #region memo
             //foreach (Material material in renderer.materials)
             //{
@@ -188,16 +192,18 @@ public class BattelManager : MonoBehaviour
             #endregion
         }
 
-        StartCoroutine(MaterialBackUp(backup, 0.1f));
+        StartCoroutine(MaterialBackUp(_defender,backup, 0.1f));
     }
-    IEnumerator MaterialBackUp(List<(SkinnedMeshRenderer renderer,
+    IEnumerator MaterialBackUp(Character _defender, List<(SkinnedMeshRenderer renderer,
         Material[] originalMats)> backup, float delay)
     {
         yield return new WaitForSeconds(delay);
 
         foreach (var(renderer, originalMats) in backup)
         {
-            renderer.materials = originalMats;
+            renderer.sharedMaterials = originalMats;
+            _defender.DamageEventUpdate(DamageEvent.Event_Off);
+            //damagedRenderers.Remove(renderer);
         }
     }
     public void JustAvoidance() 

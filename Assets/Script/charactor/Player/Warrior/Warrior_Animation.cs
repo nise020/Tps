@@ -116,26 +116,24 @@ public partial class Warrior : Player
         go.transform.localRotation = Quaternion.identity;
         playerStateData.WeaponState = PlayerWeaponState.Sword_Off;
     }
-    protected override void walkAnim(RunCheckState _runState, Vector3 _pos)
+    protected override void walkAnim(PlayerWalkState _state, Vector3 _pos)
     {
-        if (_runState == RunCheckState.Walk)
+        if (_state == PlayerWalkState.Walk)
         {
-            if (playerStateData.WalkState == PlayerWalkState.Walk_On) { return; }
-
-            playerStateData.WalkState = PlayerWalkState.Walk_On;
+            playerStateData.WalkState = PlayerWalkState.Walk;
             playerAnimator.SetInteger(PlayerAnimParameters.Walk.ToString(), 1);
+            playerAnimator.SetInteger(PlayerAnimParameters.Run.ToString(), 0);
         }
-        else if (_runState == RunCheckState.Run)
+        else if (_state == PlayerWalkState.Run)
         {
-            if (playerStateData.RunState == PlayerRunState.Run_On) { return; }
-
-            playerStateData.RunState = PlayerRunState.Run_On;
+            playerStateData.WalkState = PlayerWalkState.Run;
             playerAnimator.SetInteger(PlayerAnimParameters.Run.ToString(), 1);
+            playerAnimator.SetInteger(PlayerAnimParameters.Walk.ToString(), 0);
         }
     }
     
-    protected override void clearWalkAnimation(RunCheckState _type)
+    protected override void clearWalkAnimation()
     {
-        base.clearWalkAnimation(_type);
+        base.clearWalkAnimation();
     }
 }

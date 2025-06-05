@@ -83,6 +83,8 @@ MonoBehaviour:
   shortSword: {fileID: 0}
   AimtransPos: {fileID: 0}
   ControlBtn: {fileID: 0}
+  dashTime: 0.1
+  dashCheck: 0
   shitCheack: 0
   closeCheck: 0
   SkillEffectObj1: {fileID: 4799312573300115351, guid: 0c79debf96fd1c84d8974b869958fef5, type: 3}
@@ -326,20 +328,16 @@ PrefabInstance:
       propertyPath: m_LocalPosition.z
       value: -5
       objectReference: {fileID: 0}
+    - target: {fileID: 3354139995400515769, guid: a7c525cdfb0dee34982abf65cb8b7fba, type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 4938761094361405481, guid: a7c525cdfb0dee34982abf65cb8b7fba, type: 3}
       propertyPath: m_RootOrder
       value: 25
       objectReference: {fileID: 0}
     - target: {fileID: 4938761094361405481, guid: a7c525cdfb0dee34982abf65cb8b7fba, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4938761094361405481, guid: a7c525cdfb0dee34982abf65cb8b7fba, type: 3}
-      propertyPath: m_LocalPosition.y
-      value: 2.5
-      objectReference: {fileID: 0}
-    - target: {fileID: 4938761094361405481, guid: a7c525cdfb0dee34982abf65cb8b7fba, type: 3}
-      propertyPath: m_LocalPosition.z
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4938761094361405481, guid: a7c525cdfb0dee34982abf65cb8b7fba, type: 3}

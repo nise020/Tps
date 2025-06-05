@@ -268,11 +268,19 @@ public partial class Monster : Character
         //_state = SearchState.Wait;
         //StartCoroutine(WaitTimer(_state));
     }
-    //IEnumerator WaitTimer(SearchState _search)
-    //{
-    //    yield return new WaitForSeconds(3.0f);
-    //    _search = SearchState.None;
-    //    MONSTERAI.searchingStateUpdate(_search);
-    //}
-
+    public override bool DamageEventCheck()
+    {
+        if (monsterStateData.DamageEvent == DamageEvent.Event_On)
+        {
+            return false;
+        }
+        else
+        {
+            return true;
+        }
+    }
+    public override void DamageEventUpdate(DamageEvent _event)
+    {
+        monsterStateData.DamageEvent = _event;
+    }
 }

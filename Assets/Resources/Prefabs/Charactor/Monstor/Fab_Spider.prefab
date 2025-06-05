@@ -27,7 +27,7 @@ Transform:
   m_GameObject: {fileID: 2367429089660032736}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 20, y: 20, z: 20}
+  m_LocalScale: {x: 5, y: 5, z: 5}
   m_ConstrainProportionsScale: 1
   m_Children:
   - {fileID: 4635537413739725211}
@@ -54,8 +54,8 @@ MonoBehaviour:
   weaponHandObject: {fileID: 0}
   weaponObj: {fileID: 0}
   groundCheckLenght: 0
+  WEAPON: {fileID: 0}
   mobKey: 0
-  SphereRadius: 1
   target: {fileID: 0}
   height: 5
   throuTime: 2
@@ -70,6 +70,7 @@ MonoBehaviour:
   groundCheck: 0
   leagh: 0
   monsterRigid: {fileID: 0}
+  SphereRadius: 1
   viewDistance: 10
   viewAngle: 40
   debugColor: {r: 1, g: 0, b: 0, a: 1}

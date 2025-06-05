@@ -30,6 +30,13 @@ public partial class Player : Character
     protected int RelodingBullet;
     protected float walkStateChangeTime = 3.0f;
     protected float walkStateChangeTimer = 0.0f;
+    protected float dashDistanse = 15.0f;
+    public float dashTime = 0.2f;
+    public bool dashCheck = false;
+
+
+
+
     [Header("Avoidance Status")]
     protected float moveHeight = 2.0f;
     protected float backDistance = 5f;

@@ -9,8 +9,8 @@ public partial class Player : Character
     
     protected void AvoidanceCheck()
     {
-        if (playerStateData.WalkState == PlayerWalkState.Walk_On ||
-            playerStateData.RunState == PlayerRunState.Run_On)
+        if (playerStateData.WalkState == PlayerWalkState.Walk ||
+            playerStateData.WalkState == PlayerWalkState.Run)
         {
             Dash();
         }
@@ -21,7 +21,12 @@ public partial class Player : Character
     }
     protected void Dash() 
     {
+        Debug.Log("Dashstart");
+        playerStateData.WalkState = PlayerWalkState.Dash;
+        playerAnimator.speed = 0f;
+        WalkStateChangeAnimation(playerStateData.WalkState);
 
+        StartCoroutine(dashMove());
     }
     protected void Avoidance() 
     {
@@ -97,7 +102,7 @@ public partial class Player : Character
     protected virtual void skillValueReset()//Damage Reset
     {
         atkValue = attackReset;
-        playerStateData.firstSkillCheck = SkillState.SkillOff;
+        playerStateData.FirstSkillCheck = SkillState.SkillOff;
         playerAnimator.SetInteger(PlayerAnimName.AttackSkill.ToString(), 0);
         playerAnimator.SetInteger(PlayerAnimName.BuffSkill.ToString(), 0);
     }

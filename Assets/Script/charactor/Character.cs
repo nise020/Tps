@@ -58,7 +58,14 @@ public abstract partial class Character : Actor
             return charactorModelTrs;
         }
     }
-
+    public virtual bool DamageEventCheck() 
+    {
+        return false;
+    }
+    public virtual void DamageEventUpdate(DamageEvent _event)
+    {
+        
+    }
     //protected virtual void OnTriggerEnter(Collider other)//세분화 필요
     //{
     //    //Collider myColl = gameObject.GetComponent<Collider>();

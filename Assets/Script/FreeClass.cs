@@ -28,11 +28,11 @@ public class ItemSlotData
 
 public class CharacterStateData
 {
-    public SkillState firstSkillCheck = SkillState.SkillOff;
-    public SkillState secondSkillCheck = SkillState.SkillOff;
+    public SkillState FirstSkillCheck = SkillState.SkillOff;
+    public SkillState SecondSkillCheck = SkillState.SkillOff;
 
-
-    public RunCheckState runState = RunCheckState.Walk;
+    public DamageEvent DamageEvent = DamageEvent.Event_Off;
+    //public RunCheckState runState = RunCheckState.Walk;
 
 }
 
@@ -48,8 +48,8 @@ public class PlayerStateData : CharacterStateData
     public PlayerAttackState AttackState = PlayerAttackState.Attack_Off;
     //public ReloadState reloadState = ReloadState.Reload_Off;//Attackdp 합류
 
-    public PlayerWalkState WalkState = PlayerWalkState.Walk_Off;//하나로 합칠것
-    public PlayerRunState RunState = PlayerRunState.Run_Off;
+    public PlayerWalkState WalkState = PlayerWalkState.Stop;//하나로 합칠것
+    //public PlayerRunState RunState = PlayerRunState.Run_Off;
 
     public PlayerShitState ShitState = PlayerShitState.ShitUP;
 

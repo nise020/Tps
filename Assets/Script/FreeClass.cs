@@ -54,13 +54,12 @@ public class PlayerStateData : CharacterStateData
     public PlayerShitState ShitState = PlayerShitState.ShitUP;
 
 
-    [Header("Etc")]//따로 분리 할것
+    [Header("Auto")]
     public AiState aIState = AiState.Search;
-    public AvoidanceState avoidanceState = AvoidanceState.Avoidance_Off;
-
-
-    public NpcWalkState NpcWalkState = NpcWalkState.Stop;
     public FindMoveObject objectInfo = FindMoveObject.None;
+    public NpcWalkState NpcWalkState = NpcWalkState.Stop;
+
+    public AvoidanceState avoidanceState = AvoidanceState.Avoidance_Off;
 }
 
 public class MonsterStateData : CharacterStateData

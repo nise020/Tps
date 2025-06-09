@@ -22,7 +22,7 @@ public partial class Gunner : Player
         }
         else 
         {
-            attackAnimation(PlayerAttackState.Attack_On);
+            attackAnimation(PlayerAttackState.Attack_On, 0);
         }
             //skillAttack_common1(playerStateData.PlayerType);
 
@@ -42,7 +42,7 @@ public partial class Gunner : Player
                 return;
             }
             playerAnimator.SetLayerWeight(attackLayerIndex, 1.0f);
-            attackAnimation(PlayerAttackState.Attack_On);
+            attackAnimation(PlayerAttackState.Attack_On, 0);
         }
     }
     public void GunShootEvent() //Animation Event

@@ -6,7 +6,7 @@ public partial class Gunner : Player
 {
     public void GunAttackAnimationOut() //AnimationEvent
     {
-        attackAnimation(PlayerAttackState.Attack_Off);
+        attackAnimation(PlayerAttackState.Attack_Off, 0);
         playerAnimator.SetLayerWeight(attackLayerIndex, 0.0f);
     }
     protected override void walkAnim(PlayerWalkState _state, Vector3 _pos)

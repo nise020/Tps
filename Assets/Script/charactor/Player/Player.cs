@@ -32,7 +32,8 @@ public partial class Player : Character
         AttackEvent += AiTagetUpdate;
 
         battelTrigger = GetComponentInChildren<BattelTrigger>();
-        //battelTrigger
+        battelTriggerCol = battelTrigger.gameObject.GetComponent<Collider>();
+        battelTriggerCol.enabled = false;
     }
 
     private void FixedUpdate()

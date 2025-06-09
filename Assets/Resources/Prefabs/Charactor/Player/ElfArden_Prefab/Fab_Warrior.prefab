@@ -129,6 +129,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4257613350075049383}
   - component: {fileID: 2184834479754602259}
+  - component: {fileID: 3243625601271634965}
   m_Layer: 28
   m_Name: Battel_System_Check_Object
   m_TagString: Untagged
@@ -172,6 +173,18 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 5, y: 4.0942945, z: 5}
   m_Center: {x: 0, y: 1.3528527, z: 0}
+--- !u!114 &3243625601271634965
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5922318555680631368}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3b9e51597543f6d449662f3948fd8997, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &7457206564330867354
 GameObject:
   m_ObjectHideFlags: 0

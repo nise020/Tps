@@ -34,6 +34,9 @@ public partial class Player : Character
                 case KeyCode.Space:
                     //cameraModeChange();
                     break;
+                case KeyCode.LeftControl:
+                    blockCheck();
+                    break;
             }
         }
 

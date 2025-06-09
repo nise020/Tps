@@ -6,7 +6,30 @@ using UnityEngine;
 
 public partial class Player : Character
 {
-    
+    protected void blockCheck() 
+    {
+        if (playerStateData.AttackState != PlayerAttackState.Block) 
+        {
+            Block();
+        }
+    }
+
+    protected void Block()
+    {
+        if (playerStateData.WeaponState == PlayerWeaponState.Sword_Off)//Open Weapon
+        {
+            playerAnimator.SetInteger(PlayerAnimParameters.GetWeapon.ToString(), 1);
+            GetWeapon();
+        }
+
+        playerStateData.AttackState = PlayerAttackState.Block;
+        attackAnimation(playerStateData.AttackState, 0);
+        battelTriggerCol.enabled = true;
+    }
+    protected virtual void GetWeapon() 
+    {
+
+    }
     protected void AvoidanceCheck()
     {
         if (playerStateData.WalkState == PlayerWalkState.Walk ||
@@ -24,7 +47,7 @@ public partial class Player : Character
         Debug.Log("Dashstart");
         playerStateData.WalkState = PlayerWalkState.Dash;
         playerAnimator.speed = 0f;
-        WalkStateChangeAnimation(playerStateData.WalkState);
+        WalkStateAnimation(playerStateData.WalkState);
 
         StartCoroutine(dashMove());
     }

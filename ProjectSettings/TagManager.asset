@@ -30,8 +30,8 @@ TagManager:
   - MonsterMovePosition
   - WeaponHand
   - LeftHand
-  - RightFoot
-  - LeftFoot
+  - 
+  - MonsterTrigger
   - Skill
   - Effect
   - Body

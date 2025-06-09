@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: 833b42a4f06586741b84b52df5eee855
+guid: b288d94b84f13934380c2ab4f3b5648c
 ModelImporter:
   serializedVersion: 22200
   internalIDToNameTable:
@@ -55,11 +55,11 @@ ModelImporter:
     extraUserProperties: []
     clipAnimations:
     - serializedVersion: 16
-      name: Attack_Combo_Weapon_3
+      name: Block_Weapon
       takeName: attack_weapon
-      internalID: 1579248015043039937
-      firstFrame: 358
-      lastFrame: 422
+      internalID: 3907173095311654923
+      firstFrame: 345
+      lastFrame: 358
       wrapMode: 0
       orientationOffsetY: 0
       level: 0
@@ -79,37 +79,9 @@ ModelImporter:
       bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
       curves: []
       events:
-      - time: 0.17563732
-        functionName: RangeCheak
-        data: 
-        objectReferenceParameter: {instanceID: 0}
-        floatParameter: 0
-        intParameter: 0
-        messageOptions: 0
-      - time: 0.28045315
-        functionName: AttackCameraEvent
-        data: 
-        objectReferenceParameter: {instanceID: 0}
-        floatParameter: 0
-        intParameter: 1
-        messageOptions: 0
-      - time: 0.28895172
-        functionName: RangeCheak
-        data: 
-        objectReferenceParameter: {instanceID: 0}
-        floatParameter: 0
-        intParameter: 0
-        messageOptions: 0
-      - time: 0.45042473
-        functionName: RangeCheak
-        data: 
-        objectReferenceParameter: {instanceID: 0}
-        floatParameter: 0
-        intParameter: 0
-        messageOptions: 0
-      - time: 0.83503413
-        functionName: ComboEventCheck
-        data: 
+      - time: 0.83237046
+        functionName: AnimationOut
+        data: Block
         objectReferenceParameter: {instanceID: 0}
         floatParameter: 0
         intParameter: 0

@@ -90,6 +90,8 @@ public partial class Player : Character
     List<Slot> slotLists = new List<Slot>();
 
     [Header("Battel System")]
-    BattelTrigger battelTrigger = new BattelTrigger();
+    protected BattelTrigger battelTrigger = new BattelTrigger();
+    protected GameObject battelTriggerObj = new GameObject();
+    protected Collider battelTriggerCol = new Collider();
 
 }

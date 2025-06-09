@@ -16,6 +16,7 @@ public enum PlayerAnimParameters
     AttackCombo,
     Avoidance,
     Dash,
+    Block,
 }
 
 public enum PlayerAnimName

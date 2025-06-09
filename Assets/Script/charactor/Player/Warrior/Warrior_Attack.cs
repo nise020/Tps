@@ -54,7 +54,7 @@ public partial class Warrior : Player
         }
         else
         {
-            attackAnimation(PlayerAttackState.Attack_Off);
+            attackAnimation(PlayerAttackState.Attack_Off,0);
         }
         playerStateData.WeaponState = PlayerWeaponState.Sword_Off;
         scabbardCount = 0;
@@ -62,53 +62,62 @@ public partial class Warrior : Player
     }
     protected override void AutoAttack()
     {
-        attackAnimation(PlayerAttackState.Attack_On);
+        attackAnimation(PlayerAttackState.Attack_On, 0);
     }
     protected override void attack(PlayerModeState _state, PlayerType _job)
     {
+        if (!canReceiveInput &&
+            playerStateData.AttackState == PlayerAttackState.Attack_On) 
+        {
+            return;
+        }
+
         if (_state == PlayerModeState.Player)
         {
             if (playerStateData.WeaponState == PlayerWeaponState.Sword_Off)//Open Weapon
             {
-                StartCoroutine(getSwordEvent(1.5f,0.10f));//speed,event
-                return;
+                playerAnimator.SetInteger(PlayerAnimParameters.GetWeapon.ToString(), 1);
+                StartCoroutine(getWeaponEvent(1.5f,0.10f));//speed,event
             }
-
-            if (playerStateData.WeaponState == PlayerWeaponState.Sword_On &&
-                playerStateData.AttackState == PlayerAttackState.Attack_Off)//attack 
+            else if (playerStateData.WeaponState == PlayerWeaponState.Sword_On) 
             {
-                playerStateData.AttackState = PlayerAttackState.Attack_On;
+                if (canReceiveInput)
+                {
+                    canReceiveInput = false;
+                }
+                else if (playerStateData.AttackState != PlayerAttackState.Attack_On)//attack 
+                {
+                    playerStateData.AttackState = PlayerAttackState.Attack_On;
 
-                attackAnimation(PlayerAttackState.Attack_On);
-                playerAnimator.speed = 1.5f;
+                    attackAnimation(playerStateData.AttackState, 0);
 
-                canReceiveInput = true;
+                    canReceiveInput = true;
+                }
+                else 
+                {
+                    return;
+                    //Debug.LogError($"AttackState = {playerStateData.AttackState},canReceiveInput = {canReceiveInput}");
+                }
             }
-            else if (canReceiveInput == true && currentCombo < 2)
-            {
-                currentCombo++;
-                canReceiveInput = false;
-                scabbardCount = 0;//idel state count Reset
-                //playerAnimtor.SetInteger(PlayerAnimParameters.AttackCombo.ToString(), currentCombo);
-                //return;
-            }
+
+            
 
         }
     }
-    IEnumerator getSwordEvent(float _animationSpeed,float _event) 
+    protected IEnumerator getWeaponEvent(float _animationSpeed,float _event) 
     {
-
-        playerAnimator.SetInteger(PlayerAnimParameters.GetWeapon.ToString(), 1);
-
         float originalTimeToAttach = _event; //Event Time
 
         float delay = originalTimeToAttach / _animationSpeed;
 
         yield return new WaitForSeconds(delay);
 
+        GetWeapon();
+    }
+    protected override void GetWeapon()
+    {
         GetSword();
     }
-
     IEnumerator PlayAttackCombo()
     {
         currentCombo = 1;

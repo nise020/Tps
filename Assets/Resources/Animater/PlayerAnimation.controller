@@ -102,7 +102,7 @@ AnimatorState:
   m_MirrorParameterActive: 0
   m_CycleOffsetParameterActive: 0
   m_TimeParameterActive: 0
-  m_Motion: {fileID: 0}
+  m_Motion: {fileID: -203655887218126122, guid: dea5f98b691ba0a43a195b99265b560d, type: 3}
   m_Tag: 
   m_SpeedParameter: 
   m_MirrorParameter: 
@@ -550,7 +550,7 @@ AnimatorState:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: idle
+  m_Name: idle_Gun
   m_Speed: 1
   m_CycleOffset: 0
   m_Transitions:
@@ -796,20 +796,20 @@ AnimatorStateMachine:
     m_Position: {x: 610, y: -50, z: 0}
   - serializedVersion: 1
     m_State: {fileID: 5307832959919412555}
-    m_Position: {x: 670, y: 100, z: 0}
+    m_Position: {x: -30, y: 190, z: 0}
   - serializedVersion: 1
     m_State: {fileID: -1034353674692279342}
-    m_Position: {x: -30, y: -110, z: 0}
+    m_Position: {x: -50, y: -200, z: 0}
   - serializedVersion: 1
     m_State: {fileID: -3661793991399145742}
-    m_Position: {x: -60, y: 40, z: 0}
+    m_Position: {x: -110, y: -100, z: 0}
   m_ChildStateMachines: []
   m_AnyStateTransitions: []
   m_EntryTransitions: []
   m_StateMachineTransitions: {}
   m_StateMachineBehaviours: []
-  m_AnyStatePosition: {x: 30, y: 320, z: 0}
-  m_EntryPosition: {x: 10, y: 150, z: 0}
+  m_AnyStatePosition: {x: 100, y: 380, z: 0}
+  m_EntryPosition: {x: 200, y: 270, z: 0}
   m_ExitPosition: {x: 620, y: 190, z: 0}
   m_ParentStateMachinePosition: {x: 800, y: 20, z: 0}
   m_DefaultState: {fileID: -550096528866803641}
@@ -1104,7 +1104,7 @@ AnimatorState:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: mixamo_com
+  m_Name: Death
   m_Speed: 1
   m_CycleOffset: 0
   m_Transitions: []

@@ -80,6 +80,9 @@ public class InputManager : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.Space))
             KeyinPutQueData.Enqueue(KeyCode.Space);//Space
 
+        if (Input.GetKeyDown(KeyCode.LeftControl))
+            KeyinPutQueData.Enqueue(KeyCode.LeftControl);//Space
+
         Vector3 move = new Vector3(Input.GetAxisRaw("Horizontal"), 0, Input.GetAxisRaw("Vertical"));
         if (move.magnitude > 0.1f) MoveQueData.Enqueue(move);
 

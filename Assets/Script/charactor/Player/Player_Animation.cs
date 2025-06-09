@@ -93,7 +93,7 @@ public partial class Player : Character
         playerStateData.WalkState = PlayerWalkState.Run;
         playerAnimator.speed = 1f;
         //playerAnimator.StartPlayback();
-        WalkStateChangeAnimation(playerStateData.WalkState);
+        WalkStateAnimation(playerStateData.WalkState);
 
         walkStateChangeTimer = walkStateChangeTime;
 
@@ -108,15 +108,7 @@ public partial class Player : Character
             return;
         }
 
-        if (_type == "Attack")
-        {
-            playerAnimator.SetInteger(PlayerAnimParameters.Attack.ToString(), 0);
-        }
-        else if (_type == "ComboAttack")
-        {
-            playerAnimator.SetInteger(PlayerAnimParameters.AttackCombo.ToString(), 0);
-        }
-        else if(_type == PlayerAnimParameters.Avoidance.ToString())
+        if(_type == PlayerAnimParameters.Avoidance.ToString())
         {
             playerAnimator.SetInteger(PlayerAnimParameters.Avoidance.ToString(), 0);
 
@@ -126,9 +118,28 @@ public partial class Player : Character
         {
             playerAnimator.speed = 1f;
             playerStateData.WalkState = PlayerWalkState.Run;
-            WalkStateChangeAnimation(playerStateData.WalkState);
+            WalkStateAnimation(playerStateData.WalkState);
+        }
+        else if (_type == PlayerAnimParameters.Block.ToString())
+        {
+            playerStateData.AttackState = PlayerAttackState.Attack_Off;
+            attackAnimation(playerStateData.AttackState, 0);
         }
     }
+
+    public void AnimationCheck(string _type)
+    {
+        if (_type == PlayerAnimParameters.Block.ToString())
+        {
+            if (playerStateData.AttackState == PlayerAttackState.Attack_Off)
+            {
+
+            }
+            playerStateData.AttackState = PlayerAttackState.Attack_Off;
+            attackAnimation(playerStateData.AttackState, 0);
+        }
+    }
+
     public void AttackCameraEvent(int _value) //AnimationEvent
     {
         if (_value == 1) 
@@ -223,18 +234,41 @@ public partial class Player : Character
     //        clearWalkAnimation(playerStateData.PlayerType);
     //    }
     //}
-    protected void attackAnimation(PlayerAttackState _state)
+    protected void attackAnimation(PlayerAttackState _state,int _comboValue)
     {
-        if (_state == PlayerAttackState.Attack_On)//Off
+        switch (_state)
         {
-            //viewcam.cameraShakeAnim(true);
-            playerAnimator.SetInteger(PlayerAnimParameters.Attack.ToString(), 1);
+            case PlayerAttackState.Attack_On:
+                playerAnimator.SetInteger(PlayerAnimParameters.Attack.ToString(), 1);
+                playerAnimator.SetInteger(PlayerAnimParameters.AttackCombo.ToString(), 0);
+                break;
+            case PlayerAttackState.Attack_Off:
+                playerAnimator.SetInteger(PlayerAnimParameters.Attack.ToString(), 0);
+                playerAnimator.SetInteger(PlayerAnimParameters.Block.ToString(), 0);
+                playerAnimator.SetInteger(PlayerAnimParameters.AttackCombo.ToString(),0);
+                break;
+            case PlayerAttackState.Block:
+                playerAnimator.SetInteger(PlayerAnimParameters.Attack.ToString(), 0);
+                playerAnimator.SetInteger(PlayerAnimParameters.Block.ToString(), 1);
+                break;
+            case PlayerAttackState.Attack_Combo:
+                playerAnimator.SetInteger(PlayerAnimParameters.Attack.ToString(), 0);
+                playerAnimator.SetInteger(PlayerAnimParameters.AttackCombo.ToString(), _comboValue);
+                break;
         }
-        else if (_state == PlayerAttackState.Attack_Off)
-        {
-            //viewcam.cameraShakeAnim(false);
-            playerAnimator.SetInteger(PlayerAnimParameters.Attack.ToString(), 0);
-        }
+
+
+
+        //if (_state == PlayerAttackState.Attack_On)//Off
+        //{
+        //    //viewcam.cameraShakeAnim(true);
+        //    playerAnimator.SetInteger(PlayerAnimParameters.Attack.ToString(), 1);
+        //}
+        //else if (_state == PlayerAttackState.Attack_Off)
+        //{
+        //    //viewcam.cameraShakeAnim(false);
+        //    playerAnimator.SetInteger(PlayerAnimParameters.Attack.ToString(), 0);
+        //}
     }
     protected void runAnimation(float _move)
     {
@@ -330,7 +364,20 @@ public partial class Player : Character
     //        clearWalkAnimation(playerStateData.PlayerType);
     //    }
     //}
-    protected virtual void WalkStateChangeAnimation(PlayerWalkState _state) 
+    //protected void blockAnimation(PlayerAttackState _state) 
+    //{
+    //    if (_state == PlayerAttackState.Block_On)//Off
+    //    {
+    //        //viewcam.cameraShakeAnim(true);
+    //        playerAnimator.SetInteger(PlayerAnimParameters.Attack.ToString(), 1);
+    //    }
+    //    else if (_state == PlayerAttackState.Attack_Off)
+    //    {
+    //        //viewcam.cameraShakeAnim(false);
+    //        playerAnimator.SetInteger(PlayerAnimParameters.Attack.ToString(), 0);
+    //    }
+    //}
+    protected virtual void WalkStateAnimation(PlayerWalkState _state) 
     {
         switch (_state) 
         {

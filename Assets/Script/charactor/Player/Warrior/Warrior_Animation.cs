@@ -7,40 +7,45 @@ public partial class Warrior : Player
     [SerializeField] GameObject scabbard;
 
     int scabbardCount = 0;
-    int scabbardMaxCount = 2;
+    int scabbardMaxCount = 4;
+    public void ResetCombo()
+    {
+        playerStateData.AttackState = PlayerAttackState.Attack_Off;
+        attackAnimation(playerStateData.AttackState, 0);
 
+        canReceiveInput = false;
+    }
     public void ComboEventCheck(int _value) //AnimationEvent
     {
-        
-        if (_value == 0 || (_value <= 2 && canReceiveInput)) // 마지막 콤보 (더 이상 연결 없음)
+
+        if (_value == 0) 
         {
-            playerAnimator.SetInteger(PlayerAnimParameters.AttackCombo.ToString(), 0);
-
-            attackAnimation(PlayerAttackState.Attack_Off);
-
-            playerAnimator.speed = 1.0f;
-
-            if (!canReceiveInput) 
-            {
-                canReceiveInput = true;
-            }
-
-            playerStateData.AttackState = PlayerAttackState.Attack_Off;
-
-            currentCombo = 0;
+            ResetCombo();
             return;
         }
-        else if (canReceiveInput == false && _value <= 2) 
+
+        if (!canReceiveInput)
         {
-            attackAnimation(PlayerAttackState.Attack_Off);
-            playerStateData.AttackState = PlayerAttackState.Attack_Combo;
+            //playerStateData.AttackState = PlayerAttackState.Attack_Off;
+            //attackAnimation(PlayerAttackState.Attack_Combo, _value);
 
-            playerAnimator.SetInteger(PlayerAnimParameters.AttackCombo.ToString(), _value);
-            playerAnimator.speed = 1.5f;
-
+            //playerAnimator.speed = 1.5f;
+            attackAnimation(PlayerAttackState.Attack_Combo, _value);
             canReceiveInput = true;
-        }
 
+            return;
+        }
+        else 
+        {
+            ResetCombo();
+        }
+        //else 
+        //{
+        //    Debug.LogError($"AttackState = {playerStateData.AttackState},canReceiveInput = {canReceiveInput}");
+        //}
+
+        //AnimatorStateInfo state = playerAnimator.GetCurrentAnimatorStateInfo(0);
+        //Debug.Log("Current normalized time: " + state.normalizedTime);
         //float clipLength = GetClipLength($"Attack_Combo_Weapon_{currentCombo}");
 
         //if (clipLength <= 0f)
@@ -52,16 +57,7 @@ public partial class Warrior : Player
         //float adjustedTime = clipLength / playerAnimtor.speed;
         //StartCoroutine(PlayAttackComboCheck(adjustedTime, _value));
     }
-    private void ResetCombo()
-    {
-        currentCombo = 0;
-        canReceiveInput = false;
 
-        playerAnimator.SetInteger(PlayerAnimParameters.AttackCombo.ToString(), 0);
-        playerAnimator.speed = 1.0f;
-
-        playerStateData.AttackState = PlayerAttackState.Attack_Off;
-    }
     IEnumerator PlayAttackComboCheck(float _timer,int _value) 
     {
         yield return new WaitForSeconds(_timer);
@@ -110,11 +106,11 @@ public partial class Warrior : Player
     }
     public void ScabbardInTheSword() //AnimationEvent
     {
+        playerStateData.WeaponState = PlayerWeaponState.Sword_Off;
         GameObject go = weaponObj.gameObject;
         go.transform.SetParent(scabbard.gameObject.transform);
         go.transform.localPosition = weaponOriginalPos;
         go.transform.localRotation = Quaternion.identity;
-        playerStateData.WeaponState = PlayerWeaponState.Sword_Off;
     }
     protected override void walkAnim(PlayerWalkState _state, Vector3 _pos)
     {

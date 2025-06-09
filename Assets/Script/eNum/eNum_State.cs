@@ -106,8 +106,9 @@ public enum PlayerAttackState
     Attack_Combo,
     Reload_On,
     Reload_Off,
-    SwordOn,
-    SwordOff,
+    Block,
+    //SwordOn,
+    //SwordOff,
 
 }
 public enum PlayerModeState

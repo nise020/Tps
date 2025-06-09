@@ -9,8 +9,12 @@ public class BattelTrigger : MonoBehaviour
     {
         player = _player;
     }
-    //private void OnTriggerEnter(Collider other)
-    //{
-    //    player.
-    //}
+    private void OnTriggerEnter(Collider other)
+    {
+        if (other.gameObject.layer == LayerMask.NameToLayer(LayerName.Monster.ToString())) 
+        {
+            Monster monster = other.gameObject.GetComponent<Monster>();
+            monster.AiStateUpdate(AiState.Reset);
+        }
+    }
 }

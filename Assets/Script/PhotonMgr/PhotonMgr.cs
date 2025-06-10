@@ -19,7 +19,7 @@ public partial class PhotonMgr : MonoBehaviourPunCallbacks//응답이 오면 그때 처�
 
         PhotonNetwork.GameVersion = "1.0.0";//같은 버전 끼리만 가능
         PhotonNetwork.SendRate = 20;//통신 속ㄷ도
-        PhotonNetwork.SerializationRate = 10;
+        PhotonNetwork.SerializationRate = 10;//암호화 속도
         PhotonNetwork.ConnectUsingSettings();//연결 시돟
 
 
@@ -50,5 +50,9 @@ public partial class PhotonMgr : MonoBehaviourPunCallbacks//응답이 오면 그때 처�
 
    }
 
+    public void LeaveLobby() 
+    {
+        PhotonNetwork.LeaveLobby();
+    }
 
 }

@@ -14,11 +14,15 @@ public partial class Player : Character
     protected override void Start()
     {      
         base.Start();
+        FindWeaponObject(LayerName.Weapon);
+
         viewcam = GetComponentInChildren<PlayerCamera>();
+
         if (playerStateData.ModeState == PlayerModeState.Npc)
         {
             viewcam.gameObject.SetActive(false);
         }
+
         PLAYERAI.init(this);//FSM
         slotinit();
 
@@ -31,8 +35,8 @@ public partial class Player : Character
 
         AttackEvent += AiTagetUpdate;
 
-        battelTrigger = GetComponentInChildren<BattelTrigger>();
-        battelTriggerCol = battelTrigger.gameObject.GetComponent<Collider>();
+        battelTrigger = weaponObj.GetComponent<BattelTrigger>();
+        battelTriggerCol = battelTrigger.gameObject.GetComponent<BoxCollider>();
         battelTriggerCol.enabled = false;
     }
 

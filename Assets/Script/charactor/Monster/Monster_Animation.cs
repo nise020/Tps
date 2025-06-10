@@ -16,19 +16,23 @@ public partial class Monster : Character
         //sin °î¼±<- gmsemffla
         if (monsterStateData.MonsterType == MonsterType.Sphere)
         {
-            DirectAttack(charactorModelTrs.gameObject, HItPalyer.transform.position);
+            DirectAttack(charactorModelTrs.gameObject, targetTrs.position);
             attackRangeCheck();
         }
         else if (monsterStateData.MonsterType == MonsterType.Spider)
-        {        
+        {
+            Granad granad = weaponObj.GetComponent<Granad>();
             weaponObj.SetActive(true);
+
+            granad.CharcterInit(this);
+            granad.WeaponObjectOn();
             //granaidAttack(charactorModelTrs.position, HItPalyer.transform.position, weaponObj);
-            granaidAttack(weaponHandObject.transform.position, HItPalyer.transform.position, weaponObj);
+            granaidAttack(weaponHandObject.transform.position, targetTrs.position, weaponObj);
 
         }
         else if (monsterStateData.MonsterType == MonsterType.Dron)
         {
-            DirectAttack(charactorModelTrs.gameObject, HItPalyer.transform.position);
+            DirectAttack(charactorModelTrs.gameObject, targetTrs.position);
             attackRangeCheck();
         }
     }
@@ -36,7 +40,7 @@ public partial class Monster : Character
     public void AttackAnimationOut()//AnimationEvent
     {
         monsterStateData.AttackState = MonsterAttackState.Attack_Off;
-        attackAnimation(MonsterAttackState.Attack_Off);
+        attackAnimation(monsterStateData.AttackState);
     }
     public void DeathAnimationOut()//AnimationEvent
     {

@@ -122,6 +122,8 @@ public partial class Player : Character
         }
         else if (_type == PlayerAnimParameters.Block.ToString())
         {
+            battelTriggerCol.enabled = false;
+
             playerStateData.AttackState = PlayerAttackState.Attack_Off;
             attackAnimation(playerStateData.AttackState, 0);
         }

@@ -54,6 +54,16 @@ public partial class Monster : Character
         deathAnimation(MonsterDeathsState.Deaths_On);
     }
 
-    
+    protected void attackRangeCheck()
+    {
+        //attackAnimation(MonsterAttackState.Attack_On);
+
+        float dist = Vector3.Distance(charactorModelTrs.position, targetTrs.position);
+        if (dist < hitRange)
+        {
+            Player player = targetTrs.gameObject.GetComponentInParent<Player>();
+            Shared.BattelManager.DamageCheck(this, HItPalyer);
+        }
+    }
 
 }

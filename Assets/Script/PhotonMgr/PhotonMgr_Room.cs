@@ -28,10 +28,10 @@ public partial class PhotonMgr : MonoBehaviourPunCallbacks//응답이 오면 그때 처�
         PhotonNetwork.LeaveRoom(_com); 
     }
 
-    public void LeaveLobby()
-    {
-        PhotonNetwork.LeaveLobby();
-    }
+    //public void LeaveLobby()
+    //{
+    //    PhotonNetwork.LeaveLobby();
+    //}
 
     public void SecreatLobbyRoom(string _Room, byte _Secreat, byte _MaxPlayer)
     {

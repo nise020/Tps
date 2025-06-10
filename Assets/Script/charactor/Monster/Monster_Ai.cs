@@ -24,7 +24,6 @@ public partial class Monster : Character
     }
     public void AiStateUpdate(AiState _state)
     {
-        monsterStateData.AttackState = MonsterAttackState.Attack_On;
         MONSTERAI.AIStateUpdate(_state);
     }
     public void AiTagetUpdate(bool _check)
@@ -150,16 +149,7 @@ public partial class Monster : Character
 
     }
 
-    protected void attackRangeCheck()
-    {
-        attackAnimation(MonsterAttackState.Attack_On);
-
-        float dist = Vector3.Distance(charactorModelTrs.position, HItPalyer.transform.position);
-        if (dist < stopDistanseValue)
-        {
-            Shared.BattelManager.DamageCheck(this, HItPalyer);
-        }
-    }
+   
 
     public float TargetDistanseCheck(Vector3 _pos)//수정 필요
     {
@@ -224,20 +214,26 @@ public partial class Monster : Character
             targetRotation, Time.deltaTime * rotationSpeed);
         }
 
-        moveAnimation(monsterStateData.WalkState);
+        moveAnimation(monsterStateData.WalkState);//<- 여기 수정 필요
     }
     public void Ai_Attack(Transform _transform)//거리이내에 있는 적에게 데미지 로직 필요
     {
+        if (monsterStateData.AttackState == MonsterAttackState.Attack_On)
+        {
+            return;
+        }
+
         //charactorModelTrs.rotation = Quaternion.LookRotation(_transform.position);
-        
-        stopDilay = true;
-        
+
+        //stopDilay = true;
+
         monsterStateData.WalkState = MonsterWalkState.Walk_Off;
         moveAnimation(monsterStateData.WalkState);
 
         charactorModelTrs.LookAt(_transform);
+        targetTrs = _transform;
 
-        //MonsterAttack();
+        MonsterAttack();
 
         //Debug.Log($"{_transform.position}");
         //charactorModelTrs.rotation = Quaternion.Slerp(charactorModelTrs.rotation, targetRotation, Time.deltaTime * rotationSpeed);
@@ -251,20 +247,23 @@ public partial class Monster : Character
     //돌진 공격을 하는 몬스터는 로직을 다르게 할 필요가 있음
     //Attack
     {
-        if (monsterStateData.MonsterType == MonsterType.Sphere ||
-           monsterStateData.MonsterType == MonsterType.Dron)
-        {
-            attackAnimation(MonsterAttackState.Attack_On);
-        }
-        else if (monsterStateData.MonsterType == MonsterType.Spider)
-        {
-            Granad granad = weaponObj.GetComponent<Granad>();
+        monsterStateData.AttackState = MonsterAttackState.Attack_On;
+        attackAnimation(monsterStateData.AttackState);
 
-            if (granad.skillstate == SkillState.SkillOff)
-            {
-                attackAnimation(MonsterAttackState.Attack_On);
-            }
-        }
+        //if (monsterStateData.MonsterType == MonsterType.Sphere ||
+        //   monsterStateData.MonsterType == MonsterType.Dron)
+        //{
+        //    attackAnimation(monsterStateData.AttackState);
+        //}
+        //else if (monsterStateData.MonsterType == MonsterType.Spider)
+        //{
+        //    Granad granad = weaponObj.GetComponent<Granad>();
+
+        //    if (granad.skillstate == SkillState.SkillOff)
+        //    {
+        //        attackAnimation(monsterStateData.AttackState);
+        //    }
+        //}
         //_state = SearchState.Wait;
         //StartCoroutine(WaitTimer(_state));
     }

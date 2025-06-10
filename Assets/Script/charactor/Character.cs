@@ -41,7 +41,7 @@ public abstract partial class Character : Actor
     protected virtual void Start()
     {
         FindBodyObject();
-        FindWeaponObject(LayerName.Weapon);
+        
         InfoLoad();
         
     }

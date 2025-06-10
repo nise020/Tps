@@ -13,6 +13,7 @@ public enum LayerName
     SpawnDron,
     SpawnSphere,
     Weapon,
+    MonsterWeapon,
     ViewPoint,
     BackPosition1,
     BackPosition2,

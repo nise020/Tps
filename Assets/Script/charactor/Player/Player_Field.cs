@@ -8,7 +8,7 @@ public partial class Player : Character
 {
     protected PlayerCamera viewcam;
     protected AI_Auto PLAYERAI = new AI_Auto();
-    
+
     protected Rigidbody rigid;
     protected Animator playerAnimator;
 
@@ -91,7 +91,7 @@ public partial class Player : Character
 
     [Header("Battel System")]
     protected BattelTrigger battelTrigger = new BattelTrigger();
-    protected GameObject battelTriggerObj = new GameObject();
-    protected Collider battelTriggerCol = new Collider();
+    protected GameObject battelTriggerObj;// = new GameObject();
+    protected BoxCollider battelTriggerCol;// = new Collider();
 
 }

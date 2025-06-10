@@ -57,6 +57,7 @@ public partial class Monster : Character
 
     [Header("Ai")]
     Player HItPalyer;
+    Transform targetTrs;
     List<Slot> slots = new List<Slot>();
     int slotCount = 0;
     //protected MonsterWalkState walkState = MonsterWalkState.Walk_Off;
@@ -65,6 +66,7 @@ public partial class Monster : Character
     protected float stopDistanseValue = 0.2f;
     protected float searchRange = 20.0f;
     protected float attackRange = 5.0f;
+    protected float hitRange = 0.3f;
     //Vector3 targetPos;
     Vector3 movePosition = Vector3.zero;
     bool stopDilay = false;

@@ -14,7 +14,16 @@ public class BattelTrigger : MonoBehaviour
         if (other.gameObject.layer == LayerMask.NameToLayer(LayerName.Monster.ToString())) 
         {
             Monster monster = other.gameObject.GetComponent<Monster>();
-            monster.AiStateUpdate(AiState.Reset);
+
+            if (monster.AttackStateLoad())
+            {
+                AttackCansle(monster);
+            }
+            else { return; }
         }
+    }
+    public void AttackCansle(Monster _monster) 
+    {
+        _monster.AiStateUpdate(AiState.Reset);
     }
 }

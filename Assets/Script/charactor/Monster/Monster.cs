@@ -24,8 +24,12 @@ public partial class Monster : Character
     protected override void Start() 
     {
         base.Start();
+        FindWeaponObject(LayerName.MonsterWeapon);
+
         monsterAnimator = GetComponent<Animator>();
+
         creatTabObj = Shared.GameManager.creatTab;//¿ÀºêÁ§Æ® »ý¼º ÅÇ(ex.ÃÑ¾Ë)
+
         MONSTERAI.init(this, SKILL);
         //MONSTERAI.Type(monsterStateData.MonsterType);
 

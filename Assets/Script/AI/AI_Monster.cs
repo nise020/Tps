@@ -79,21 +79,6 @@ public partial class AiMonster : AiBase
     {
         Debug.Log($"{MONSTER},Move");
 
-        //if (searchingState == SearchState.Move) 
-        //{
-        //    aIState = MonsterAiState.Search;//Re Search
-        //    return;
-        //}
-
-        //if (MONSTER.TargetAttackMove(out searchingState))//목표를 놓쳤을때 로직 필요
-        //{
-        //    if (searchingState == SearchState.Stop) 
-        //    {
-        //        aIState = MonsterAiState.Attack;
-        //    }
-        //}
-
-
         float value = MONSTER.TargetDistanseCheck(_pos);
 
         if (MONSTER.AttackDistanseCheck(value) == true&&
@@ -135,8 +120,4 @@ public partial class AiMonster : AiBase
         }
     }
 
-    public void searchingStateUpdate(SearchState _state) 
-    {
-        //searchingState = _state;
-    }
 }

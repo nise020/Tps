@@ -24,6 +24,7 @@ public partial class Player : Character
 
         playerStateData.AttackState = PlayerAttackState.Block;
         attackAnimation(playerStateData.AttackState, 0);
+
         battelTriggerCol.enabled = true;
     }
     protected virtual void GetWeapon() 

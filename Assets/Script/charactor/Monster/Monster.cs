@@ -19,7 +19,7 @@ public partial class Monster : Character
     protected bool viewHpBar = false;
     protected virtual void Awake() 
     {
-        objType = ObjectType.Monster;
+        //objType = ObjectType.Monster;
     }
     protected override void Start() 
     {
@@ -44,18 +44,37 @@ public partial class Monster : Character
 
     protected override void FindWeaponObject(LayerName _name)
     {
-        MeshRenderer[] mesh = GetComponentsInChildren<MeshRenderer>();
+        Weapon[] weaponData = GetComponentsInChildren<Weapon>();
+
         int value = LayerMask.NameToLayer(_name.ToString());
-        foreach (var skinObj in mesh)
+        foreach (var skinObj in weaponData)
         {
-            if (skinObj.gameObject.layer == value)
+            //Transform weapontrs = skinObj.transform.parent;
+
+            //MainWeaponObj = weapontrs.gameObject;
+
+            //weaponOriginalPos = MainWeaponObj.transform.localPosition;
+
+            //MAINWEAPON = MainWeaponObj.GetComponent<Granad>();
+            //MAINWEAPON.CharcterInit(this);
+
+            WeaponType type = skinObj.WeaponType;
+
+            if (type == WeaponType.Main)
             {
-                Transform weapontrs = skinObj.transform.parent;
+                MAINWEAPON = skinObj.GetComponent<Weapon>();
+                MAINWEAPON.CharcterInit(this);
+                MainWeaponObj = skinObj.gameObject;
 
-                weaponObj = weapontrs.gameObject;
+                weaponOriginalPos = MainWeaponObj.transform.localPosition;
+            }
+            else if (type == WeaponType.Sub)
+            {
+                SUBWEAPON = skinObj.gameObject.GetComponent<Granad>();
+                SUBWEAPON.CharcterInit(this);
+                SubWeaponObj = skinObj.gameObject;
 
-                weaponOriginalPos = weaponObj.transform.localPosition;
-                break;
+                weaponOriginalPos = SubWeaponObj.transform.localPosition;
             }
         }
     }

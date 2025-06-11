@@ -100,7 +100,7 @@ SphereCollider:
     serializedVersion: 2
     m_Bits: 0
   m_LayerOverridePriority: 0
-  m_IsTrigger: 1
+  m_IsTrigger: 0
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
@@ -149,8 +149,7 @@ LineRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_Positions:
-  - {x: 0, y: 2.2, z: 1.3119988}
-  - {x: 0, y: 2.3164763, z: -0.20398653}
+  - {x: 0, y: 0, z: 0}
   m_Parameters:
     serializedVersion: 3
     widthMultiplier: 1
@@ -158,8 +157,8 @@ LineRenderer:
       serializedVersion: 2
       m_Curve:
       - serializedVersion: 3
-        time: 0.05909091
-        value: 0.44
+        time: 0.025192615
+        value: 0.13387764
         inSlope: 1.4976914
         outSlope: 1.4976914
         tangentMode: 0
@@ -167,8 +166,8 @@ LineRenderer:
         inWeight: 0.11707855
         outWeight: 0.24390246
       - serializedVersion: 3
-        time: 0.47906694
-        value: 0.3919841
+        time: 0.44940594
+        value: 0.08586174
         inSlope: 0
         outSlope: 0
         tangentMode: 0
@@ -217,7 +216,7 @@ LineRenderer:
       m_ColorSpace: -1
       m_NumColorKeys: 2
       m_NumAlphaKeys: 2
-    numCornerVertices: 0
+    numCornerVertices: 2
     numCapVertices: 0
     alignment: 0
     textureMode: 0
@@ -5136,6 +5135,7 @@ GameObject:
   m_Component:
   - component: {fileID: 6110151848662743104}
   - component: {fileID: 4061457886737221380}
+  - component: {fileID: 6637733983377503510}
   m_Layer: 0
   m_Name: Fab_Granad
   m_TagString: Untagged
@@ -5175,6 +5175,33 @@ MonoBehaviour:
   startPos: {x: 0, y: 0, z: 0}
   explotionObj: {fileID: 0}
   skillstate: 1
+--- !u!54 &6637733983377503510
+Rigidbody:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2510131076140555390}
+  serializedVersion: 4
+  m_Mass: 1
+  m_Drag: 0
+  m_AngularDrag: 0.05
+  m_CenterOfMass: {x: 0, y: 0, z: 0}
+  m_InertiaTensor: {x: 1, y: 1, z: 1}
+  m_InertiaRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ImplicitCom: 1
+  m_ImplicitTensor: 1
+  m_UseGravity: 1
+  m_IsKinematic: 0
+  m_Interpolate: 0
+  m_Constraints: 0
+  m_CollisionDetection: 0
 --- !u!1 &5520370622831462281
 GameObject:
   m_ObjectHideFlags: 0

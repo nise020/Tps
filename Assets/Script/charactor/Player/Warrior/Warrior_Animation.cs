@@ -79,7 +79,7 @@ public partial class Warrior : Player
 
     public void GetSword()//AnimationEvent
     {
-        GameObject go = weaponObj.gameObject;
+        GameObject go = MainWeaponObj.gameObject;
         go.transform.SetParent(weaponHandObject.gameObject.transform);
         go.transform.localPosition = Vector3.zero;
         go.transform.localRotation = Quaternion.identity;
@@ -107,7 +107,7 @@ public partial class Warrior : Player
     public void ScabbardInTheSword() //AnimationEvent
     {
         playerStateData.WeaponState = PlayerWeaponState.Sword_Off;
-        GameObject go = weaponObj.gameObject;
+        GameObject go = MainWeaponObj.gameObject;
         go.transform.SetParent(scabbard.gameObject.transform);
         go.transform.localPosition = weaponOriginalPos;
         go.transform.localRotation = Quaternion.identity;

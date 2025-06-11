@@ -39,6 +39,7 @@ public class PlayerChangeButten : MonoBehaviour
         Character charactor = PlayerCharacter;
 
         hpBar.CharactorInIt(charactor);
+        PlayerCharacter.HpInIt(hpBar);
     }
     
 

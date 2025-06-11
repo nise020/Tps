@@ -7,6 +7,7 @@ using System.Net.Mail;
 using UnityEditor;
 using UnityEngine;
 using UnityEngine.Networking;
+using UnityEngine.TextCore.Text;
 
 public class BattelManager : MonoBehaviour
 {
@@ -31,7 +32,14 @@ public class BattelManager : MonoBehaviour
     public GameObject attackAim;
     [SerializeField] GameObject startPointObj;
     [SerializeField, Tooltip("공격 감지")] public List<bool> AttackSearch;
-    [SerializeField] List< Monster> MONSTEROBJ;
+
+    [Header("Character/List")]
+    [SerializeField] List< Monster> Monsters;
+    [SerializeField] List<GameObject> MonstersObj;
+    [SerializeField] List< Player> Players;
+    [SerializeField] List<GameObject> PlayersObj;
+    [SerializeField] List< Character> Characters;
+    [SerializeField] List<GameObject> CharactersObj;
 
     [SerializeField] Shader damageShader;
     [SerializeField] Material damageMaterial;
@@ -55,7 +63,41 @@ public class BattelManager : MonoBehaviour
     //일정 시간 후 부활(위치는 원래 위치)
     //몬스터나 플레이어 생성시 사용할 아이템도 생성
     #endregion
+    public List<GameObject> LoadToCharcterList(ObjectType _type) 
+    {
+        switch (_type)
+        {
+            case ObjectType.Player:
+                //if (PlayersObj.Count == 0) 
+                //{
+                //    Shared.GameManager.
+                //}
+                return PlayersObj;
 
+            case ObjectType.Monster:
+                return MonstersObj;
+
+            default:
+                return null;
+        }
+
+    }
+    public void AddDataToCharcterList(ObjectType _type, Character _character) 
+    {
+        switch (_type)
+        {
+            case ObjectType.Player:
+                Players.Add(_character as Player);
+                PlayersObj.Add(_character.gameObject);
+                break;
+            case ObjectType.Monster:
+                Monsters.Add(_character as Monster);
+                MonstersObj.Add(_character.gameObject);
+                break;
+        }
+        Characters.Add(_character);
+        CharactersObj.Add(_character.gameObject);
+    }
     public void Timer() //이걸 인게임 시간으로 사용 예정
     {
         
@@ -90,7 +132,7 @@ public class BattelManager : MonoBehaviour
         Debug.Log($"damageShader = {damageShader}");
     }
 
-    public void DamageCheck(Character _attacker, Character _defender) 
+    public void DamageCheck(Character _attacker, Character _defender,Item _weapon) 
     {
         float defenserHp = _defender.StatusTypeLoad(StatusType.HP);
 
@@ -98,14 +140,24 @@ public class BattelManager : MonoBehaviour
 
         float attakerPower = _attacker.StatusTypeLoad(StatusType.Power);
 
-        float CriticalValue = _attacker.StatusTypeLoad(StatusType.CritRate);
+        float weaponPower = 0.0f;
+
+        if (_weapon != null) 
+        {
+            weaponPower = _weapon.WeaponStatusLoad(StatusType.Power);
+        }
+        //float CriticalValue = _attacker.StatusTypeLoad(StatusType.CritRate);
 
         //attakerPower = DamageCalculator(attakerPower, CriticalValue);
 
-        defenserHp = defenserHp - attakerPower;
-        //defenserHp = defenserHp - 1000;
+        defenserHp = defenserHp - (attakerPower + weaponPower);
+        //defenserHp = defenserHp - 1000; <- TEST
 
         //State
+        Debug.Log($"attakerPower ={attakerPower}\n" +
+            $"weaponPower = {weaponPower}\n" +
+            $"defenserHp = {defenserHp}");
+
         _defender.StatusUpLoad(defenserHp);
 
         if (defenserHp <= 0)
@@ -126,7 +178,7 @@ public class BattelManager : MonoBehaviour
             DamageColor(_defender);
         }
 
-        HpBar hpBar = _defender.GetComponentInChildren<HpBar>();//임시로 몬스터만 있음
+        HpBar hpBar = _defender.HpDataLoad();
         hpBar.AttackDamageEvent?.Invoke((int)attakerPower);
 
     }

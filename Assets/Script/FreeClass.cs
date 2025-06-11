@@ -73,6 +73,11 @@ public class ItemStateData
 {
     public ItemType itemType = ItemType.None;
 
-    public WeaponEnum WeaponType = WeaponEnum.None;
-    public PlayerType AcceptType = PlayerType.None;
+    public WeaponclassType WeaponType = WeaponclassType.None;
+    public PlayerType AcceptPlayerType = PlayerType.None;
+
 }
+//public class WeaponStateData : ItemStateData 
+//{
+//    //public WeaponType WeaponClass = WeaponType.No;
+//}

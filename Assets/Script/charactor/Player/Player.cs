@@ -8,7 +8,7 @@ public partial class Player : Character
 {
     protected virtual void Awake()
     {
-        objType = ObjectType.Player;
+        //objType = ObjectType.Player;
     }
     //protected GameObject WeaponObj;
     protected override void Start()
@@ -35,9 +35,13 @@ public partial class Player : Character
 
         AttackEvent += AiTagetUpdate;
 
-        battelTrigger = weaponObj.GetComponent<BattelTrigger>();
-        battelTriggerCol = battelTrigger.gameObject.GetComponent<BoxCollider>();
-        battelTriggerCol.enabled = false;
+        battelTrigger = MainWeaponObj.GetComponent<BattelTrigger>();
+        if (battelTrigger) 
+        {
+            battelTriggerCol = battelTrigger.gameObject.GetComponent<BoxCollider>();
+            battelTriggerCol.enabled = false;
+        }
+
     }
 
     private void FixedUpdate()

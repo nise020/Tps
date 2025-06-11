@@ -70,12 +70,12 @@ public static class Factory
                 break;
         }
 
-        switch (_type) //이대로 사용하면 모노비헤이비어를 상속 못 받음
-        {
-            case ItemType.Weapon:
-                item = new Weapon();//이 부분이 바뀌게 된다
-                break;
-        }
+        //switch (_type) //이대로 사용하면 모노비헤이비어를 상속 못 받음
+        //{
+        //    case ItemType.Weapon:
+        //        item = new Weapon();//이 부분이 바뀌게 된다
+        //        break;
+        //}
 
         //Table_Charactor.Info info = Shared.TableManager.Character.Get(1);
         //Shared.InutTableMgr();

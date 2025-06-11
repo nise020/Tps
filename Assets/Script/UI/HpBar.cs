@@ -153,7 +153,7 @@ public partial class HpBar : MonoBehaviour
     public void CharactorInIt(Character charactor) //캐릭터 타입 로드 필요
     {
         CHARACTER = charactor;
-        ObjectType = CHARACTER.TypeInit();
+        ObjectType = CHARACTER.Type;
         CHARACTER.onHpChanged += SetHp;
         AttackDamageEvent += DamageImageActive;
 
@@ -248,6 +248,7 @@ public partial class HpBar : MonoBehaviour
         if (gameObject.activeSelf) 
         {
             hpImg.fillAmount = _curHp / _maxHp;
+            Debug.Log($"{_curHp}");
             StartCoroutine(animateEffectBar());
         }
     }

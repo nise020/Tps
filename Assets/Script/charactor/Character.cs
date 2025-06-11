@@ -41,7 +41,6 @@ public abstract partial class Character : Actor
     protected virtual void Start()
     {
         FindBodyObject();
-        
         InfoLoad();
         
     }

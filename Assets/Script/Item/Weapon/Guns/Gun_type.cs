@@ -6,8 +6,8 @@ using UnityEngine;
 public partial class Gun : Weapon
 {
 
-    public int bullet;//ÃÑ¾Ë°¹¼ö
-    public int nowbullet;//ÃÑ¾Ë°¹¼ö
+    public int maxBullet;//ÃÑ¾Ë°¹¼ö
+    public int nowBullet;//ÃÑ¾Ë°¹¼ö
     protected int pluse_bullet;//Ãß°¡ÇÒ ÃÑ¾Ë°¹¼ö
     protected int RelodingBullet;
     [SerializeField] GunType GunEnumType;
@@ -28,16 +28,16 @@ public partial class Gun : Weapon
 
         if (GunEnumType == GunType.SMG)
         {
-            bullet = 30;
+            maxBullet = 30;
             ChargeingTime = 0.2f;
         }
         else if (GunEnumType == GunType.SR)
         {
-            bullet = 5;
+            maxBullet = 5;
             //Â÷Áö ºñ·Ê ´ë¹ÌÁö ¹®±¸ Ãß°¡ ÆÈ¿ä
             ChargeingTime = 3.0f;
         }
-        nowbullet = bullet;
+        nowBullet = maxBullet;
         //RerodingBullet = bullet;
     }
     

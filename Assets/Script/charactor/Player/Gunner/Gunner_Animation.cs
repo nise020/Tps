@@ -50,8 +50,8 @@ public partial class Gunner : Player
     }
     public void GunSkillShoot() 
     {
-        Vector3 AimDirection = weaponObj.transform.forward;
-        WEAPON.Attack(AimDirection);
+        Vector3 AimDirection = MainWeaponObj.transform.forward;
+        MAINWEAPON.Attack(AimDirection);
         SkillAnimation(SkillType.Skill1, false);
         Invoke("skillOut", 1);
     }

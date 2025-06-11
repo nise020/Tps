@@ -8,7 +8,7 @@ public abstract partial class Strategy : MonoBehaviour
     protected Player PLAYER;
     protected Weapon Weapon;
 
-    protected WeaponEnum WeaponType = WeaponEnum.None;
+    protected WeaponclassType WeaponType = WeaponclassType.None;
     protected PlayerType playerType = PlayerType.None;
     protected int DamegeUp;
     abstract public void Skill(PlayerType _type, int _skillNumber, out int _damageValue);

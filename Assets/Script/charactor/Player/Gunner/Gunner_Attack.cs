@@ -5,12 +5,11 @@ using UnityEngine;
 
 public partial class Gunner : Player
 {
-    [SerializeField] Granad granadObj;
     protected override void AutoAttack()
     {
         playerAnimator.SetLayerWeight(attackLayerIndex, 1.0f);
 
-        if (WEAPON.ReturnTypeValue(BulletValueType.NowBullet) <= 0)
+        if (MAINWEAPON.ReturnTypeValue(BulletValueType.NowBullet) <= 0)
         {
             playerStateData.AttackState = PlayerAttackState.Reload_On;
             playerAnimator.SetLayerWeight(attackLayerIndex, 1.0f);
@@ -36,9 +35,9 @@ public partial class Gunner : Player
         if (_job == PlayerType.Gunner)
         {
             if (playerStateData.AttackState == PlayerAttackState.Reload_Off && 
-                WEAPON.ReturnTypeValue(BulletValueType.NowBullet) <= 0)
+                MAINWEAPON.ReturnTypeValue(BulletValueType.NowBullet) <= 0)
             {
-                Debug.Log($"bullet = {WEAPON.ReturnTypeValue(BulletValueType.NowBullet)}");
+                Debug.Log($"bullet = {MAINWEAPON.ReturnTypeValue(BulletValueType.NowBullet)}");
                 return;
             }
             playerAnimator.SetLayerWeight(attackLayerIndex, 1.0f);
@@ -51,9 +50,9 @@ public partial class Gunner : Player
     }
     private void gunShoot() 
     {
-        Vector3 AimDirection = weaponObj.transform.forward;
+        Vector3 AimDirection = MainWeaponObj.transform.forward;
 
-        WEAPON.Attack(AimDirection);
+        MAINWEAPON.Attack(AimDirection);
 
     }
     //protected override void inPutCameraAnimation(bool _check)
@@ -75,7 +74,7 @@ public partial class Gunner : Player
     protected override void commonRSkill(PlayerType _type)//Reload
     {
         if (_type == PlayerType.Gunner ||
-            WEAPON.ReturnTypeValue(BulletValueType.NowBullet) <= 0) 
+            MAINWEAPON.ReturnTypeValue(BulletValueType.NowBullet) <= 0) 
         {
             if (playerStateData.AttackState == PlayerAttackState.Reload_Off)
             {
@@ -216,7 +215,7 @@ public partial class Gunner : Player
     {
         //AnimationEvent
         playerStateData.AttackState = PlayerAttackState.Reload_On;
-        WEAPON.ReloadClearValue();
+        MAINWEAPON.ReloadClearValue();
         playerAnimator.SetLayerWeight(attackLayerIndex, 0.0f);
         //playerAnim.SetLayerWeight(BaseLayerIndex, 1.0f);
         playerAnimator.SetInteger(PlayerAnimParameters.Reload.ToString(), 0);

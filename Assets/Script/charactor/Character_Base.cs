@@ -66,6 +66,7 @@ public abstract partial class Character : Actor
         }
         return value;
     }
+    
 
     public void StatusUpLoad(float _hp)
     {
@@ -94,7 +95,7 @@ public abstract partial class Character : Actor
 
     protected virtual void death() //»ç¸Á »óÅÂ
     {
-        if (objType == ObjectType.Player)
+        if (Type == ObjectType.Player)
         {
             Shared.BattelManager.PlayerAlive = false;
 
@@ -133,8 +134,12 @@ public abstract partial class Character : Actor
     public void HpInIt(HpBar _hpBar)
     {
         HPBAR = _hpBar;
+        Debug.Log($"{gameObject},{HPBAR}");
     }
-
+    public HpBar HpDataLoad() 
+    {
+        return HPBAR;
+    }
     protected void hbBarCheck(bool _check)
     {
         if (!HPBAR.gameObject.activeSelf)

@@ -62,7 +62,7 @@ public partial class Monster : Character
         if (dist < hitRange)
         {
             Player player = targetTrs.gameObject.GetComponentInParent<Player>();
-            Shared.BattelManager.DamageCheck(this, HItPalyer);
+            Shared.BattelManager.DamageCheck(this, HItPalyer, null);
         }
     }
 

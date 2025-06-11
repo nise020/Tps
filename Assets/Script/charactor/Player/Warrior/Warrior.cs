@@ -15,7 +15,7 @@ public partial class Warrior : Player
     }
     void OnDrawGizmosSelected()
     {
-        if (weaponObj != null)
+        if (MainWeaponObj != null)
         {
             Gizmos.color = Color.red;
             Gizmos.DrawWireSphere(SkillParentObj1.transform.position, 3.5f);
@@ -70,9 +70,11 @@ public partial class Warrior : Player
         {
             if (skinObj.gameObject.layer == value)
             {
-                WEAPON = skinObj.GetComponentInParent<Weapon>();
-                weaponObj = skinObj.rootBone.gameObject;
-                weaponOriginalPos = weaponObj.transform.localPosition;
+                MAINWEAPON = skinObj.GetComponentInParent<Weapon>();
+                MAINWEAPON.CharcterInit(this);
+
+                MainWeaponObj = skinObj.rootBone.gameObject;
+                weaponOriginalPos = MainWeaponObj.transform.localPosition;
                 break;
             }
         }

@@ -20,7 +20,7 @@ public enum AvoidanceState
     Avoidance_Off,
 }
 
-public enum WeaponEnum 
+public enum WeaponclassType 
 {
     None,
     Gun,

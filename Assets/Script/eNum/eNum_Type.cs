@@ -35,6 +35,7 @@ public enum ObjectType
     None,
     Player,
     Monster,
+    Weapon,
     Gun,
     Bullet_Player,
     Bullet_Monster,
@@ -61,11 +62,17 @@ public enum BodyType
 }
 public enum BulletValueType 
 {
-    Bullet,
+    MaxBullet,
     NowBullet,
     Pluse_bullet,
 }
 public enum WeaponType
+{
+    None,
+    Main,
+    Sub
+}
+public enum WeaponClassType
 {
     Sowrd,
     Gun,

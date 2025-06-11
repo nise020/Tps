@@ -49,7 +49,7 @@ public partial class Gun : Weapon
             plBullet.WeaponTrs = _pos;
             
             bulletcount++;
-            nowbullet--;
+            nowBullet--;
 
             State = GunState.On;
 

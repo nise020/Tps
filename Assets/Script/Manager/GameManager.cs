@@ -61,14 +61,17 @@ public class GameManager : MonoBehaviour
         {
             Destroy(gameObject);
         }
-        
+
+        //CharctorAdd(PlayerModeState.Npc, GUNNER);
+        //CharctorAdd(PlayerModeState.Player, WARRIOR);
     }
     void Start()
     {
         CharctorAdd(PlayerModeState.Npc,GUNNER);
         CharctorAdd(PlayerModeState.Player,WARRIOR);
-
         FindPlayer();
+
+        Shared.MonsterManager.CreatMonsterObject();
 
         PLAYER.gameObject.transform.position = startPointObj.gameObject.transform.position;
         playerKey = 0;
@@ -143,10 +146,10 @@ public class GameManager : MonoBehaviour
         PlayerData.Add(_player,_player.gameObject);
         playerKey += 1;
         PlayerObj.Add(_player);
-
         Camera cam = _player.gameObject.GetComponentInChildren<Camera>();
 
         Shared.CameraManager.CameraAdd(cam);
+        Shared.BattelManager.AddDataToCharcterList(ObjectType.Player, _player);
     }
     public void PlayerbleDataLoad(out Dictionary<Player, GameObject> _value) 
     {

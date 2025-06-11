@@ -13,7 +13,7 @@ public partial class State : State_Base
     ObjectType objType;
     MonsterType monster = MonsterType.Defolt;
     GunType gun = global::GunType.None;
-    WeaponEnum WeaponType = WeaponEnum.None;
+    WeaponclassType WeaponType = WeaponclassType.None;
 
     public void init(Actor _actor, int _stateId) 
     {
@@ -82,14 +82,14 @@ public partial class State : State_Base
     {
         gun = _eNum;
     }
-    public void WeaponState(WeaponEnum _type)
+    public void WeaponState(WeaponclassType _type)
     {
         switch (_type)
         {
-            case WeaponEnum.Gun:
+            case WeaponclassType.Gun:
                 WeaponAttack = 10 ;
                 break;
-            case WeaponEnum.Sword:
+            case WeaponclassType.Sword:
                 WeaponAttack = 20;
                 break;
         }

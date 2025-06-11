@@ -45,15 +45,15 @@ public class MonsterManager : MonoBehaviour
         {
             Destroy(this);
         }
-        //creatObject();
+        creatTab = Shared.GameManager.CreatTransform();
     }
 
     private void Start()
     {
-        creatTab = Shared.GameManager.CreatTransform();
-        creatObject();
+        //creatTab = Shared.GameManager.CreatTransform();
+        //CreatMonsterObject();
     }
-    private void creatObject()
+    public void CreatMonsterObject()
     {
         //monster
         spownListArrange(STAGE[stageLevel]);
@@ -127,6 +127,7 @@ public class MonsterManager : MonoBehaviour
 
             spawnByType(layerName, spawnPoint.position, mincount, Maxcount, objType);
         }
+
     }
     private void spawnByType(string _layername, Vector3 _spawnTrs, int _min, int _max, ObjectType _type)
     {
@@ -156,25 +157,27 @@ public class MonsterManager : MonoBehaviour
 
         monster.creatTab(creatTab);
 
-        monster.TypeInit(_type);
+        Shared.BattelManager.AddDataToCharcterList(ObjectType.Monster, monster);
+        Shared.ItemManager.ItemDataAddToMonster(monster);
+        //monster.Type;
 
-        HpBarValue(Maxcount, monsterCount, monster);
 
         MonsterList.Add(monster);
         monsterCount += 1;
 
-        Shared.ItemManager.ItemDataAdd(monster);
+        HpBarValue(Maxcount, monsterCount, monster);//<-
 
     }
     public void HpBarValue(int _max, int _min, Monster _monster)
     {
         HpBar hpBar = _monster.GetComponentInChildren<HpBar>();
+        hpBar.CharactorInIt(_monster);
 
         _monster.HpInIt(hpBar);
-        hpData.Add(_min, hpBar);
 
-        hpBar.key = _min;
-        hpBar.CharactorInIt(_monster);
+        //hpData.Add(_min, hpBar);
+
+        //hpBar.key = _min;
     }
     public bool GetMonsterPosition(int _value, out Vector3 _pos)
     {

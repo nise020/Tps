@@ -48,7 +48,9 @@ public partial class Character : Actor
     protected Transform charactorModelTrs;//Modeling
     protected Transform RootTransform;//RootModel
     [SerializeField] protected GameObject weaponHandObject;//Hand
-    [SerializeField] protected GameObject weaponObj;//Weapon
+    [SerializeField] protected GameObject MainWeaponObj;//Weapon
+    [SerializeField] protected GameObject SubWeaponObj;//Sub
+
 
     [Header("Skill")]
     protected float rotationSpeed = 20.0f;//나중에 조정
@@ -72,7 +74,8 @@ public partial class Character : Actor
     public Action<AiState> StateEvent;
 
     [Header("Weapon")]
-    [SerializeField] protected Weapon WEAPON;
+    [SerializeField] protected Weapon MAINWEAPON;
+    [SerializeField] protected Weapon SUBWEAPON;
 
 
 }

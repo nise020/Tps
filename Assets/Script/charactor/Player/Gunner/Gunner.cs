@@ -17,7 +17,7 @@ public partial class Gunner : Player
     protected override void Start()
     {
         base.Start();
-        WEAPON = GetComponentInChildren<Gun>();
+        MAINWEAPON = GetComponentInChildren<Gun>();
         FindWeaponObject(LayerName.Weapon);
     }
 
@@ -36,34 +36,46 @@ public partial class Gunner : Player
     protected override void FindWeaponObject(LayerName _name)
     {
         //MeshRenderer[] Mesh = GetComponentsInChildren<MeshRenderer>();
-        Weapon[] Mesh = GetComponentsInChildren<Weapon>();
+        Weapon[] weaponData = GetComponentsInChildren<Weapon>();
 
         //granadObj
         int value = LayerMask.NameToLayer(_name.ToString());
-        foreach (var MeshObj in Mesh)
+        foreach (var weaponObj in weaponData)
         {
-            if (MeshObj.gameObject.layer == value)//weapon
+            Weapon weapon = weaponObj.gameObject.GetComponent<Weapon>();
+
+            WeaponType type = weapon.WeaponType;
+
+            if (type == WeaponType.Main)
             {
-                Weapon weapon = MeshObj.gameObject.GetComponent<Weapon>();
-
-                WeaponEnum type = weapon.Weapontype();
-
-                if (type == WeaponEnum.Sword)
-                {
-                    weaponObj = MeshObj.gameObject;
-                }
-                else if (type == WeaponEnum.Gun) 
-                {
-                    WEAPON = MeshObj.GetComponentInParent<Weapon>();
-                    weaponObj = MeshObj.gameObject;
-                }
-                else if (type == WeaponEnum.Granad) 
-                {
-                    Granad granad = MeshObj.gameObject.GetComponent<Granad>();
-                    granadObj = granad;
-                }
+                weapon.init();
+                MAINWEAPON = weaponObj;//.GetComponent<Weapon>();
+                MAINWEAPON.CharcterInit(this);
+                MainWeaponObj = weaponObj.gameObject;
+            }
+            else if (type == WeaponType.Sub)
+            {
+                weapon.init();
+                SUBWEAPON = weaponObj;//.gameObject.GetComponent<Granad>();
+                SUBWEAPON.CharcterInit(this);
+                SubWeaponObj = weaponObj.gameObject;
             }
 
         }
+    }
+    protected void WeaponInit(Weapon weapon) 
+    {
+        if (weapon is Gun)
+        {
+            weapon.init();
+        }
+        else if (weapon is Granad)
+        {
+            weapon.init();
+        }
+        else if (weapon is Sword) 
+        {
+            weapon.init();
+        } 
     }
 }

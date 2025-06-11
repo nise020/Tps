@@ -79,4 +79,5 @@ public partial class Player : Character
         }
         return stateValue;
     }
+    
 }

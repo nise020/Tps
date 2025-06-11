@@ -6,6 +6,7 @@ using UnityEngine.UI;
 
 public partial class Player : Character
 {
+    public override ObjectType Type => ObjectType.Player;
     protected PlayerCamera viewcam;
     protected AI_Auto PLAYERAI = new AI_Auto();
 

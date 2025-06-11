@@ -37,7 +37,7 @@ public class ItemManager : MonoBehaviour
         return itemObjectData;
     }
 
-    public void ItemDataAdd(Monster _monster) 
+    public void ItemDataAddToMonster(Monster _monster) 
     {
         Dictionary<Item, GameObject> itemObjectData = creatItemObject();
 

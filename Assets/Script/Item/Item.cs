@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UIElements;
 
 public abstract partial class Item : Actor
 {
@@ -12,7 +13,10 @@ public abstract partial class Item : Actor
     {
         
     }
+    public virtual void init() 
+    {
 
+    }
     public void ItemTypeSetting(ItemType _type) 
     {
         ItemStateData.itemType = _type;
@@ -35,7 +39,8 @@ public abstract partial class Item : Actor
     //    //return ItemValue;
     //}
 
-   
+    
+
 
     protected virtual int RemoveEfect() 
     {

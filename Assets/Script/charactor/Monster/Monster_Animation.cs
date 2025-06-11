@@ -13,6 +13,14 @@ public partial class Monster : Character
     }
     public void AttackAnimationEvent()//AnimationEvent
     {
+        Weapon weapon = MainWeaponObj.GetComponent<Weapon>();
+
+        if (weapon != null)
+        {
+            weapon = SUBWEAPON.GetComponent<Weapon>();
+        }
+
+
         //sin °î¼±<- gmsemffla
         if (monsterStateData.MonsterType == MonsterType.Sphere)
         {
@@ -21,13 +29,11 @@ public partial class Monster : Character
         }
         else if (monsterStateData.MonsterType == MonsterType.Spider)
         {
-            Granad granad = weaponObj.GetComponent<Granad>();
-            weaponObj.SetActive(true);
+            weapon.gameObject.SetActive(true);
+            weapon.WeaponReset();
 
-            granad.CharcterInit(this);
-            granad.WeaponObjectOn();
             //granaidAttack(charactorModelTrs.position, HItPalyer.transform.position, weaponObj);
-            granaidAttack(weaponHandObject.transform.position, targetTrs.position, weaponObj);
+            granaidAttack(weaponHandObject.transform.position, targetTrs.position, MainWeaponObj);
 
         }
         else if (monsterStateData.MonsterType == MonsterType.Dron)

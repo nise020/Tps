@@ -22,23 +22,29 @@ public abstract partial class Item : Actor
     protected int Speed;
     protected int CritRate;
     protected int CritDamage;
-    //private void Awake()
-    //{
-    //    Shared.InutTableMgr();
-    //    var info = Shared.TableManager.Item.Get(id_Item);
-    //    if (info == null)
-    //    {
-    //        Debug.LogError($"{gameObject}.info = null");
-    //    }
-    //    else
-    //    {
-    //        Init(info, type_Item);
-    //        STATE.init(this, state_Item);
-    //        stateInIt();
-    //    }
-    //}
-    //protected float Range;//범위
-    //리치
+    public float WeaponStatusLoad(StatusType _type)
+    {
+        int value = 0;
+        switch (_type)
+        {
+            case StatusType.Power:
+                value = (int)Power;
+                break;
+            case StatusType.Speed:
+                value = (int)Speed;
+                break;
+            case StatusType.Defens:
+                value = (int)Defense;
+                break;
+            case StatusType.CritDamage:
+                value = (int)CritRate;
+                break;
+            case StatusType.CritRate:
+                value = (int)CritDamage;
+                break;
+        }
+        return value;
+    }
 
 
     public void Init(Table_Item.Info _info, byte _type)

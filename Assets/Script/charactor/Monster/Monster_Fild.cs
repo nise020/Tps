@@ -4,6 +4,8 @@ using UnityEngine;
 
 public partial class Monster : Character
 {
+    public override ObjectType Type => ObjectType.Monster;
+
     BattelManager BATTELMANAGER;
     [Header("공격할 물체(공통)")]
 

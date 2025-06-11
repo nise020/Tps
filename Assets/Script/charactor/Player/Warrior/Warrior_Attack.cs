@@ -21,7 +21,7 @@ public partial class Warrior : Player
         }
         else
         {
-            weaponPos = weaponObj.transform.position;
+            weaponPos = MainWeaponObj.transform.position;
         }
 
         List<Monster> monsetrPos = Shared.MonsterManager.MonsterList;
@@ -33,7 +33,7 @@ public partial class Warrior : Player
 
             if (dist < 3.5f)
             {
-                Shared.BattelManager.DamageCheck(this, monsetrPos[iNum]);
+                Shared.BattelManager.DamageCheck(this, monsetrPos[iNum],MAINWEAPON);
             }
         }
     }
@@ -262,7 +262,7 @@ public partial class Warrior : Player
 
                 SkillParentObj2.SetActive(true);
 
-                SkillEffectObj2.transform.rotation = Quaternion.LookRotation(weaponObj.transform.up);
+                SkillEffectObj2.transform.rotation = Quaternion.LookRotation(MainWeaponObj.transform.up);
 
                 SkillEffectSystem2.Play();
                 //playerAnim.SetInteger(PlayerAnimName.BuffSkill.ToString(), 1);

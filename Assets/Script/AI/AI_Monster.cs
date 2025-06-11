@@ -22,10 +22,17 @@ public partial class AiMonster : AiBase
             TagetPlayer = null;
             tagetTrs = null;
             Debug.Log($"Monster = {TagetPlayer}");
+
+            if (aIState == AiState.Attack ||
+            aIState == AiState.Reset ||
+            aIState == AiState.Move)
+            {
+                aIState = AiState.Search;
+            }
         }
-        if (aIState == AiState.Attack || aIState == AiState.Reset || aIState == AiState.Move)
+        else 
         {
-            aIState = AiState.Search;
+            aIState = AiState.Move;
         }
 
         Debug.Log($"[Dead] 타겟 초기화 완료, 상태 초기화");

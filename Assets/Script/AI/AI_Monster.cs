@@ -29,13 +29,12 @@ public partial class AiMonster : AiBase
             {
                 aIState = AiState.Search;
             }
+            Debug.Log($"[Dead] 타겟 초기화 완료, 상태 초기화");
         }
         else 
         {
             aIState = AiState.Move;
         }
-
-        Debug.Log($"[Dead] 타겟 초기화 완료, 상태 초기화");
     }
     public void ChangeTarget(Player _player)
     {

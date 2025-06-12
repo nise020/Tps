@@ -242,20 +242,38 @@ public partial class Player : Character
         {
             case PlayerAttackState.Attack_On:
                 playerAnimator.SetInteger(PlayerAnimParameters.Attack.ToString(), 1);
+
                 playerAnimator.SetInteger(PlayerAnimParameters.AttackCombo.ToString(), 0);
                 break;
             case PlayerAttackState.Attack_Off:
+
+                playerAnimator.SetInteger(PlayerAnimParameters.Reload.ToString(), 0);
                 playerAnimator.SetInteger(PlayerAnimParameters.Attack.ToString(), 0);
                 playerAnimator.SetInteger(PlayerAnimParameters.Block.ToString(), 0);
                 playerAnimator.SetInteger(PlayerAnimParameters.AttackCombo.ToString(),0);
+
                 break;
             case PlayerAttackState.Block:
-                playerAnimator.SetInteger(PlayerAnimParameters.Attack.ToString(), 0);
+
                 playerAnimator.SetInteger(PlayerAnimParameters.Block.ToString(), 1);
+
+                playerAnimator.SetInteger(PlayerAnimParameters.Attack.ToString(), 0);
+
                 break;
             case PlayerAttackState.Attack_Combo:
-                playerAnimator.SetInteger(PlayerAnimParameters.Attack.ToString(), 0);
+
                 playerAnimator.SetInteger(PlayerAnimParameters.AttackCombo.ToString(), _comboValue);
+
+                playerAnimator.SetInteger(PlayerAnimParameters.Attack.ToString(), 0);
+
+                break;
+            case PlayerAttackState.Reload:
+
+                playerAnimator.SetInteger(PlayerAnimParameters.Reload.ToString(), 1);
+
+                playerAnimator.SetInteger(PlayerAnimParameters.Attack.ToString(), 0);
+                playerAnimator.SetInteger(PlayerAnimParameters.AttackCombo.ToString(), 0);
+
                 break;
         }
 

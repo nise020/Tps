@@ -5,6 +5,13 @@ using UnityEngine.TextCore.Text;
 
 public partial class Gunner : Player
 {
+    [Header("Gunner")]
+    [SerializeField] Transform UpperBody;
+    [SerializeField] private float maxPitch = 30f;      // 상체 최대 회전
+    [SerializeField] private float UpperrotationSpeed = 30f; // 상체 회전 부드러움
+    [SerializeField] private float recoilAmount = 0.01f; // 에임 흔들림 강도s
+    private bool forceUpperBody;
+    private Vector3 cachedUpperBodyEuler;
     protected override void Awake()
     {
         id = 1;
@@ -28,6 +35,13 @@ public partial class Gunner : Player
             inputrocessing();
         }
     }
+    private void LateUpdate()
+    {
+        if (forceUpperBody)
+        {
+            UpperBody.localEulerAngles = cachedUpperBodyEuler;
+        }
+    }
     protected override void shitdownCheak()
     {
        base.shitdownCheak();
@@ -42,23 +56,25 @@ public partial class Gunner : Player
         int value = LayerMask.NameToLayer(_name.ToString());
         foreach (var weaponObj in weaponData)
         {
-            Weapon weapon = weaponObj.gameObject.GetComponent<Weapon>();
+           // Weapon weapon = weaponObj.gameObject.GetComponent<Weapon>();
 
-            WeaponType type = weapon.WeaponType;
+            WeaponType type = weaponObj.WeaponType;
 
             if (type == WeaponType.Main)
             {
-                weapon.init();
+                MainWeaponObj = weaponObj.gameObject;
+
                 MAINWEAPON = weaponObj;//.GetComponent<Weapon>();
                 MAINWEAPON.CharcterInit(this);
-                MainWeaponObj = weaponObj.gameObject;
+                MAINWEAPON.init();
             }
             else if (type == WeaponType.Sub)
             {
-                weapon.init();
+                SubWeaponObj = weaponObj.gameObject;
+
                 SUBWEAPON = weaponObj;//.gameObject.GetComponent<Granad>();
                 SUBWEAPON.CharcterInit(this);
-                SubWeaponObj = weaponObj.gameObject;
+                MAINWEAPON.init();
             }
 
         }

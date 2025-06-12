@@ -46,7 +46,7 @@ public partial class Warrior : Player
 
     private void Update()
     {
-        if (playerStateData.ModeState != PlayerModeState.Npc)
+        if (playerStateData.ModeState != PlayerModeState.AutoMode)
         {
             //transform.rotation = new Quaternion();
             inputrocessing();

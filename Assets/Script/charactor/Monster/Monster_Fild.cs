@@ -57,9 +57,7 @@ public partial class Monster : Character
     protected Collider monsterColl;
     //public Vector3 startPos;
 
-    [Header("Ai")]
-    Player HItPalyer;
-    Transform targetTrs;
+    [Header("Ai_Monster")]
     List<Slot> slots = new List<Slot>();
     int slotCount = 0;
     //protected MonsterWalkState walkState = MonsterWalkState.Walk_Off;

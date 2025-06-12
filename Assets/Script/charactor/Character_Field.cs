@@ -77,5 +77,7 @@ public partial class Character : Actor
     [SerializeField] protected Weapon MAINWEAPON;
     [SerializeField] protected Weapon SUBWEAPON;
 
-
+    [Header("Ai")]
+    protected Character targetCharacter;
+    protected Transform targetTrs;
 }

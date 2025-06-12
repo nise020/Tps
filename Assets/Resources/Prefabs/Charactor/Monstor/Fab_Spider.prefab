@@ -52,9 +52,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   hpBar: {fileID: 9135575270855701387, guid: e3d5465fd69dd4e4bad042dc6f58d2d8, type: 3}
   weaponHandObject: {fileID: 0}
-  weaponObj: {fileID: 0}
+  MainWeaponObj: {fileID: 0}
+  SubWeaponObj: {fileID: 0}
   groundCheckLenght: 0
-  WEAPON: {fileID: 0}
+  MAINWEAPON: {fileID: 0}
+  SUBWEAPON: {fileID: 0}
   mobKey: 0
   target: {fileID: 0}
   height: 5
@@ -819,8 +821,8 @@ CapsuleCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Radius: 11.160647
-  m_Height: 61.234264
+  m_Radius: 13.34
+  m_Height: 96.8
   m_Direction: 2
   m_Center: {x: -26.7, y: -0.18707992, z: -17.374458}
 --- !u!1001 &6659188982549261348

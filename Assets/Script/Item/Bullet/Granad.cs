@@ -24,7 +24,7 @@ public class Granad : Weapon
 
     private Coroutine effectCoroutine;
 
-    float range = 3.0f;
+    float range = 10.0f;
     //List<GameObject> characters = new List<GameObject>();  
 
     private void OnDrawGizmos()
@@ -48,10 +48,12 @@ public class Granad : Weapon
         //GetComponent<Rigidbody>().AddTorque(Vector3.forward * 200.0f);
     }
 
-   
-  
     private void OnCollisionEnter(Collision collision)
     {
+        //Collision (tigger==false)물체가 통과가 안됨
+
+        //trigger (tigger==ture)물체가 통과됨
+
         modelingObject.SetActive(false);
         skillstate = SkillState.SkillOn;
 
@@ -61,13 +63,14 @@ public class Granad : Weapon
         {
             float value = Vector3.Distance(gameObject.transform.position,
                                            targetToAttackList[i].transform.position);
-            if (value < range) 
+            if (value <= range) 
             {
                 Character target = targetToAttackList[i].GetComponent<Character>();
-                Shared.BattelManager.DamageCheck(character, target, this);
+                Shared.BattelManager.DamageCheck(CHARACTER, target, this);
             }
         }
     }
+
     private void expltioncheck()
     {
         if (skillstate == SkillState.SkillOn ||

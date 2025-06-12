@@ -1025,10 +1025,12 @@ MonoBehaviour:
   attackAim: {fileID: 0}
   startPointObj: {fileID: 1635663219}
   AttackSearch: 
-  MONSTEROBJ:
-  - {fileID: 2914542211161757420, guid: e3607604ba17d994bb5091c9244eea72, type: 3}
-  - {fileID: 8083318495069326932, guid: 7201b0d848c2011419f306609ce55541, type: 3}
-  - {fileID: 6191365220507688643, guid: 7acc0d0041d8a9243a4285a59532ddaf, type: 3}
+  Monsters: []
+  MonstersObj: []
+  Players: []
+  PlayersObj: []
+  Characters: []
+  CharactersObj: []
   damageShader: {fileID: 4800000, guid: 5a91d4e626daa8546bb3a86bb15ab3e2, type: 3}
   damageMaterial: {fileID: 2100000, guid: 8f09addc39029ef4796110f371bf3142, type: 2}
 --- !u!4 &943005752

@@ -195,10 +195,11 @@ public partial class Player : Character
         //charactorModelTrs.rotation = Quaternion.Slerp(charactorModelTrs.rotation, targetRotation, Time.deltaTime * rotationSpeed);
        
         npcRunStateAnimation(0.0f);
-        
-        AutoAttack();
+
+        targetTrs = _transform;
+        AutoAttack(targetTrs);
     }
-    protected virtual void AutoAttack() 
+    protected virtual void AutoAttack(Transform _transform) 
     {
 
     }

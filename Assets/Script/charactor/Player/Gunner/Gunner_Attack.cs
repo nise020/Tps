@@ -5,56 +5,103 @@ using UnityEngine;
 
 public partial class Gunner : Player
 {
-    protected override void AutoAttack()
+    protected override void AutoAttack(Transform _transform)
     {
+        //targetTrs = _transform;
+        if (playerStateData.AttackState != PlayerAttackState.Attack_Off) 
+        {
+            return;
+        }
+
         playerAnimator.SetLayerWeight(attackLayerIndex, 1.0f);
 
         if (MAINWEAPON.ReturnTypeValue(BulletValueType.NowBullet) <= 0)
         {
-            playerStateData.AttackState = PlayerAttackState.Reload_On;
-            playerAnimator.SetLayerWeight(attackLayerIndex, 1.0f);
-            playerAnimator.SetInteger(PlayerAnimParameters.Reload.ToString(), 1);
-        }
-        else if(playerStateData.AttackState == PlayerAttackState.Reload_On)
-        {
-            return;
+            playerStateData.AttackState = PlayerAttackState.Reload;
         }
         else 
         {
-            attackAnimation(PlayerAttackState.Attack_On, 0);
+            playerStateData.AttackState = PlayerAttackState.Attack_On;
         }
-            //skillAttack_common1(playerStateData.PlayerType);
 
-            //skillAttack_common2(playerStateData.PlayerType);
+        attackAnimation(playerStateData.AttackState, 0);
 
-            //attackAnimation(PlayerAttackState.Attack_On);
+        //skillAttack_common1(playerStateData.PlayerType);
+
+        //skillAttack_common2(playerStateData.PlayerType);
+
+        //attackAnimation(PlayerAttackState.Attack_On);
         //gunShoot();
     }
     protected override void attack(PlayerModeState _state, PlayerType _job)
     {
         if (_job == PlayerType.Gunner)
         {
-            if (playerStateData.AttackState == PlayerAttackState.Reload_Off && 
+            if (playerStateData.AttackState == PlayerAttackState.Attack_Off && 
                 MAINWEAPON.ReturnTypeValue(BulletValueType.NowBullet) <= 0)
             {
                 Debug.Log($"bullet = {MAINWEAPON.ReturnTypeValue(BulletValueType.NowBullet)}");
                 return;
             }
+            playerStateData.AttackState = PlayerAttackState.Attack_On;
+
             playerAnimator.SetLayerWeight(attackLayerIndex, 1.0f);
-            attackAnimation(PlayerAttackState.Attack_On, 0);
+            attackAnimation(playerStateData.AttackState, 0);
         }
     }
-    public void GunShootEvent() //Animation Event
+    private void AdjustUpperBodyToTarget(Weapon weapon)
     {
-        gunShoot();
+        if (weapon == null) { return; }
+        Gun gun = weapon as Gun;
+
+        Transform gunHoleTrs = gun.GunHoleObj.transform;
+
+        Vector3 toTarget = (targetTrs.position - gunHoleTrs.position).normalized;
+        Vector3 gunForward = gunHoleTrs.forward;
+
+        float pitchAngle = Vector3.SignedAngle(gunForward, toTarget, gunHoleTrs.right);
+        float clampedPitch = Mathf.Clamp(pitchAngle, -maxPitch, maxPitch);
+
+        Vector3 currentEuler = UpperBody.localEulerAngles;
+        if (currentEuler.x > 180f) currentEuler.x -= 360f;
+
+        float newX = Mathf.Lerp(currentEuler.x, currentEuler.x + clampedPitch, Time.deltaTime * UpperrotationSpeed);
+        UpperBody.localEulerAngles = new Vector3(newX, currentEuler.y, currentEuler.z);
     }
-    private void gunShoot() 
+
+    public IEnumerator AdjustUpperBodyToTargetOnce(Weapon weapon)
     {
-        Vector3 AimDirection = MainWeaponObj.transform.forward;
+        if (weapon == null) { yield break; }
+        Gun gun = weapon as Gun;
 
-        MAINWEAPON.Attack(AimDirection);
+        Transform gunHoleTrs = gun.GunHoleObj.transform;
 
+
+        Vector3 toTarget = (targetTrs.position - gunHoleTrs.position).normalized;
+        Vector3 gunForward = gunHoleTrs.forward;
+
+        float pitchAngle = Vector3.SignedAngle(gunForward, toTarget, gunHoleTrs.right);
+        float clampedPitch = Mathf.Clamp(pitchAngle, -maxPitch, maxPitch);
+
+        Vector3 currentEuler = UpperBody.localEulerAngles;
+        if (currentEuler.x > 180f) currentEuler.x -= 360f;
+
+        float targetX = currentEuler.x + clampedPitch;
+        float duration = 0.2f;
+        float elapsed = 0f;
+
+        while (elapsed < duration)
+        {
+            float newX = Mathf.Lerp(currentEuler.x, targetX, elapsed / duration);
+            cachedUpperBodyEuler = new Vector3(newX, currentEuler.y, currentEuler.z);
+
+            elapsed += Time.deltaTime;
+            yield return null;
+        }
+
+        cachedUpperBodyEuler = new Vector3(targetX, currentEuler.y, currentEuler.z);
     }
+
     //protected override void inPutCameraAnimation(bool _check)
     //{
     //    viewcam.cameraShakeAnim(_check);
@@ -76,18 +123,20 @@ public partial class Gunner : Player
         if (_type == PlayerType.Gunner ||
             MAINWEAPON.ReturnTypeValue(BulletValueType.NowBullet) <= 0) 
         {
-            if (playerStateData.AttackState == PlayerAttackState.Reload_Off)
+            if (playerStateData.AttackState != PlayerAttackState.Reload)
             {
-                playerStateData.AttackState = PlayerAttackState.Reload_On;
+                playerStateData.AttackState = PlayerAttackState.Reload;
+
                 playerAnimator.SetLayerWeight(attackLayerIndex, 1.0f);
-                playerAnimator.SetInteger(PlayerAnimParameters.Reload.ToString(), 1);
+                playerAnimator.SetInteger(playerStateData.AttackState.ToString(), 1);
             }
         }
 
 
         if (playerStateData.FirstSkillCheck == SkillState.SkillOff)
         {
-            gunShoot();
+            Gun gun = MAINWEAPON as Gun;
+            gunShoot(gun);
 
             SkillAnimation(SkillType.Skill1, true);
 
@@ -214,10 +263,11 @@ public partial class Gunner : Player
     public void ReloadOut()//AnimationEvent
     {
         //AnimationEvent
-        playerStateData.AttackState = PlayerAttackState.Reload_On;
-        MAINWEAPON.ReloadClearValue();
+        playerStateData.AttackState = PlayerAttackState.Attack_Off;
+
         playerAnimator.SetLayerWeight(attackLayerIndex, 0.0f);
-        //playerAnim.SetLayerWeight(BaseLayerIndex, 1.0f);
-        playerAnimator.SetInteger(PlayerAnimParameters.Reload.ToString(), 0);
+        attackAnimation(playerStateData.AttackState, 0);
+
+        MAINWEAPON.ReloadClearValue();
     }
 }

@@ -60,9 +60,10 @@ public partial class Warrior : Player
         scabbardCount = 0;
 
     }
-    protected override void AutoAttack()
+    protected override void AutoAttack(Transform _transform)
     {
-        attackAnimation(PlayerAttackState.Attack_On, 0);
+        Debug.LogError($"전사 로직 추가 필요");
+        //attackAnimation(PlayerAttackState.Attack_On, 0);
     }
     protected override void attack(PlayerModeState _state, PlayerType _job)
     {

@@ -26,6 +26,7 @@ public enum WeaponclassType
     Gun,
     Sword,
     Granad,
+    Bullet,
 }
 
 

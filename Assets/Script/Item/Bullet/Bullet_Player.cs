@@ -22,24 +22,62 @@ public partial class Bullet_Player : Weapon
     bool coroutinRun = false;
     //Vector3 targetPos;//몬스터가 공격할 목표
     RaycastHit hit;//총알이 맞출 목표
+
+    float range = 10.0f;
+    private void Awake()
+    {
+        ItemStateData.WeaponType = WeaponclassType.Bullet;
+        Power = 100;
+    }
     private void OnTriggerEnter(Collider other)
     {
-        if (other.gameObject.layer == Delivery.LayerNameEnum(LayerName.Monster))
+        Character character = other.gameObject.GetComponentInParent<Character>();
+        if (character == null)
         {
-            //Monster monster = new Monster();
-            Monster monster = other.gameObject.GetComponentInParent<Monster>();
-            Shared.BattelManager.DamageCheck(character, monster,this);
             gameObject.transform.localPosition = new Vector3();
             gameObject.SetActive(false);
-
         }
         else 
         {
-            gameObject.transform.localPosition = new Vector3();
-            gameObject.SetActive(false);
+            for (int i = 0; i < targetToAttackList.Count; i++)
+            {
+                if (character.gameObject == targetToAttackList[i].gameObject)
+                {
+                    Shared.BattelManager.DamageCheck(CHARACTER, character, this);
+                    gameObject.transform.localPosition = new Vector3();
+                    gameObject.SetActive(false);
+                    return;
+                }
+            }
         }
-    }
 
+        //if (other.gameObject.layer == Delivery.LayerNameEnum(LayerName.Monster))
+        //{
+        //    //Monster monster = new Monster();
+        //    Monster monster = other.gameObject.GetComponentInParent<Monster>();
+        //    Shared.BattelManager.DamageCheck(CHARACTER, monster,this);
+        //    gameObject.transform.localPosition = new Vector3();
+        //    gameObject.SetActive(false);
+
+        //}
+        //else 
+        //{
+        //    gameObject.transform.localPosition = new Vector3();
+        //    gameObject.SetActive(false);
+        //}
+    }
+    public IEnumerator MoveBullet(Transform bullet, Vector3 direction, float speed, float duration)
+    {
+        float time = 0f;
+        while (time < duration)
+        {
+            bullet.position += direction * speed * Time.deltaTime;
+            time += Time.deltaTime;
+            yield return null;
+        }
+
+        bullet.gameObject.SetActive(false);
+    }
     IEnumerator invisible()
     {
         if (coroutinRun)
@@ -54,13 +92,13 @@ public partial class Bullet_Player : Weapon
     }
 
 
-    private void Update()
-    {
-        if (gameObject.activeSelf && !coroutinRun)
-        {
-            StartCoroutine(invisible());
-        }
-        //gameObject.transform.position = BULLET.moveing(transform.position, targetPos, BulletType, speedValue);
-        gameObject.transform.position += WeaponTrs.normalized * speedValue * Time.deltaTime;
-    }
+    //private void Update()
+    //{
+    //    if (gameObject.activeSelf && !coroutinRun)
+    //    {
+    //        StartCoroutine(invisible());
+    //    }
+    //    //gameObject.transform.position = BULLET.moveing(transform.position, targetPos, BulletType, speedValue);
+    //    gameObject.transform.position += WeaponTrs.normalized * speedValue * Time.deltaTime;
+    //}
 }

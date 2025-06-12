@@ -21,7 +21,7 @@ public partial class HpBar : MonoBehaviour
     [SerializeField] Image hpImg;
     [SerializeField] Image hpLateImg;
 
-    [SerializeField, Range(0.1f, 10f)] float effectTime = 1;
+    [SerializeField, Range(0.1f, 10f)] float effectTime = 0.5f;
     //Vector3 posiTion = new Vector3(0,0.5f,0);
 
     public Vector3 offset;
@@ -255,7 +255,9 @@ public partial class HpBar : MonoBehaviour
 
     private void chasePlayer()
     {
+
         transform.LookAt(transform.position + mainCam.transform.forward);
+
         //if (Shared.MonsterManager.GetMonsterPosition(key, out Vector3 pos) == true)
         //{
         //    transform.LookAt(transform.position + mainCam.transform.forward);

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.UIElements;
 
 public partial class Gun : Weapon
 {
@@ -12,7 +13,7 @@ public partial class Gun : Weapon
     [SerializeField] float gunRazer;
     [SerializeField] bool razerOn;
 
-    public GameObject gunHoleObj;//gunHole
+    public GameObject GunHoleObj;//gunHole
     [SerializeField] GameObject gunObj;//gun
     [SerializeField] Bullet_Player bulletObj;//bullet
     [SerializeField] Transform magazine;
@@ -21,6 +22,7 @@ public partial class Gun : Weapon
     [SerializeField] bool angleOn = true;
     LineRenderer gunLazer;
     GunState State = GunState.Off;
+    [SerializeField] float bulletSpeed = 30.0f;
     public void reloed()
     {
         for (int iNum = 0; iNum < bulletData.Count; iNum++) 
@@ -32,33 +34,43 @@ public partial class Gun : Weapon
             else { return; }
         }
     }
-
-    public override void Attack(Vector3 _pos)
+    public void StateUpdate(GunState gunState) 
     {
-        if (State == GunState.Off)
+        State = gunState;
+    }
+    public override void Attack(Vector3 _finalAim)
+    {
+        if (State != GunState.Off || bulletcount >= maxBullet) 
         {
-            GameObject go = bulletData[bulletcount];
-            if (bulletData[bulletcount] == null) 
-            {
-                return;
-            }
-            go.transform.position = gunHoleObj.transform.position;
-            Bullet_Player plBullet = go.GetComponent<Bullet_Player>();
-            //plBullet.targetPos = gameObject.transform.position;
-            //수정 필요
-            plBullet.WeaponTrs = _pos;
-            
-            bulletcount++;
-            nowBullet--;
-
-            State = GunState.On;
-
-            Invoke("AttackDelay", 0.3f);
-
-            go.SetActive(true);
-
-            StartCoroutine(HideObject(go, 3f));
+            return;
         }
+
+        GameObject go = bulletObjList[bulletcount];
+        if (go == null) return;
+
+        go.transform.position = GunHoleObj.transform.position;
+        go.transform.rotation = Quaternion.LookRotation(_finalAim);
+        go.SetActive(true);
+
+        StartCoroutine(MoveBullet(go.transform, _finalAim, bulletSpeed, 20f));
+
+        bulletcount++;
+        nowBullet--;
+
+        State = GunState.On;
+        Invoke("AttackDelay", 0.3f);
+    }
+    public IEnumerator MoveBullet(Transform bullet, Vector3 direction, float speed, float duration)
+    {
+        float time = 0f;
+        while (time < duration)
+        {
+            bullet.position += direction * speed * Time.deltaTime;
+            time += Time.deltaTime;
+            yield return null;
+        }
+
+        bullet.gameObject.SetActive(false);
     }
     private void AttackDelay() 
     {
@@ -84,7 +96,7 @@ public partial class Gun : Weapon
         //eulerRotation.z = 0f;
         //gunObj.transform.eulerAngles = eulerRotation;
         
-        Debug.DrawLine(gunHoleObj.transform.position, targetPos, Color.red);
+        Debug.DrawLine(GunHoleObj.transform.position, targetPos, Color.red);
         return _player.transform.localRotation;
     }
 

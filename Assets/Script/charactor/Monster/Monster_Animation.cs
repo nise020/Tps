@@ -13,14 +13,29 @@ public partial class Monster : Character
     }
     public void AttackAnimationEvent()//AnimationEvent
     {
-        Weapon weapon = MainWeaponObj.GetComponent<Weapon>();
+        Weapon weapon;
 
-        if (weapon != null)
+        if (MAINWEAPON == null)
         {
-            weapon = SUBWEAPON.GetComponent<Weapon>();
+            weapon = SUBWEAPON;
+        }
+        else 
+        {
+            weapon = MAINWEAPON;
         }
 
+        if (weapon.WeaponType == WeaponType.Main)
+        {
+            AttackAnimation(weapon,MainWeaponObj);
+        }
+        else 
+        {
+            AttackAnimation(weapon,SubWeaponObj);
+        }
 
+    }
+    protected virtual void AttackAnimation(Weapon _weapon, GameObject _weaponObj) 
+    {
         //sin °î¼±<- gmsemffla
         if (monsterStateData.MonsterType == MonsterType.Sphere)
         {
@@ -29,11 +44,11 @@ public partial class Monster : Character
         }
         else if (monsterStateData.MonsterType == MonsterType.Spider)
         {
-            weapon.gameObject.SetActive(true);
-            weapon.WeaponReset();
+            _weapon.gameObject.SetActive(true);
+            _weapon.WeaponReset();
 
             //granaidAttack(charactorModelTrs.position, HItPalyer.transform.position, weaponObj);
-            granaidAttack(weaponHandObject.transform.position, targetTrs.position, MainWeaponObj);
+            granaidAttack(weaponHandObject.transform.position, targetTrs.position, _weaponObj);
 
         }
         else if (monsterStateData.MonsterType == MonsterType.Dron)
@@ -42,7 +57,6 @@ public partial class Monster : Character
             attackRangeCheck();
         }
     }
-
     public void AttackAnimationOut()//AnimationEvent
     {
         monsterStateData.AttackState = MonsterAttackState.Attack_Off;

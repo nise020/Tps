@@ -4,10 +4,91 @@ using UnityEngine;
 
 public partial class Gunner : Player
 {
+    public void GunShootEvent() //Animation Event
+    {
+        Gun gun = MAINWEAPON as Gun;
+        gun.StateUpdate(GunState.Off);
+
+        playerAnimator.applyRootMotion = false;
+
+        if (playerStateData.ModeState == PlayerModeState.Npc ||
+            playerStateData.ModeState == PlayerModeState.AutoMode)
+        {
+            forceUpperBody = true;
+            StartCoroutine(AdjustUpperBodyToTargetOnce(gun));
+            //AdjustUpperBodyToTarget(gun);
+            //DirectionAssistance(gun);
+        }
+
+        gunShoot(gun);
+    }
+    private void gunShoot(Gun _gun) //Animation Event
+    {
+
+        Transform gunHoleTrs = _gun.GunHoleObj.transform;
+
+        Vector3 aimDirection = gunHoleTrs.forward;
+
+        float recoilAmount = 0.01f;
+        Vector3 recoil = new Vector3(
+            Random.Range(-recoilAmount, recoilAmount),
+            Random.Range(-recoilAmount, recoilAmount),
+            0f
+        );
+
+        aimDirection += _gun.GunHoleObj.transform.TransformDirection(recoil);
+        aimDirection.Normalize();
+
+
+        //Vector3 AimDirection = MainWeaponObj.transform.forward;
+
+        MAINWEAPON.Attack(aimDirection);
+
+    }
     public void GunAttackAnimationOut() //AnimationEvent
     {
-        attackAnimation(PlayerAttackState.Attack_Off, 0);
-        playerAnimator.SetLayerWeight(attackLayerIndex, 0.0f);
+        if (MAINWEAPON.ReturnTypeValue(BulletValueType.NowBullet) <= 0) 
+        {
+            playerStateData.AttackState = PlayerAttackState.Attack_Off;
+            attackAnimation(playerStateData.AttackState, 0);
+            playerAnimator.SetLayerWeight(attackLayerIndex, 0.0f);
+        }
+        if (!PLAYERAI.AtttackCheck()) 
+        {
+            playerStateData.AttackState = PlayerAttackState.Attack_Off;
+            attackAnimation(playerStateData.AttackState, 0);
+            playerAnimator.SetLayerWeight(attackLayerIndex, 0.0f);
+        }
+        //if (playerStateData.ModeState != PlayerModeState.None &&
+        //    playerStateData.ModeState != PlayerModeState.Npc)
+        //{
+        //    playerStateData.AttackState = PlayerAttackState.Attack_Off;
+        //    attackAnimation(playerStateData.AttackState, 0);
+        //    playerAnimator.SetLayerWeight(attackLayerIndex, 0.0f);
+        //}
+        //else 
+        //{
+        //    if (!PLAYERAI.AtttackCheck() || 
+        //        MAINWEAPON.ReturnTypeValue(BulletValueType.NowBullet) <= 0) 
+        //    {
+        //        playerStateData.AttackState = PlayerAttackState.Attack_Off;
+        //        attackAnimation(playerStateData.AttackState, 0);
+        //        playerAnimator.SetLayerWeight(attackLayerIndex, 0.0f);
+        //    }
+        //    playerStateData.AttackState = PlayerAttackState.Attack_Off;
+        //}
+        //if (!PLAYERAI.AtttackCheck() ||
+        //        MAINWEAPON.ReturnTypeValue(BulletValueType.NowBullet) <= 0)
+        //{
+        //    playerStateData.AttackState = PlayerAttackState.Attack_Off;
+        //    attackAnimation(playerStateData.AttackState, 0);
+        //    playerAnimator.SetLayerWeight(attackLayerIndex, 0.0f);
+        //}
+
+        //playerStateData.AttackState = PlayerAttackState.Attack_Off;
+        //attackAnimation(playerStateData.AttackState, 0);
+        //playerAnimator.SetLayerWeight(attackLayerIndex, 0.0f);
+        playerAnimator.applyRootMotion = true;
     }
     protected override void walkAnim(PlayerWalkState _state, Vector3 _pos)
     {

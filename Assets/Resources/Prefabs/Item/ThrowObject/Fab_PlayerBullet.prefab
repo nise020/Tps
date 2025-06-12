@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 1978554283873218056}
   - component: {fileID: 3691588053872777883}
   - component: {fileID: 8315013135361078018}
-  m_Layer: 9
+  m_Layer: 16
   m_Name: Fab_PlayerBullet
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -147,3 +147,4 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   targetPos: {x: 0, y: 0, z: 0}
+  WeaponTrs: {x: 0, y: 0, z: 0}

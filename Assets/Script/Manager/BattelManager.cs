@@ -155,6 +155,7 @@ public class BattelManager : MonoBehaviour
 
         //State
         Debug.Log($"attakerPower ={attakerPower}\n" +
+            $"_attacker = {_attacker}" +
             $"weaponPower = {weaponPower}\n" +
             $"defenserHp = {defenserHp}");
 

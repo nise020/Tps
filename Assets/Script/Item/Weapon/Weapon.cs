@@ -21,24 +21,28 @@ public abstract partial class Weapon : Item
     //protected int RequiredLevel;//착용 조건
     //protected int WeaponType;
     //protected float Speed;//범위
-    protected Character character;
-    protected List<GameObject> targetToAttackList = new List<GameObject>();
-    public void CharcterInit(Character _charactor)
-    {
-        if (character == null)
-        {
-            character = _charactor;
 
-            if (_charactor is Player)
+    protected Character CHARACTER;
+    protected List<GameObject> targetToAttackList = new List<GameObject>();
+    public void CharcterInit(Character _character)
+    {
+        if (CHARACTER == null)
+        {
+            CHARACTER = _character;
+
+            if (_character is Player)
             {
                 targetToAttackList = Shared.BattelManager.LoadToCharcterList(ObjectType.Monster);
             }
-            else if (_charactor is Monster)
+            else if (_character is Monster)
             {
                 targetToAttackList = Shared.BattelManager.LoadToCharcterList(ObjectType.Player);
             }
         }
-        else { return; }
+        else 
+        {
+            return; 
+        }
     }
 
     protected override void WeaponItemInit(Table_Item.Info _info)

@@ -19,7 +19,10 @@ public class AI_Auto : AiBase
     {
         PLAYER = _player;
     }
-    
+    public bool AtttackCheck() 
+    {
+        return TagetAive;
+    }
     public void TargetStateUpdate(bool isDefenderDead)//Reset
     {
         if (isDefenderDead)

@@ -10,6 +10,7 @@ public partial class Gun : Weapon
 
 
     public Dictionary<int, GameObject> bulletData = new Dictionary<int, GameObject>();
+    List<GameObject> bulletObjList = new List<GameObject>();
     public int bulletcount;
     //Player PLAYER;
     //GameObject playerUpperBody;
@@ -35,14 +36,15 @@ public partial class Gun : Weapon
 
         while (bulletcount < maxBullet) 
         {
-            GameObject go = Instantiate(bulletObj.gameObject, gunHoleObj.transform.position,
+            GameObject go = Instantiate(bulletObj.gameObject, GunHoleObj.transform.position,
                     Quaternion.identity, magazine.transform);//Creat bullet
             go.SetActive(false);
             Bullet_Player bullet= go.GetComponent<Bullet_Player>();
 
-            bullet.CharcterInit(character);
+            bullet.CharcterInit(CHARACTER);
 
             bulletData.Add(bulletcount, go);
+            bulletObjList.Add(go);
             bulletcount++;
         }
         bulletcount = 0;

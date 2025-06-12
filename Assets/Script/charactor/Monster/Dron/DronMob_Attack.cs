@@ -4,13 +4,17 @@ using UnityEngine;
 
 public partial class DronMob : Monster
 {
-    float moveTimer = 0.0f;
-    float jumpStart = 0.0f;
-    float jumpHight = 5.0f;
-    float speed = 10.0f;
-    bool targetCheack = false;
+    //float moveTimer = 0.0f;
+    //float jumpStart = 0.0f;
+    //float jumpHight = 5.0f;
+    //float speed = 10.0f;
+    //bool targetCheack = false;
     [SerializeField] bool directAtkON = false;
-    
+    protected override void AttackAnimation(Weapon _weapon, GameObject _weaponObj)
+    {
+        DirectAttack(charactorModelTrs.gameObject, targetTrs.position);
+        attackRangeCheck();
+    }
     //protected override void targetOn(ref int _value)
     //{
     //    base.targetOn(ref _value);

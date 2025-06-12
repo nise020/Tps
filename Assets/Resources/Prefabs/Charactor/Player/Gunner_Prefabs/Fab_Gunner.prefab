@@ -48,15 +48,16 @@ MonoBehaviour:
   reLoed: 0
   gunRazer: 0
   razerOn: 0
-  gunHoleObj: {fileID: 6969085068361534176}
+  GunHoleObj: {fileID: 0}
   gunObj: {fileID: 2739008053356981986}
   bulletObj: {fileID: 8315013135361078018, guid: f91a1c6d90c566a4dbd6048e4c71d4e9, type: 3}
   magazine: {fileID: 7119097427240176788}
   gunRotSpeed: 80
   razerEndObj: {fileID: 0}
   angleOn: 0
-  bullet: 0
-  nowbullet: 0
+  bulletSpeed: 5
+  maxBullet: 0
+  nowBullet: 0
   GunEnumType: 3
 --- !u!1 &6590099433310919523
 GameObject:
@@ -111,19 +112,27 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   hpBar: {fileID: 0}
   weaponHandObject: {fileID: 0}
-  weaponObj: {fileID: 0}
+  MainWeaponObj: {fileID: 0}
+  SubWeaponObj: {fileID: 0}
   groundCheckLenght: 0
+  MAINWEAPON: {fileID: 0}
+  SUBWEAPON: {fileID: 0}
   WeaponPrefab: {fileID: 7208749909875244897}
   shortSword: {fileID: 0}
   AimtransPos: {fileID: 0}
   ControlBtn: {fileID: 0}
+  dashTime: 0.2
+  dashCheck: 0
   shitCheack: 0
   closeCheck: 0
   SkillEffectObj1: {fileID: 4799312573300115351, guid: a88d7cefaae7e184696ea2a1efd4779a, type: 3}
   SkillEffectObj2: {fileID: 4799312573300115351, guid: 15d280cc6a5446b43a82f1eaa64a1d78, type: 3}
   SkillParentObj1: {fileID: 7119097427240176788}
   SkillParentObj2: {fileID: 348033900356103323}
-  granadObj: {fileID: 0}
+  UpperBody: {fileID: 7321203840995780355}
+  maxPitch: 30
+  UpperrotationSpeed: 10
+  recoilAmount: 0.01
 --- !u!54 &4268791606964638330
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -845,6 +854,11 @@ CapsuleCollider:
   m_Height: 1.3199816
   m_Direction: 1
   m_Center: {x: -0.000000519103, y: 0.1599907, z: -0.0093929125}
+--- !u!4 &7321203840995780355 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: -3480699329000672020, guid: f23be60aa6b7bbf4eb0255d85e6d7546, type: 3}
+  m_PrefabInstance: {fileID: 3037737855976608751}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &9152142084867696484 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: -3086436065929644917, guid: f23be60aa6b7bbf4eb0255d85e6d7546, type: 3}
@@ -1103,11 +1117,6 @@ GameObject:
 --- !u!4 &6755744555101140211 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 369101448470390884, guid: 494318586390ca24b9f2bd507d02ccf8, type: 3}
-  m_PrefabInstance: {fileID: 6403685664172137623}
-  m_PrefabAsset: {fileID: 0}
---- !u!1 &6969085068361534176 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 4064885540784625271, guid: 494318586390ca24b9f2bd507d02ccf8, type: 3}
   m_PrefabInstance: {fileID: 6403685664172137623}
   m_PrefabAsset: {fileID: 0}
 --- !u!1 &7119097427240176788 stripped

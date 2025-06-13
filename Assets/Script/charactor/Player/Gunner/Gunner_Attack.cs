@@ -60,45 +60,8 @@ public partial class Gunner : Player
             Gizmos.DrawLine(gun.GunHoleObj.transform.position, targetTrs.position);
         }
     }
-   
-    protected override IEnumerator AdjustUpperBodyToTargetOnce(Weapon weapon, float _duration)
-    {
-        if (weapon == null) yield break;
 
-        Gun gun = weapon as Gun;
-        Transform gunHoleTrs = gun.GunHoleObj.transform;
 
-        // 목표물 방향
-        Vector3 dirToTarget = targetTrs.position - gunHoleTrs.position;
-
-        // 타겟을 향한 회전 계산
-        Quaternion lookRot = Quaternion.LookRotation(dirToTarget, Vector3.up);
-
-        // Spine 로컬 기준으로 각도 비교
-        Quaternion localRot = Quaternion.Inverse(UpperBody.parent.rotation) * lookRot;
-
-        float pitch = localRot.eulerAngles.x;
-        if (pitch > 180f) pitch -= 360f;
-
-        float clampedPitch = Mathf.Clamp(pitch, -30f, 30f);
-
-        Quaternion startRot = UpperBody.localRotation;
-        Quaternion targetRot = Quaternion.Euler(clampedPitch, startRot.eulerAngles.y, startRot.eulerAngles.z);
-
-        float elapsed = 0f;
-        while (elapsed < _duration)
-        {
-            UpperBody.localRotation = Quaternion.Slerp(startRot, targetRot, elapsed / _duration);
-            elapsed += Time.deltaTime;
-            yield return null;
-        }
-
-        UpperBody.localRotation = targetRot;
-        cachedUpperBodyEuler = targetRot;
-        UpperBodyColutin = null;
-
-        AutoAttack(targetTrs);//애니메이션 실행
-    }
     private Quaternion CalculateUpperBodyRotationToTarget()
     {
         Transform gunHoleTrs = (MAINWEAPON as Gun).GunHoleObj.transform;

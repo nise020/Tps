@@ -193,36 +193,49 @@ public partial class Player : Character
         //charactorModelTrs.LookAt(_transform);
         //Debug.Log($"{_transform.position}");
         //charactorModelTrs.rotation = Quaternion.Slerp(charactorModelTrs.rotation, targetRotation, Time.deltaTime * rotationSpeed);
-        if (playerStateData.NpcWalkState != NpcWalkState.Stop) 
-        {
+
+        if (_transform == null) return;
+
+        if (playerStateData.NpcWalkState != NpcWalkState.Stop)
             npcRunStateAnimation(0.0f);
-        }
+
+        Vector3 newTargetPos = _transform.position;
+
+        //AutoAttack(targetTrs); // 애니메이션 실행+Attack_On
 
 
-
-        if (UpperBodyColutin == null)//임시
+        // 목표 위치가 달라졌을 때에만 재시작
+        if (UpperBodyColutin != null)
         {
-            forceUpperBody = true;
-            targetTrs = _transform;
-
-            // UpperBody 회전은 AvatarMask 상체 레이어가 있어야 함
-            UpperBodyColutin = AimAndShootRoutine(MAINWEAPON as Gun);
-            StartCoroutine(UpperBodyColutin);
+            if (targetTrs == null || Vector3.Distance(newTargetPos, targetTrs.position) > 0.01f)
+            {
+                StopCoroutine(UpperBodyColutin);
+                UpperBodyColutin = null;
+            }
         }
-        //AutoAttack(targetTrs);
+
+        if (UpperBodyColutin == null)
+        {
+            targetTrs = _transform;
+            forceUpperBody = true;
+            UpperBodyColutin = AdjustUpperBodyToTargetOnce(MAINWEAPON as Gun, 1.0f);
+            StartCoroutine(UpperBodyColutin);
+
+            AutoAttack(targetTrs); // 애니메이션 실행+Attack_On
+        }
 
     }
-    protected IEnumerator AimAndShootRoutine(Gun gun)
-    {
-        yield return AdjustUpperBodyToTargetOnce(gun, 0.2f); // 상체 보정
+    //protected IEnumerator AimAndShootRoutine(Gun gun)
+    //{
+    //    yield return AdjustUpperBodyToTargetOnce(gun); // 상체 보정
 
-        //forceUpperBody = false;
+    //    //forceUpperBody = false;
 
-        AutoAttack(targetTrs);//애니메이션 실행
+    //    AutoAttack(targetTrs);//애니메이션 실행
 
-        //forceUpperBody = true;
-        //UpperBodyColutin = null;
-    }
+    //    //forceUpperBody = true;
+    //    //UpperBodyColutin = null;
+    //}
     protected virtual void AutoAttack(Transform _transform) 
     {
 

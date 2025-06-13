@@ -4,20 +4,156 @@ using UnityEngine;
 
 public partial class Gunner : Player
 {
-    //private void OnAnimatorIK(int layerIndex)
+    //void OnAnimatorIK(int layerIndex)
     //{
-    //    if (targetTrs == null || !forceUpperBody) return;
-
-    //    if ((playerStateData.ModeState == PlayerModeState.Npc ||  
-    //         playerStateData.ModeState == PlayerModeState.AutoMode) &&
-    //         playerStateData.AttackState == PlayerAttackState.Attack_On)
+    //    if (forceUpperBody && cachedUpperBodyEuler != null)
     //    {
-    //        playerAnimator.SetLookAtWeight(0f, 0.7f, 0f, 1f, 0.5f); // 가중치 설정
-    //        playerAnimator.SetLookAtPosition(targetTrs.position); // 바라볼 위치
-
-    //        //AvatarIKGoal.LeftHand
+    //        UpperBody.localRotation = cachedUpperBodyEuler;
     //    }
     //}
+    private void LateUpdate()
+    {
+        if (forceUpperBody && cachedUpperBodyEuler != null)
+        {
+            UpperBody.localRotation = cachedUpperBodyEuler;
+        }
+    }
+    Vector3 lastTargetPos = Vector3.zero;
+    protected override IEnumerator AdjustUpperBodyToTargetOnce(Gun gun,float duration)
+    {
+        lastTargetPos = Vector3.zero; // 초기화
+
+        while (playerStateData.AttackState == PlayerAttackState.Attack_On)
+        {
+            Vector3 currentTargetPos = Vector3.zero;
+
+            if (targetTrs == null) 
+            {
+                Debug.LogWarning("[코루틴 종료] targetTrs가 null입니다.");
+                yield break;
+            }
+            if (targetTrs != null)
+            {
+                currentTargetPos = targetTrs.position;
+                //Debug.Log($"현재 목표물 위치: {currentTargetPos}, 이전 위치: {lastTargetPos}");
+
+                if ((currentTargetPos - lastTargetPos).sqrMagnitude > 0.01f)
+                {
+                    Debug.Log("위치가 변경됨. 상체 회전 업데이트");
+                }
+                else
+                {
+                    Debug.Log("위치 변화 없음. 회전 유지");
+                }
+            }
+
+            //Vector3 currentTargetPos = targetTrs.position;
+
+            // 목표 위치가 바뀐 경우만 계산
+            if ((lastTargetPos - currentTargetPos).sqrMagnitude > 0.01f)
+            {
+                lastTargetPos = currentTargetPos;
+
+                Transform gunHoleTrs = gun.GunHoleObj.transform;
+                Vector3 toTarget = (currentTargetPos - gunHoleTrs.position).normalized;
+                Vector3 toTargetLocal = gunHoleTrs.InverseTransformDirection(toTarget);
+
+                float pitchAngle = Mathf.Atan2(toTargetLocal.y, toTargetLocal.z) * Mathf.Rad2Deg;
+                float clampedPitch = Mathf.Clamp(pitchAngle, -30f, 30f);
+
+                Quaternion startRot = UpperBody.localRotation;
+                //Quaternion targetRot = Quaternion.Euler(clampedPitch, startRot.eulerAngles.y, startRot.eulerAngles.z);
+                Quaternion targetRot = Quaternion.Euler(clampedPitch, 0, 0);
+
+                float elapsed = 0f;
+                while (elapsed < duration)
+                {
+                    cachedUpperBodyEuler = Quaternion.Slerp(startRot, targetRot, elapsed / duration);
+                    elapsed += Time.deltaTime;
+                    yield return null;
+                }
+
+                cachedUpperBodyEuler = targetRot;
+            }
+
+            yield return null;
+        }
+
+        UpperBodyColutin = null;
+        forceUpperBody = false;
+
+        //// 공격 종료 시 회전값 초기화
+        //targetUpperBodyRot = null;
+        //forceUpperBody = false;
+
+        //if (gun == null || targetTrs == null)
+        //yield break;
+
+        //Transform gunHoleTrs = gun.GunHoleObj.transform;
+        //Vector3 lastTargetPos = targetTrs.position;
+
+        //while (targetTrs != null)
+        //{
+        //    Vector3 currentTargetPos = targetTrs.position;
+
+        //    // 목표물이 움직였을 때만 회전 갱신
+        //    if (Vector3.Distance(currentTargetPos, lastTargetPos) > 0.01f)
+        //    {
+        //        Vector3 toTarget = (currentTargetPos - gunHoleTrs.position).normalized;
+        //        Vector3 toTargetLocal = gunHoleTrs.InverseTransformDirection(toTarget);
+
+        //        float pitchAngle = Mathf.Atan2(toTargetLocal.y, toTargetLocal.z) * Mathf.Rad2Deg;
+        //        float clampedPitch = Mathf.Clamp(pitchAngle, -30f, 30f);
+
+        //        Quaternion current = UpperBody.localRotation;
+        //        Quaternion target = Quaternion.Euler(clampedPitch, current.eulerAngles.y, current.eulerAngles.z);
+
+        //        UpperBody.localRotation = Quaternion.Slerp(current, target, Time.deltaTime * 5f);
+        //        cachedUpperBodyEuler = UpperBody.localRotation;
+
+        //        lastTargetPos = currentTargetPos;
+        //    }
+
+        //    yield return null;
+        //}
+
+        //forceUpperBody = false;
+        //UpperBodyColutin = null;
+
+        #region before
+
+        //if (weapon == null || targetTrs == null) yield break;
+
+        //Gun gun = weapon as Gun;
+        //Transform gunHoleTrs = gun.GunHoleObj.transform;
+
+        //Vector3 toTarget = (targetTrs.position - gunHoleTrs.position).normalized;
+        //Vector3 toTargetLocal = gunHoleTrs.InverseTransformDirection(toTarget);
+
+        //float pitchAngle = Mathf.Atan2(toTargetLocal.y, toTargetLocal.z) * Mathf.Rad2Deg;
+        //float clampedPitch = Mathf.Clamp(pitchAngle, -30f, 30f);
+
+        //Quaternion startRot = UpperBody.localRotation;
+        //Quaternion targetRot = Quaternion.Euler(clampedPitch, startRot.eulerAngles.y, startRot.eulerAngles.z);
+
+        //float elapsed = 0f;
+        //while (elapsed < _duration)
+        //{
+        //    cachedUpperBodyEuler = Quaternion.Slerp(startRot, targetRot, elapsed / _duration);
+        //    elapsed += Time.deltaTime;
+        //    yield return null;
+        //}
+
+        ////UpperBody.rotation = targetRot;
+        //cachedUpperBodyEuler = targetRot;
+        //forceUpperBody = true;
+        //UpperBodyColutin = null;
+        //Debug.Log($"UpperBody rotation after animation: {UpperBody.localRotation.eulerAngles}");
+        #endregion
+
+        //yield return null; // 1프레임 대기 (총구 방향 안정화) 
+    }
+
     public void GunShootEvent() //Animation Event
     {
         Gun gun = MAINWEAPON as Gun;
@@ -47,7 +183,6 @@ public partial class Gunner : Player
     }
     private void gunShoot(Gun _gun) //Animation Event
     {
-
         Transform gunHoleTrs = _gun.GunHoleObj.transform;
 
         Vector3 aimDirection = gunHoleTrs.forward;
@@ -62,11 +197,7 @@ public partial class Gunner : Player
         aimDirection += _gun.GunHoleObj.transform.TransformDirection(recoil);
         aimDirection.Normalize();
 
-
-        //Vector3 AimDirection = MainWeaponObj.transform.forward;
-
         MAINWEAPON.Attack(aimDirection);
-
     }
     public void GunAttackAnimationOut() //AnimationEvent
     {
@@ -78,8 +209,11 @@ public partial class Gunner : Player
 
             forceUpperBody = false;
         }
-        if (PLAYERAI.AtttackCheck())
+        if (PLAYERAI.AtttackCheck())//사망확인
         {
+            StopCoroutine(UpperBodyColutin);
+            UpperBodyColutin = null;
+
             UpperBody.localRotation = Quaternion.identity;
 
             playerStateData.AttackState = PlayerAttackState.Attack_Off;
@@ -88,11 +222,11 @@ public partial class Gunner : Player
 
             forceUpperBody = false;
         }
-        else 
-        {
-            UpperBodyColutin = null;
-            forceUpperBody = false;
-        }
+        //else 
+        //{
+        //    UpperBodyColutin = null;
+        //    forceUpperBody = false;
+        //}
         //if (targetTrs == null)
         //{
         //    UpperBody.localRotation = Quaternion.identity;

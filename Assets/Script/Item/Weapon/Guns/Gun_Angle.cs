@@ -65,7 +65,7 @@ public partial class Gun : Weapon
         float time = 0f;
         while (time < duration)
         {
-            bullet.position += direction * speed * Time.deltaTime;
+            bullet.position += direction.normalized * speed * Time.deltaTime;
             time += Time.deltaTime;
             yield return null;
         }

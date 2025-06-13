@@ -25,7 +25,9 @@ public partial class Gunner : Player
         base.Start();
         MAINWEAPON = GetComponentInChildren<Gun>();
         FindWeaponObject(LayerName.Weapon);
+
         attackLayerIndex = playerAnimator.GetLayerIndex("Attack");
+        //UpperBody = playerAnimator.GetBoneTransform(HumanBodyBones.Spine);
     }
 
     private void Update()
@@ -35,27 +37,12 @@ public partial class Gunner : Player
             inputrocessing();
         }
     }
-    //private void LateUpdate()
-    //{
-    //    //if (forceUpperBody)
-    //    //{
-    //    //    UpperBody.localRotation = cachedUpperBodyEuler;
-    //    //}
-    //    if (!forceUpperBody || targetTrs == null) return;
 
-    //    Vector3 currentTargetPos = targetTrs.position;
 
-    //    if ((currentTargetPos - lastTargetPosition).sqrMagnitude > 0.01f)
-    //    {
-    //        //cachedUpperBodyEuler = CalculateUpperBodyRotationToTarget();
-    //        lastTargetPosition = currentTargetPos;
-    //    }
 
-    //    UpperBody.localRotation = Quaternion.Slerp(UpperBody.localRotation, cachedUpperBodyEuler, Time.deltaTime * 10f);
-    //}
     protected override void shitdownCheak()
     {
-       base.shitdownCheak();
+        base.shitdownCheak();
     }
     Vector3 granadOriginalPos = Vector3.zero;
     protected override void FindWeaponObject(LayerName _name)
@@ -67,7 +54,7 @@ public partial class Gunner : Player
         int value = LayerMask.NameToLayer(_name.ToString());
         foreach (var weaponObj in weaponData)
         {
-           // Weapon weapon = weaponObj.gameObject.GetComponent<Weapon>();
+            // Weapon weapon = weaponObj.gameObject.GetComponent<Weapon>();
 
             WeaponType type = weaponObj.WeaponType;
 
@@ -90,7 +77,7 @@ public partial class Gunner : Player
 
         }
     }
-    protected void WeaponInit(Weapon weapon) 
+    protected void WeaponInit(Weapon weapon)
     {
         if (weapon is Gun)
         {
@@ -100,9 +87,11 @@ public partial class Gunner : Player
         {
             weapon.init();
         }
-        else if (weapon is Sword) 
+        else if (weapon is Sword)
         {
             weapon.init();
-        } 
+        }
     }
+
 }
+

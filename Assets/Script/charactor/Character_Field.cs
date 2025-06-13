@@ -87,6 +87,9 @@ public partial class Character : Actor
     [SerializeField] protected float maxPitch = 30f;      // 상체 최대 회전
     [SerializeField] protected float UpperrotationSpeed = 30f; // 상체 회전 부드러움
     [SerializeField] protected float recoilAmount = 0.01f; // 에임 흔들림 강도s
+    [SerializeField] protected float maxAngle = 60f; // 에임 흔들림 강도s
+    protected float aimSpeed = 0.2f;
+
     protected bool forceUpperBody;
     protected Quaternion cachedUpperBodyEuler;
     protected Quaternion initialUpperBodyRot;

@@ -49,59 +49,69 @@ public partial class Gunner : Player
             attackAnimation(playerStateData.AttackState, 0);
         }
     }
-    private void AdjustUpperBodyToTarget(Weapon weapon)
+
+    private bool isAdjustingUpperBody = false;
+
+    void OnDrawGizmos()
     {
-        if (weapon == null) { return; }
-        Gun gun = weapon as Gun;
-
-        Transform gunHoleTrs = gun.GunHoleObj.transform;
-
-        Vector3 toTarget = (targetTrs.position - gunHoleTrs.position).normalized;
-        Vector3 gunForward = gunHoleTrs.forward;
-
-        float pitchAngle = Vector3.SignedAngle(gunForward, toTarget, gunHoleTrs.right);
-        float clampedPitch = Mathf.Clamp(pitchAngle, -maxPitch, maxPitch);
-
-        Vector3 currentEuler = UpperBody.localEulerAngles;
-        if (currentEuler.x > 180f) currentEuler.x -= 360f;
-
-        float newX = Mathf.Lerp(currentEuler.x, currentEuler.x + clampedPitch, Time.deltaTime * UpperrotationSpeed);
-        UpperBody.localEulerAngles = new Vector3(newX, currentEuler.y, currentEuler.z);
-    }
-
-    public IEnumerator AdjustUpperBodyToTargetOnce(Weapon weapon)
-    {
-        if (weapon == null) { yield break; }
-        Gun gun = weapon as Gun;
-
-        Transform gunHoleTrs = gun.GunHoleObj.transform;
-
-
-        Vector3 toTarget = (targetTrs.position - gunHoleTrs.position).normalized;
-        Vector3 gunForward = gunHoleTrs.forward;
-
-        float pitchAngle = Vector3.SignedAngle(gunForward, toTarget, gunHoleTrs.right);
-        float clampedPitch = Mathf.Clamp(pitchAngle, -maxPitch, maxPitch);
-
-        Vector3 currentEuler = UpperBody.localEulerAngles;
-        if (currentEuler.x > 180f) currentEuler.x -= 360f;
-
-        float targetX = currentEuler.x + clampedPitch;
-        float duration = 0.2f;
-        float elapsed = 0f;
-
-        while (elapsed < duration)
+        if (MAINWEAPON is Gun gun && gun.GunHoleObj != null && targetTrs != null)
         {
-            float newX = Mathf.Lerp(currentEuler.x, targetX, elapsed / duration);
-            cachedUpperBodyEuler = new Vector3(newX, currentEuler.y, currentEuler.z);
+            Gizmos.color = Color.red;
+            Gizmos.DrawLine(gun.GunHoleObj.transform.position, targetTrs.position);
+        }
+    }
+   
+    protected override IEnumerator AdjustUpperBodyToTargetOnce(Weapon weapon, float _duration)
+    {
+        if (weapon == null) yield break;
 
+        Gun gun = weapon as Gun;
+        Transform gunHoleTrs = gun.GunHoleObj.transform;
+
+        // 목표물 방향
+        Vector3 dirToTarget = targetTrs.position - gunHoleTrs.position;
+
+        // 타겟을 향한 회전 계산
+        Quaternion lookRot = Quaternion.LookRotation(dirToTarget, Vector3.up);
+
+        // Spine 로컬 기준으로 각도 비교
+        Quaternion localRot = Quaternion.Inverse(UpperBody.parent.rotation) * lookRot;
+
+        float pitch = localRot.eulerAngles.x;
+        if (pitch > 180f) pitch -= 360f;
+
+        float clampedPitch = Mathf.Clamp(pitch, -30f, 30f);
+
+        Quaternion startRot = UpperBody.localRotation;
+        Quaternion targetRot = Quaternion.Euler(clampedPitch, startRot.eulerAngles.y, startRot.eulerAngles.z);
+
+        float elapsed = 0f;
+        while (elapsed < _duration)
+        {
+            UpperBody.localRotation = Quaternion.Slerp(startRot, targetRot, elapsed / _duration);
             elapsed += Time.deltaTime;
             yield return null;
         }
 
-        cachedUpperBodyEuler = new Vector3(targetX, currentEuler.y, currentEuler.z);
-    }
+        UpperBody.localRotation = targetRot;
+        cachedUpperBodyEuler = targetRot;
+        UpperBodyColutin = null;
 
+        AutoAttack(targetTrs);//애니메이션 실행
+    }
+    private Quaternion CalculateUpperBodyRotationToTarget()
+    {
+        Transform gunHoleTrs = (MAINWEAPON as Gun).GunHoleObj.transform;
+        Vector3 toTarget = (targetTrs.position - gunHoleTrs.position).normalized;
+
+        // 총구 기준 pitch 각도만 계산
+        float pitch = Vector3.SignedAngle(gunHoleTrs.forward, toTarget, gunHoleTrs.right);
+        float clampedPitch = Mathf.Clamp(pitch, -30f, 30f);
+
+        // 현재 로컬 회전에서 x축만 덮어씀
+        Vector3 currentEuler = UpperBody.localRotation.eulerAngles;
+        return Quaternion.Euler(clampedPitch, currentEuler.y, currentEuler.z);
+    }
     //protected override void inPutCameraAnimation(bool _check)
     //{
     //    viewcam.cameraShakeAnim(_check);

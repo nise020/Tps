@@ -190,20 +190,43 @@ public partial class Player : Character
     public void Ai_Attack(Transform _transform)//거리이내에 있는 적에게 데미지 로직 필요
     {
         //charactorModelTrs.rotation = Quaternion.LookRotation(_transform.position);
-        charactorModelTrs.LookAt(_transform);
+        //charactorModelTrs.LookAt(_transform);
         //Debug.Log($"{_transform.position}");
         //charactorModelTrs.rotation = Quaternion.Slerp(charactorModelTrs.rotation, targetRotation, Time.deltaTime * rotationSpeed);
-       
-        npcRunStateAnimation(0.0f);
+        if (playerStateData.NpcWalkState != NpcWalkState.Stop) 
+        {
+            npcRunStateAnimation(0.0f);
+        }
 
-        targetTrs = _transform;
-        AutoAttack(targetTrs);
+
+
+        if (UpperBodyColutin == null)//임시
+        {
+            forceUpperBody = true;
+            targetTrs = _transform;
+
+            // UpperBody 회전은 AvatarMask 상체 레이어가 있어야 함
+            UpperBodyColutin = AimAndShootRoutine(MAINWEAPON as Gun);
+            StartCoroutine(UpperBodyColutin);
+        }
+        //AutoAttack(targetTrs);
+
+    }
+    protected IEnumerator AimAndShootRoutine(Gun gun)
+    {
+        yield return AdjustUpperBodyToTargetOnce(gun, 0.2f); // 상체 보정
+
+        //forceUpperBody = false;
+
+        AutoAttack(targetTrs);//애니메이션 실행
+
+        //forceUpperBody = true;
+        //UpperBodyColutin = null;
     }
     protected virtual void AutoAttack(Transform _transform) 
     {
 
     }
-
     public override bool DamageEventCheck()
     {
         if (playerStateData.DamageEvent == DamageEvent.Event_On)

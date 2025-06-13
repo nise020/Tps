@@ -22,7 +22,7 @@ public partial class Gun : Weapon
     [SerializeField] bool angleOn = true;
     LineRenderer gunLazer;
     GunState State = GunState.Off;
-    [SerializeField] float bulletSpeed = 30.0f;
+    [SerializeField] float bulletSpeed = 10.0f;
     public void reloed()
     {
         for (int iNum = 0; iNum < bulletData.Count; iNum++) 
@@ -52,7 +52,7 @@ public partial class Gun : Weapon
         go.transform.rotation = Quaternion.LookRotation(_finalAim);
         go.SetActive(true);
 
-        StartCoroutine(MoveBullet(go.transform, _finalAim, bulletSpeed, 20f));
+        StartCoroutine(MoveBullet(go.transform, _finalAim, bulletSpeed, 3f));
 
         bulletcount++;
         nowBullet--;

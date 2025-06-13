@@ -47,7 +47,7 @@ public partial class Player : Character
     protected SkillStrategy skillStrategy = new SkillStrategy();
 
     [Header("Animator Info")]
-    protected int attackLayerIndex = 1;
+    protected int attackLayerIndex;
     protected int BaseLayerIndex = 0;
     [SerializeField] bool shitCheack = false;
     [SerializeField] bool closeCheck = false;

@@ -154,10 +154,10 @@ public class BattelManager : MonoBehaviour
         //defenserHp = defenserHp - 1000; <- TEST
 
         //State
-        Debug.Log($"attakerPower ={attakerPower}\n" +
-            $"_attacker = {_attacker}" +
-            $"weaponPower = {weaponPower}\n" +
-            $"defenserHp = {defenserHp}");
+        //Debug.Log($"attakerPower ={attakerPower}\n" +
+        //    $"_attacker = {_attacker}" +
+        //    $"weaponPower = {weaponPower}\n" +
+        //    $"defenserHp = {defenserHp}");
 
         _defender.StatusUpLoad(defenserHp);
 

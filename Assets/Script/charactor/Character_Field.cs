@@ -80,4 +80,15 @@ public partial class Character : Actor
     [Header("Ai")]
     protected Character targetCharacter;
     protected Transform targetTrs;
+    protected IEnumerator UpperBodyColutin;
+
+    [Header("Gunner")]
+    [SerializeField] protected Transform UpperBody;
+    [SerializeField] protected float maxPitch = 30f;      // 상체 최대 회전
+    [SerializeField] protected float UpperrotationSpeed = 30f; // 상체 회전 부드러움
+    [SerializeField] protected float recoilAmount = 0.01f; // 에임 흔들림 강도s
+    protected bool forceUpperBody;
+    protected Quaternion cachedUpperBodyEuler;
+    protected Quaternion initialUpperBodyRot;
+    protected Vector3 lastTargetPosition;
 }

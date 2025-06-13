@@ -143,6 +143,9 @@ public partial class Player : Character
             viewcam.CameraModeInit(cameraMode);
         }
     }
-    
-    
+
+    protected virtual IEnumerator AdjustUpperBodyToTargetOnce(Weapon weapon, float _duration)
+    {
+        yield return null;
+    }
 }

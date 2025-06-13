@@ -4,23 +4,46 @@ using UnityEngine;
 
 public partial class Gunner : Player
 {
+    //private void OnAnimatorIK(int layerIndex)
+    //{
+    //    if (targetTrs == null || !forceUpperBody) return;
+
+    //    if ((playerStateData.ModeState == PlayerModeState.Npc ||  
+    //         playerStateData.ModeState == PlayerModeState.AutoMode) &&
+    //         playerStateData.AttackState == PlayerAttackState.Attack_On)
+    //    {
+    //        playerAnimator.SetLookAtWeight(0f, 0.7f, 0f, 1f, 0.5f); // 가중치 설정
+    //        playerAnimator.SetLookAtPosition(targetTrs.position); // 바라볼 위치
+
+    //        //AvatarIKGoal.LeftHand
+    //    }
+    //}
     public void GunShootEvent() //Animation Event
     {
         Gun gun = MAINWEAPON as Gun;
+
+        if (gun == null) return;
         gun.StateUpdate(GunState.Off);
-
-        playerAnimator.applyRootMotion = false;
-
-        if (playerStateData.ModeState == PlayerModeState.Npc ||
-            playerStateData.ModeState == PlayerModeState.AutoMode)
-        {
-            forceUpperBody = true;
-            StartCoroutine(AdjustUpperBodyToTargetOnce(gun));
-            //AdjustUpperBodyToTarget(gun);
-            //DirectionAssistance(gun);
-        }
-
         gunShoot(gun);
+
+        //playerAnimator.applyRootMotion = false;
+
+        //if (playerStateData.ModeState == PlayerModeState.Npc ||
+        //    playerStateData.ModeState == PlayerModeState.AutoMode)
+        //{
+        //    //OnAnimatorIK(attackLayerIndex);
+        //    if (UpperBodyColutin == null)
+        //    {
+        //        //OnAnimatorIK(attackLayerIndex);
+        //        forceUpperBody = true;
+        //        UpperBodyColutin = AdjustUpperBodyToTargetOnce(gun, 0.2f);
+        //        StartCoroutine(UpperBodyColutin);
+        //    }
+
+        //    //AdjustUpperBodyToTarget(gun);
+        //    //DirectionAssistance(gun);
+        //}
+
     }
     private void gunShoot(Gun _gun) //Animation Event
     {
@@ -52,13 +75,35 @@ public partial class Gunner : Player
             playerStateData.AttackState = PlayerAttackState.Attack_Off;
             attackAnimation(playerStateData.AttackState, 0);
             playerAnimator.SetLayerWeight(attackLayerIndex, 0.0f);
+
+            forceUpperBody = false;
         }
-        if (!PLAYERAI.AtttackCheck()) 
+        if (PLAYERAI.AtttackCheck())
         {
+            UpperBody.localRotation = Quaternion.identity;
+
             playerStateData.AttackState = PlayerAttackState.Attack_Off;
             attackAnimation(playerStateData.AttackState, 0);
             playerAnimator.SetLayerWeight(attackLayerIndex, 0.0f);
+
+            forceUpperBody = false;
         }
+        else 
+        {
+            UpperBodyColutin = null;
+            forceUpperBody = false;
+        }
+        //if (targetTrs == null)
+        //{
+        //    UpperBody.localRotation = Quaternion.identity;
+
+        //    // 필요한 상태 초기화
+        //    playerAnimator.ResetTrigger("Attack");
+        //    playerStateData.AttackState = PlayerAttackState.Attack_Off;
+        //    cachedUpperBodyEuler = initialUpperBodyRot; // 초기 저장한 회전값
+        //}
+        //playerAnimator.applyRootMotion = true;
+
         //if (playerStateData.ModeState != PlayerModeState.None &&
         //    playerStateData.ModeState != PlayerModeState.Npc)
         //{
@@ -88,7 +133,6 @@ public partial class Gunner : Player
         //playerStateData.AttackState = PlayerAttackState.Attack_Off;
         //attackAnimation(playerStateData.AttackState, 0);
         //playerAnimator.SetLayerWeight(attackLayerIndex, 0.0f);
-        playerAnimator.applyRootMotion = true;
     }
     protected override void walkAnim(PlayerWalkState _state, Vector3 _pos)
     {

@@ -5,20 +5,19 @@ using UnityEngine.TextCore.Text;
 
 public partial class Gunner : Player
 {
-    [Header("Gunner")]
-    [SerializeField] Transform UpperBody;
-    [SerializeField] private float maxPitch = 30f;      // 상체 최대 회전
-    [SerializeField] private float UpperrotationSpeed = 30f; // 상체 회전 부드러움
-    [SerializeField] private float recoilAmount = 0.01f; // 에임 흔들림 강도s
-    private bool forceUpperBody;
-    private Vector3 cachedUpperBodyEuler;
+    
+    
+    IEnumerator AttackColutin;
     protected override void Awake()
     {
         id = 1;
         RenderType = ObjectRenderType.Skin;
         playerStateData.ModeState = PlayerModeState.Npc;
         playerStateData.PlayerType = PlayerType.Gunner;
+
+        initialUpperBodyRot = UpperBody.rotation;
         base.Awake();
+        
     }
 
     protected override void Start()
@@ -26,6 +25,7 @@ public partial class Gunner : Player
         base.Start();
         MAINWEAPON = GetComponentInChildren<Gun>();
         FindWeaponObject(LayerName.Weapon);
+        attackLayerIndex = playerAnimator.GetLayerIndex("Attack");
     }
 
     private void Update()
@@ -35,13 +35,24 @@ public partial class Gunner : Player
             inputrocessing();
         }
     }
-    private void LateUpdate()
-    {
-        if (forceUpperBody)
-        {
-            UpperBody.localEulerAngles = cachedUpperBodyEuler;
-        }
-    }
+    //private void LateUpdate()
+    //{
+    //    //if (forceUpperBody)
+    //    //{
+    //    //    UpperBody.localRotation = cachedUpperBodyEuler;
+    //    //}
+    //    if (!forceUpperBody || targetTrs == null) return;
+
+    //    Vector3 currentTargetPos = targetTrs.position;
+
+    //    if ((currentTargetPos - lastTargetPosition).sqrMagnitude > 0.01f)
+    //    {
+    //        //cachedUpperBodyEuler = CalculateUpperBodyRotationToTarget();
+    //        lastTargetPosition = currentTargetPos;
+    //    }
+
+    //    UpperBody.localRotation = Quaternion.Slerp(UpperBody.localRotation, cachedUpperBodyEuler, Time.deltaTime * 10f);
+    //}
     protected override void shitdownCheak()
     {
        base.shitdownCheak();

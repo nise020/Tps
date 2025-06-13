@@ -21,7 +21,7 @@ public class AI_Auto : AiBase
     }
     public bool AtttackCheck() 
     {
-        return TagetAive;
+        return TagetMonster == null;
     }
     public void TargetStateUpdate(bool isDefenderDead)//Reset
     {

@@ -171,7 +171,8 @@ public enum MonsterType //몬스터 태그
     Defolt,
     Dron,
     Spider,
-    Sphere
+    Sphere,
+    Boss,
 }
 public enum ObjectRenderType //몬스터 태그
 {

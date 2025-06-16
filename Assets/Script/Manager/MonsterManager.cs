@@ -48,11 +48,6 @@ public class MonsterManager : MonoBehaviour
         creatTab = Shared.GameManager.CreatTransform();
     }
 
-    private void Start()
-    {
-        //creatTab = Shared.GameManager.CreatTransform();
-        //CreatMonsterObject();
-    }
     public void CreatMonsterObject()
     {
         //monster

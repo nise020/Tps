@@ -144,7 +144,7 @@ public partial class Player : Character
         }
     }
 
-    protected virtual IEnumerator AdjustUpperBodyToTargetOnce(Gun gun, float duration)
+    protected virtual IEnumerator AdjustUpperBodyToTargetLoop(Gun gun)
     {
         yield return null;
     }

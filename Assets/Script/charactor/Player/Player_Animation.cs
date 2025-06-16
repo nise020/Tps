@@ -25,7 +25,35 @@ public partial class Player : Character
                 break;
         }
     }
-    public void AnimationStart(string _type) //AnimationEvent
+    public virtual void AnimationOut(string _type) //AnimationEvent
+    {
+        if (_type == null)
+        {
+            Debug.LogError($"_type 값의 해당하는 애니메이션이 아닙니다");
+            return;
+        }
+
+        if (_type == PlayerAnimParameters.Avoidance.ToString())
+        {
+            playerAnimator.SetInteger(PlayerAnimParameters.Avoidance.ToString(), 0);
+
+            playerStateData.avoidanceState = AvoidanceState.Avoidance_Off;
+        }
+        else if (_type == PlayerAnimParameters.Dash.ToString())
+        {
+            playerAnimator.speed = 1f;
+            playerStateData.WalkState = PlayerWalkState.Run;
+            WalkStateAnimation(playerStateData.WalkState);
+        }
+        else if (_type == PlayerAnimParameters.Block.ToString())
+        {
+            battelTriggerCol.enabled = false;
+
+            playerStateData.AttackState = PlayerAttackState.Attack_Off;
+            attackAnimation(playerStateData.AttackState, 0);
+        }
+    }
+    public virtual void AnimationStart(string _type) //AnimationEvent
     {
 
         if (_type == "")
@@ -100,34 +128,7 @@ public partial class Player : Character
         dashCheck = false;
     }
 
-    public void AnimationOut(string _type) //AnimationEvent
-    {
-        if (_type == null) 
-        {
-            Debug.LogError($"_type 값의 해당하는 애니메이션이 아닙니다");
-            return;
-        }
-
-        if(_type == PlayerAnimParameters.Avoidance.ToString())
-        {
-            playerAnimator.SetInteger(PlayerAnimParameters.Avoidance.ToString(), 0);
-
-            playerStateData.avoidanceState = AvoidanceState.Avoidance_Off;
-        }
-        else if (_type == PlayerAnimParameters.Dash.ToString())
-        {
-            playerAnimator.speed = 1f;
-            playerStateData.WalkState = PlayerWalkState.Run;
-            WalkStateAnimation(playerStateData.WalkState);
-        }
-        else if (_type == PlayerAnimParameters.Block.ToString())
-        {
-            battelTriggerCol.enabled = false;
-
-            playerStateData.AttackState = PlayerAttackState.Attack_Off;
-            attackAnimation(playerStateData.AttackState, 0);
-        }
-    }
+   
 
     public void AnimationCheck(string _type)
     {

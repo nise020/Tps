@@ -157,6 +157,20 @@ public partial class Player : Character
         }
 
     }
+    public override bool CharacterStateCheck()
+    {
+        if (playerStateData.AttackState == PlayerAttackState.Attack_Off)
+        {
+            return true;
+        }
+        else 
+        {
+            return false;
+        }
+    }
+        
+
+    
     public bool SearchCheck(out Monster _monster)
     {
         //float radius = 8f;
@@ -204,25 +218,25 @@ public partial class Player : Character
         //AutoAttack(targetTrs); // 애니메이션 실행+Attack_On
 
 
-        // 목표 위치가 달라졌을 때에만 재시작
-        if (UpperBodyColutin != null)
+        if (_transform == null) return;
+
+        if (targetTrs == null || Vector3.Distance(_transform.position, targetTrs.position) > 0.01f)
         {
-            if (targetTrs == null || Vector3.Distance(newTargetPos, targetTrs.position) > 0.01f)
+            // 새 타겟이거나 위치 변화 → 코루틴 리셋
+            if (UpperBodyColutin != null)
             {
                 StopCoroutine(UpperBodyColutin);
                 UpperBodyColutin = null;
             }
-        }
 
-        if (UpperBodyColutin == null)
-        {
             targetTrs = _transform;
-            forceUpperBody = true;
-            UpperBodyColutin = AdjustUpperBodyToTargetOnce(MAINWEAPON as Gun, 1.0f);
-            StartCoroutine(UpperBodyColutin);
 
-            AutoAttack(targetTrs); // 애니메이션 실행+Attack_On
+            forceUpperBody = true;
+            UpperBodyColutin = AdjustUpperBodyToTargetLoop(MAINWEAPON as Gun);
+            StartCoroutine(UpperBodyColutin);
         }
+
+        AutoAttack(targetTrs);
 
     }
     //protected IEnumerator AimAndShootRoutine(Gun gun)

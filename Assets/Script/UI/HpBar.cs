@@ -54,6 +54,7 @@ public partial class HpBar : MonoBehaviour
         canvas = GetComponentInParent<Canvas>();
 
         DamageSetting();
+        AttackDamageEvent += DamageImageActive;
     }
 
     private void DamageSetting() 
@@ -155,7 +156,7 @@ public partial class HpBar : MonoBehaviour
         CHARACTER = charactor;
         ObjectType = CHARACTER.Type;
         CHARACTER.onHpChanged += SetHp;
-        AttackDamageEvent += DamageImageActive;
+        //AttackDamageEvent += DamageImageActive;
 
         init();
         if (ObjectType != ObjectType.Player)

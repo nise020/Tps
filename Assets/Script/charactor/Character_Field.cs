@@ -89,9 +89,17 @@ public partial class Character : Actor
     [SerializeField] protected float recoilAmount = 0.01f; // 에임 흔들림 강도s
     [SerializeField] protected float maxAngle = 60f; // 에임 흔들림 강도s
     protected float aimSpeed = 0.2f;
+    Vector3 lastTargetPos = Vector3.zero;
+    protected Quaternion cachedUpperBodyEulerTarget = Quaternion.identity;
+    protected Quaternion cachedUpperBodyEulerCurrent = Quaternion.identity;
+
 
     protected bool forceUpperBody;
     protected Quaternion cachedUpperBodyEuler;
     protected Quaternion initialUpperBodyRot;
     protected Vector3 lastTargetPosition;
+
+    [Header("Knockback")]
+    protected float knockbackDistance = 1.5f;
+    protected float knockbackDuration = 0.2f;
 }

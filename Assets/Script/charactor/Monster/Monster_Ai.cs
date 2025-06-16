@@ -267,6 +267,19 @@ public partial class Monster : Character
         //_state = SearchState.Wait;
         //StartCoroutine(WaitTimer(_state));
     }
+
+    public override bool CharacterStateCheck()
+    {
+        if (monsterStateData.AttackState == MonsterAttackState.Attack_Off)
+        {
+            return true;
+        }
+        else
+        {
+            return false;
+        }
+    }
+
     public override bool DamageEventCheck()
     {
         if (monsterStateData.DamageEvent == DamageEvent.Event_On)

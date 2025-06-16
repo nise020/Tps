@@ -115,10 +115,6 @@ public partial class Monster : Character
             obj.transform.SetParent(gameObject.transform);
 
         }
-
-        //itemObj = _itemObj;
-        //Item item = itemObj.GetComponent<Item>();
-        //ITEM = item;
     }
 
     public override int StatusTypeLoad(StatusType _type)

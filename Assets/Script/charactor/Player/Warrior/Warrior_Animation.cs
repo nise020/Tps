@@ -4,10 +4,99 @@ using UnityEngine;
 
 public partial class Warrior : Player
 {
+    [Header("Warrior/Animation")]
     [SerializeField] GameObject scabbard;
-
     int scabbardCount = 0;
     int scabbardMaxCount = 4;
+    bool isChecking = true;
+    public void RangCheckStart(string _Range) //AnimationEvent
+    {
+        if (_Range == "Front") 
+        {
+            StartCoroutine(CheckThrustHit());
+        }
+        else
+        {
+            StartCoroutine(CheckSlashHit());
+        }
+    }
+    public void RangCheckEnd()//AnimationEvent
+    {
+        isChecking = false;
+    }
+    public override void AnimationOut(string _type) //AnimationEvent
+    {
+        if (_type == null)
+        {
+            Debug.LogError($"_type 값의 해당하는 애니메이션이 아닙니다");
+            return;
+        }
+
+        if (_type == PlayerAnimParameters.Avoidance.ToString())
+        {
+            playerAnimator.SetInteger(PlayerAnimParameters.Avoidance.ToString(), 0);
+
+            playerStateData.avoidanceState = AvoidanceState.Avoidance_Off;
+        }
+        else if (_type == PlayerAnimParameters.Dash.ToString())
+        {
+            playerAnimator.speed = 1f;
+            playerStateData.WalkState = PlayerWalkState.Run;
+            WalkStateAnimation(playerStateData.WalkState);
+        }
+        else if (_type == PlayerAnimParameters.Block.ToString())
+        {
+            battelTriggerCol.enabled = false;
+
+            playerStateData.AttackState = PlayerAttackState.Attack_Off;
+            attackAnimation(playerStateData.AttackState, 0);
+        }
+    }
+    public override void AnimationStart(string _type) //AnimationEvent
+    {
+        if (_type == "")
+        {
+            Debug.LogError($"_type 값의 해당하는 애니메이션이 아닙니다");
+            return;
+        }
+        if (_type == "Attack")
+        {
+            playerAnimator.SetInteger(PlayerAnimParameters.Attack.ToString(), 0);
+        }
+        else if (_type == "ComboAttack")
+        {
+            playerAnimator.SetInteger(PlayerAnimParameters.AttackCombo.ToString(), 0);
+        }
+        else if (_type == PlayerAnimParameters.Avoidance.ToString())
+        {
+
+            AnimatorStateInfo info = playerAnimator.GetCurrentAnimatorStateInfo(0);
+            float animLength = info.length / playerAnimator.speed;
+            float normalizedTime = info.normalizedTime % 1f;
+
+            float remainingTime = animLength * (1f - normalizedTime);
+
+
+
+            StartCoroutine(BackAvoid(gameObject, remainingTime));
+            //AnimationEventTiming(PlayerAnimParameters.Avoidance, 1.5f,0.10f);
+        }
+        else if (_type == PlayerAnimParameters.Dash.ToString())
+        {
+            //Debug.Log($"playerStateData.WalkState ={playerStateData.WalkState}");
+
+            //if (dashCheck)
+            //{
+            //    dashCheck = false;
+            //    StartCoroutine(dashMove());
+            //}
+
+            //playerStateData.WalkState = PlayerWalkState.Dash;
+            //Debug.Log($"playerStateData.WalkState ={playerStateData.WalkState}");
+        }
+    }
+
+
     public void ResetCombo()
     {
         playerStateData.AttackState = PlayerAttackState.Attack_Off;
@@ -26,10 +115,6 @@ public partial class Warrior : Player
 
         if (!canReceiveInput)
         {
-            //playerStateData.AttackState = PlayerAttackState.Attack_Off;
-            //attackAnimation(PlayerAttackState.Attack_Combo, _value);
-
-            //playerAnimator.speed = 1.5f;
             attackAnimation(PlayerAttackState.Attack_Combo, _value);
             canReceiveInput = true;
 
@@ -39,23 +124,6 @@ public partial class Warrior : Player
         {
             ResetCombo();
         }
-        //else 
-        //{
-        //    Debug.LogError($"AttackState = {playerStateData.AttackState},canReceiveInput = {canReceiveInput}");
-        //}
-
-        //AnimatorStateInfo state = playerAnimator.GetCurrentAnimatorStateInfo(0);
-        //Debug.Log("Current normalized time: " + state.normalizedTime);
-        //float clipLength = GetClipLength($"Attack_Combo_Weapon_{currentCombo}");
-
-        //if (clipLength <= 0f)
-        //{
-        //    Debug.LogWarning("해당 클립을 찾지 못했습니다.");
-        //    //break;
-        //}
-
-        //float adjustedTime = clipLength / playerAnimtor.speed;
-        //StartCoroutine(PlayAttackComboCheck(adjustedTime, _value));
     }
 
     IEnumerator PlayAttackComboCheck(float _timer,int _value) 

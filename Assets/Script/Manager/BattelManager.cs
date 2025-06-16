@@ -172,6 +172,9 @@ public class BattelManager : MonoBehaviour
             _attacker.AttackEvent?.Invoke(false);
         }
 
+        _attacker.ApplyKnockback(_defender.gameObject.transform.position);
+        //_attacker.ApplyKnockback(Vectoe3.zero);
+
         //sharder
         if (_defender.DamageEventCheck()) 
         {

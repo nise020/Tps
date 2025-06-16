@@ -65,28 +65,7 @@ public abstract partial class Character : Actor
     {
         
     }
-    //protected virtual void OnTriggerEnter(Collider other)//세분화 필요
-    //{
-    //    //Collider myColl = gameObject.GetComponent<Collider>();
-    //    //if (myColl.gameObject.layer == Delivery.LayerNameEnum(LayerName.Monster))//몬스터일 경우
-    //    //{
-    //    //    if (other.gameObject.layer == Delivery.LayerNameEnum(LayerName.Player))
-    //    //    {
-    //    //        //Attack();
-    //    //    }
-    //    //    else if (other.gameObject.layer == Delivery.LayerNameEnum(LayerName.Bullet))//피격
-    //    //    {
-    //    //        checkHp(other);
-    //    //    }
-    //    //}
-    //    //else if (myColl.gameObject.layer == Delivery.LayerNameEnum(LayerName.Player))//플레이어 일 경우
-    //    //{
-    //    //    if (other.gameObject.layer == Delivery.LayerNameEnum(LayerName.Monster))//피격
-    //    //    {
-    //    //        checkHp(other);
-    //    //    }
-    //    //}
-    //}
+
 
 
     protected void footRayCheck() //중력구현
@@ -95,20 +74,7 @@ public abstract partial class Character : Actor
         //update
         //Renderring
     }
-    //protected GameObject FindSkinBodyTypeObject(BodyType _type)
-    //{
-    //    //GameObject [] bodyObj = GetComponentsInChildren<GameObject>();
-    //    //foreach (GameObject obj in bodyObj) 
-    //    //{
-    //    //    int Layer = LayerMask.NameToLayer(_type.ToString());
-    //    //    if (Layer == obj.layer) 
-    //    //    {
-    //    //        return obj;
-    //    //    }
-    //    //}
-    //    //Debug.Log($"gameObject = null");
-    //    //return null;
-    //}
+
     protected void FindRootBodyObject()
     {
         Transform[] body = GetComponentsInChildren<Transform>();

@@ -23,6 +23,16 @@ public class ItemManager : MonoBehaviour
         }
     }
 
+    
+
+    public void ItemDataAddToMonster(Monster _monster) 
+    {
+        Dictionary<Item, GameObject> itemObjectData = creatItemObject();
+
+        _monster.ItemUpdate(itemObjectData);
+
+    }
+
     private Dictionary<Item, GameObject> creatItemObject()
     {
         Dictionary<Item, GameObject> itemObjectData = new Dictionary<Item, GameObject>();
@@ -36,25 +46,6 @@ public class ItemManager : MonoBehaviour
         }
         return itemObjectData;
     }
-
-    public void ItemDataAddToMonster(Monster _monster) 
-    {
-        Dictionary<Item, GameObject> itemObjectData = creatItemObject();
-
-        //int count = Random.Range(0, Items.Count);
-
-        //GameObject go = Instantiate(Items[count].gameObject,Vector3.zero,Quaternion.identity, _monster.transform);
-        //go.SetActive(false);
-
-        _monster.ItemUpdate(itemObjectData);
-        
-        //creat();
-    }
-    private void creat()
-    {
-        hillItem = CreatEffect(hillItem);
-        BuffItem = CreatEffect(BuffItem);
-    }
     private Item CreatEffect(Item _particle)
     {
         GameObject go = Instantiate(_particle.gameObject, creatTab);
@@ -64,5 +55,11 @@ public class ItemManager : MonoBehaviour
         _particle.gameObject.SetActive(false);
 
         return _particle;
+    }
+
+    private void creat()
+    {
+        hillItem = CreatEffect(hillItem);
+        BuffItem = CreatEffect(BuffItem);
     }
 }

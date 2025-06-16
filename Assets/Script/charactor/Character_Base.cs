@@ -66,7 +66,41 @@ public abstract partial class Character : Actor
         }
         return value;
     }
-    
+    public virtual bool CharacterStateCheck() 
+    {
+        return false;
+    }
+    public void ApplyKnockback(Vector3 attackerPosition)
+    {
+        if (CharacterStateCheck() == true)
+        {
+            Vector3 knockbackDir = (transform.position - attackerPosition).normalized;
+
+            StartCoroutine(KnockbackRoutine(knockbackDir));
+        }
+        else 
+        {
+            return;
+        }
+        
+    }
+
+    private IEnumerator KnockbackRoutine(Vector3 dir)
+    {
+        float elapsed = 0f;
+        float knockbackDuration = 0.2f;
+        Vector3 startPos = transform.position;
+        Vector3 targetPos = startPos + dir * knockbackDistance;
+
+        while (elapsed < knockbackDuration)
+        {
+            transform.position = Vector3.Lerp(startPos, targetPos, elapsed / knockbackDuration);
+            elapsed += Time.deltaTime;
+            yield return null;
+        }
+
+        transform.position = targetPos;
+    }
 
     public void StatusUpLoad(float _hp)
     {
@@ -76,8 +110,6 @@ public abstract partial class Character : Actor
             hP = (int)_hp;
             cheHP = hP;
             hbBarCheck(true);
-
-            //GameEvents.onHpChanged?.Invoke(this);
 
             onHpChanged?.Invoke(maxHP, cheHP);
 

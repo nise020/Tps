@@ -94,7 +94,7 @@ ModelImporter:
         intParameter: 1
         messageOptions: 0
       - time: 0.636923
-        functionName: RangeCheak
+        functionName: RangCheckEnd
         data: 
         objectReferenceParameter: {instanceID: 0}
         floatParameter: 0
@@ -102,6 +102,13 @@ ModelImporter:
         messageOptions: 0
       - time: 0.78153026
         functionName: ComboEventCheck
+        data: 
+        objectReferenceParameter: {instanceID: 0}
+        floatParameter: 0
+        intParameter: 1
+        messageOptions: 0
+      - time: 0.42148727
+        functionName: RangCheckStart
         data: 
         objectReferenceParameter: {instanceID: 0}
         floatParameter: 0

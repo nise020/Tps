@@ -36,10 +36,12 @@ public partial class AiMonster : AiBase
             aIState = AiState.Move;
         }
     }
+
     public void ChangeTarget(Player _player)
     {
         TagetPlayer = _player;
     }
+
     public override void State()
     {
         if (!TagetAive && aIState != AiState.Search)
@@ -53,7 +55,7 @@ public partial class AiMonster : AiBase
                 Search();
                 break;
             case AiState.Move:
-                Move(targetPos);
+                Move(tagetTrs.position);
                 break;
             case AiState.Attack:
                 Attack();
@@ -80,14 +82,11 @@ public partial class AiMonster : AiBase
         }
     }
  
-    //행렬
     protected override void Move(Vector3 _pos)//이동
     {
-        Debug.Log($"{MONSTER},Move");
-
         float value = MONSTER.TargetDistanseCheck(_pos);
 
-        if (MONSTER.AttackDistanseCheck(value) == true&&
+        if (MONSTER.AttackDistanseCheck(value) == true &&
             MONSTER.RadiusCheck(value) == true)//Move
         {
             aIState = AiState.Attack;
@@ -95,14 +94,13 @@ public partial class AiMonster : AiBase
         else
         {
             MONSTER.Ai_TargetMove(_pos, value);
-            //PLAYER.AI_TargetMove(_pos, value);
+            Debug.Log($"{MONSTER},Move");
         }
 
     }
 
     protected override void Attack()//공격
     {
-        Debug.Log($"{MONSTER},Attack");
         if (!TagetAive || tagetTrs == null)
         {
             aIState = AiState.Search;
@@ -110,6 +108,7 @@ public partial class AiMonster : AiBase
         }
         MONSTER.Ai_Attack(tagetTrs);//
 
+        Debug.Log($"{MONSTER},Attack");
         aIState = AiState.Reset;
     }
     protected override void Reset()//사이클 끝(보통 다시 공격 대상 탐색)

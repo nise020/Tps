@@ -81,6 +81,7 @@ public partial class Character : Actor
     protected Character targetCharacter;
     protected Transform targetTrs;
     protected IEnumerator UpperBodyColutin;
+    protected Vector3 startPosition;
 
     [Header("Gunner")]
     [SerializeField] protected Transform UpperBody;

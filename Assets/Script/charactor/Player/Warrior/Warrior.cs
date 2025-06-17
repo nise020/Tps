@@ -64,16 +64,34 @@ public partial class Warrior : Player
     }
     protected override void FindWeaponObject(LayerName _name)
     {
-        SkinnedMeshRenderer[] skin = GetComponentsInChildren<SkinnedMeshRenderer>();
+        //SkinnedMeshRenderer[] skin = GetComponentsInChildren<SkinnedMeshRenderer>();
+        //int value = LayerMask.NameToLayer(_name.ToString());
+        //foreach (var skinObj in skin)
+        //{
+        //    if (skinObj.gameObject.layer == value)
+        //    {
+        //        MAINWEAPON = skinObj.GetComponentInParent<Weapon>();
+        //        MAINWEAPON.CharcterInit(this);
+
+        //        MainWeaponObj = skinObj.rootBone.gameObject;
+        //        weaponOriginalPos = MainWeaponObj.transform.localPosition;
+        //        break;
+        //    }
+        //}
+
+        Weapon[] weapon = GetComponentsInChildren<Weapon>();
         int value = LayerMask.NameToLayer(_name.ToString());
-        foreach (var skinObj in skin)
+        foreach (var skinObj in weapon)
         {
-            if (skinObj.gameObject.layer == value)
+            WeaponType type = skinObj.WeaponType;
+
+            if (type == WeaponType.Main)
             {
-                MAINWEAPON = skinObj.GetComponentInParent<Weapon>();
+                MAINWEAPON = skinObj;
                 MAINWEAPON.CharcterInit(this);
 
-                MainWeaponObj = skinObj.rootBone.gameObject;
+                SkinnedMeshRenderer skin = skinObj.GetComponent<SkinnedMeshRenderer>();
+                MainWeaponObj = skin.rootBone.gameObject;
                 weaponOriginalPos = MainWeaponObj.transform.localPosition;
                 break;
             }

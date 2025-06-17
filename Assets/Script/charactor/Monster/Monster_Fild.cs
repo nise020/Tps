@@ -10,30 +10,18 @@ public partial class Monster : Character
     [Header("공격할 물체(공통)")]
 
     public List<Vector3> movePos;
+    protected Transform creatTab;//총알 저장탭
+    //public GameObject MobGrenade;//투척물 프리팹
+    //public GameObject MobBullet;//일반공격 총알 프리팹
 
 
-    public GameObject MobGrenade;//투척물 프리팹
-    public GameObject MobBullet;//일반공격 총알 프리팹
 
-    //protected MonsterType monsterType;
 
-    //protected AiState aIState = AiState.Create;
-
-    protected Transform creatTabObj;//총알 저장탭
-    public void creatTab(Transform _tab) 
+    public void creatTabLoad(Transform _tab) 
     {
-        creatTabObj = _tab;
+        creatTab = _tab;
     }
 
-    
-    //Dictionary<int, HpBar> hpBarData = new Dictionary<int, HpBar>();
-
-    //protected GameObject deadEffect;
-    //public void BomEffect(GameObject _effect) 
-    //{
-    //    //deadEffect = _effect;  
-    //    deadEffect = Instantiate(_effect, charactorModelTrs.position, Quaternion.identity,charactorModelTrs);  
-    //}
     [Header("공격할 물체(공통)")]
     public GameObject AttackArm;//공격의 시작점이 될 팔
     protected bool NumberOn = false;
@@ -41,12 +29,8 @@ public partial class Monster : Character
     Vector3 targetpos;
     //public float attackDistanse;
 
-
-
-    [Header("기본 타이머")]
-    //ublic int Patternt = 0f;
-    //protected float Patterntimer = 0f;
-    //protected float Patternltime = 10.0f;
+    [Header("Animation")]
+    protected Animator monsterAnimator;
 
 
     [Header("다리,이동 관련(FlyingMob 제외)")]
@@ -68,7 +52,7 @@ public partial class Monster : Character
     protected float attackRange = 5.0f;
     protected float hitRange = 0.3f;
     //Vector3 targetPos;
-    Vector3 movePosition = Vector3.zero;
+    protected Vector3 movePosition = Vector3.zero;
     bool stopDilay = false;
 
     protected MonsterStateData monsterStateData = new MonsterStateData();

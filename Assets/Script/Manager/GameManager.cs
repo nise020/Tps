@@ -67,8 +67,8 @@ public class GameManager : MonoBehaviour
     }
     void Start()
     {
-        CharctorAdd(PlayerModeState.Npc,GUNNER);
         CharctorAdd(PlayerModeState.Player,WARRIOR);
+        CharctorAdd(PlayerModeState.Npc,GUNNER);
         FindPlayer();
 
         Shared.MonsterManager.CreatMonsterObject();

@@ -17,6 +17,7 @@ public class MonsterManager : MonoBehaviour
     ObjectType objType = ObjectType.None;
 
     [Header("Monster")]
+    [SerializeField] BossMonster BossMob;
     [SerializeField] SpiderMob SpiderMob;
     [SerializeField] DronMob dronMob;
     [SerializeField] SphereMob sphereMob;
@@ -141,6 +142,9 @@ public class MonsterManager : MonoBehaviour
             case "SpawnSphere":
                 monsterType = sphereMob.gameObject;
                 break;
+            case "SpawnBoss":
+                monsterType = BossMob.gameObject;
+                break;
         }
         GameObject go = Instantiate(monsterType, _spawnTrs, Quaternion.identity, creatTab);
         _type = ObjectType.Monster;
@@ -150,7 +154,7 @@ public class MonsterManager : MonoBehaviour
 
         monster.KeyUpdate(monsterCount);
 
-        monster.creatTab(creatTab);
+        monster.creatTabLoad(creatTab);
 
         Shared.BattelManager.AddDataToCharcterList(ObjectType.Monster, monster);
         Shared.ItemManager.ItemDataAddToMonster(monster);

@@ -14,6 +14,7 @@ public partial class DronMob : Monster
     protected override void Start()
     {
         base.Start();
+        Compomentinit();
     }
     protected override void FixedUpdate()
     {

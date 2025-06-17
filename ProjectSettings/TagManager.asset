@@ -37,7 +37,7 @@ TagManager:
   - Body
   - TriggerZone
   - Item
-  - 
+  - SpawnBoss
   - PostProcessVolume
   m_SortingLayers:
   - name: Default

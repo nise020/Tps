@@ -52,10 +52,11 @@ public abstract partial class Character : Actor
             FindBodyObject();
             return charactorModelTrs;
         }
-        else 
+        else
         {
             return charactorModelTrs;
         }
+
     }
     public virtual bool DamageEventCheck() 
     {

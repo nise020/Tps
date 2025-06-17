@@ -17,7 +17,7 @@ public partial class Warrior : Player
 
         HashSet<Transform> damagedEnemies = new HashSet<Transform>();
 
-        List<Monster> monsetrPos = Shared.MonsterManager.MonsterList;
+        List<GameObject> monsetrPos = Shared.BattelManager.LoadToCharcterList(ObjectType.Monster);
         isChecking = true;
 
         while (isChecking) // 외부에서 코루틴을 멈출 때까지 계속 실행
@@ -38,7 +38,8 @@ public partial class Warrior : Player
                 {
                     damagedEnemies.Add(monsetrPos[iNum].transform);
 
-                    Shared.BattelManager.DamageCheck(this, monsetrPos[iNum], MAINWEAPON);
+                    Character character = monsetrPos[iNum].gameObject.GetComponent<Character>();
+                    Shared.BattelManager.DamageCheck(this, character, MAINWEAPON);
                 }
             }
             yield return null;
@@ -53,7 +54,7 @@ public partial class Warrior : Player
         Transform origin = MainWeaponObj.transform; // 찌르기 시작점 (검 끝 또는 손 위치)
 
         HashSet<Transform> damagedEnemies = new HashSet<Transform>();
-        List<Monster> monsetrPos = Shared.MonsterManager.MonsterList;
+        List<GameObject> monsetrPos = Shared.BattelManager.LoadToCharcterList(ObjectType.Monster);
         isChecking = true;
         while (isChecking)
         {
@@ -74,7 +75,8 @@ public partial class Warrior : Player
 
                 damagedEnemies.Add(monsetrPos[iNum].transform);
 
-                Shared.BattelManager.DamageCheck(this, monsetrPos[iNum], MAINWEAPON);
+                Character character = monsetrPos[iNum].gameObject.GetComponent<Character>();
+                Shared.BattelManager.DamageCheck(this, character, MAINWEAPON);
             }
 
             yield return null;

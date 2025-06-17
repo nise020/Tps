@@ -159,6 +159,7 @@ public abstract partial class Character : Actor
             else if (skin2.gameObject.layer == BodyLayer)
             {
                 charactorModelTrs = skin2.transform;
+                startPosition = charactorModelTrs.position;
             }
         }
         

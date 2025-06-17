@@ -14,6 +14,7 @@ public partial class SpiderMob : Monster
     protected override void Start()
     {
         base.Start();
+        Compomentinit();
         //cam = UnityEngine.Camera.main;
         //mobAnimator = GetComponent<Animator>();
         //creatTabObj = Shared.GameManager.creatTab;//¿ÀºêÁ§Æ® »ý¼º ÅÇ(ex.ÃÑ¾Ë)

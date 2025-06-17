@@ -14,7 +14,7 @@ public partial class Monster : Character
     
     public int mobKey = 0;
 
-    Vector3 startPosition;
+    
 
     protected bool viewHpBar = false;
     protected virtual void Awake() 
@@ -28,14 +28,12 @@ public partial class Monster : Character
 
         monsterAnimator = GetComponent<Animator>();
 
-        creatTabObj = Shared.GameManager.creatTab;//¿ÀºêÁ§Æ® »ý¼º ÅÇ(ex.ÃÑ¾Ë)
+        creatTab = Shared.GameManager.creatTab;//¿ÀºêÁ§Æ® »ý¼º ÅÇ(ex.ÃÑ¾Ë)
 
         MONSTERAI.init(this, SKILL);
         //MONSTERAI.Type(monsterStateData.MonsterType);
 
-        startPosition = charactorModelTrs.position;
-
-        Compomentinit();
+        //Compomentinit();
         //STATE.MonsterState(monsterType);
         //stateInIt();
         AttackEvent += AiTagetUpdate;
@@ -49,15 +47,6 @@ public partial class Monster : Character
         int value = LayerMask.NameToLayer(_name.ToString());
         foreach (var skinObj in weaponData)
         {
-            //Transform weapontrs = skinObj.transform.parent;
-
-            //MainWeaponObj = weapontrs.gameObject;
-
-            //weaponOriginalPos = MainWeaponObj.transform.localPosition;
-
-            //MAINWEAPON = MainWeaponObj.GetComponent<Granad>();
-            //MAINWEAPON.CharcterInit(this);
-
             WeaponType type = skinObj.WeaponType;
 
             if (type == WeaponType.Main)

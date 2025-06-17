@@ -42,6 +42,7 @@ public enum MonsterAnimParameters
     Open,
     Stop,
     Death,
+    Trun,
 
 }
 public enum MonsterAnim

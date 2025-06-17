@@ -5,8 +5,16 @@ using UnityEngine;
 
 public partial class Monster : Character
 {
-    protected Animator monsterAnimator;
-
+    
+    public void LoopAttackAnimationTimer() 
+    {
+        StartCoroutine(LoopAttackAnimationEnd(5.0f));
+    }
+    IEnumerator LoopAttackAnimationEnd(float _timer) 
+    {
+        yield return new WaitForSeconds(_timer);
+        AttackAnimationOut();
+    }
     public void IdelAnimationEvent() 
     {
         stopDilay = true;
@@ -36,26 +44,6 @@ public partial class Monster : Character
     }
     protected virtual void AttackAnimation(Weapon _weapon, GameObject _weaponObj) 
     {
-        //sin °î¼±<- gmsemffla
-        if (monsterStateData.MonsterType == MonsterType.Sphere)
-        {
-            DirectAttack(charactorModelTrs.gameObject, targetTrs.position);
-            attackRangeCheck();
-        }
-        else if (monsterStateData.MonsterType == MonsterType.Spider)
-        {
-            _weapon.gameObject.SetActive(true);
-            _weapon.WeaponReset();
-
-            //granaidAttack(charactorModelTrs.position, HItPalyer.transform.position, weaponObj);
-            granaidAttack(weaponHandObject.transform.position, targetTrs.position, _weaponObj);
-
-        }
-        else if (monsterStateData.MonsterType == MonsterType.Dron)
-        {
-            DirectAttack(charactorModelTrs.gameObject, targetTrs.position);
-            attackRangeCheck();
-        }
     }
     public void AttackAnimationOut()//AnimationEvent
     {
@@ -128,7 +116,6 @@ public partial class Monster : Character
     {
         if (_state == MonsterAttackState.Attack_On)
         {
-            //_state = MonsterAttackState.Attack_On;
             monsterAnimator.SetInteger(MonsterAnimParameters.Attack.ToString(), 1);
         }
         else 

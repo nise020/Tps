@@ -30,7 +30,7 @@ public partial class DronMob : Monster
         {
             Quaternion rotation = Quaternion.LookRotation(disTance.normalized);
 
-            charactorModelTrs.position += disTance.normalized * speedValue * Time.deltaTime;
+            charactorModelTrs.position += disTance.normalized * StatusData[StatusType.Speed] * Time.deltaTime;
 
             charactorModelTrs.rotation = Quaternion.Slerp(charactorModelTrs.rotation,
                 rotation, Time.deltaTime * rotationSpeed);
@@ -50,7 +50,7 @@ public partial class DronMob : Monster
         //charactorModelTrs.rotation = Quaternion.Slerp(charactorModelTrs.rotation, targetRotation, Time.deltaTime * rotationSpeed);
 
 
-        charactorModelTrs.transform.position += direction.normalized * speedValue * Time.deltaTime;
+        charactorModelTrs.transform.position += direction.normalized * StatusData[StatusType.Speed] * Time.deltaTime;
 
         charactorModelTrs.rotation = Quaternion.Slerp(charactorModelTrs.rotation,
         targetRotation, Time.deltaTime * rotationSpeed);

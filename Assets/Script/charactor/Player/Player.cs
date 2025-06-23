@@ -14,7 +14,7 @@ public partial class Player : Character
     protected override void Start()
     {      
         base.Start();
-        FindWeaponObject(LayerName.Weapon);
+        FindWeaponObject();
 
         viewcam = GetComponentInChildren<PlayerCamera>();
 

@@ -42,7 +42,7 @@ public abstract partial class Character : Actor
     {
         FindBodyObject();
         InfoLoad();
-        
+
     }
 
     public Transform BodyObjectLoad() 
@@ -58,23 +58,17 @@ public abstract partial class Character : Actor
         }
 
     }
-    public virtual bool DamageEventCheck() 
-    {
-        return false;
-    }
-    public virtual void DamageEventUpdate(DamageEvent _event)
-    {
-        
-    }
+    public virtual bool DamageEventCheck() {return false;}
+    public virtual void DamageEventUpdate(DamageEvent _event) {}
 
 
 
-    protected void footRayCheck() //중력구현
-    {
-        //init
-        //update
-        //Renderring
-    }
+    //protected void footRayCheck() //중력구현
+    //{
+    //    //init
+    //    //update
+    //    //Renderring
+    //}
 
     protected void FindRootBodyObject()
     {

@@ -49,7 +49,7 @@ public partial class Player : Character
         {
             battelTriggerCol.enabled = false;
 
-            playerStateData.AttackState = PlayerAttackState.Attack_Off;
+            playerStateData.AttackState = AttackState.Attack_Off;
             attackAnimation(playerStateData.AttackState, 0);
         }
     }
@@ -134,11 +134,11 @@ public partial class Player : Character
     {
         if (_type == PlayerAnimParameters.Block.ToString())
         {
-            if (playerStateData.AttackState == PlayerAttackState.Attack_Off)
+            if (playerStateData.AttackState == AttackState.Attack_Off)
             {
 
             }
-            playerStateData.AttackState = PlayerAttackState.Attack_Off;
+            playerStateData.AttackState = AttackState.Attack_Off;
             attackAnimation(playerStateData.AttackState, 0);
         }
     }
@@ -237,16 +237,16 @@ public partial class Player : Character
     //        clearWalkAnimation(playerStateData.PlayerType);
     //    }
     //}
-    protected void attackAnimation(PlayerAttackState _state,int _comboValue)
+    protected void attackAnimation(AttackState _state,int _comboValue)
     {
         switch (_state)
         {
-            case PlayerAttackState.Attack_On:
+            case AttackState.Attack_On:
                 playerAnimator.SetInteger(PlayerAnimParameters.Attack.ToString(), 1);
 
                 playerAnimator.SetInteger(PlayerAnimParameters.AttackCombo.ToString(), 0);
                 break;
-            case PlayerAttackState.Attack_Off:
+            case AttackState.Attack_Off:
 
                 playerAnimator.SetInteger(PlayerAnimParameters.Reload.ToString(), 0);
                 playerAnimator.SetInteger(PlayerAnimParameters.Attack.ToString(), 0);
@@ -254,21 +254,21 @@ public partial class Player : Character
                 playerAnimator.SetInteger(PlayerAnimParameters.AttackCombo.ToString(),0);
 
                 break;
-            case PlayerAttackState.Block:
+            case AttackState.Block:
 
                 playerAnimator.SetInteger(PlayerAnimParameters.Block.ToString(), 1);
 
                 playerAnimator.SetInteger(PlayerAnimParameters.Attack.ToString(), 0);
 
                 break;
-            case PlayerAttackState.Attack_Combo:
+            case AttackState.Attack_Combo:
 
                 playerAnimator.SetInteger(PlayerAnimParameters.AttackCombo.ToString(), _comboValue);
 
                 playerAnimator.SetInteger(PlayerAnimParameters.Attack.ToString(), 0);
 
                 break;
-            case PlayerAttackState.Reload:
+            case AttackState.Reload:
 
                 playerAnimator.SetInteger(PlayerAnimParameters.Reload.ToString(), 1);
 

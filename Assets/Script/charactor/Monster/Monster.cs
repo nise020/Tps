@@ -24,7 +24,7 @@ public partial class Monster : Character
     protected override void Start() 
     {
         base.Start();
-        FindWeaponObject(LayerName.MonsterWeapon);
+        FindWeaponObject();
 
         monsterAnimator = GetComponent<Animator>();
 
@@ -40,11 +40,11 @@ public partial class Monster : Character
         StateEvent += AiStateUpdate;
     }
 
-    protected override void FindWeaponObject(LayerName _name)
+    protected override void FindWeaponObject()
     {
         Weapon[] weaponData = GetComponentsInChildren<Weapon>();
 
-        int value = LayerMask.NameToLayer(_name.ToString());
+       //int value = LayerMask.NameToLayer(_name.ToString());
         foreach (var skinObj in weaponData)
         {
             WeaponType type = skinObj.WeaponType;
@@ -106,10 +106,4 @@ public partial class Monster : Character
         }
     }
 
-    public override int StatusTypeLoad(StatusType _type)
-    {
-        int status = 0;
-        status = base.StatusTypeLoad(_type);
-        return status;
-    }
 }

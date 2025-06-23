@@ -70,9 +70,9 @@ public partial class Player : Character
                 Vector3 type = Shared.InputManager.MoveQueData.Dequeue();
 
 
-                if (playerStateData.AttackState == PlayerAttackState.Attack_On)
+                if (playerStateData.AttackState == AttackState.Attack_On)
                 {
-                    playerStateData.AttackState = PlayerAttackState.Attack_Off;
+                    playerStateData.AttackState = AttackState.Attack_Off;
 
                     canReceiveInput = true;
                 }

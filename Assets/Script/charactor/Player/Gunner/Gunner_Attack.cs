@@ -8,7 +8,7 @@ public partial class Gunner : Player
     protected override void AutoAttack(Transform _transform)
     {
         //targetTrs = _transform;
-        if (playerStateData.AttackState != PlayerAttackState.Attack_Off) 
+        if (playerStateData.AttackState != AttackState.Attack_Off) 
         {
             return;
         }
@@ -17,11 +17,11 @@ public partial class Gunner : Player
 
         if (MAINWEAPON.ReturnTypeValue(BulletValueType.NowBullet) <= 0)
         {
-            playerStateData.AttackState = PlayerAttackState.Reload;
+            playerStateData.AttackState = AttackState.Reload;
         }
         else 
         {
-            playerStateData.AttackState = PlayerAttackState.Attack_On;
+            playerStateData.AttackState = AttackState.Attack_On;
         }
 
         attackAnimation(playerStateData.AttackState, 0);
@@ -37,13 +37,13 @@ public partial class Gunner : Player
     {
         if (_job == PlayerType.Gunner)
         {
-            if (playerStateData.AttackState == PlayerAttackState.Attack_Off && 
+            if (playerStateData.AttackState == AttackState.Attack_Off && 
                 MAINWEAPON.ReturnTypeValue(BulletValueType.NowBullet) <= 0)
             {
                 Debug.Log($"bullet = {MAINWEAPON.ReturnTypeValue(BulletValueType.NowBullet)}");
                 return;
             }
-            playerStateData.AttackState = PlayerAttackState.Attack_On;
+            playerStateData.AttackState = AttackState.Attack_On;
 
             playerAnimator.SetLayerWeight(attackLayerIndex, 1.0f);
             attackAnimation(playerStateData.AttackState, 0);
@@ -96,9 +96,9 @@ public partial class Gunner : Player
         if (_type == PlayerType.Gunner ||
             MAINWEAPON.ReturnTypeValue(BulletValueType.NowBullet) <= 0) 
         {
-            if (playerStateData.AttackState != PlayerAttackState.Reload)
+            if (playerStateData.AttackState != AttackState.Reload)
             {
-                playerStateData.AttackState = PlayerAttackState.Reload;
+                playerStateData.AttackState = AttackState.Reload;
 
                 playerAnimator.SetLayerWeight(attackLayerIndex, 1.0f);
                 playerAnimator.SetInteger(playerStateData.AttackState.ToString(), 1);
@@ -116,7 +116,7 @@ public partial class Gunner : Player
             //firstSkillCheck = SkillRunning.SkillOn;
 
             //playerAnim.SetInteger(SkillType.Skill1.ToString(), 1);
-            int value = (int)atkValue;
+            int value = (int)StatusData[StatusType.Power];
             skillStrategy.Skill(playerStateData.PlayerType, 1, out value);
 
             SkillParentObj1.SetActive(true);
@@ -159,7 +159,7 @@ public partial class Gunner : Player
             if (playerStateData.FirstSkillCheck == SkillState.SkillOff)
             {
                 //Invoke("SkillValueReset", 3);//clear
-                int value = (int)atkValue;
+                int value = (int)StatusData[StatusType.Power];
 
                 Debug.Log($"attackValue = {value}");
 
@@ -197,7 +197,7 @@ public partial class Gunner : Player
         {
             if (playerStateData.SecondSkillCheck == SkillState.SkillOff)
             {
-                int value = (int)atkValue;
+                int value = (int)StatusData[StatusType.Power];
 
                 skillStrategy.Skill(playerStateData.PlayerType, 2, out value);
                 playerStateData.SecondSkillCheck = SkillState.SkillOn;
@@ -228,7 +228,7 @@ public partial class Gunner : Player
     }
     protected override void skillValueReset()//Damage Reset
     {
-        atkValue = attackReset;
+        StatusData[StatusType.Power] = attackReset;
         playerStateData.FirstSkillCheck = SkillState.SkillOff;
         playerAnimator.SetInteger(PlayerAnimName.AttackSkill.ToString(), 0);
         playerAnimator.SetInteger(PlayerAnimName.BuffSkill.ToString(), 0);
@@ -236,7 +236,7 @@ public partial class Gunner : Player
     public void ReloadOut()//AnimationEvent
     {
         //AnimationEvent
-        playerStateData.AttackState = PlayerAttackState.Attack_Off;
+        playerStateData.AttackState = AttackState.Attack_Off;
 
         playerAnimator.SetLayerWeight(attackLayerIndex, 0.0f);
         attackAnimation(playerStateData.AttackState, 0);

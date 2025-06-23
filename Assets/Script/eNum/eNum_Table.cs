@@ -12,7 +12,20 @@ public enum TableType
     Skill,
     SkillType,
 }
-public enum CharacterTableType : byte
+public enum CharacterTabelType 
+{
+    Id,
+    Type,
+    Skill1,
+    Skill2,
+    Ai,
+    State,
+    Prefabs,
+    Img,
+    Name,
+    Dec,
+}
+public enum CharacterType : byte
 {
     None = 0,
     Player = 1,                

@@ -113,6 +113,7 @@ public enum EffectType
     GunEffect,
     BoomEffect,
 }
+
 public enum StatusType
 {
     None,

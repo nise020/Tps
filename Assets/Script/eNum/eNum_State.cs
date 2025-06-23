@@ -98,7 +98,7 @@ public enum PlayerControllState
     Off,
     On,
 }
-public enum PlayerAttackState
+public enum AttackState
 {
     None,
     Attack_On,

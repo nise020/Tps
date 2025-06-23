@@ -5,12 +5,16 @@ using UnityEngine.TextCore.Text;
 
 public partial class Gunner : Player
 {
-    
-    
+    [Header("Aim")]
+    [SerializeField] protected float recoilAmount = 0.01f; // 에임 흔들림 강도s
+    [SerializeField] protected float maxAngle = 60f; // 에임 흔들림 강도s
+
+
+
     IEnumerator AttackColutin;
     protected override void Awake()
     {
-        id = 1;
+        CharacterTabelData[CharacterTabelType.Id] = 1;
         RenderType = ObjectRenderType.Skin;
         playerStateData.ModeState = PlayerModeState.Npc;
         playerStateData.PlayerType = PlayerType.Gunner;
@@ -24,7 +28,7 @@ public partial class Gunner : Player
     {
         base.Start();
         MAINWEAPON = GetComponentInChildren<Gun>();
-        FindWeaponObject(LayerName.Weapon);
+        FindWeaponObject();
 
         attackLayerIndex = playerAnimator.GetLayerIndex("Attack");
         //UpperBody = playerAnimator.GetBoneTransform(HumanBodyBones.Spine);
@@ -45,13 +49,13 @@ public partial class Gunner : Player
         base.shitdownCheak();
     }
     Vector3 granadOriginalPos = Vector3.zero;
-    protected override void FindWeaponObject(LayerName _name)
+    protected override void FindWeaponObject()
     {
         //MeshRenderer[] Mesh = GetComponentsInChildren<MeshRenderer>();
         Weapon[] weaponData = GetComponentsInChildren<Weapon>();
 
         //granadObj
-        int value = LayerMask.NameToLayer(_name.ToString());
+        //int value = LayerMask.NameToLayer(LayerName.Weapon.ToString());
         foreach (var weaponObj in weaponData)
         {
             // Weapon weapon = weaponObj.gameObject.GetComponent<Weapon>();
@@ -77,21 +81,21 @@ public partial class Gunner : Player
 
         }
     }
-    protected void WeaponInit(Weapon weapon)
-    {
-        if (weapon is Gun)
-        {
-            weapon.init();
-        }
-        else if (weapon is Granad)
-        {
-            weapon.init();
-        }
-        else if (weapon is Sword)
-        {
-            weapon.init();
-        }
-    }
+    //protected void WeaponInit(Weapon weapon)
+    //{
+    //    if (weapon is Gun)
+    //    {
+    //        weapon.init();
+    //    }
+    //    else if (weapon is Granad)
+    //    {
+    //        weapon.init();
+    //    }
+    //    else if (weapon is Sword)
+    //    {
+    //        weapon.init();
+    //    }
+    //}
 
 }
 

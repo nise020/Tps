@@ -7,7 +7,7 @@ public partial class SpiderMob : Monster
     protected override void Awake()
     {
         base.Awake();
-        id = 101;
+        CharacterTabelData[CharacterTabelType.Id] = 101;
         monsterStateData.MonsterType = MonsterType.Spider;
         RenderType = ObjectRenderType.Skin;
     }
@@ -15,20 +15,6 @@ public partial class SpiderMob : Monster
     {
         base.Start();
         Compomentinit();
-        //cam = UnityEngine.Camera.main;
-        //mobAnimator = GetComponent<Animator>();
-        //creatTabObj = Shared.GameManager.creatTab;//¿ÀºêÁ§Æ® »ý¼º ÅÇ(ex.ÃÑ¾Ë)
-        //monsterRigid = GetComponent<Rigidbody>();
-        //monsterColl = GetComponent<Collider>();
-        //if (monsterColl == null)
-        //{
-        //    monsterColl = GetComponentInChildren<Collider>();
-        //}
-        //AI.init(this, SKILL);
-        //AI.Type(monsterType);
-        //FindSkinBodyObject();
-        //STATUS.MonsterState(monsterType);
-        //stateInIt();
     }
     protected override void FixedUpdate()
     {

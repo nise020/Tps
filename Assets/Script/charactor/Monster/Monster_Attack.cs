@@ -13,7 +13,7 @@ public partial class Monster : Character
     public void DirectAttack(GameObject _obj,Vector3 _pos) 
     {
         Vector3 myPos = _obj.transform.position;
-        float speed = speedValue;
+        float speed = StatusData[StatusType.Speed];
         _obj.transform.position += (new Vector3(_pos.x,0, _pos.z) - myPos).normalized * speed * Time.deltaTime;
     }
 

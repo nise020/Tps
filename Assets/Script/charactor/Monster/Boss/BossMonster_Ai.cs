@@ -18,7 +18,7 @@ public partial class BossMonster : Monster
         //charactorModelTrs.rotation = Quaternion.Slerp(charactorModelTrs.rotation, targetRotation, Time.deltaTime * rotationSpeed);
 
 
-        transform.transform.position += direction.normalized * speedValue * Time.deltaTime;
+        transform.transform.position += direction.normalized * StatusData[StatusType.Speed] * Time.deltaTime;
 
         transform.rotation = Quaternion.Slerp(transform.rotation,
         targetRotation, Time.deltaTime * rotationSpeed);

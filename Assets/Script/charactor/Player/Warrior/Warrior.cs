@@ -7,7 +7,7 @@ public partial class Warrior : Player
     //GameObject Weapon;
     protected override void Awake()
     {
-        id = 2;
+        CharacterTabelData[CharacterTabelType.Id] = 2;
         RenderType = ObjectRenderType.Skin;
         playerStateData.ModeState = PlayerModeState.Player;
         playerStateData.PlayerType = PlayerType.Warrior;
@@ -62,7 +62,7 @@ public partial class Warrior : Player
     {
         base.shitdownCheak();
     }
-    protected override void FindWeaponObject(LayerName _name)
+    protected override void FindWeaponObject()
     {
         //SkinnedMeshRenderer[] skin = GetComponentsInChildren<SkinnedMeshRenderer>();
         //int value = LayerMask.NameToLayer(_name.ToString());
@@ -80,7 +80,7 @@ public partial class Warrior : Player
         //}
 
         Weapon[] weapon = GetComponentsInChildren<Weapon>();
-        int value = LayerMask.NameToLayer(_name.ToString());
+        //int value = LayerMask.NameToLayer(LayerName.Weapon.ToString());
         foreach (var skinObj in weapon)
         {
             WeaponType type = skinObj.WeaponType;

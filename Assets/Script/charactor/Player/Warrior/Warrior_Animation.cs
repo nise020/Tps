@@ -48,7 +48,7 @@ public partial class Warrior : Player
         {
             battelTriggerCol.enabled = false;
 
-            playerStateData.AttackState = PlayerAttackState.Attack_Off;
+            playerStateData.AttackState = AttackState.Attack_Off;
             attackAnimation(playerStateData.AttackState, 0);
         }
     }
@@ -99,7 +99,7 @@ public partial class Warrior : Player
 
     public void ResetCombo()
     {
-        playerStateData.AttackState = PlayerAttackState.Attack_Off;
+        playerStateData.AttackState = AttackState.Attack_Off;
         attackAnimation(playerStateData.AttackState, 0);
 
         canReceiveInput = false;
@@ -115,7 +115,7 @@ public partial class Warrior : Player
 
         if (!canReceiveInput)
         {
-            attackAnimation(PlayerAttackState.Attack_Combo, _value);
+            attackAnimation(AttackState.Attack_Combo, _value);
             canReceiveInput = true;
 
             return;

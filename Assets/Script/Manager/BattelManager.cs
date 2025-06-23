@@ -134,11 +134,11 @@ public class BattelManager : MonoBehaviour
 
     public void DamageCheck(Character _attacker, Character _defender,Item _weapon) 
     {
-        float defenserHp = _defender.StatusTypeLoad(StatusType.HP);
+        float defenserHp = (int)_defender.StatusTypeLoad(StatusType.HP);
 
         if (defenserHp <= 0) return;
 
-        float attakerPower = _attacker.StatusTypeLoad(StatusType.Power);
+        float attakerPower = (int)_attacker.StatusTypeLoad(StatusType.Power);
 
         float weaponPower = 0.0f;
 
@@ -186,13 +186,10 @@ public class BattelManager : MonoBehaviour
         hpBar.AttackDamageEvent?.Invoke((int)attakerPower);
 
     }
-    private float DamageCalculator(float _attakerPower ,float _cri) 
-    {
-        //크리티컬 코드 추가 필요
-
-
-        return _attakerPower;
-    }
+    //private float DamageCalculator(float _attakerPower ,float _cri) 
+    //{
+    //    return _attakerPower;
+    //}
     private void DamageColor(Character _defender) 
     {
         SkinnedMeshRenderer[] renderers = _defender.gameObject.GetComponentsInChildren<SkinnedMeshRenderer>();

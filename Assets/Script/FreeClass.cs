@@ -45,7 +45,7 @@ public class PlayerStateData : CharacterStateData
     [Header("Weapon")]
     public PlayerWeaponState WeaponState = PlayerWeaponState.Sword_Off;
 
-    public PlayerAttackState AttackState = PlayerAttackState.Attack_Off;
+    public AttackState AttackState = AttackState.Attack_Off;
     //public ReloadState reloadState = ReloadState.Reload_Off;//Attackdp 합류
 
     public PlayerWalkState WalkState = PlayerWalkState.Stop;//하나로 합칠것

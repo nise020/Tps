@@ -8,7 +8,7 @@ public partial class Player : Character
 {
     protected void blockCheck() 
     {
-        if (playerStateData.AttackState != PlayerAttackState.Block) 
+        if (playerStateData.AttackState != AttackState.Block) 
         {
             Block();
         }
@@ -22,7 +22,7 @@ public partial class Player : Character
             GetWeapon();
         }
 
-        playerStateData.AttackState = PlayerAttackState.Block;
+        playerStateData.AttackState = AttackState.Block;
         attackAnimation(playerStateData.AttackState, 0);
 
         battelTriggerCol.enabled = true;
@@ -125,7 +125,7 @@ public partial class Player : Character
     }
     protected virtual void skillValueReset()//Damage Reset
     {
-        atkValue = attackReset;
+        StatusData[StatusType.Power] = attackReset;
         playerStateData.FirstSkillCheck = SkillState.SkillOff;
         playerAnimator.SetInteger(PlayerAnimName.AttackSkill.ToString(), 0);
         playerAnimator.SetInteger(PlayerAnimName.BuffSkill.ToString(), 0);

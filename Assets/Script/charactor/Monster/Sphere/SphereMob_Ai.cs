@@ -34,7 +34,7 @@ public partial class SphereMob : Monster
 
             //RootTransform.position += disTance.normalized * speedValue * Time.deltaTime;
 
-            charactorModelTrs.position += disTance.normalized * speedValue * Time.deltaTime;
+            charactorModelTrs.position += disTance.normalized * StatusData[StatusType.Speed] * Time.deltaTime;
 
             charactorModelTrs.rotation = Quaternion.Slerp(charactorModelTrs.rotation,
             rotation, Time.deltaTime * rotationSpeed);
@@ -56,7 +56,7 @@ public partial class SphereMob : Monster
 
 
         //RootTransform.position += direction.normalized * speedValue * Time.deltaTime;
-        charactorModelTrs.position += direction.normalized * speedValue * Time.deltaTime;
+        charactorModelTrs.position += direction.normalized * StatusData[StatusType.Speed] * Time.deltaTime;
 
         charactorModelTrs.rotation = Quaternion.Slerp(charactorModelTrs.rotation,
         targetRotation, Time.deltaTime * rotationSpeed);

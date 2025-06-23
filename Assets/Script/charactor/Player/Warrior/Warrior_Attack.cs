@@ -131,7 +131,7 @@ public partial class Warrior : Player
         }
         else
         {
-            attackAnimation(PlayerAttackState.Attack_Off,0);
+            attackAnimation(AttackState.Attack_Off,0);
         }
         playerStateData.WeaponState = PlayerWeaponState.Sword_Off;
         scabbardCount = 0;
@@ -145,7 +145,7 @@ public partial class Warrior : Player
     protected override void attack(PlayerModeState _state, PlayerType _job)
     {
         if (!canReceiveInput &&
-            playerStateData.AttackState == PlayerAttackState.Attack_On) 
+            playerStateData.AttackState == AttackState.Attack_On) 
         {
             return;
         }
@@ -163,9 +163,9 @@ public partial class Warrior : Player
                 {
                     canReceiveInput = false;
                 }
-                else if (playerStateData.AttackState != PlayerAttackState.Attack_On)//attack 
+                else if (playerStateData.AttackState != AttackState.Attack_On)//attack 
                 {
-                    playerStateData.AttackState = PlayerAttackState.Attack_On;
+                    playerStateData.AttackState = AttackState.Attack_On;
 
                     attackAnimation(playerStateData.AttackState, 0);
 
@@ -245,7 +245,7 @@ public partial class Warrior : Player
         playerAnimator.SetInteger(PlayerAnimParameters.AttackCombo.ToString(), 0);
         playerAnimator.speed = 1.0f;
         currentCombo = 0;
-        playerStateData.AttackState = PlayerAttackState.Attack_Off;
+        playerStateData.AttackState = AttackState.Attack_Off;
     }
     float GetClipLength(string clipName)
     {
@@ -281,7 +281,7 @@ public partial class Warrior : Player
 
                 //playerAnim.SetInteger(SkillType.Skill1.ToString(), 1);
 
-                int value = (int)atkValue;
+                int value = (int)StatusData[StatusType.Power];
 
                 skillStrategy.Skill(playerStateData.PlayerType, 1,out value);
 
@@ -334,7 +334,7 @@ public partial class Warrior : Player
                 //secondSkillCheck = SkillRunning.SkillOn;
                 //playerAnim.SetInteger(SkillType.Skill1.ToString(), 1);
 
-                int value = (int)atkValue;
+                int value = (int)StatusData[StatusType.Power];
 
                 skillStrategy.Skill(playerStateData.PlayerType, 2, out value);
 
@@ -379,7 +379,7 @@ public partial class Warrior : Player
             playerAnimator.SetInteger(SkillType.Skill2.ToString(), 0);
             playerStateData.SecondSkillCheck = SkillState.SkillOff;
         }
-        atkValue = attackReset;
+        StatusData[StatusType.Power] = attackReset;
     }
 
 }

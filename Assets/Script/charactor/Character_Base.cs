@@ -7,26 +7,26 @@ using UnityEngine.UIElements;
 
 public abstract partial class Character : Actor
 {
-    protected virtual void FindWeaponObject(LayerName _name) { }
-    protected void invincibleState()//公利
-    {
-        characterstate = InvincibleState.invincible_On;
-        Invoke("invincibleOut", 1.0f);
-    }
-    protected void invincibleOut()
-    {
-        //if (hP == 0) return;
-        characterstate = InvincibleState.invincible_Off;
+    protected virtual void FindWeaponObject() { }
+    //protected void invincibleState()//公利
+    //{
+    //    characterstate = InvincibleState.invincible_On;
+    //    Invoke("invincibleOut", 1.0f);
+    //}
+    //protected void invincibleOut()
+    //{
+    //    //if (hP == 0) return;
+    //    characterstate = InvincibleState.invincible_Off;
 
-        if (hP < maxHP / 2)
-        {
-            condition = Condition.hard;
-        }
-        else
-        {
-            condition = Condition.health;
-        }
-    }
+    //    if (hp < maxHP / 2)
+    //    {
+    //        condition = Condition.hard;
+    //    }
+    //    else
+    //    {
+    //        condition = Condition.health;
+    //    }
+    //}
     public bool ConditionLoad()
     {
         if (condition != Condition.Death) 
@@ -40,30 +40,9 @@ public abstract partial class Character : Actor
     {
         condition = _condition;
     }
-    public virtual int StatusTypeLoad(StatusType _type) 
+    public float StatusTypeLoad(StatusType _type) 
     {
-        int value = 0;
-        switch (_type)
-        {
-            case StatusType.HP:
-                value = (int)hP;
-                break;
-            case StatusType.Power:
-                value = (int)atkValue;
-                break;
-            case StatusType.Speed:
-                value = (int)speedValue;
-                break;
-            case StatusType.Defens:
-                value = (int)defVAlue;
-                break;
-            case StatusType.CritDamage:
-                value = (int)CritRateValue;
-                break;
-            case StatusType.CritRate:
-                value = (int)CritDamageValue;
-                break;
-        }
+        float value = StatusData[_type];
         return value;
     }
     public virtual bool CharacterStateCheck() 
@@ -107,16 +86,16 @@ public abstract partial class Character : Actor
         if (condition == Condition.Death) { return; }
         if (condition != Condition.Death)
         {
-            hP = (int)_hp;
-            cheHP = hP;
+            StatusData[StatusType.HP] = (int)_hp;
+
             hbBarCheck(true);
 
-            onHpChanged?.Invoke(maxHP, cheHP);
+            onHpChanged?.Invoke(StatusData[StatusType.MaxHP], StatusData[StatusType.HP]);
 
-            if (hP <= 0)
+            if (StatusData[StatusType.HP] <= 0)
             {
                 condition = Condition.Death;
-                Debug.Log("Dead");
+                Debug.Log($"{gameObject} = Dead");
                 Invoke("death", 0.3f);
                 return;
             }
@@ -131,13 +110,11 @@ public abstract partial class Character : Actor
         {
             Shared.BattelManager.PlayerAlive = false;
 
-            hP = maxHP;
-            cheHP = maxHP;
+            StatusData[StatusType.HP] = StatusData[StatusType.MaxHP];
         }
         else//+Item,Effect
         {
-            hP = maxHP;
-            cheHP = maxHP;
+            StatusData[StatusType.HP] = StatusData[StatusType.MaxHP];
 
             Shared.EffectManager.Play(EffectType.BoomEffect, charactorModelTrs.position);
         }

@@ -9,7 +9,7 @@ public partial class DronMob : Monster
         base.Awake();
         monsterStateData.MonsterType = MonsterType.Dron;
         RenderType = ObjectRenderType.Mesh;
-        id = 103;
+        CharacterTabelData[CharacterTabelType.Id] = 103;
     }
     protected override void Start()
     {

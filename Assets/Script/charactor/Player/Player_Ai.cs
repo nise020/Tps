@@ -93,11 +93,11 @@ public partial class Player : Character
             npcRunStateAnimation(dist);
             if (dist > runDistanseValue)//run
             {
-                gameObject.transform.position += disTance.normalized * speedValue * 2 * Time.deltaTime;
+                gameObject.transform.position += disTance.normalized * StatusData[StatusType.Speed] * 2 * Time.deltaTime;
             }
             else if (dist < runDistanseValue && dist >= playerStopDistanseValue)//walk
             {
-                gameObject.transform.position += disTance.normalized * speedValue * Time.deltaTime;
+                gameObject.transform.position += disTance.normalized * StatusData[StatusType.Speed] * Time.deltaTime;
             }
 
             //player Direction
@@ -117,7 +117,7 @@ public partial class Player : Character
 
 
         Vector3 moveDir = direction.normalized;
-        transform.position += moveDir * speedValue * Time.deltaTime;
+        transform.position += moveDir * StatusData[StatusType.Speed] * Time.deltaTime;
 
         npcRunStateAnimation(_distance);
     }
@@ -159,7 +159,7 @@ public partial class Player : Character
     }
     public override bool CharacterStateCheck()
     {
-        if (playerStateData.AttackState == PlayerAttackState.Attack_Off)
+        if (playerStateData.AttackState == AttackState.Attack_Off)
         {
             return true;
         }

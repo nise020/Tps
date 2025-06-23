@@ -38,43 +38,17 @@ public partial class Player : Character
         base.death();
         gameObject.SetActive(false);
     }
-    public override int StatusTypeLoad(StatusType _type)
-    {
-        int value = 0;
-        switch (_type)
-        {
-            case StatusType.HP:
-                value = (int)hP;
-                break;
-            case StatusType.Power:
-                value = AttackComboStateCheck();
-                break;
-            case StatusType.Speed:
-                value = (int)speedValue;
-                break;
-            case StatusType.Defens:
-                value = (int)defVAlue;
-                break;
-            case StatusType.CritDamage:
-                value = (int)CritRateValue;
-                break;
-            case StatusType.CritRate:
-                value = (int)CritDamageValue;
-                break;
-        }
-        return value;
-    }
 
     protected int AttackComboStateCheck()
     {
         int stateValue = 0;
-        if (playerStateData.AttackState == PlayerAttackState.Attack_On) 
+        if (playerStateData.AttackState == AttackState.Attack_On) 
         {
-            stateValue = (int)atkValue;
+            stateValue = (int)StatusData[StatusType.Power];
         }
-        else if (playerStateData.AttackState == PlayerAttackState.Attack_Combo) 
+        else if (playerStateData.AttackState == AttackState.Attack_Combo) 
         {
-            float combo = atkValue * 1.5f;
+            float combo = StatusData[StatusType.Power] * 1.5f;
             stateValue = (int)combo;
         }
         return stateValue;

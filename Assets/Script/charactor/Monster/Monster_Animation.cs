@@ -77,7 +77,11 @@ public partial class Monster : Character
 
         //Reset
         stateInIt();
-        HPBAR.SetHp(maxHP, cheHP);
+
+        float Hp = StatusData[StatusType.HP];
+        float maxHp = StatusData[StatusType.MaxHP];
+
+        HPBAR.SetHp(maxHp, Hp);
 
         charactorModelTrs.position = startPosition;//PositionReset
 

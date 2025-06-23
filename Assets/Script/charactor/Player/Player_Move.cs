@@ -51,11 +51,11 @@ public partial class Player : Character
                 //playerWalkState = PlayerWalkState.Walk_On;
                 notWalkTimer = 0.0f;
 
-                float speed = speedValue;
+                float speed = StatusData[StatusType.Speed];
 
                 if (playerStateData.WalkState == PlayerWalkState.Run) 
                 {
-                    speed = speedValue * 2;
+                    speed = StatusData[StatusType.Speed] * 2;
                 }
 
                 if (cameraMode == PlayerCameraMode.CameraRotationMode)//nomal

@@ -9,7 +9,9 @@ public partial class BossMonster : Monster
         base.Awake();
         monsterStateData.MonsterType = MonsterType.Boss;
         RenderType = ObjectRenderType.Mesh;
-        id = 201;
+
+        CharacterTabelData[CharacterTabelType.Id] = 201;
+
         radius = 100;
     }
     protected override void Start()
@@ -23,7 +25,7 @@ public partial class BossMonster : Monster
         base.FixedUpdate();
     }
 
-    protected override void FindWeaponObject(LayerName _name)
+    protected override void FindWeaponObject()
     {
         //SkinnedMeshRenderer[] skin = GetComponentsInChildren<SkinnedMeshRenderer>();
         //int value = LayerMask.NameToLayer(_name.ToString());
@@ -39,9 +41,9 @@ public partial class BossMonster : Monster
         //        break;
         //    }
         //}
+        //int value = LayerMask.NameToLayer(_name.ToString());
 
         Weapon[] weapon = GetComponentsInChildren<Weapon>();
-        int value = LayerMask.NameToLayer(_name.ToString());
         foreach (var skinObj in weapon)
         {
             WeaponType type = skinObj.WeaponType;
@@ -52,17 +54,10 @@ public partial class BossMonster : Monster
                 MAINWEAPON = skinObj;
                 MAINWEAPON.CharcterInit(this);
 
-                //Transform child = transform.GetChild(0);           // 첫 번째 자식
-                //Transform grandChild = child.GetChild(0);
-
-                //SkinnedMeshRenderer skin = skinObj.GetComponent<SkinnedMeshRenderer>();
-                //MainWeaponObj = skin.rootBone.gameObject;
-                //weaponOriginalPos = MainWeaponObj.transform.localPosition;
-
                 SkinnedMeshRenderer skin = skinObj.GetComponent<SkinnedMeshRenderer>();
                 GameObject go = skin.rootBone.gameObject;
 
-                Transform child = go.transform.GetChild(0);           // 첫 번째 자식
+                Transform child = go.transform.GetChild(0);           
                 Transform grandChild = child.GetChild(0);
 
                 MainWeaponObj = grandChild.gameObject;

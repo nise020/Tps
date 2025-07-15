@@ -8,7 +8,7 @@ public partial class Character : Actor
     protected void InfoLoad()
     {
         Shared.InutTableMgr();
-        var info = Shared.TableManager.Character.Get((int)CharacterTabelData[CharacterTabelType.Id]);
+        var info = Shared.TableManager.Character.Get(Id);
         if (info == null)
         {
             Debug.LogError($"{gameObject}.info = null");
@@ -28,7 +28,8 @@ public partial class Character : Actor
         CharacterTabelData.Add(CharacterTabelType.Type, _info.Type);
         CharacterTabelData.Add(CharacterTabelType.Skill1, _info.Skill1);
         CharacterTabelData.Add(CharacterTabelType.Skill2, _info.Skill2);
-        CharacterTabelData.Add(CharacterTabelType.Ai, _info.State);
+        CharacterTabelData.Add(CharacterTabelType.Ai, _info.Ai);
+        CharacterTabelData.Add(CharacterTabelType.State, _info.State);
         CharacterTabelData.Add(CharacterTabelType.Dec, _info.Dec);
 
         CharacterTabelTextData.Add(CharacterTabelType.Img, _info.Img);

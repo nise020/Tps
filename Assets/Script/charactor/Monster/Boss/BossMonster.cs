@@ -10,7 +10,7 @@ public partial class BossMonster : Monster
         monsterStateData.MonsterType = MonsterType.Boss;
         RenderType = ObjectRenderType.Mesh;
 
-        CharacterTabelData[CharacterTabelType.Id] = 201;
+        Id = 201;
 
         radius = 100;
     }

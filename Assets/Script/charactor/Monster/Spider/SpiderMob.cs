@@ -7,7 +7,7 @@ public partial class SpiderMob : Monster
     protected override void Awake()
     {
         base.Awake();
-        CharacterTabelData[CharacterTabelType.Id] = 101;
+        Id   = 101;
         monsterStateData.MonsterType = MonsterType.Spider;
         RenderType = ObjectRenderType.Skin;
     }

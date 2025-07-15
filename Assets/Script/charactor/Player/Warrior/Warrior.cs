@@ -7,7 +7,7 @@ public partial class Warrior : Player
     //GameObject Weapon;
     protected override void Awake()
     {
-        CharacterTabelData[CharacterTabelType.Id] = 2;
+        Id = 2;
         RenderType = ObjectRenderType.Skin;
         playerStateData.ModeState = PlayerModeState.Player;
         playerStateData.PlayerType = PlayerType.Warrior;

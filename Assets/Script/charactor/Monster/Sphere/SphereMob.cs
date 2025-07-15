@@ -9,7 +9,7 @@ public partial class SphereMob : Monster
         base.Awake();
         monsterStateData.MonsterType = MonsterType.Sphere;
         RenderType = ObjectRenderType.Mesh;
-        CharacterTabelData[CharacterTabelType.Id] = 102;
+        Id = 102;
     }
     protected override void Start()
     {

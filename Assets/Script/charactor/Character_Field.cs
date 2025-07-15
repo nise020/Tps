@@ -8,11 +8,11 @@ public partial class Character : Actor
     [Header("Table/State")]
     protected State STATE = new State();
     protected Dictionary<StatusType, float> StatusData { get; set; } = new Dictionary<StatusType, float>();
-    protected Dictionary<CharacterTabelType, float> CharacterTabelData { get; set; } = new Dictionary<CharacterTabelType, float>();
+    protected Dictionary<CharacterTabelType, int> CharacterTabelData { get; set; } = new Dictionary<CharacterTabelType, int>();
     protected Dictionary<CharacterTabelType, string> CharacterTabelTextData { get; set; } = new Dictionary<CharacterTabelType, string>();
 
     //[Header("Table/Character")]
-    //protected int id;
+    public int Id;
     //protected byte type;
     //protected int skill1;
     //protected int skill2;

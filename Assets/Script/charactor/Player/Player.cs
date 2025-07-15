@@ -14,6 +14,8 @@ public partial class Player : Character
     protected override void Start()
     {      
         base.Start();
+        playerAnimator = GetComponent<Animator>();
+
         FindWeaponObject();
 
         viewcam = GetComponentInChildren<PlayerCamera>();
@@ -27,7 +29,6 @@ public partial class Player : Character
         slotinit();
 
         rigid = GetComponent<Rigidbody>();//Kinematic Controll
-        playerAnimator = GetComponent<Animator>();
 
         skillStrategy.PlayerInit(this);
         SkillEffectSystem1 = CreatSkill(SkillEffectObj1, SkillParentObj1);

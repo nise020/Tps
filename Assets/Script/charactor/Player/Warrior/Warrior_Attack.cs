@@ -11,26 +11,26 @@ public partial class Warrior : Player
     int currentCombo = 0;
     private IEnumerator CheckSlashHit()
     {
-        float slashRange = 2.5f;         // 검이 닿는 최대 거리
-        float slashAngle = 90f;          // 공격 범위 각도 (예: 앞쪽 90도)
-        Transform weaponOrigin = MainWeaponObj.transform; // 검의 기준 위치 (검의 시작점 또는 손 위치 등)
+        float slashRange = 2.5f;         
+        float slashAngle = 90f;          
+        Transform weaponOrigin = MainWeaponObj.transform;
 
         HashSet<Transform> damagedEnemies = new HashSet<Transform>();
 
         List<GameObject> monsetrPos = Shared.BattelManager.LoadToCharcterList(ObjectType.Monster);
         isChecking = true;
 
-        while (isChecking) // 외부에서 코루틴을 멈출 때까지 계속 실행
+        while (isChecking) 
         {
 
             for (int iNum = 0; iNum < monsetrPos.Count; iNum++)
             {
                 if (monsetrPos[iNum] == null || damagedEnemies.Contains(monsetrPos[iNum].transform)) continue;
 
-                Vector3 toTarget = monsetrPos[iNum].transform.position - weaponOrigin.position; // 검 기준점 → 몬스터 벡터
+                Vector3 toTarget = monsetrPos[iNum].transform.position - weaponOrigin.position;
                 float distance = toTarget.magnitude;
 
-                if (distance > slashRange) continue; // 범위를 벗어난 몬스터는 무시
+                if (distance > slashRange) continue; 
 
                 float angle = Vector3.Angle(weaponOrigin.forward, toTarget.normalized);
 
@@ -43,15 +43,15 @@ public partial class Warrior : Player
                 }
             }
             yield return null;
-            Debug.Log("코루틴 종료 - 공격 판정 끝");
+            Debug.Log("Coroutine Exit");
         }
     }
 
     IEnumerator CheckThrustHit()
     {
-        float thrustRange = 3.0f;           // 찌르기 도달 거리
-        float thrustRadius = 0.5f;          // 찌르기 두께 (직선 주변 허용 범위)
-        Transform origin = MainWeaponObj.transform; // 찌르기 시작점 (검 끝 또는 손 위치)
+        float thrustRange = 3.0f;           
+        float thrustRadius = 0.5f;          
+        Transform origin = MainWeaponObj.transform; 
 
         HashSet<Transform> damagedEnemies = new HashSet<Transform>();
         List<GameObject> monsetrPos = Shared.BattelManager.LoadToCharcterList(ObjectType.Monster);
@@ -82,7 +82,7 @@ public partial class Warrior : Player
             yield return null;
         }
 
-        Debug.Log("Thrust 코루틴 종료");
+        Debug.Log("Coroutine Exit");
     }
     public void RangeCheak()
     {

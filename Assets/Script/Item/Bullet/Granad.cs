@@ -25,13 +25,18 @@ public class Granad : Weapon
     private Coroutine effectCoroutine;
 
     float range = 10.0f;
-    //List<GameObject> characters = new List<GameObject>();  
 
-    private void OnDrawGizmos()
-    {
-        Gizmos.DrawLine(transform.localPosition, transform.
-            TransformDirection(Vector3.down));
-    }
+    //GranadPos = startPos;
+    //transform.position = GranadPos;
+    //GetComponent<Rigidbody>().AddTorque(Vector3.forward * 200.0f);
+
+
+    //private void OnDrawGizmos()
+    //{
+    //    Gizmos.DrawLine(transform.localPosition, transform.
+    //        TransformDirection(Vector3.down));
+    //}
+
     public override void WeaponReset() 
     {
         modelingObject.SetActive(true);
@@ -43,9 +48,32 @@ public class Granad : Weapon
         explotionEffect.Stop(true, ParticleSystemStopBehavior.StopEmittingAndClear);
         skillstate = SkillState.SkillOff;
 
-        //GranadPos = startPos;
-        //transform.position = GranadPos;
-        //GetComponent<Rigidbody>().AddTorque(Vector3.forward * 200.0f);
+        
+    }
+    private void PlayExplosionEffect()
+    {
+        explotionEffect.gameObject.SetActive(true);
+        explotionEffect.Play();
+
+
+        if (effectCoroutine != null)
+            StopCoroutine(effectCoroutine);
+
+
+        effectCoroutine = StartCoroutine(AutoStopEffect());
+    }
+
+    private IEnumerator AutoStopEffect()
+    {
+        yield return new WaitForSeconds(explotionEffect.main.duration);
+
+        explotionEffect.gameObject.SetActive(false);
+        if (explotionEffect.isPlaying)
+        {
+            explotionEffect.Stop();
+        }
+        explotionEffect.gameObject.transform.localPosition = startPos;
+        gameObject.SetActive(false);
     }
 
     private void OnCollisionEnter(Collision collision)
@@ -117,35 +145,7 @@ public class Granad : Weapon
         }
     }
 
-    private void PlayExplosionEffect()
-    {
-        // 강제 리셋
-        //explotionEffect.Stop(true, ParticleSystemStopBehavior.StopEmittingAndClear);
-        explotionEffect.gameObject.SetActive(true);
-        explotionEffect.Play();
-
-        // 기존 종료 코루틴 취소
-        if (effectCoroutine != null)
-            StopCoroutine(effectCoroutine);
-
-        // 새로 시작
-        effectCoroutine = StartCoroutine(AutoStopEffect());
-    }
-
-    private IEnumerator AutoStopEffect()
-    {
-        yield return new WaitForSeconds(explotionEffect.main.duration);
-
-        explotionEffect.gameObject.SetActive(false);
-        if (explotionEffect.isPlaying) 
-        {
-            explotionEffect.Stop();
-        }
-        explotionEffect.gameObject.transform.localPosition = startPos;
-        gameObject.SetActive(false);
-        //ResetObject(); // 위치 초기화 등
-    }
-
+   
     private void Start()
     {
         explotionEffect = GetComponentInChildren<ParticleSystem>();

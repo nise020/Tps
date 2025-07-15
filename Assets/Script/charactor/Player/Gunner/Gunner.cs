@@ -14,7 +14,7 @@ public partial class Gunner : Player
     IEnumerator AttackColutin;
     protected override void Awake()
     {
-        CharacterTabelData[CharacterTabelType.Id] = 1;
+        Id = 1;
         RenderType = ObjectRenderType.Skin;
         playerStateData.ModeState = PlayerModeState.Npc;
         playerStateData.PlayerType = PlayerType.Gunner;
